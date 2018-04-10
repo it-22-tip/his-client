@@ -6,6 +6,7 @@
     <button @click="getPrinters">List Printer</button>
     <button @click="print">Print</button>
     <button @click="electronPrinter">Electron Printer</button>
+    <button @click="electronPrint">Electron Print</button>
   </div>
 </template>
 
@@ -37,10 +38,12 @@
     methods: {
       electronPrinter () {
         let webContents = ele.remote.getCurrentWebContents()
-        webContents.getPrinters()
+        let printers = webContents.getPrinters()
+        console.log(printers)
       },
       electronPrint () {
         let webContents = ele.remote.getCurrentWebContents()
+        // webContents.print({silent: false, printBackground: false, deviceName: 'EPSON-L360-Series'})
         webContents.print()
       },
       getSupportedPrintFormats () {
