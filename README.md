@@ -2,6 +2,8 @@
 
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
+[![License](https://img.shields.io/npm/l/express.svg)](https://github.com/idnesdotlink/his-client/blob/master/LICENSE)
+
 <!--
 |Windows|Linux|
 |:-:|:-:|
