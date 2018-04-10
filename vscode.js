@@ -32,7 +32,7 @@ const writeWorkSpace = async function () {
     return false
   }
 
-  return writeFile('vuehis.code-workspace', content)
+  return writeFile('his-client.code-workspace', content)
     .then(
       () => {
         console.log('success')
