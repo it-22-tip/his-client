@@ -1,14 +1,14 @@
 {
-  "name": "vuehis",
+  "name": "his-client",
   "version": "0.0.0",
   "author": "idnes.link <16096613+idnesdotlink@users.noreply.github.com>",
-  "description": "his desktop app",
+  "description": "his desktop client",
   "license": "MIT",
   "private": true,
   "main": "./dist/electron/main.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/idnesdotlink/vuehis.git"
+    "url": "https://github.com/idnesdotlink/his-client.git"
   },
   "engines": {
     "node": ">7.0.0"
@@ -29,14 +29,14 @@
     "pack:renderer": "cross-env NODE_ENV=production webpack --progress --colors --config .electron-vue/webpack.renderer.config.js"
   },
   "build": {
-    "productName": "Hospital Information System",
-    "appId": "id.co.phcc.vuehis",
+    "productName": "HIS Desktop Client",
+    "appId": "id.co.phcc.his-client",
     "directories": {
       "buildResources": "build",
       "output": "build"
     },
     "compression": "store",
-    "copyright": "Copyright © 2018 idnes",
+    "copyright": "Copyright © 2018 idnesdotlink",
     "files": [
       "dist/electron/**/*"
     ],
