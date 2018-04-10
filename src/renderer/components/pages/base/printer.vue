@@ -101,7 +101,7 @@
           {
             data: this.printdata,//'print from Node.JS buffer', // or simple String: "some text"
             printer: 'EPSON L360 Series', //, printer:'Foxit Reader PDF Printer' // printer name, if missing then will print to default printer
-            type: 'EMF', // type: RAW, TEXT, PDF, JPEG, .. depends on platform
+            type: 'NT EMF 1.003', // type: RAW, TEXT, PDF, JPEG, .. depends on platform
             success: function (jobID) {
               console.log("sent to printer with ID: "+jobID)
             },
