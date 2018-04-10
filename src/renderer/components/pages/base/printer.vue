@@ -5,13 +5,14 @@
     <button @click="getSupportedPrintFormats">Supported Format</button>
     <button @click="getPrinters">List Printer</button>
     <button @click="print">Print</button>
+    <button @click="electronPrint">Electron Print</button>
   </div>
 </template>
 
 <script>
   import printer from 'printer'
-  import util from 'util'
   import file from '@/mixins/file'
+  const ele = require('electron')
   export default {
     name: 'Intro',
     mixins: [file],
@@ -25,7 +26,6 @@
 
     },
     mounted () {
-      // console.log("installed printers:\n"+util.inspect(printer.getPrinters(), {colors:true, depth:10}))
       console.log(printer)
       this.readFile(__static + '/svg/logo.svg').then(
         data => {
@@ -35,6 +35,10 @@
       )
     },
     methods: {
+      electronPrint() {
+        let webContents = ele.remote.getCurrentWebContents()
+        webContents.print()
+      },
       getSupportedPrintFormats () {
         let formats
         try {
@@ -51,9 +55,25 @@
           console.log(error)
         }
       },
+      getPrinterDriverOptions () {
+        let printedDriverOptions
+        try {
+          printedDriverOptions = printer.getPrinterDriverOptions()
+        } catch (error) {
+          console.log(error)
+        }
+        console.log(printedDriverOptions)
+      },
       getPrinter () {
         try {
           this.formats = printer.getPrinter()
+        } catch (error) {
+          console.log(error)
+        }
+      },
+      getSelectedPaperSize () {
+        try {
+          printer.getSelectedPaperSize()
         } catch (error) {
           console.log(error)
         }
