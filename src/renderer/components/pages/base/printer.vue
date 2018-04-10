@@ -5,7 +5,7 @@
     <button @click="getSupportedPrintFormats">Supported Format</button>
     <button @click="getPrinters">List Printer</button>
     <button @click="print">Print</button>
-    <button @click="electronPrint">Electron Print</button>
+    <button @click="electronPrinter">Electron Printer</button>
   </div>
 </template>
 
@@ -35,7 +35,11 @@
       )
     },
     methods: {
-      electronPrint() {
+      electronPrinter () {
+        let webContents = ele.remote.getCurrentWebContents()
+        webContents.getPrinters()
+      },
+      electronPrint () {
         let webContents = ele.remote.getCurrentWebContents()
         webContents.print()
       },
