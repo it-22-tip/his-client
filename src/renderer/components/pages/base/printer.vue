@@ -56,11 +56,13 @@
         console.log({formats: formats})
       },
       getPrinters () {
+        let printers
         try {
-          this.formats = printer.getPrinters()
+          printers = printer.getPrinters()
         } catch (error) {
           console.log(error)
         }
+        console.log(printers)
       },
       getPrinterDriverOptions () {
         let printedDriverOptions
