@@ -28,7 +28,7 @@
     },
     mounted () {
       console.log(printer)
-      this.readFile(__static + '/svg/logo.svg').then(
+      this.readFile(__static + '/emf/e.emf').then(
         data => {
           console.log(data)
           this.printdata = data
@@ -99,7 +99,7 @@
           {
             data: this.printdata,//'print from Node.JS buffer', // or simple String: "some text"
             printer: 'EPSON-L360-Series', //, printer:'Foxit Reader PDF Printer' // printer name, if missing then will print to default printer
-            type: 'PDF', // type: RAW, TEXT, PDF, JPEG, .. depends on platform
+            type: 'EMF', // type: RAW, TEXT, PDF, JPEG, .. depends on platform
             success: function (jobID) {
               console.log("sent to printer with ID: "+jobID)
             },
