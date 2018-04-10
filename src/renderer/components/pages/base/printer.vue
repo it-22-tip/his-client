@@ -28,7 +28,7 @@
     },
     mounted () {
       console.log(printer)
-      this.readFile(__static + '/ps/test.ps').then(
+      this.readFile(__static + '/ps/lv1.ps').then(
         data => {
           console.log(data)
           this.printdata = data
