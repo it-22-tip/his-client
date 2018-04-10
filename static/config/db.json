@@ -1,0 +1,10 @@
+{
+  "host": "localhost",
+  "user": "simrs",
+  "password": "simrs",
+  "database": "simrs",
+  "charset": "utf8mb4_unicode_ci",
+  "maxPacketSize": "512",
+  "port": 3306,
+  "connectTimeout": 36000
+}

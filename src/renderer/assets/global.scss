@@ -1,0 +1,47 @@
+@import "~material-design-icons/iconfont/material-icons.css";
+@import "~typeface-roboto/index.css";
+@import "~vue-material/dist/vue-material.css";
+@import "theme";
+@import "vuebar";
+@import "pdf";
+
+html, body {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+html, body, #app {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+.md-scrollbar::-webkit-scrollbar {
+  border-radius: 0;
+}
+.md-scrollbar::-webkit-scrollbar-thumb {
+  border-radius: 0;
+}
+.md-scrollbar.md-theme-default::-webkit-scrollbar-thumb {
+  background: rgba(#757575, .5) !important;
+}
+
+/* * {
+  &::-webkit-scrollbar {
+    width: 8px !important;
+    height: 8px !important;
+    border-radius: 8px !important;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 8px !important;
+  }
+
+  &::-webkit-scrollbar-button {
+    display: none !important;
+  }
+} */
+
+table.table table.table tr, table.table td {
+  border: 1px solid #000000;
+}

@@ -1,0 +1,54 @@
+<template>
+  <app-wrapper>
+    <page-container>
+      <template slot="header">
+      <h3 class="md-title" style="flex: 1">Title</h3>
+       <menu-feature></menu-feature>
+      </template>
+      <div slot="default" class="test">
+        [Dashboard]
+        {{ employee.count }} {{ employee.version }}
+        <md-button @click="add">Add</md-button>
+        <md-button @click="remove">Remove</md-button>
+        <md-button @click="sync">Sync</md-button>
+      </div>
+      <page-footer slot="footer">
+        <div>FOOTER</div>
+      </page-footer>
+    </page-container>
+  </app-wrapper>
+</template>
+
+<script>
+  export default {
+    data () {
+      return {
+      }
+    },
+    computed: {
+      employee () {
+        return this.$store.getters['ModelInfos/getCountByName']('Employees')
+        // return this.$store.state.Employee
+      }
+    },
+    methods: {
+      add () {
+        this.$store.dispatch('ModelInfos/INCREASE_COUNT', { table: 'Employees'} )
+      },
+      remove () {
+        this.$store.dispatch('ModelInfos/DECREASE_COUNT', { table: 'Employees' })
+      },
+      sync () {
+        this.$store.dispatch('ModelInfos/SYNC_TABLE', { table: 'Employees' })
+      }
+    },
+    mounted () {
+      // console.log(this)
+      // console.log(this.$store.state.table)
+    }
+  }
+</script>
+
+<style lang="scss" scoped>
+
+</style>

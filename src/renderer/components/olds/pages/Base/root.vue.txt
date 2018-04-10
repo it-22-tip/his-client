@@ -1,0 +1,196 @@
+<template>
+  <div class="padding-10">
+  <md-content class="padding-10">
+    <md-content>
+      <md-subheader>Root Access</md-subheader>
+      <md-field>
+        <label>User Name</label>
+        <md-input v-model="form.username"/>
+      </md-field>
+      <md-field>
+        <label>Password</label>
+        <md-input v-model="form.password"/>
+      </md-field>
+      <md-field>
+        <label>Import Path</label>
+        <md-input v-model="form.import"/>
+      </md-field>
+    </md-content>
+    <md-content>
+      <p v-for="item in log" :key="item.count" class="log" :class="item.class">
+        {{ item.message }}
+      </p>
+    </md-content>
+    <md-content>
+      <custom-button class="md-raised md-primary" @click="createDB">
+        Create Database
+      </custom-button>
+      <custom-button class="md-raised md-primary" @click="dropDB">
+        Drop Database
+      </custom-button>
+      <custom-button class="md-raised md-primary" @click="clearLog">
+        Clear Log
+      </custom-button>
+      <custom-button class="md-raised md-primary" :to="{ path: '/' }">
+        Back
+      </custom-button>
+    </md-content>
+  </md-content>
+  </div>
+</template>
+<script>
+import { homeDir, exists } from '@/helper'
+import models from '@/orm'
+import options from '@/orm/options'
+import Sequelize from 'sequelize'
+import { default as Promise }  from 'bluebird'
+
+export default {
+  name: 'test',
+  data () {
+    return {
+      form: {
+        username: 'root',
+        import: homeDir('/.hisdata')
+      },
+      options: null,
+      log: [],
+      config: homeDir('/.hisdata') + '/config.yml'
+    }
+  },
+  mounted () {
+    this.options = options
+    this.options.pool = {
+      max: 5,
+      min: 0,
+      acquire: 600,
+      idle: 100,
+      handleDisconnects: true
+    },
+    this.options.database = null
+    this.sampleData()
+    readFile(this.config)
+      .then(
+        (data) => {
+          console.log(yaml.safeLoad(data))
+        }
+      )
+      .catch(
+        error => {
+          console.log(error)
+        }
+      )
+  },
+  methods: {
+    test () {
+      return {}
+    },
+    async sampleData () {
+      let exists = await stat(this.form.import)
+        .then(() => { return true })
+        .catch(
+          (error) => {
+            this.pushLog(error.message, true)
+            return false
+          })
+
+      if(!exists) return false
+
+      return readDir(this.form.import)
+        .then(
+          data => {
+            return data
+          }
+        )
+        .catch(
+          error => {
+            console.log(error)
+            pushLog('failed', true)
+          }
+        )
+
+    },
+    clearLog () {
+      this.log = []
+    },
+    pushLog (message, error = false) {
+      let log = {
+        message: message,
+        count: this.log.length + 1,
+        class: !error ? 'info' : 'error'
+      }
+      this.log.push(log)
+    },
+    runQuery (sequelize, query) {
+      return sequelize.transaction(
+        transaction => {
+          let options = {
+            transaction: transaction,
+            type: sequelize.QueryTypes.RAW,
+            raw: true
+          }
+          return sequelize.query(query, options)
+            .then(
+              value => { return true },
+              error => { throw error }
+            )
+        }
+      )
+    },
+    async createDB () {
+      let sequelize = null
+      let success = false
+      this.options.username = this.form.username
+      this.options.password = this.form.password
+      sequelize = new Sequelize(this.options)
+      let query = `CREATE database simrs`
+      try {
+        success = await this.runQuery(sequelize, query)
+      } catch(error) {
+        if(error.original !== undefined) {
+          this.pushLog(error.original.message, true)
+        } else {
+          this.pushLog('undefined error', true)
+          console.log(error)
+        }
+      }
+      if (success) this.pushLog('db created')
+      await sequelize.close()
+      sequelize = null
+    },
+    async dropDB () {
+      let sequelize = null
+      let success
+      this.options.username = this.form.username
+      this.options.password = this.form.password
+      sequelize = new Sequelize(this.options)
+      let query = `DROP database simrs`
+      try {
+        success = await this.runQuery(sequelize, query)
+      } catch(error) {
+        if(error.original !== undefined) {
+          this.pushLog(error.original.message, true)
+        } else {
+          this.pushLog('undefined error', true)
+          console.log(error)
+        }
+      }
+      if (success) this.pushLog('db dropped')
+      await sequelize.close()
+      sequelize = null
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+  .padding-10 {
+    padding: 20px !important;
+  }
+  .log.error{
+    color: red;
+  }
+  .log.info {
+    color: green;
+  }
+</style>
