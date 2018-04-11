@@ -1,46 +1,56 @@
 <template>
-    <li :class="classes"
+  <li :class="classes"
+    :draggable="draggable"
+    @dragstart.stop="onItemDragStart($event, _self, _self.model)"
+    @dragend.stop.prevent="onItemDragEnd($event, _self, _self.model)"
+    @dragover.stop.prevent="() => false"
+    @dragenter.stop.prevent="isDragEnter = true"
+    @dragleave.stop.prevent="isDragEnter = false"
+    @drop.stop.prevent="handleItemDrop($event, _self, _self.model)">
+    <div :class="wholeRowClasses" v-if="isWholeRow">&nbsp;</div>
+    <i class="tree-icon tree-ocl" @click="handleItemToggle"></i>
+    <div :class="anchorClasses" @click="handleItemClick" @mouseover="isHover=true" @mouseout="isHover=false">
+      <i class="tree-icon tree-checkbox" v-if="showCheckbox && !model.loading"></i>
+      <i :class="themeIconClasses" v-if="!model.loading"></i>
+      {{model.text}}
+    </div>
+    <ul role="group" ref="group" class="tree-children" v-if="isFolder">
+      <tree-view-item v-for="(child, index) in model.children"
+        :key="index"
+        :item-data="child"
+        :whole-row="wholeRow"
+        :show-checkbox="showCheckbox"
+        :height= "height"
+        :parent-item="model.children"
         :draggable="draggable"
-        @dragstart.stop="onItemDragStart($event, _self, _self.model)"
-        @dragend.stop.prevent="onItemDragEnd($event, _self, _self.model)"
-        @dragover.stop.prevent="() => false"
-        @dragenter.stop.prevent="isDragEnter = true"
-        @dragleave.stop.prevent="isDragEnter = false"
-        @drop.stop.prevent="handleItemDrop($event, _self, _self.model)">
-        <div :class="wholeRowClasses" v-if="isWholeRow">&nbsp;</div>
-        <i class="tree-icon tree-ocl" @click="handleItemToggle"></i>
-        <div :class="anchorClasses" @click="handleItemClick" @mouseover="isHover=true" @mouseout="isHover=false">
-            <i class="tree-icon tree-checkbox" v-if="showCheckbox && !model.loading"></i>
-            <i :class="themeIconClasses" v-if="!model.loading"></i>
-            {{model.text}}
-        </div>
-        <ul role="group" ref="group" class="tree-children" v-if="isFolder">
-            <tree-view-item v-for="(child, index) in model.children"
-                       :key="index"
-                       :data="child"
-                       :whole-row="wholeRow"
-                       :show-checkbox="showCheckbox"
-                       :height= "height"
-                       :parent-item="model.children"
-                       :draggable="draggable"
-                       :on-item-click="onItemClick"
-                       :on-item-toggle="onItemToggle"
-                       :on-item-drag-start="onItemDragStart"
-                       :on-item-drag-end="onItemDragEnd"
-                       :on-item-drop="onItemDrop"
-                       :index="index"
-                       :klass="index === model.children.length-1 ? 'tree-last' : ''"
-                       >
-            </tree-view-item>
-        </ul>
-    </li>
+        :on-item-click="onItemClick"
+        :on-item-toggle="onItemToggle"
+        :on-item-drag-start="onItemDragStart"
+        :on-item-drag-end="onItemDragEnd"
+        :on-item-drop="onItemDrop"
+        :index="index"
+        :item-class="index === model.children.length-1 ? 'tree-last' : ''"
+        >
+      </tree-view-item>
+    </ul>
+  </li>
 </template>
 <script>
   export default {
     name: 'tree-view-item',
     props: {
-      data: {
+      itemData: {
         type: Object,
+        default: () => {
+          return {
+            icon: '',
+            opened: false,
+            selected: false,
+            disabled: false,
+            loading: false,
+            children: []
+          }
+        },
         required: true
       },
       wholeRow: {
@@ -82,15 +92,18 @@
         type: Function,
         default: () => false
       },
-      klass: String,
-      last: false,
+      itemClass: String,
+      last: {
+        type: Boolean,
+        required: false
+      },
       index: false
     },
     data () {
       return {
         isHover: false,
         isDragEnter: false,
-        model: this.data
+        model: this.itemData
       }
     },
     watch: {
@@ -101,7 +114,7 @@
           this.$el.style.backgroundColor = 'inherit'
         }
       },
-      data (newValue) {
+      itemData (newValue) {
         this.model = newValue
       },
       'model.opened': {
@@ -110,6 +123,9 @@
           this.handleSetGroupMaxHeight()
         },
         deep: true
+      },
+      model (value) {
+        console.log(value)
       }
     },
     computed: {
@@ -124,7 +140,7 @@
           {'tree-leaf': !this.isFolder},
           {'tree-loading': !!this.model.loading},
           {'tree-drag-enter': this.isDragEnter},
-          {[this.klass]: !!this.klass}
+          {[this.itemClass]: !!this.itemClass}
         ]
       },
       anchorClasses () {
@@ -202,6 +218,7 @@
       },
       handleItemClick () {
         if (this.model.disabled) return
+        console.log('test')
         this.model.selected = !this.model.selected
         this.onItemClick(this, this.model)
       },
@@ -215,3 +232,15 @@
     }
   }
 </script>
+
+<style lang="scss" scoped>
+.tree-children {
+  padding: 0;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  list-style-image: none;
+  overflow: hidden;
+}
+</style>
+

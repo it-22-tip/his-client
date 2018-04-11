@@ -3,7 +3,7 @@
     <md-content class="mc">
       <md-content class="leftist">
         <div>
-          <tree-view :data="asyncData" @item-click="treeItemClick" ref="tree"></tree-view>
+          <tree-view :item-data="asyncData" @item-click="treeItemClick" ref="tree"></tree-view>
         </div>
       </md-content>
       <md-table
@@ -68,6 +68,9 @@ export default {
     await this.closeConnection()
   },
   methods: {
+    async  asyncTree () {
+
+    },
     async populateTree () {
       let tree = []
       try {

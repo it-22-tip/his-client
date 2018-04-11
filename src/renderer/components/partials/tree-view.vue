@@ -2,20 +2,20 @@
   <div :class="classes" onselectstart="return false">
     <ul :class="containerClasses">
       <tree-view-item
-        v-for="(child, index) in data"
+        v-for="(child, index) in itemData"
         :key="index"
-        :data="child"
+        :item-data="child"
         :whole-row="wholeRow"
         :show-checkbox="showCheckbox"
-        :height="sizeHight"
-        :parent-item="data"
+        :height="sizeHeight"
+        :parent-item="itemData"
         :draggable="draggable"
         :on-item-click="onItemClick"
         :on-item-toggle="onItemToggle"
         :on-item-drag-start="onItemDragStart"
         :on-item-drag-end="onItemDragEnd"
         :on-item-drop="onItemDrop"
-        :klass="index === data.length-1 ? 'tree-last' : ''">
+        :item-class="index === itemData.length-1 ? 'tree-last' : ''">
       </tree-view-item>
     </ul>
   </div>
@@ -32,7 +32,7 @@
       'tree-view-item': () => import('@partials/tree-view-item')
     },
     props: {
-      data: {
+      itemData: {
         type: Array
       },
       size: {
@@ -77,7 +77,7 @@
       draggable: {
         type: Boolean, default: false
       },
-      klass: String
+      itemClass: String
     },
     data () {
       return {
@@ -92,7 +92,7 @@
           {'tree-default': !this.size},
           {[`tree-default-${this.size}`]: !!this.size},
           {'tree-checkbox-selection': !!this.showCheckbox},
-          {[this.klass]: !!this.klass}
+          {[this.itemClass]: !!this.itemClass}
         ]
       },
       containerClasses () {
@@ -103,7 +103,7 @@
           {'tree-no-dots': !!this.noDots}
         ]
       },
-      sizeHight () {
+      sizeHeight () {
         switch (this.size) {
           case 'large':
             return ITEM_HEIGHT_LARGE
@@ -140,8 +140,10 @@
         let self = this
         node.addChild = function (data) {
           let newItem = self.initializeDataItem(data)
+          console.log(newItem)
           node.children.push(newItem)
         }
+        console.log(node)
         return node
       },
       initializeLoading () {
@@ -169,6 +171,7 @@
         } else {
           this.handleSingleSelectItems(oriNode, oriItem)
         }
+        console.log('click')
         this.$emit('item-click', oriNode, oriItem)
       },
       handleSingleSelectItems (oriNode, oriItem) {
@@ -248,17 +251,19 @@
       }
     },
     created () {
-      this.initializeData(this.data)
+      // console.log(this.itemData)
+      this.initializeData(this.itemData)
     },
     mounted () {
       if (this.async) {
-        this.$set(this.data, 0, this.initializeLoading())
-        this.handleAsyncLoad(this.data, this)
+        this.$set(this.itemData, 0, this.initializeLoading())
+        this.handleAsyncLoad(this.itemData, this)
       }
     }
   }
 </script>
-<style lang="css">
+<style lang="scss" scoped>
+/*
 .tree-children,
 .tree-container-ul,
 .tree-node {
@@ -673,5 +678,76 @@
 .tree-default.tree-rtl .tree-last {
   background: transparent;
 }
-
+ */
 </style>
+
+<style scoped>
+/*
+
+ol.tree
+{
+	padding: 0 0 0 30px;
+	width: 300px;
+}
+	li
+	{
+		position: relative;
+		margin-left: -15px;
+		list-style: none;
+	}
+	li.file
+	{
+		margin-left: -1px !important;
+	}
+		li.file a
+		{
+			background: url(document.png) 0 0 no-repeat;
+			color: #4C4C4C;
+			padding-left: 21px;
+			text-decoration: none;
+			display: block;
+		}
+		li.file a[href *= '.pdf']	{ background: url(document.png) 0 0 no-repeat; }
+		li.file a[href *= '.html']	{ background: url(document.png) 0 0 no-repeat; }
+		li.file a[href $= '.css']	{ background: url(document.png) 0 0 no-repeat; }
+		li.file a[href $= '.js']		{ background: url(document.png) 0 0 no-repeat; }
+	li input
+	{
+		position: absolute;
+		left: 0;
+		margin-left: 0;
+		opacity: 0;
+		z-index: 2;
+		cursor: pointer;
+		height: 1em;
+		width: 1em;
+		top: 0;
+	}
+		li input + ol
+		{
+			background: url(toggle-small-expand.png) 40px 0 no-repeat;
+			margin: -0.938em 0 0 -44px;
+			height: 1em;
+		}
+		li input + ol > li { display: none; margin-left: -14px !important; padding-left: 1px; }
+	li label
+	{
+		background: url(folder-horizontal.png) 15px 1px no-repeat;
+		cursor: pointer;
+		display: block;
+		padding-left: 37px;
+	}
+
+	li input:checked + ol
+	{
+		background: url(toggle-small.png) 40px 5px no-repeat;
+		margin: -1.25em 0 0 -44px;
+		padding: 1.563em 0 0 80px;
+		height: auto;
+	}
+		li input:checked + ol > li { display: block; margin: 0 0 0.125em;}
+		li input:checked + ol > li:last-child { margin: 0 0 0.063em; }
+
+*/
+</style>
+
