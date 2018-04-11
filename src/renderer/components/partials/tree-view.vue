@@ -28,6 +28,9 @@
 
   export default {
     name: 'tree-view',
+    components: {
+      'tree-view-item': () => import('@partials/tree-view-item')
+    },
     props: {
       data: {
         type: Array

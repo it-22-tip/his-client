@@ -51,10 +51,12 @@
   .right-bottom {
     flex: 1;
     position: relative;
+    display: flex;
+    flex-direction: column;
   }
   .padding-20 {
     padding: 20px;
-    height: 100%;
+    flex: 1;
   }
   .right-table {
     height: 100% !important;
