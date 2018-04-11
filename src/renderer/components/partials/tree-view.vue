@@ -1,23 +1,25 @@
 <template>
-  <div :class="classes" onselectstart="return false">
-    <ul :class="containerClasses">
-      <tree-view-item
-        v-for="(child, index) in itemData"
-        :key="index"
-        :item-data="child"
-        :whole-row="wholeRow"
-        :show-checkbox="showCheckbox"
-        :height="sizeHeight"
-        :parent-item="itemData"
-        :draggable="draggable"
-        :on-item-click="onItemClick"
-        :on-item-toggle="onItemToggle"
-        :on-item-drag-start="onItemDragStart"
-        :on-item-drag-end="onItemDragEnd"
-        :on-item-drop="onItemDrop"
-        :item-class="index === itemData.length-1 ? 'tree-last' : ''">
-      </tree-view-item>
-    </ul>
+  <div class="tree-container">
+    <div :class="classes" onselectstart="return false">
+      <ul :class="containerClasses">
+        <tree-view-item
+          v-for="(child, index) in itemData"
+          :key="index"
+          :item-data="child"
+          :whole-row="wholeRow"
+          :show-checkbox="showCheckbox"
+          :height="sizeHeight"
+          :parent-item="itemData"
+          :draggable="draggable"
+          :on-item-click="onItemClick"
+          :on-item-toggle="onItemToggle"
+          :on-item-drag-start="onItemDragStart"
+          :on-item-drag-end="onItemDragEnd"
+          :on-item-drop="onItemDrop"
+          :item-class="index === itemData.length-1 ? 'tree-last' : ''">
+        </tree-view-item>
+      </ul>
+    </div>
   </div>
 </template>
 <script>
@@ -263,8 +265,25 @@
   }
 </script>
 <style lang="scss" scoped>
+.tree-container {
+  display: flex;
+  height: 100%;
+  overflow: hidden;
+}
+.tree {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  overflow: scroll;
+}
+.tree-container-ul.tree-children {
+  display: block;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  list-style-image: none;
+}
 /*
-.tree-children,
 .tree-container-ul,
 .tree-node {
   display: block;
@@ -272,11 +291,6 @@
   padding: 0;
   list-style-type: none;
   list-style-image: none;
-}
-
-.tree-children {
-  overflow: hidden;
-  transition: all .3s;
 }
 
 .tree-anchor,
