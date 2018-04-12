@@ -202,27 +202,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-  .right-table {
-    height: 100% !important;
-    display: flex;
-    flex-direction: column;
-  }
-  .right-table .md-table-content {
-    display: flex;
-    flex: 1;
-    overflow-y: scroll !important;
-    height: 1px !important;
-    max-height: none !important;
-  }
-  div.md-content.md-table-content.md-scrollbar {
-    display: flex;
-    flex: 1;
-    overflow-y: scroll !important;
-    height: 1px !important;
-    max-height: none !important;
-  }
-</style>
-
-

@@ -2,8 +2,10 @@
   <layout-one>
     <md-content class="mc">
       <md-content class="leftist">
-        <div>
-          <tree-view :item-data="asyncData" @item-click="treeItemClick" ref="tree"></tree-view>
+        <div class="parentbox">
+          <div class="innerbox">
+            <tree-view :item-data="asyncData" @item-click="treeItemClick" ref="tree"></tree-view>
+          </div>
         </div>
       </md-content>
       <md-table
@@ -223,30 +225,48 @@ export default {
     display: flex;
     overflow: hidden;
   }
-  .leftist > div {
+  .parentbox {
     padding: 20px;
     flex: 1;
     overflow: hidden;
-  }
-  .right-table {
-    height: 100% !important;
     display: flex;
-    flex-direction: column;
-    flex: 1;
+    min-height: 0;
+    position: relative;
   }
-  .right-table .md-table-content {
-    display: flex;
-    flex: 1;
-    overflow-y: scroll !important;
-    height: 1px !important;
-    max-height: none !important;
+  .innerbox {
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    position: absolute;
+    height: 100%;
+    display: block;
+    width: 100%;
+    overflow: auto;
   }
-  div.md-content.md-table-content.md-scrollbar {
-    display: flex;
-    flex: 1;
-    overflow-y: scroll !important;
-    height: 1px !important;
-    max-height: none !important;
+.innerbox::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+/* Track */
+.innerbox::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+.innerbox::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Handle on hover */
+.innerbox::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+  .bigger {
+    height: 900px;
+    width: 800px;
+    display: block;
   }
 </style>
 
