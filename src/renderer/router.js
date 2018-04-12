@@ -32,14 +32,6 @@ const base = [
     }
   },
   {
-    path: '/icon',
-    name: 'base.icon',
-    component: () => import('@pages/base/icon'),
-    meta: {
-
-    }
-  },
-  {
     path: '/install',
     name: 'base.install',
     component: () => import('@pages/base/install'),
@@ -121,8 +113,29 @@ const base = [
   }
 ]
 
+const examples = [
+  {
+    path: '/example/icons',
+    name: 'example.icons',
+    component: () => import('@partials/example/icons'),
+    meta: {
+      title: 'example Documents',
+      login: true
+    }
+  },
+  {
+    path: '/example/tabs',
+    name: 'example.tabs',
+    component: () => import('@partials/example/tabs'),
+    meta: {
+      title: 'example tabs',
+      login: true
+    }
+  }
+]
+
 const routes = new Router({
-  routes: [].concat(base, error404)
+  routes: [].concat(base, error404, examples)
 })
 
 routes.beforeEach((to, from, next) => {

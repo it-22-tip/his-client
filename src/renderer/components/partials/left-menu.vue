@@ -6,7 +6,8 @@
     <button @click="Licenses">Licenses</button>
     <button @click="JobTitles">Job Titles</button>
     <button @click="Documents">Documents</button>
-    <button @click="Helpers">Helpers</button>
+    <button @click="Icons">Icons</button>
+    <button @click="Tabs">Tabs</button>
   </md-content>
 </template>
 
@@ -31,8 +32,11 @@
       Documents () {
         this.$router.push({ name: 'documents.document.list' })
       },
-      Helpers () {
-        this.$router.push({ name: 'base.icon' })
+      Icons () {
+        this.$router.push({ name: 'example.icons' })
+      },
+      Tabs () {
+        this.$router.push({ name: 'example.tabs' })
       }
     }
   }
