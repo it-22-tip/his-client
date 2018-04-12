@@ -1,25 +1,6 @@
 <template>
   <layout-one>
-    <!-- <md-content>
-      <md-field>
-        <label>Pencarian</label>
-        <md-input v-model="searchText"></md-input>
-      </md-field>
-      <md-list>
-        <md-subheader>Cari Berdasarkan</md-subheader>
-        <md-list-item>
-          <md-radio v-model="searchBy" value="Name" />
-          <span class="md-list-item-text">Nama</span>
-        </md-list-item>
-        <md-list-item>
-          <md-radio v-model="searchBy" value="JobTitle" />
-          <span class="md-list-item-text">Posisi</span>
-        </md-list-item>
-      </md-list>
-      <md-button @click="clickSearch">Cari</md-button>
-    </md-content> -->
     <md-table
-      class="right-table"
       v-model="model"
       :md-sort.sync="currentSort"
       :md-sort-order.sync="currentSortOrder"
@@ -28,6 +9,7 @@
       <md-table-row slot="md-table-row" slot-scope="{ item }">
         <md-table-cell md-label="No" md-sort-by="Id">{{ item.Id }}</md-table-cell>
         <md-table-cell md-label="Nama" md-sort-by="Name">{{ item.Name }}</md-table-cell>
+        <md-table-cell md-label="Jumlah" md-sort-by="Count">{{ item.Count }}</md-table-cell>
         <md-table-cell>
           <md-button @click="clickEdit(item.Id)" class="md-icon-button">
             <md-icon>edit</md-icon>
@@ -42,7 +24,7 @@
 <script>
 import orm from '@/mixins/orm'
 import file from '@/mixins/file'
-import { map } from 'lodash'
+import { map, groupBy, toPairs } from 'lodash'
 import moment from 'moment'
 export default {
   mixins: [
@@ -124,7 +106,12 @@ export default {
       const { Persons, Employees, JobTitles } = this.connection.models
       let data = await JobTitles.findAll({
         transaction: transaction,
-        raw: true
+        raw: true,
+        include: [
+          {
+            all: true,
+          }
+        ]
       })
       return data
     },
@@ -170,7 +157,18 @@ export default {
       }).connect()
       try {
         let data = await this.connection.transaction(this.transaction)
-        let model = data.slice()
+        let test = data.slice()
+        test = groupBy(test, (o) => {
+          return o.Id
+        })
+        test = map(test, (i, k) => {
+          let Id = i[0].Id
+          let Name = i[0].Name
+          let Count = i.length
+          return { Id, Name, Count }
+        })
+        console.log(test)
+        let model = test
         this.model = map(model, this.dataMapper)
       } catch (error) {
         console.log(error)

@@ -1,0 +1,43 @@
+@import "../../../assets/theme";
+.tree::-webkit-scrollbar {
+  border-radius: 0;
+}
+
+.tree::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  border-radius: 8px;
+}
+
+.tree::-webkit-scrollbar-button {
+  display: none;
+}
+
+.tree.md-theme-default::-webkit-scrollbar-corner,
+.tree.md-theme-default::-webkit-scrollbar-track {
+  background: #e1e1e1;
+  background: var(--md-theme-default-scrollbar-background-on-background-variant, #e1e1e1);
+}
+
+.tree.md-theme-default::-webkit-scrollbar-thumb {
+  background: rgba(117, 117, 117, 0.5) !important;
+}
+
+.tree.md-theme-default::-webkit-scrollbar-thumb {
+  background: #757575;
+  background: var(--md-theme-default-scrollbar-on-background-variant, #757575);
+}
+
+.tree::-webkit-scrollbar-thumb {
+  border-radius: 0;
+}
+
+.tree::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+}
+
+.tree.md-theme-default::-webkit-scrollbar-corner,
+.tree.md-theme-default::-webkit-scrollbar-track {
+  background: #e1e1e1;
+  background: var(--md-theme-default-scrollbar-background-on-background-variant, #e1e1e1);
+}

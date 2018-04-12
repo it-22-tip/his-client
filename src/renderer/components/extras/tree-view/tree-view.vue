@@ -265,25 +265,23 @@
   }
 </script>
 <style lang="scss" scoped>
-.tree::-webkit-scrollbar {
+@import "tree-view";
+/* .tree::-webkit-scrollbar {
     height: 8px;
     width: 8px;
 }
 
-/* Track */
 .tree::-webkit-scrollbar-track {
     background: #f1f1f1;
 }
 
-/* Handle */
 .tree::-webkit-scrollbar-thumb {
     background: #ff0000;
 }
 
-/* Handle on hover */
 .tree::-webkit-scrollbar-thumb:hover {
     background: #555;
-}
+} */
 
 .tree {
   flex: 1;
