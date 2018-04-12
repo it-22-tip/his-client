@@ -31,7 +31,7 @@
   export default {
     name: 'tree-view',
     components: {
-      'tree-view-item': () => import('@partials/tree-view-item')
+      'tree-view-item': () => import('./tree-view-item')
     },
     props: {
       itemData: {

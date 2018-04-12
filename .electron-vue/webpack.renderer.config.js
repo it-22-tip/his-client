@@ -147,6 +147,7 @@ let rendererConfig = {
       // 'handsontable.css$': '',
       '@pages': path.join(__dirname, '../src/renderer/components/pages'),
       '@partials': path.join(__dirname, '../src/renderer/components/partials'),
+      '@extras': path.join(__dirname, '../src/renderer/components/extras'),
       '@': path.join(__dirname, '../src/renderer'),
       'vue$': 'vue/dist/vue.esm.js',
     },

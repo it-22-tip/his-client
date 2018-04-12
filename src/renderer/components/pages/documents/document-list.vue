@@ -46,8 +46,7 @@ export default {
   ],
   components: {
     'layout-one': () => import('@partials/layout-one'),
-    'tree-view': () => import('@partials/tree-view'),
-    'tree-view-item': () => import('@partials/tree-view-item')
+    'tree-view': () => import('@extras/tree-view'),
   },
   data () {
     return {
