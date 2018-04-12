@@ -134,8 +134,27 @@ const examples = [
   }
 ]
 
+const tabsTest = [
+  {
+    path: 'page/install/database',
+    component: () => import('@pages/install/Install'),
+    children: [
+      {
+        path: '',
+        name: 'page.install.database',
+        component: () => import('@pages/install/Database')
+      },
+      {
+        path: 'page/install/table',
+        name: 'page.install.table',
+        component: () => import('@pages/install/Table')
+      }
+    ]
+  }
+]
+
 const routes = new Router({
-  routes: [].concat(base, error404, examples)
+  routes: [].concat(base, error404, examples, tabsTest)
 })
 
 routes.beforeEach((to, from, next) => {

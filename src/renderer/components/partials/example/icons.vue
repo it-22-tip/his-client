@@ -1,13 +1,5 @@
 <template>
-  <layout-one>
+  <div>
     icons
-  </layout-one>
+  </div>
 </template>
-<script>
-export default {
-  components: {
-    'layout-one': () => import('@partials/layout-tab')
-  }
-}
-</script>
-

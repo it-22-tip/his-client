@@ -8,6 +8,8 @@
     <button @click="Documents">Documents</button>
     <button @click="Icons">Icons</button>
     <button @click="Tabs">Tabs</button>
+    <button @click="Ins">Tabs Install</button>
+    <button @click="Tab">Tabs Table</button>
   </md-content>
 </template>
 
@@ -37,6 +39,12 @@
       },
       Tabs () {
         this.$router.push({ name: 'example.tabs' })
+      },
+      Ins () {
+        this.$router.push({ name: 'page.install.database' })
+      },
+      Tab () {
+        this.$router.push({ name: 'page.install.table' })
       }
     }
   }
