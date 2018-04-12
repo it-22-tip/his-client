@@ -265,32 +265,6 @@
   }
 </script>
 <style lang="scss" scoped>
-.tree-container {
-  display: flex;
-  overflow: hidden;
-  flex: 1;
-}
-// tc
-.tree-container::-webkit-scrollbar {
-    width: 5px;
-}
-
-/* Track */
-.tree-container::-webkit-scrollbar-track {
-    background: #f1f1f1;
-}
-
-/* Handle */
-.tree-container::-webkit-scrollbar-thumb {
-    background: #ffcc00;
-}
-
-/* Handle on hover */
-.tree-container::-webkit-scrollbar-thumb:hover {
-    background: #555;
-}
-
-// t
 .tree::-webkit-scrollbar {
     height: 8px;
     width: 8px;
@@ -310,7 +284,6 @@
 .tree::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
-
 
 .tree {
   flex: 1;
