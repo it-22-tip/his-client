@@ -173,7 +173,7 @@
     "optimize-css-assets-webpack-plugin": "^4.0.0",
     "pug": "^2.0.3",
     "raw-loader": "^0.5.1",
-    "sass-loader": "^6.0.6",
+    "sass-loader": "^7.0.0",
     "sequelize-cli": "^4.0.0",
     "style-loader": "^0.20.3",
     "uglifyjs-webpack-plugin": "^1.2.4",
