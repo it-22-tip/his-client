@@ -1,5 +1,6 @@
 'use strict'
 
+import { default as Promise } from 'bluebird'
 import { spawn } from 'child_process'
 import fs from 'fs'
 import path from 'path'

@@ -1,13 +1,16 @@
 'use-strict'
-import { execFile } from 'child_process'
+// import { execFile, spawn } from 'child_process'
+import { spawn } from 'child_process'
 import { default as Promise } from 'bluebird'
+import crypto from 'crypto'
 import fs from 'fs'
 import path from 'path'
 // import util from 'util'
-import forOwn from 'lodash'
+// import forOwn from 'lodash'
+const TMPDIR = `/home/it1/.hisdata/tmp`// `./node-pdftk-tmp/`
 
-/*  the officially support options of prince(1)  */
-var princeOptions = {
+// the officially support options of prince(1)
+/* let princeOptions = {
   'help': false,
   'version': false,
   'credits': false,
@@ -53,75 +56,174 @@ var princeOptions = {
   'disallow-annotate': false,
   'disallow-modify': false,
   'scanfonts': false
-}
+} */
 
 /*  API constructor  */
-function PrinceXML (options) {
-  /*  optionally on-the-fly generate an instance  */
-  if (!(this instanceof PrinceXML)) {
-    return new PrinceXML(options)
+class PrinceXML {
+  constructor (options, tmpFiles) {
+    /*  optionally on-the-fly generate an instance  */
+    /* if (!(this instanceof PrinceXML)) {
+      return new PrinceXML(options)
+    } */
+
+    /*  create default configuration  */
+    this.config = {
+      binary: 'prince',
+      prefix: '',
+      license: '',
+      timeout: 10 * 1000,
+      maxbuffer: 10 * 1024 * 1024,
+      cwd: '.',
+      option: {},
+      inputs: [],
+      cookies: [],
+      output: ''
+    }
+
+    this.tmpFiles = tmpFiles || []
+
+    // override defaults with more reasonable information about environment
+    let install = [
+      {
+        basedir: 'prince/lib/prince',
+        binary: 'bin/prince'
+      },
+      {
+        basedir: 'prince\\program files\\Prince\\Engine',
+        binary: 'bin\\PrinceXML.exe'
+      }
+    ]
+    let basedir
+    let binary
+    for (let i = 0; i < install.length; i++) {
+      basedir = path.resolve(path.join(__dirname, install[i].basedir))
+      binary = path.join(basedir, install[i].binary)
+      if (fs.existsSync(binary)) {
+        this.binary(binary)
+        this.prefix(basedir)
+        break
+      }
+    }
+
+    // allow caller to override defaults
+    if (typeof options === 'object') {
+      if (typeof options.binary !== 'undefined') {
+        this.binary(options.binary)
+      }
+      if (typeof options.prefix !== 'undefined') {
+        this.prefix(options.prefix)
+      }
+      if (typeof options.inputs !== 'undefined') {
+        this.inputs(options.inputs)
+      }
+      if (typeof options.cookies !== 'undefined') {
+        this.cookies(options.cookies)
+      }
+      if (typeof options.output !== 'undefined') {
+        this.output(options.output)
+      }
+    }
+
+    return this
   }
 
-  /*  create default configuration  */
-  this.config = {
-    binary: 'prince',
-    prefix: '',
-    license: '',
-    timeout: 10 * 1000,
-    maxbuffer: 10 * 1024 * 1024,
-    cwd: '.',
-    option: {},
-    inputs: [],
-    cookies: [],
-    output: ''
+  static input (src) {
+    const input = []
+    const tmpFiles = []
+
+    /**
+     * Write a temp file and save the path for deletion later.
+     * @private
+     * @function
+     * @param {Object} srcFile - Buffer to be written as a temp file.
+     * @returns {String} Path of the newly created temp file.
+     */
+    function writeTempFile (srcFile) {
+      const tmpPath = path.join(__dirname, TMPDIR)
+      const uniqueId = crypto.randomBytes(16).toString('hex')
+      const tmpFile = `${tmpPath}${uniqueId}.pdf`
+      fs.writeFileSync(tmpFile, srcFile)
+      tmpFiles.push(tmpFile)
+      return tmpFile
+    }
+
+    src = Array.isArray(src) ? src : [
+      src
+    ]
+
+    for (const srcFile of src) {
+      if (Buffer.isBuffer(srcFile)) {
+        input.push(writeTempFile(srcFile))
+      } else if (PrinceXML.isObject(srcFile)) {
+        for (const handle in srcFile) {
+          if (srcFile.hasOwnProperty(handle)) {
+            if (Buffer.isBuffer(srcFile[handle])) {
+              input.push(`${handle}=${writeTempFile(srcFile[handle])}`)
+            } else if (!fs.existsSync(srcFile[handle])) {
+              throw new Error(`The input file "${srcFile[handle]}" does not exist`)
+            } else {
+              input.push(`${handle}=${srcFile[handle]}`)
+            }
+          }
+        }
+      } else {
+        if (!fs.existsSync(srcFile)) throw new Error(`The input file "${srcFile}" does not exist`)
+        input.push(srcFile)
+      }
+    }
+
+    return new PrinceXML(input, tmpFiles)
   }
 
-  /*  override defaults with more reasonable information about environment  */
-  var install = [
-    {
-      basedir: 'prince/lib/prince',
-      binary: 'bin/prince'
-    },
-    {
-      basedir: 'prince\\program files\\Prince\\Engine',
-      binary: 'bin\\PrinceXML.exe'
-    }
-  ]
-  var basedir
-  var binary
-  for (var i = 0; i < install.length; i++) {
-    basedir = path.resolve(path.join(__dirname, install[i].basedir))
-    binary = path.join(basedir, install[i].binary)
-    if (fs.existsSync(binary)) {
-      this.binary(binary)
-      this.prefix(basedir)
-      break
-    }
-  }
+  static output (writeFile, outputDest, needsOutput = true) {
+    return new Promise((resolve, reject) => {
+      if (needsOutput) {
+        this.args.push(
+          'output',
+          outputDest || '-'
+        )
+      }
 
-  /*  allow caller to override defaults  */
-  if (typeof options === 'object') {
-    if (typeof options.binary !== 'undefined') {
-      this.binary(options.binary)
-    }
-    if (typeof options.prefix !== 'undefined') {
-      this.prefix(options.prefix)
-    }
-    if (typeof options.inputs !== 'undefined') {
-      this.inputs(options.inputs)
-    }
-    if (typeof options.cookies !== 'undefined') {
-      this.cookies(options.cookies)
-    }
-    if (typeof options.output !== 'undefined') {
-      this.output(options.output)
-    }
-  }
+      this.args = this.args.concat(this.postArgs)
 
-  return this
+      const child = spawn(this.command, this.args)
+
+      const result = []
+
+      child.stderr.on('data', data => {
+        if (!(this._ignoreWarnings && data.toString().toLowerCase().includes('warning'))) {
+          return reject(data)
+        }
+      })
+
+      child.stdout.on('data', data => result.push(Buffer.from(data)))
+
+      child.on('close', code => {
+        this._cleanUpTempFiles()
+
+        if (code === 0) {
+          const output = Buffer.concat(result)
+          if (writeFile) {
+            return fs.writeFile(writeFile, output, err => {
+              if (err) return reject(err)
+              return resolve(output)
+            })
+          }
+          return resolve(output)
+        }
+        return reject(code)
+      })
+
+      if (this.stdin) {
+        child.stdin.write(this.stdin)
+        child.stdin.end()
+      }
+    })
+  }
 }
 
-/*  set path to CLI binary  */
+/*
+// set path to CLI binary
 PrinceXML.prototype.binary = function (binary) {
   if (arguments.length !== 1) {
     throw new Error('Prince#binary: invalid number of arguments')
@@ -130,81 +232,89 @@ PrinceXML.prototype.binary = function (binary) {
   this.config.prefix = ''
 
   return this
-}
+} */
 
-/*  set path to installation tree  */
+/*
+// set path to installation tree
 PrinceXML.prototype.prefix = function (prefix) {
   if (arguments.length !== 1) {
     throw new Error('Prince#prefix: invalid number of arguments')
   }
   this.config.prefix = prefix
   return this
-}
+} */
 
-/*  set path to license file  */
+/*
+// set path to license file
 PrinceXML.prototype.license = function (filename) {
   if (arguments.length !== 1) {
     throw new Error('Prince#license: invalid number of arguments')
   }
   this.config.license = filename
   return this
-}
+} */
 
-/*  set timeout for CLI execution  */
+/*
+// set timeout for CLI execution
 PrinceXML.prototype.timeout = function (timeout) {
   if (arguments.length !== 1) {
     throw new Error('Prince#timeout: invalid number of arguments')
   }
   this.config.timeout = timeout
   return this
-}
+} */
 
-/*  set maxmimum stdout/stderr buffer for CLI execution  */
+/*
+// set maxmimum stdout/stderr buffer for CLI execution
 PrinceXML.prototype.maxbuffer = function (maxbuffer) {
   if (arguments.length !== 1) {
     throw new Error('Prince#maxbuffer: invalid number of arguments')
   }
   this.config.maxbuffer = maxbuffer
   return this
-}
+} */
 
-/*  set current working directory for CLI execution  */
+/*
+// set current working directory for CLI execution
 PrinceXML.prototype.cwd = function (cwd) {
   if (arguments.length !== 1) {
     throw new Error('Prince#cwd: invalid number of arguments')
   }
   this.config.cwd = cwd
   return this
-}
+} */
 
-/*  set input file(s)  */
+/*
+// set input file(s)
 PrinceXML.prototype.inputs = function (inputs) {
   if (arguments.length !== 1) {
     throw new Error('Prince#inputs: invalid number of arguments')
   }
   this.config.inputs = Array.isArray(inputs) ? inputs : [ inputs ]
   return this
-}
+} */
 
-/*  set cookie(s)  */
+/*
+// set cookie(s)
 PrinceXML.prototype.cookies = function (cookies) {
   if (arguments.length !== 1) {
     throw new Error('Prince#cookies: invalid number of arguments')
   }
   this.config.cookies = Array.isArray(cookies) ? cookies : [ cookies ]
   return this
-}
+} */
 
-/*  set output file  */
+/*
+// set output file
 PrinceXML.prototype.output = function (output) {
   if (arguments.length !== 1) {
     throw new Error('Prince#output: invalid number of arguments')
   }
   this.config.output = output
   return this
-}
-
-/*  set CLI options  */
+} */
+/*
+// set CLI options
 PrinceXML.prototype.option = function (name, value, forced) {
   if (arguments.length < 1 || arguments.length > 3) {
     throw new Error('Prince#option: invalid number of arguments')
@@ -223,18 +333,19 @@ PrinceXML.prototype.option = function (name, value, forced) {
   }
   this.config.option[name] = value
   return this
-}
+} */
 
-/*  execute the CLI binary  */
+/*
+// execute the CLI binary
 PrinceXML.prototype._execute = function (method, args) {
-  /*  determine path to prince(1) binary  */
-  var prog = this.config.binary
+  // determine path to prince(1) binary
+  let prog = this.config.binary
   if (!fs.existsSync(prog)) {
-    var findInPath = function (name) {
-      var p = process.env.PATH.split(path.delimiter).map(function (item) {
+    let findInPath = function (name) {
+      let p = process.env.PATH.split(path.delimiter).map(function (item) {
         return path.join(item, name)
       })
-      for (var i = 0, len = p.length; i < len; i++) {
+      for (let i = 0, len = p.length; i < len; i++) {
         if (fs.existsSync(p[i])) return p[i]
       }
       return undefined
@@ -245,18 +356,18 @@ PrinceXML.prototype._execute = function (method, args) {
     }
   }
 
-  /*  return promise for executing CLI  */
-  var self = this
+  // return promise for executing CLI
+  let self = this
   return new Promise(function (resolve, reject) {
     try {
-      var options = {}
+      let options = {}
       options.timeout = self.config.timeout
       options.maxBuffer = self.config.maxbuffer
       options.cwd = self.config.cwd
       options.encoding = 'buffer'
       execFile(prog, args, options,
         function (error, stdout, stderr) {
-          var m
+          let m
           if (error === null && (m = stderr.toString().match(/prince:\s+error:\s+([^\n]+)/))) {
             // reject({ error: m[1], stdout: stdout, stderr: stderr })
             reject(new Error(m[1]))
@@ -273,12 +384,13 @@ PrinceXML.prototype._execute = function (method, args) {
       // reject({ error: exception, stdout: '', stderr: '' })
     }
   })
-}
+} */
 
-/*  execute the CLI binary  */
+/*
+// execute the CLI binary
 PrinceXML.prototype.execute = function () {
-  /*  determine arguments to prince(1) binary  */
-  var args = []
+  // determine arguments to prince(1) binary
+  let args = []
   if (this.config.prefix !== '') {
     args.push('--prefix')
     args.push(this.config.prefix)
@@ -297,19 +409,19 @@ PrinceXML.prototype.execute = function () {
     args.push(input)
   })
 
-  /*  supported since Prince 10  */
+  // supported since Prince 10
   this.config.cookies.forEach(function (cookie) {
     args.push('--cookie')
     args.push(cookie)
   })
 
-  /*  required from Prince 11 on, supported since Prince 7  */
+  // required from Prince 11 on, supported since Prince 7
   args.push('--output')
   args.push(this.config.output)
 
-  /*  return promise for executing CLI  */
+  // return promise for executing CLI
   return this._execute('execute', args)
-}
+} */
 
-/*  export API constructor  */
+// export API constructor
 export default PrinceXML
