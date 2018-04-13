@@ -66,10 +66,41 @@ let rendererConfig = {
         use: {
           loader: 'vue-loader',
           options: {
-            extractCSS: process.env.NODE_ENV === 'production',
+            extractCSS: false,// process.env.NODE_ENV === 'production',
             loaders: {
-              sass: 'vue-style-loader!css-loader!sass-loader?indentedSyntax=1',
-              scss: 'vue-style-loader!css-loader!sass-loader'
+              css: [
+                {
+                  loader: miniCssExtractPlugin.loader
+                },
+                {
+                  loader: 'css-loader'
+                }
+              ],
+              sass: [
+                {
+                  loader: 'vue-style-loader'
+                },
+                {
+                  loader: 'css-loader'
+                },
+                {
+                  loader: 'sass-loader',
+                  options: {
+                    indentedSyntax: true
+                  }
+                }
+              ],
+              scss: [
+                {
+                  loader: 'vue-style-loader'
+                },
+                {
+                  loader: 'css-loader'
+                },
+                {
+                  loader: 'sass-loader'
+                }
+              ]
             }
           }
         }
