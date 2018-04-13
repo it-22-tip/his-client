@@ -50,5 +50,7 @@ const associations = function (models) {
   Licenses.belongsTo(Persons, {foreignKey: 'PersonId', targetKey: 'Id'})
   LicenseTypes.hasMany(Licenses, {foreignKey: 'LicenseTypeId', sourceKey: 'Id'})
   Licenses.belongsTo(LicenseTypes, {foreignKey: 'LicenseTypeId', targetKey: 'Id'})
+  JobTitles.hasMany(LicenseTypes, {foreignKey: 'JobTitleId', sourceKey: 'Id'})
+  LicenseTypes.belongsTo(JobTitles, {foreignKey: 'JobTitleId', targetKey: 'Id'})
 }
 export default associations

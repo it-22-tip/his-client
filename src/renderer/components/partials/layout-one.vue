@@ -46,13 +46,14 @@
   .right-top {
     height: 60px;
     width: 100%;
-    background-color: blue;
+    background-color: grey;
   }
   .right-bottom {
     flex: 1;
     position: relative;
     display: flex;
     flex-direction: column;
+    background-color: grey
   }
   .padding-20 {
     padding: 20px;

@@ -8,6 +8,9 @@ const attributes = {
   },
   Title: {
     type: DataTypes.STRING()
+  },
+  JobTitleId: {
+    type: DataTypes.INTEGER()
   }
 }
 export default { tableName, attributes }

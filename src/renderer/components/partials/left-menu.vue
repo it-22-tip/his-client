@@ -1,9 +1,9 @@
 <template>
   <div>
     <button @click="LogOut">Log Out</button>
-    <button @click="Dashboard">Dashboard</button>
-    <button @click="Employees">Employees</button>
-    <button @click="Documents">Documents</button>
+    <button @click="Dashboard">Dasbor</button>
+    <button @click="Employees">Karyawan</button>
+    <button @click="Documents">Dokumen</button>
   </div>
 </template>
 

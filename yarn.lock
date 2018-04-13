@@ -2226,6 +2226,13 @@ cfb@~1.0.5:
     commander "^2.14.1"
     printj "~1.1.2"
 
+cfb@~1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/cfb/-/cfb-1.0.6.tgz#d0107fa579a8d79c53a31074a755abcb898017f0"
+  dependencies:
+    commander "^2.14.1"
+    printj "~1.1.2"
+
 cfonts@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/cfonts/-/cfonts-1.2.0.tgz#876021c9f8fa40ae73274ff60412b7fd41e9afa1"
@@ -11375,12 +11382,12 @@ xlsx@^0.12.4:
     exit-on-epipe "~1.0.1"
     ssf "~0.10.2"
 
-xlsx@^0.12.8:
-  version "0.12.8"
-  resolved "https://registry.yarnpkg.com/xlsx/-/xlsx-0.12.8.tgz#02d16a712900be9a75bb5d723e0ca885647a76df"
+xlsx@^0.12.9:
+  version "0.12.9"
+  resolved "https://registry.yarnpkg.com/xlsx/-/xlsx-0.12.9.tgz#839bad5107531f63d1a7229d97121e5ef00abe38"
   dependencies:
     adler-32 "~1.2.0"
-    cfb "~1.0.5"
+    cfb "~1.0.6"
     codepage "~1.12.1"
     commander "~2.14.1"
     crc-32 "~1.2.0"

@@ -101,16 +101,25 @@ export default {
       }
     },
     async transaction (transaction) {
-      const { Persons, Employees, JobTitles } = this.connection.models
+      const { Persons, Employees, JobTitles, LicenseTypes } = this.connection.models
       let data = await JobTitles.findAll({
         transaction: transaction,
         raw: true,
         include: [
           {
-            all: true,
+            model: Employees,
+            include: [
+              {
+                model: Persons
+              }
+            ]
+          },
+          {
+            model: LicenseTypes
           }
         ]
       })
+      console.log(data)
       return data
     },
     reAssign (item, from, to) {
@@ -160,6 +169,7 @@ export default {
           return o.Id
         })
         test = map(test, (i, k) => {
+          console.log(i)
           let Id = i[0].Id
           let Name = i[0].Name
           let Count = i.length

@@ -82,8 +82,14 @@ class PrinceXML {
 
     this.tmpFiles = tmpFiles || []
 
+    /**
+     * @member
+     * @type {String}
+     */
+    this.command = 'prince'
+
     // override defaults with more reasonable information about environment
-    let install = [
+    /* let install = [
       {
         basedir: 'prince/lib/prince',
         binary: 'bin/prince'
@@ -103,7 +109,7 @@ class PrinceXML {
         this.prefix(basedir)
         break
       }
-    }
+    } */
 
     // allow caller to override defaults
     if (typeof options === 'object') {
