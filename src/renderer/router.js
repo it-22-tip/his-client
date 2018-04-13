@@ -55,7 +55,7 @@ const base = [
       login: true
     }
   },
-  // employees start
+  // employee tab
   {
     path: '/employees/employee',
     component: () => import('@pages/employees/employees-tab'),
@@ -75,16 +75,6 @@ const base = [
         component: () => import('@pages/employees/jobtitle-list'),
         meta: {
           title: 'Employee Job Titles',
-          login: true
-        }
-      },
-      {
-        path: '/employees/jobtitle/:jobtitleId',
-        name: 'employees.jobtitle.detail',
-        component: () => import('@pages/employees/jobtitle-detail'),
-        props: true,
-        meta: {
-          title: 'Employee Job Title Details',
           login: true
         }
       },
@@ -109,7 +99,7 @@ const base = [
       login: true
     }
   },
-  // employees end
+  // employees tab end
 
   {
     path: '/documents/document',
@@ -143,27 +133,8 @@ const examples = [
   }
 ]
 
-const tabsTest = [
-  {
-    path: 'page/install/database',
-    component: () => import('@pages/install/Install'),
-    children: [
-      {
-        path: '',
-        name: 'page.install.database',
-        component: () => import('@pages/install/Database')
-      },
-      {
-        path: 'page/install/table',
-        name: 'page.install.table',
-        component: () => import('@pages/install/Table')
-      }
-    ]
-  }
-]
-
 const routes = new Router({
-  routes: [].concat(base, error404, examples, tabsTest)
+  routes: [].concat(base, error404, examples)
 })
 
 routes.beforeEach((to, from, next) => {

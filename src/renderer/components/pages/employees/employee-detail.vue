@@ -1,14 +1,20 @@
 <template>
   <layout-one>
+    <md-content>
     <h1>Tester</h1>
     <p>{{ model }}</p>
+    <button @click="clickMe">Click Me</button>
+    </md-content>
   </layout-one>
 </template>
 
 <script>
+  import readline from 'readline'
+  import PrinceXML from '@/extras/PrinceXML'
+  import PdfTk from '@/extras/PdfTk'
   import orm from '@/mixins/orm'
   import { map } from 'lodash'
-import licenseListVue from './license-list.vue';
+  import licenseListVue from './license-list.vue';
   export default {
     name: 'EmployeeDetail',
     mixins: [
@@ -30,6 +36,25 @@ import licenseListVue from './license-list.vue';
       this.populate()
     },
     methods: {
+      async clickMe () {
+        let test
+
+        try {
+          PdfTk
+            .input('/home/it1/.hisdata/test.pdf')
+            .stamp(__static + '/stamp/logo.pdf')
+            .output('/home/it1/.hisdata/output.pdf')
+            .then(buffer => {
+                // Do stuff with the output buffer
+            })
+            .catch(err => {
+                // handle errors
+            })
+        } catch (error) {
+          console.log({error:error})
+        }
+        console.log(test)
+      },
       dataMapper (item) {
         console.log(item)
         return item

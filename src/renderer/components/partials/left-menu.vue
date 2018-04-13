@@ -1,16 +1,10 @@
 <template>
-  <md-content>
+  <div>
     <button @click="LogOut">Log Out</button>
     <button @click="Dashboard">Dashboard</button>
     <button @click="Employees">Employees</button>
-    <button @click="Licenses">Licenses</button>
-    <button @click="JobTitles">Job Titles</button>
     <button @click="Documents">Documents</button>
-    <button @click="Icons">Icons</button>
-    <button @click="Tabs">Tabs</button>
-    <button @click="Ins">Tabs Install</button>
-    <button @click="Tab">Tabs Table</button>
-  </md-content>
+  </div>
 </template>
 
 <script>
