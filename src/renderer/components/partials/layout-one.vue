@@ -57,6 +57,8 @@
   .padding-20 {
     padding: 20px;
     flex: 1;
+    display: flex;
+    flex-direction: column;
   }
   .right-table {
     height: 100% !important;

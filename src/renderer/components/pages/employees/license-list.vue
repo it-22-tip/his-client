@@ -1,26 +1,24 @@
 <template>
-  <layout-one>
-    <md-table
-      class="right-table"
-      v-model="model"
-      :md-sort.sync="currentSort"
-      :md-sort-order.sync="currentSortOrder"
-      :md-sort-fn="customSort"
-      md-fixed-header>
-      <md-table-row slot="md-table-row" slot-scope="{ item }">
-        <md-table-cell md-label="Id" md-sort-by="Id">{{ item.Id }}</md-table-cell>
-        <md-table-cell md-label="Nama" md-sort-by="Name">{{ item.Name }}</md-table-cell>
-        <md-table-cell md-label="No Registrasi" md-sort-by="LicenseType">{{ item.LicenseType }}<br/>{{ item.Number }}</md-table-cell>
-        <md-table-cell md-label="Berlaku Hingga" md-sort-by="DueDateDiffToday">{{ item.DueDateFormated }}</md-table-cell>
-        <md-table-cell>
-          <md-button @click="clickEdit(item.Id)" class="md-icon-button">
-            <md-icon>edit</md-icon>
-            <md-tooltip md-direction="top">Edit</md-tooltip>
-          </md-button>
-        </md-table-cell>
-      </md-table-row>
-    </md-table>
-  </layout-one>
+  <md-table
+    class="right-table"
+    v-model="model"
+    :md-sort.sync="currentSort"
+    :md-sort-order.sync="currentSortOrder"
+    :md-sort-fn="customSort"
+    md-fixed-header>
+    <md-table-row slot="md-table-row" slot-scope="{ item }">
+      <md-table-cell md-label="Id" md-sort-by="Id">{{ item.Id }}</md-table-cell>
+      <md-table-cell md-label="Nama" md-sort-by="Name">{{ item.Name }}</md-table-cell>
+      <md-table-cell md-label="No Registrasi" md-sort-by="LicenseType">{{ item.LicenseType }}<br/>{{ item.Number }}</md-table-cell>
+      <md-table-cell md-label="Berlaku Hingga" md-sort-by="DueDateDiffToday">{{ item.DueDateFormated }}</md-table-cell>
+      <md-table-cell>
+        <md-button @click="clickEdit(item.Id)" class="md-icon-button">
+          <md-icon>edit</md-icon>
+          <md-tooltip md-direction="top">Edit</md-tooltip>
+        </md-button>
+      </md-table-cell>
+    </md-table-row>
+  </md-table>
 </template>
 
 <script>

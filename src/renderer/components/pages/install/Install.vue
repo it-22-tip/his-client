@@ -1,8 +1,9 @@
 <template>
+<layout-one>
   <md-content class="db">
     <md-content class="db-main">
       <md-content class="db-main-tabs">
-        <md-tabs>
+        <md-tabs md-sync-route>
           <md-tab id="tab-database" md-label="Data Base" :to="{ name: 'page.install.database'}"/>
           <md-tab id="tab-table" md-label="Table" :to="{ name: 'page.install.table'}"/>
         </md-tabs>
@@ -11,8 +12,8 @@
         </md-content>
       </md-content>
     </md-content>
-    <log-viewer v-model="log"/>
   </md-content>
+</layout-one>
 </template>
 
 <style lang="scss" scoped>
@@ -49,6 +50,8 @@
 
 <script>
 export default {
-
+  components: {
+    'layout-one': () => import('@partials/layout-one')
+  }
 }
 </script>

@@ -55,14 +55,49 @@ const base = [
       login: true
     }
   },
+  // employees start
   {
     path: '/employees/employee',
-    name: 'employees.employee.list',
-    component: () => import('@pages/employees/employee-list'),
-    meta: {
-      title: 'Employees',
-      login: true
-    }
+    component: () => import('@pages/employees/employees-tab'),
+    children: [
+      {
+        path: '',
+        name: 'employees.employee.list',
+        component: () => import('@pages/employees/employee-list'),
+        meta: {
+          title: 'Employees',
+          login: true
+        }
+      },
+      {
+        path: '/employees/jobtitle',
+        name: 'employees.jobtitle.list',
+        component: () => import('@pages/employees/jobtitle-list'),
+        meta: {
+          title: 'Employee Job Titles',
+          login: true
+        }
+      },
+      {
+        path: '/employees/jobtitle/:jobtitleId',
+        name: 'employees.jobtitle.detail',
+        component: () => import('@pages/employees/jobtitle-detail'),
+        props: true,
+        meta: {
+          title: 'Employee Job Title Details',
+          login: true
+        }
+      },
+      {
+        path: '/employees/license',
+        name: 'employees.license.list',
+        component: () => import('@pages/employees/license-list'),
+        meta: {
+          title: 'Employee Licenses',
+          login: true
+        }
+      }
+    ]
   },
   {
     path: '/employees/employee/:employeeId',
@@ -74,34 +109,8 @@ const base = [
       login: true
     }
   },
-  {
-    path: '/employees/jobtitle',
-    name: 'employees.jobtitle.list',
-    component: () => import('@pages/employees/jobtitle-list'),
-    meta: {
-      title: 'Employee Job Titles',
-      login: true
-    }
-  },
-  {
-    path: '/employees/jobtitle/:jobtitleId',
-    name: 'employees.jobtitle.detail',
-    component: () => import('@pages/employees/jobtitle-detail'),
-    props: true,
-    meta: {
-      title: 'Employee Job Title Details',
-      login: true
-    }
-  },
-  {
-    path: '/employees/license',
-    name: 'employees.license.list',
-    component: () => import('@pages/employees/license-list'),
-    meta: {
-      title: 'Employee Licenses',
-      login: true
-    }
-  },
+  // employees end
+
   {
     path: '/documents/document',
     name: 'documents.document.list',

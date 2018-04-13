@@ -1,45 +1,25 @@
 <template>
-  <layout-one>
-    <!-- <md-content>
-      <md-field>
-        <label>Pencarian</label>
-        <md-input v-model="searchText"></md-input>
-      </md-field>
-      <md-list>
-        <md-subheader>Cari Berdasarkan</md-subheader>
-        <md-list-item>
-          <md-radio v-model="searchBy" value="Name" />
-          <span class="md-list-item-text">Nama</span>
-        </md-list-item>
-        <md-list-item>
-          <md-radio v-model="searchBy" value="JobTitle" />
-          <span class="md-list-item-text">Posisi</span>
-        </md-list-item>
-      </md-list>
-      <md-button @click="clickSearch">Cari</md-button>
-    </md-content> -->
-    <md-table
-      class="right-table"
-      v-model="model"
-      :md-sort.sync="currentSort"
-      :md-sort-order.sync="currentSortOrder"
-      :md-sort-fn="customSort"
-      md-fixed-header>
-      <md-table-row slot="md-table-row" slot-scope="{ item }">
-        <md-table-cell md-label="NIP" md-sort-by="Id">{{ item.EmployeeId }}</md-table-cell>
-        <md-table-cell md-label="Nama" md-sort-by="Name">{{ item.Name }}</md-table-cell>
-        <md-table-cell md-label="JK" md-sort-by="Gender">{{ item.Gender }}</md-table-cell>
-        <md-table-cell md-label="Posisi" md-sort-by="JobTitle">{{ item.JobTitle }}</md-table-cell>
-        <md-table-cell md-label="Umur" md-sort-by="Age">{{ item.Age }}</md-table-cell>
-        <md-table-cell>
-          <md-button @click="clickEdit(item.Id)" class="md-icon-button">
-            <md-icon>edit</md-icon>
-            <md-tooltip md-direction="top">Edit</md-tooltip>
-          </md-button>
-        </md-table-cell>
-      </md-table-row>
-    </md-table>
-  </layout-one>
+  <md-table
+    class="right-table"
+    v-model="model"
+    :md-sort.sync="currentSort"
+    :md-sort-order.sync="currentSortOrder"
+    :md-sort-fn="customSort"
+    md-fixed-header>
+    <md-table-row slot="md-table-row" slot-scope="{ item }">
+      <md-table-cell md-label="NIP" md-sort-by="Id">{{ item.EmployeeId }}</md-table-cell>
+      <md-table-cell md-label="Nama" md-sort-by="Name">{{ item.Name }}</md-table-cell>
+      <md-table-cell md-label="JK" md-sort-by="Gender">{{ item.Gender }}</md-table-cell>
+      <md-table-cell md-label="Posisi" md-sort-by="JobTitle">{{ item.JobTitle }}</md-table-cell>
+      <md-table-cell md-label="Umur" md-sort-by="Age">{{ item.Age }}</md-table-cell>
+      <md-table-cell>
+        <md-button @click="clickEdit(item.Id)" class="md-icon-button">
+          <md-icon>edit</md-icon>
+          <md-tooltip md-direction="top">Edit</md-tooltip>
+        </md-button>
+      </md-table-cell>
+    </md-table-row>
+  </md-table>
 </template>
 
 <script>
