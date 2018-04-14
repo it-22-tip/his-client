@@ -1,6 +1,21 @@
 <template>
   <layout-one>
-    [Heloo]
+    <div class="md-layout md-gutter">
+      <div class="md-layout-item">
+        <md-card>
+          <md-card-content>
+            <pie-chart></pie-chart>
+          </md-card-content>
+        </md-card>
+      </div>
+      <div class="md-layout-item">
+        <md-card>
+          <md-card-content>
+            <horizontal-bar-chart></horizontal-bar-chart>
+          </md-card-content>
+        </md-card>
+      </div>
+    </div>
   </layout-one>
 </template>
 
@@ -14,7 +29,9 @@
     ],
     components: {
       'base-button': () => import('@partials/base-button'),
-      'layout-one': () => import('@partials/layout-one')
+      'layout-one': () => import('@partials/layout-one'),
+      'pie-chart': () => import('@extras/charts/pie'),
+      'horizontal-bar-chart': () => import('@extras/charts/horizontal-bar')
     },
     methods: {
       logOut () {

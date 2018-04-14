@@ -1,9 +1,10 @@
 <template>
   <layout-one>
     <md-content>
-    <h1>Tester</h1>
-    <p>{{ model }}</p>
-    <button @click="clickMe">Click Me</button>
+    <h1>Edit</h1>
+    <md-field>
+      <md-input>
+    </md-field>
     </md-content>
   </layout-one>
 </template>
@@ -113,6 +114,7 @@
           //let model = data.slice()
           console.log(data)
           this.model = map(data, this.dataMapper)
+          this.model
         } catch (error) {
           console.log(error)
         } finally {

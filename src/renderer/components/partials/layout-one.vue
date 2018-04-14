@@ -8,7 +8,7 @@
     <md-content class="right">
       <md-content class="right-top">
         <md-toolbar class="md-dense" md-elevation="0">
-          [TOP]
+          Hospital Information System
         </md-toolbar>
       </md-content>
       <md-content class="right-bottom">
