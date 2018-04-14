@@ -1,9 +1,8 @@
 <template>
   <layout-one>
     <md-tabs>
-      <md-tab md-label="Personal"/>
-      <md-tab md-label="Alamat"/>
-      <md-tab md-label="Ok"/>
+      <md-tab md-label="Personal" :to="{ name: 'employees.employee.detail.personal' }" />
+      <!-- <md-tab md-label="Surat Izin" :to="{ name: 'employees.employee.detail.license' }" /> -->
     </md-tabs>
     <md-content class="ctc">
       <router-view></router-view>
@@ -13,6 +12,9 @@
 
 <script>
   export default {
+    props: [
+      'employeeId'
+    ],
     components: {
       'layout-one': () => import('@partials/layout-one')
     }

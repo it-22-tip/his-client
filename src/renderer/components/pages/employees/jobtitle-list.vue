@@ -9,12 +9,12 @@
       <md-table-cell md-label="No" md-sort-by="Id">{{ item.Id }}</md-table-cell>
       <md-table-cell md-label="Nama" md-sort-by="Name">{{ item.Name }}</md-table-cell>
       <md-table-cell md-label="Jumlah" md-sort-by="Count">{{ item.Count }}</md-table-cell>
-      <md-table-cell>
+      <!-- <md-table-cell>
         <md-button @click="clickEdit(item.Id)" class="md-icon-button">
           <md-icon>edit</md-icon>
           <md-tooltip md-direction="top">Edit</md-tooltip>
         </md-button>
-      </md-table-cell>
+      </md-table-cell> -->
     </md-table-row>
   </md-table>
 </template>

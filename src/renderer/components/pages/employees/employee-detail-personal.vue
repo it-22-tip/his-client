@@ -1,26 +1,8 @@
 <template>
-  <layout-one>
     <md-content>
-    <h1>Employee Detail</h1>
-    <md-field>
-      <label>Nama</label>
-      <md-input v-model="detail.Name"></md-input>
-    </md-field>
-    <md-field>
-      <label>RT</label>
-      <md-input v-model="detail.Rt"></md-input>
-    </md-field>
-    <md-field>
-      <label>RW</label>
-      <md-input v-model="detail.Rw"></md-input>
-    </md-field>
-    <md-field>
-      <label>Alamat</label>
-      <md-input v-model="detail.Address"></md-input>
-    </md-field>
-    <md-button @click="edit" class="md-primary md-raised">Click To Edit</md-button>
+    <h1>{{ detail.Name }}</h1>
+    <p class="mo" @click="editAddress">{{ detail.Address }}</p>
     </md-content>
-  </layout-one>
 </template>
 
 <script>
@@ -28,7 +10,7 @@
   import PrinceXML from '@/extras/PrinceXML'
   import PdfTk from '@/extras/PdfTk'
   import orm from '@/mixins/orm'
-  import { map } from 'lodash'
+  import { map, startCase, toLower } from 'lodash'
   import licenseListVue from './license-list.vue';
   export default {
     name: 'EmployeeDetail',
@@ -44,8 +26,6 @@
         connection: null,
         detail: {
           Name: '',
-          Rt: '',
-          Rw: '',
           Address: ''
         }
       }
@@ -57,8 +37,12 @@
       this.populate()
     },
     methods: {
-      edit () {
-
+      editAddress () {
+        try {
+          this.$router.push({ name: 'employees.edit.address', attributes: { employeeId: this.employeeId } })
+        } catch (error) {
+          console.log(error)
+        }
       },
       async clickMe () {
         let test
@@ -77,10 +61,21 @@
         } catch (error) {
           console.log({error:error})
         }
-        console.log(test)
+        // console.log(test)
       },
       dataMapper (item) {
-        console.log(item)
+        // console.log(item)
+
+        let Provinces =  item['Person.AddressHistories.AddressVillage.District.Regency.Province.Name'] ? ', ' + startCase(toLower(item['Person.AddressHistories.AddressVillage.District.Regency.Province.Name'])) : ''
+        let Regencies =  item['Person.AddressHistories.AddressVillage.District.Regency.Name'] ? ', ' + startCase(toLower(item['Person.AddressHistories.AddressVillage.District.Regency.Name'])) : ''
+        let Districts =  item['Person.AddressHistories.AddressVillage.District.Name'] ? ', ' + startCase(toLower(item['Person.AddressHistories.AddressVillage.District.Name'])) : ''
+        let Villages =  item['Person.AddressHistories.AddressVillage.Name'] ? ', ' + startCase(toLower(item['Person.AddressHistories.AddressVillage.Name'])) : ''
+        let Address = item['Person.AddressHistories.Address']
+        let Rt = item['Person.AddressHistories.Rt'] ? ', rt:' + item['Person.AddressHistories.Rt'] : ''
+        let Rw = item['Person.AddressHistories.Rw'] ? ', rw:' + item['Person.AddressHistories.Rw'] : ''
+
+        item.Address = Address + Rt + Rw + Villages + Districts + Regencies + Provinces
+
         return item
       },
       async closeConnection () {
@@ -94,7 +89,7 @@
         }
       },
       async transaction (transaction) {
-        const { Persons, Employees, JobTitles, Licenses, LicenseTypes, AddressHistories } = this.connection.models
+        const { Persons, Employees, JobTitles, Licenses, LicenseTypes, AddressHistories, Villages, Districts, Regencies, Provinces } = this.connection.models
         console.log(this.connection)
         let data = await Employees.findAll({
           transaction: transaction,
@@ -117,7 +112,29 @@
                   ]
                 },
                 {
-                  model: AddressHistories
+                  model: AddressHistories,
+                  include: [
+                    {
+                      model: Villages,
+                      as: 'AddressVillage',
+                      include: [
+                        {
+                          model: Districts,
+                          include: [
+                            {
+                              model: Regencies,
+                              include:
+                              [
+                                {
+                                  model: Provinces
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
                 }
               ]
             },
@@ -141,10 +158,10 @@
           let model
           model = map(data, this.dataMapper)
           let first = model.slice()
+          console.log(first)
           first = first[0]
           this.detail.Name = first['Person.Name']
-          this.detail.Rt = first['Person.Rt']
-          this.detail.Rw = first['Person.Rw']
+          this.detail.Address = first['Address']
           // first = first[0]
           // console.log({a:first['Person.Name']})
           // console.log(first)
@@ -159,4 +176,11 @@
     }
   }
 </script>
+
+<style lang="scss" scoped>
+.mo:hover {
+  text-decoration: underline;
+}
+</style>
+
 

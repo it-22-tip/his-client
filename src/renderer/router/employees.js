@@ -34,24 +34,43 @@ const Employees = [
   },
   {
     path: '/employees/employee/:employeeId',
-    name: 'employees.employee.detail',
     component: () => import('@pages/employees/employee-detail-tab'),
     props: true,
     meta: {
-      title: 'Employees Details',
+      title: 'Employees Details Personal',
       login: true
     },
     children: [
       {
         path: '',
-        name: 'employees.employee.list',
-        component: () => import('@pages/employees/employee-detail-person'),
+        name: 'employees.employee.detail.personal',
+        component: () => import('@pages/employees/employee-detail-personal'),
+        props: true,
         meta: {
-          title: 'Employees Details',
+          title: 'Employees Details Personal',
+          login: true
+        }
+      },
+      {
+        path: '/employees/employee/:employeeId/license',
+        name: 'employees.employee.detail.license',
+        component: () => import('@pages/employees/employee-detail-license'),
+        props: true,
+        meta: {
+          title: 'Employees Details License',
           login: true
         }
       }
     ]
+  },
+  {
+    path: '/employees/license/:employeeId/edit-address',
+    name: 'employees.edit.address',
+    component: () => import('@pages/employees/employee-edit-address'),
+    meta: {
+      title: 'Edit Address',
+      login: true
+    }
   }
 ]
 

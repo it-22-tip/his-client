@@ -1,14 +1,20 @@
 <template>
   <md-content class="wrapper">
-    <md-content class="left">
+<!--     <md-content class="left">
       <md-content class="md-primary left-content">
-        <left-menu/>
       </md-content>
-    </md-content>
+    </md-content> -->
     <md-content class="right">
       <md-content class="right-top">
-        <md-toolbar class="md-dense" md-elevation="0">
-          Hospital Information System
+        <md-toolbar class="md-dense md-primary" md-elevation="0">
+          <div class="md-toolbar-section-start">
+            <h1 class="md-title">Hospital Information System</h1>
+          </div>
+          <div class="md-toolbar-section-end">
+            <md-button :to="{ name: 'base.dashboard' }">Dasbor</md-button>
+            <md-button :to="{ name: 'employees.employee.list' }">HRD</md-button>
+            <md-button :to="{ name: 'base.login' }">Logout</md-button>
+          </div>
         </md-toolbar>
       </md-content>
       <md-content class="right-bottom">
@@ -28,7 +34,7 @@
     width: 100vw;
   }
   .left {
-    width: 250px;
+    width: 0px;
     height: 100vh;
     background: pink;
   }

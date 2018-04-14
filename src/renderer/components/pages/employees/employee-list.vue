@@ -55,7 +55,7 @@ export default {
   },
   methods: {
     clickEdit($event) {
-      this.$router.push({ name: 'employees.employee.detail', params: { employeeId: $event } })
+      this.$router.push({ name: 'employees.employee.detail.personal', params: { employeeId: $event } })
     },
     clickSearch () {
       const toLower = text => {
