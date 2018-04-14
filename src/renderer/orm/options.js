@@ -17,7 +17,7 @@ const defaultOptions = {
     handleDisconnects: true
   },
   retry: {
-    macth: [
+    match: [
       'SequelizeConnectionError',
       'SequelizeConnectionRefusedError',
       'SequelizeHostNotFoundError',

@@ -4,7 +4,7 @@
       <md-steppers md-linear :md-active-step.sync="active">
         <md-step id="Provinces" md-label="Provinsi" md-description="">
           <md-field>
-            <label>Provinsi</label>
+            <label for="province">Provinsi</label>
             <md-select v-model="province" name="province" id="province">
               <md-option v-for="item in Provinces" :value="item.Code" :key="item.Code">{{ item.Name }}</md-option>
             </md-select>
@@ -13,7 +13,7 @@
         </md-step>
         <md-step id="Regencies" md-label="Kota/Kabupaten" md-description="">
           <md-field>
-            <label>Kota/Kabupaten</label>
+            <label for="regency">Kota/Kabupaten</label>
             <md-select v-model="regency" name="regency" id="regency">
               <md-option v-for="item in Regencies" :value="item.Code" :key="item.Code">{{ item.Name }}</md-option>
             </md-select>
@@ -23,7 +23,7 @@
         </md-step>
         <md-step id="Districts" md-label="Kecamatan" md-description="">
           <md-field>
-            <label>Kecamatan</label>
+            <label for="district">Kecamatan</label>
             <md-select v-model="district" name="district" id="district">
               <md-option v-for="item in Districts" :value="item.Code" :key="item.Code">{{ item.Name }}</md-option>
             </md-select>
@@ -33,7 +33,7 @@
         </md-step>
         <md-step id="Villages" md-label="Kelurahan/Desa" md-description="">
           <md-field>
-            <label>Kelurahan/Desa</label>
+            <label for="village">Kelurahan/Desa</label>
             <md-select v-model="village" name="village" id="village">
               <md-option v-for="item in Villages" :value="item.Code" :key="item.Code">{{ item.Name }}</md-option>
             </md-select>
