@@ -9,6 +9,21 @@
               <md-option v-for="item in Provinces" :value="item.Code" :key="item.Code">{{ item.Name }}</md-option>
             </md-select>
           </md-field>
+
+          <md-field>
+            <label for="bookok">Book Ok</label>
+            <md-select v-model="selectedOk" name="bookok" id="bookok">
+              <md-option v-for="item in selectionOk" :value="item.title" :key="item.title">{{ item.title }}</md-option>
+            </md-select>
+          </md-field>
+
+          <!-- <md-field>
+            <label for="booknotok">Book Not Ok</label>
+            <md-select v-model="selectedNotOk" name="booknotok" id="booknotok">
+              <md-option v-for="item in selectionNotOk" :value="item.id" :key="item.id">{{ item.title }}</md-option>
+            </md-select>
+          </md-field> -->
+
           <md-button :disabled="province === null" class="md-primary md-raised" @click="active = 'Regencies'">Selanjutnya</md-button>
         </md-step>
         <md-step id="Regencies" md-label="Kota/Kabupaten" md-description="">
@@ -59,6 +74,8 @@
 </template>
 
 <script>
+import Vue from 'vue'
+import { default as Promise } from 'bluebird'
 import orm from '@/mixins/orm'
 export default {
   mixins: [
@@ -67,10 +84,9 @@ export default {
   components: {
     'layout-one': () => import('@partials/layout-one')
   },
-  data () {
-    return {
+  data: () => ({
       active: 'Provinces',
-      province: null,
+      province: '33',
       regency: null,
       district: null,
       village: null,
@@ -81,9 +97,14 @@ export default {
       Regencies: [],
       Districts: [],
       Villages: [],
-      connection: null
-    }
-  },
+      connection: null,
+
+      selectedNotOk: null,
+      selectionNotOk: [],
+      selectedOk: null,
+      selectionOk: []
+
+  }),
   watch: {
     active (val) {
       if (val === 'Provinces') {
@@ -103,8 +124,29 @@ export default {
       }
     }
   },
-  mounted () {
-    this.province = '33'
+  async mounted () {
+    // this.province = '33'
+      // just example
+
+      this.selectedNotOk = 'learning vue.js 2'
+      this.selectedOk = 'learning vue.js 2'
+      // this.selectionNotOk = []
+      this.selectionOk = [
+        {
+          id: 1,
+          title: 'learning vue.js 2'
+        },
+        {
+          id: 2,
+          title: 'vue.js 2 cookbook'
+        }
+      ]
+      /* Promise.resolve(booksArray).then(
+        selectionNotOk => {
+          this.selectionNotOk = selectionNotOk
+        }
+      ) */
+
     this.getData('Provinces')
   },
   methods: {
@@ -129,9 +171,24 @@ export default {
         database: 'his',
       }).connect()
       try {
-        let data = await this.connection.transaction(transaction)
-        console.log(data)
-        this[modelName] = data
+        let data = this.connection.transaction(transaction)
+        // console.log(data)
+        // console.log(data)
+        data.then((d) => {
+          console.log(d[0])
+          /* this[modelName] = [
+            {
+              Code: '33',
+              Name: 'Test'
+            },
+            {
+              Code: '34',
+              Name: 'Test 2'
+            }
+          ] */
+        })
+        // this[modelName] = data
+        // console.log(data[0])
         // console.log(this.connection.models)
         /* let data = await this.connection.transaction(transaction)
         let model = data.slice()

@@ -76,6 +76,8 @@
 
         item.Address = Address + Rt + Rw + Villages + Districts + Regencies + Provinces
 
+        console.log(item)
+
         return item
       },
       async closeConnection () {
