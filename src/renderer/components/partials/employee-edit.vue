@@ -1,5 +1,7 @@
 <template>
-  <layout-one>
+<md-dialog class="test" :md-active.sync="showed">
+      <md-dialog-title>Preferences</md-dialog-title>
+
     <md-content>
       <md-steppers md-linear :md-active-step.sync="active">
         <md-step id="Provinces" md-label="Provinsi" md-description="">
@@ -55,7 +57,13 @@
         </md-step>
       </md-steppers>
     </md-content>
-  </layout-one>
+
+
+      <md-dialog-actions>
+        <md-button class="md-primary" @click="showed = false">Close</md-button>
+        <md-button class="md-primary" @click="showed = false">Save</md-button>
+      </md-dialog-actions>
+    </md-dialog>
 </template>
 
 <script>
@@ -66,13 +74,7 @@ export default {
   mixins: [
     orm
   ],
-  props: {
-    employeeId: {
-      required: true,
-      type: Number,
-      defaultValue: null
-    }
-  },
+  props: ['showDialog'],
   components: {
     'layout-one': () => import('@partials/layout-one'),
     'select-province': () => import('@partials/select-province')
@@ -90,9 +92,13 @@ export default {
       Regencies: [],
       Districts: [],
       Villages: [],
-      connection: null
+      connection: null,
+      showed: false
   }),
   watch: {
+    showDialog (val) {
+      this.showed = val
+    },
     active (val) {
       if (val === 'Provinces') {
         this.getData(val)
@@ -193,4 +199,14 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.test {
+  height: 900px;
+  width: 700px;
+  position: relative;
+  z-index: 1;
+}
+</style>
+
 

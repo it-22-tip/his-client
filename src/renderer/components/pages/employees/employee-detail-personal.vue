@@ -1,7 +1,9 @@
 <template>
     <md-content>
     <h1>{{ detail.Name }}</h1>
-    <p class="mo" @click="editAddress">{{ detail.Address }}</p>
+    <p class="mo" @click="showDialog = !showDialog">{{ detail.Address }}</p>
+    <employee-edit :show-dialog="showDialog"/>
+
     </md-content>
 </template>
 
@@ -27,11 +29,13 @@
         detail: {
           Name: '',
           Address: ''
-        }
+        },
+        showDialog: false
       }
     },
     components: {
-      'layout-one': () => import('@partials/layout-one')
+      'layout-one': () => import('@partials/layout-one'),
+      'employee-edit': () => import('@partials/employee-edit')
     },
     mounted () {
       this.populate()
@@ -39,7 +43,14 @@
     methods: {
       editAddress () {
         try {
-          this.$router.push({ name: 'employees.edit.address', attributes: { employeeId: this.employeeId } })
+          this.$router.push(
+            {
+              name: 'employees.edit.address',
+              attributes: {
+                employeeId: this.employeeId
+              }
+            }
+          )
         } catch (error) {
           console.log(error)
         }
@@ -74,6 +85,8 @@
         let Rt = item['Person.AddressHistories.Rt'] ? ', rt:' + item['Person.AddressHistories.Rt'] : ''
         let Rw = item['Person.AddressHistories.Rw'] ? ', rw:' + item['Person.AddressHistories.Rw'] : ''
 
+        console.log(item)
+
         item.Address = Address + Rt + Rw + Villages + Districts + Regencies + Provinces
 
         console.log(item)
@@ -105,6 +118,10 @@
               model: Persons,
               attributes: ['Name', 'Gender', 'BirthDate'],
               include: [
+                {
+                  model: Regencies,
+                  as: 'BirthPlaceRegency'
+                },
                 {
                   model: Licenses,
                   include: [
