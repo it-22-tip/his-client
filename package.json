@@ -26,7 +26,8 @@
     "lint": "./node_modules/.bin/eslint --ext .js,.vue -f ./node_modules/eslint-friendly-formatter src",
     "pack": "npm run pack:main && npm run pack:renderer",
     "pack:main": "cross-env NODE_ENV=production webpack --progress --colors --config .electron-vue/webpack.main.config.js",
-    "pack:renderer": "cross-env NODE_ENV=production webpack --progress --colors --config .electron-vue/webpack.renderer.config.js"
+    "pack:renderer": "cross-env NODE_ENV=production webpack --progress --colors --config .electron-vue/webpack.renderer.config.js",
+    "rebuild": "electron-rebuild -f -w sqlite3,bcrypt"
   },
   "build": {
     "productName": "HIS Desktop Client",
@@ -151,6 +152,7 @@
     "electron-builder": "^20.8.1",
     "electron-debug": "^1.5.0",
     "electron-devtools-installer": "^2.2.3",
+    "electron-rebuild": "^1.7.3",
     "eslint": "^4.19.1",
     "eslint-config-standard": "^11.0.0",
     "eslint-friendly-formatter": "^4.0.1",

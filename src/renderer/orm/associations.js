@@ -23,7 +23,8 @@ const associations = function (models) {
     Persons,
     Provinces,
     Regencies,
-    Villages
+    Villages,
+    EducationHistories
   } = models
 
   Provinces.hasMany(Regencies, {foreignKey: 'ProvinceCode', sourceKey: 'Code'})
@@ -40,6 +41,13 @@ const associations = function (models) {
   Persons.belongsTo(Regencies, {foreignKey: 'BirthPlaceRegencyCode', targetKey: 'Code', as: 'BirthPlaceRegency'})
   Persons.hasMany(AddressHistories)
   AddressHistories.belongsTo(Persons)
+
+  Persons.hasMany(EducationHistories, {foreignKey: 'PersonId', sourceKey: 'Id'})
+  EducationHistories.belongsTo(Persons, {foreignKey: 'PersonId', targetKey: 'Id'})
+
+  Almamaters.hasMany(EducationHistories, {foreignKey: 'AlmamaterId', sourceKey: 'Id'})
+  EducationHistories.belongsTo(Almamaters, {foreignKey: 'AlmamaterId', targetKey: 'Id'})
+
   Villages.hasMany(AddressHistories, {foreignKey: 'VillageCode', sourceKey: 'Code', as: 'VillageAddress'})
   AddressHistories.belongsTo(Villages, {foreignKey: 'VillageCode', targetKey: 'Code', as: 'AddressVillage'})
   JobTitles.hasMany(Employees, {foreignKey: 'JobTitleId', sourceKey: 'Id'})

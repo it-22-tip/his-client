@@ -1,9 +1,8 @@
 <template>
     <md-content>
     <h1>{{ detail.Name }}</h1>
-    <p class="mo" @click="showDialog = !showDialog">{{ detail.Address }}</p>
-    <employee-edit :show-dialog="showDialog"/>
-
+    <h2>{{ detail.JobTitle }}</h2>
+    <p class="mo" @click="editAddress">{{ detail.Address }}</p>
     </md-content>
 </template>
 
@@ -34,8 +33,7 @@
       }
     },
     components: {
-      'layout-one': () => import('@partials/layout-one'),
-      'employee-edit': () => import('@partials/employee-edit')
+      'layout-one': () => import('@partials/layout-one')
     },
     mounted () {
       this.populate()
@@ -43,11 +41,12 @@
     methods: {
       editAddress () {
         try {
+          console.log(this.detail.PersonId)
           this.$router.push(
             {
-              name: 'employees.edit.address',
+              name: 'persons.edit.address',
               attributes: {
-                employeeId: this.employeeId
+                personId: this.detail.PersonId
               }
             }
           )
@@ -85,11 +84,11 @@
         let Rt = item['Person.AddressHistories.Rt'] ? ', rt:' + item['Person.AddressHistories.Rt'] : ''
         let Rw = item['Person.AddressHistories.Rw'] ? ', rw:' + item['Person.AddressHistories.Rw'] : ''
 
-        console.log(item)
+        // console.log(item)
 
         item.Address = Address + Rt + Rw + Villages + Districts + Regencies + Provinces
 
-        console.log(item)
+        // console.log(item)
 
         return item
       },
@@ -104,8 +103,8 @@
         }
       },
       async transaction (transaction) {
-        const { Persons, Employees, JobTitles, Licenses, LicenseTypes, AddressHistories, Villages, Districts, Regencies, Provinces } = this.connection.models
-        console.log(this.connection)
+        const { Almamaters, EducationHistories, Persons, Employees, JobTitles, Licenses, LicenseTypes, AddressHistories, Villages, Districts, Regencies, Provinces } = this.connection.models
+        // console.log(this.connection)
         let data = await Employees.findAll({
           transaction: transaction,
           raw: true,
@@ -116,8 +115,21 @@
           include: [
             {
               model: Persons,
-              attributes: ['Name', 'Gender', 'BirthDate'],
+              attributes: ['Id', 'Name', 'Gender', 'BirthDate'],
               include: [
+                {
+                  model: EducationHistories,
+                  include: [
+                    {
+                      model: Almamaters,
+                      include: [
+                        {
+                          model: Regencies
+                        }
+                      ]
+                    }
+                  ]
+                },
                 {
                   model: Regencies,
                   as: 'BirthPlaceRegency'
@@ -181,6 +193,8 @@
           first = first[0]
           this.detail.Name = first['Person.Name']
           this.detail.Address = first['Address']
+          this.detail.PersonId = first['Person.Id']
+          this.detail.JobTitle = first['JobTitle.Name']
           // first = first[0]
           // console.log({a:first['Person.Name']})
           // console.log(first)

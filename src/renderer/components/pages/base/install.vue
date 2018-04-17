@@ -182,6 +182,7 @@
               type: connection.QueryTypes.RAW,
               raw: true
             }
+            if (connection.connectionManager.dialectName === 'sqlite') return null
             for (let query of this.queries) {
               try {
                 this.message = 'Running Preinstall: ' + query.title

@@ -7,7 +7,7 @@ const attributes = {
     autoIncrement: true
   },
   PersonId: {
-    type: DataTypes.STRING()
+    type: DataTypes.INTEGER()
   },
   AlmamaterId: {
     type: DataTypes.INTEGER()

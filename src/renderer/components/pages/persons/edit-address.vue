@@ -1,7 +1,8 @@
 <template>
   <layout-one>
     <md-content>
-      <md-steppers md-linear :md-active-step.sync="active">
+      {{ personId }}
+      <!-- <md-steppers md-linear :md-active-step.sync="active">
         <md-step id="Provinces" md-label="Provinsi" md-description="">
           <md-field>
             <label for="province">Provinsi</label>
@@ -53,7 +54,7 @@
           <md-button class="md-primary md-raised" @click="active = 'Districts'">Kembali</md-button>
           <md-button :disabled="village === null" class="md-primary md-raised" @click="done">Simpan</md-button>
         </md-step>
-      </md-steppers>
+      </md-steppers> -->
     </md-content>
   </layout-one>
 </template>
@@ -67,10 +68,9 @@ export default {
     orm
   ],
   props: {
-    employeeId: {
+    personId: {
       required: true,
-      type: Number,
-      defaultValue: null
+      type: Number
     }
   },
   components: {
@@ -120,6 +120,7 @@ export default {
   async mounted () {
     // this.province = '33'
       // just example
+    this.getPersons()
     this.getData('Provinces')
   },
   methods: {
@@ -128,14 +129,16 @@ export default {
     },
     async getPersons() {
       const transaction = async transaction => {
-        const Model = this.connection.models[modelName]
+        const { Persons } = this.connection.models
         const opt = {
           transaction: transaction,
           raw: true,
-          attributes: ['Name', 'Code']
+          attributes: ['Name', 'Code'],
+          where: {
+            id: this.personId
+          }
         }
-        if (where) opt.where = where
-        let data = await Model.findAll(opt)
+        let data = await Persons.findAll(opt)
         return data
       }
       this.connection = (new this.$orm).withOption({
@@ -145,13 +148,8 @@ export default {
       }).connect()
       try {
         let data = await this.connection.transaction(transaction)
-        let model = data.slice()
-        this[modelName] = model
-        this.$nextTick().then(
-          () => {
-            this.province = 33
-          }
-        )
+        console.log(data)
+
       } catch (error) {
         console.log({error})
       } finally {

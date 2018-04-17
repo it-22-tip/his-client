@@ -74,7 +74,7 @@ export default {
   mixins: [
     orm
   ],
-  props: ['showDialog'],
+  props: ['employeeId'],
   components: {
     'layout-one': () => import('@partials/layout-one'),
     'select-province': () => import('@partials/select-province')
@@ -126,6 +126,7 @@ export default {
   async mounted () {
     // this.province = '33'
       // just example
+    this.getPerson()
     this.getData('Provinces')
   },
   methods: {
@@ -134,14 +135,17 @@ export default {
     },
     async getPersons() {
       const transaction = async transaction => {
-        const Model = this.connection.models[modelName]
+        const { Persons } = this.connection.models
         const opt = {
           transaction: transaction,
           raw: true,
           attributes: ['Name', 'Code']
         }
-        if (where) opt.where = where
-        let data = await Model.findAll(opt)
+        if (where) opt.where = {
+          id: this.employeeId
+        }
+        let data = await Persons.findOne(opt)
+        // console.log({hallo:data})
         return data
       }
       this.connection = (new this.$orm).withOption({
@@ -151,13 +155,7 @@ export default {
       }).connect()
       try {
         let data = await this.connection.transaction(transaction)
-        let model = data.slice()
-        this[modelName] = model
-        this.$nextTick().then(
-          () => {
-            this.province = 33
-          }
-        )
+        console.log({hello: data})
       } catch (error) {
         console.log({error})
       } finally {

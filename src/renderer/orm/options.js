@@ -1,6 +1,10 @@
+import path from 'path'
+import os from 'os'
+const storage = path.join(os.homedir(), '/.hisdata/db.sqlite')
 const defaultOptions = {
-  dialect: 'mysql',
+  dialect: 'sqlite',
   operatorsAliases: false,
+  storage: storage,
   define: {
     charset: 'utf8mb4',
     dialectOptions: {

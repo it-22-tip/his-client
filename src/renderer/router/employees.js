@@ -62,16 +62,6 @@ const Employees = [
         }
       }
     ]
-  },
-  {
-    path: '/employees/employee/:employeeId/edit-address',
-    name: 'employees.edit.address',
-    component: () => import('@pages/employees/employee-edit-address'),
-    props: true,
-    meta: {
-      title: 'Edit Address',
-      login: true
-    }
   }
 ]
 
