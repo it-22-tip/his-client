@@ -33,8 +33,6 @@ const associations = function (models) {
   Districts.belongsTo(Regencies, {foreignKey: 'RegencyCode', targetKey: 'Code'})
   Districts.hasMany(Villages, {foreignKey: 'DistrictCode', sourceKey: 'Code'})
   Villages.belongsTo(Districts, {foreignKey: 'DistrictCode', targetKey: 'Code'})
-  Persons.belongsTo(Almamaters)
-  Almamaters.hasMany(Persons)
   Regencies.hasMany(Almamaters, {foreignKey: 'RegencyCode', sourceKey: 'Code'})
   Almamaters.belongsTo(Regencies, {foreignKey: 'RegencyCode', targetKey: 'Code'})
   Regencies.hasMany(Persons, {foreignKey: 'BirthPlaceRegencyCode', sourceKey: 'Code'})

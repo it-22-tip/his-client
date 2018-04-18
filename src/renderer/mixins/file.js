@@ -2,11 +2,7 @@ import { stat as fsStat, readFile as fsReadFile, readdir as fsreaddir } from 'fs
 import { default as Promise } from 'bluebird'
 import yaml from 'js-yaml'
 import XLSX from 'xlsx'
-import path from 'path'
-import os from 'os'
 
-const homePath = os.homedir()
-const appDataPath = path.join(homePath, '/.hisdata')
 const statAsync = Promise.promisify(fsStat)
 const readFileAsync = Promise.promisify(fsReadFile)
 const readDirAsync = Promise.promisify(fsreaddir)
@@ -26,12 +22,7 @@ function readAs (file, as) {
 }
 
 export default {
-  created () {
-    this.$file = {
-      homePath: homePath,
-      appDataPath: appDataPath
-    }
-  },
+  created () {},
   methods: {
     stat (args) {
       return statAsync(args)

@@ -27,6 +27,7 @@ import orm from '@/mixins/orm'
 import file from '@/mixins/file'
 import { map } from 'lodash'
 import moment from 'moment'
+import { toDateDiffToday, toMoment, employeeId } from '@/mixins/databaseTo'
 export default {
   mixins: [
     orm,
@@ -127,40 +128,14 @@ export default {
       delete item[from]
       return item
     },
-    toMoment (item, key) {
-      if (item[key] !== null) {
-        item[key] = moment(item[key])
-      } else {
-        item[key] = null
-      }
-      return item
-    },
-    toDateDiffToday (item, key, by = 'years') {
-      if(item[key] === null) {
-        item[key] = 0
-      } else {
-        item[key] = Math.abs(parseInt(item[key].diff(moment(), by)))
-      }
-      return item
-    },
-    employeeId (item) {
-      const pad = function (num, size) {
-        let string = num + ""
-        while (string.length < size) string = '0' + string
-        return string
-      }
-      item['EmployeeId'] = item['Age'].format('YYYYMMDD') + '' + pad(item['Id'], 5)
-
-      return item
-    },
     dataMapper (item) {
       item = this.reAssign(item, 'Person.Name', 'Name')
       item = this.reAssign(item, 'Person.Gender', 'Gender')
       item = this.reAssign(item, 'JobTitle.Name', 'JobTitle')
       item = this.reAssign(item, 'Person.BirthDate', 'Age')
-      item = this.toMoment(item, 'Age')
-      item = this.employeeId(item)
-      item = this.toDateDiffToday(item, 'Age')
+      item = toMoment(item, 'Age')
+      item = employeeId(item)
+      item = toDateDiffToday(item, 'Age')
       return item
     },
     async populate () {

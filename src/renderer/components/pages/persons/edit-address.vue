@@ -1,8 +1,7 @@
 <template>
   <layout-one>
     <md-content>
-      {{ personId }}
-      <!-- <md-steppers md-linear :md-active-step.sync="active">
+      <md-steppers md-linear :md-active-step.sync="active">
         <md-step id="Provinces" md-label="Provinsi" md-description="">
           <md-field>
             <label for="province">Provinsi</label>
@@ -54,7 +53,7 @@
           <md-button class="md-primary md-raised" @click="active = 'Districts'">Kembali</md-button>
           <md-button :disabled="village === null" class="md-primary md-raised" @click="done">Simpan</md-button>
         </md-step>
-      </md-steppers> -->
+      </md-steppers>
     </md-content>
   </layout-one>
 </template>
@@ -133,10 +132,15 @@ export default {
         const opt = {
           transaction: transaction,
           raw: true,
-          attributes: ['Name', 'Code'],
+          attribute: ['Name', 'AddressHistories.Address'],
           where: {
             id: this.personId
-          }
+          },
+          include: [
+            {
+              all: true
+            }
+          ]
         }
         let data = await Persons.findAll(opt)
         return data

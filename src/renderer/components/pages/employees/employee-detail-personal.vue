@@ -45,7 +45,7 @@
           this.$router.push(
             {
               name: 'persons.edit.address',
-              attributes: {
+              params: {
                 personId: this.detail.PersonId
               }
             }

@@ -1,40 +1,39 @@
 <template>
-  <div class="tree-container">
-    <div :class="classes" onselectstart="return false">
-      <ul :class="containerClasses">
-        <tree-view-item
-          v-for="(child, index) in itemData"
-          :key="index"
-          :item-data="child"
-          :whole-row="wholeRow"
-          :show-checkbox="showCheckbox"
-          :height="sizeHeight"
-          :parent-item="itemData"
-          :draggable="draggable"
-          :on-item-click="onItemClick"
-          :on-item-toggle="onItemToggle"
-          :on-item-drag-start="onItemDragStart"
-          :on-item-drag-end="onItemDragEnd"
-          :on-item-drop="onItemDrop"
-          :item-class="index === itemData.length-1 ? 'tree-last' : ''">
-        </tree-view-item>
-      </ul>
-    </div>
+  <div :class="classes" role="tree" onselectstart="return false">
+    <ul :class="containerClasses" role="group">
+      <tree-view-item v-for="(child, index) in treeData"
+        :key="index"
+        :tree-data="child"
+        :text-field-name="textFieldName"
+        :value-field-name="valueFieldName"
+        :item-events="itemEvents"
+        :whole-row="wholeRow"
+        :show-checkbox="showCheckbox"
+        :height="sizeHight"
+        :parent-item="treeData"
+        :draggable="draggable"
+        :on-item-click="onItemClick"
+        :on-item-toggle="onItemToggle"
+        :on-item-drag-start="onItemDragStart"
+        :on-item-drag-end="onItemDragEnd"
+        :on-item-drop="onItemDrop"
+        :tree-class="index === treeData.length-1 ? 'tree-last' : ''">
+      </tree-view-item>
+    </ul>
   </div>
 </template>
 <script>
+  import TreeViewItem from './tree-view-item.vue'
+
   let ITEM_ID = 0
   let ITEM_HEIGHT_SMALL = 18
   let ITEM_HEIGHT_DEFAULT = 24
   let ITEM_HEIGHT_LARGE = 32
 
   export default {
-    name: 'tree-view',
-    components: {
-      'tree-view-item': () => import('./tree-view-item')
-    },
+    name: 'TreeView',
     props: {
-      itemData: {
+      treeData: {
         type: Array
       },
       size: {
@@ -50,6 +49,10 @@
         default: false
       },
       noDots: {
+        type: Boolean,
+        default: false
+      },
+      collapse: {
         type: Boolean,
         default: false
       },
@@ -69,6 +72,12 @@
         type: String,
         default: 'value'
       },
+      itemEvents: {
+        type: Object,
+        default: function () {
+          return {}
+        }
+      },
       async: {
         type: Function
       },
@@ -77,9 +86,10 @@
         default: 'Loading...'
       },
       draggable: {
-        type: Boolean, default: false
+        type: Boolean,
+        default: false
       },
-      itemClass: String
+      treeClass: String
     },
     data () {
       return {
@@ -94,7 +104,7 @@
           {'tree-default': !this.size},
           {[`tree-default-${this.size}`]: !!this.size},
           {'tree-checkbox-selection': !!this.showCheckbox},
-          {[this.itemClass]: !!this.itemClass}
+          {[this.treeClass]: !!this.treeClass}
         ]
       },
       containerClasses () {
@@ -105,7 +115,7 @@
           {'tree-no-dots': !!this.noDots}
         ]
       },
-      sizeHeight () {
+      sizeHight () {
         switch (this.size) {
           case 'large':
             return ITEM_HEIGHT_LARGE
@@ -127,26 +137,46 @@
         }
       },
       initializeDataItem (item) {
-        function Model (item, textFieldName, valueFieldName) {
+        function Model (item, textFieldName, valueFieldName, collapse) {
           this.id = item.id || ITEM_ID++
           this[textFieldName] = item[textFieldName] || ''
           this[valueFieldName] = item[valueFieldName] || item[textFieldName]
           this.icon = item.icon || ''
-          this.opened = item.opened || false
+          this.opened = item.opened || collapse
           this.selected = item.selected || false
           this.disabled = item.disabled || false
           this.loading = item.loading || false
           this.children = item.children || []
         }
-        let node = new Model(item, this.textFieldName, this.valueFieldName)
+        let treeNode = Object.assign(new Model(item, this.textFieldName, this.valueFieldName, this.collapse), item)
         let self = this
-        node.addChild = function (data) {
+        treeNode.addBefore = function (data, selectedTreeNode) {
           let newItem = self.initializeDataItem(data)
-          console.log(newItem)
-          node.children.push(newItem)
+          let index = selectedTreeNode.parentItem.indexOf(treeNode)
+          selectedTreeNode.parentItem.splice(index, 0, newItem)
         }
-        console.log(node)
-        return node
+        treeNode.addAfter = function (data, selectedTreeNode) {
+          let newItem = self.initializeDataItem(data)
+          let index = selectedTreeNode.parentItem.indexOf(treeNode) + 1
+          selectedTreeNode.parentItem.splice(index, 0, newItem)
+        }
+        treeNode.addChild = function (data) {
+          let newItem = self.initializeDataItem(data)
+          treeNode.children.push(newItem)
+        }
+        treeNode.openChildren = function () {
+          treeNode.opened = true
+          self.handleRecursiontreeNodeChildren(treeNode, treeNode => {
+            treeNode.opened = true
+          })
+        }
+        treeNode.closeChildren = function () {
+          treeNode.opened = false
+          self.handleRecursiontreeNodeChildren(treeNode, treeNode => {
+            treeNode.opened = false
+          })
+        }
+        return treeNode
       },
       initializeLoading () {
         var item = {}
@@ -155,50 +185,57 @@
         item.loading = true
         return this.initializeDataItem(item)
       },
-      handleRecursionNodeChilds (node, func) {
-        if (node.$children && node.$children.length > 0) {
-          for (let childNode of node.$children) {
-            if (!childNode.disabled) {
-              func(childNode)
-              this.handleRecursionNodeChilds(childNode, func)
+      handleRecursiontreeNodeChilds (treeNode, func) {
+        if (treeNode.$children && treeNode.$children.length > 0) {
+          for (let childtreeNode of treeNode.$children) {
+            if (!childtreeNode.disabled) {
+              func(childtreeNode)
+              this.handleRecursiontreeNodeChilds(childtreeNode, func)
             }
           }
         }
       },
-      onItemClick (oriNode, oriItem) {
+      handleRecursiontreeNodeChildren (treeNode, func) {
+        if (treeNode.children && treeNode.children.length > 0) {
+          for (let childtreeNode of treeNode.children) {
+            func(childtreeNode)
+            this.handleRecursiontreeNodeChildren(childtreeNode, func)
+          }
+        }
+      },
+      onItemClick (oriTreeNode, oriItem) {
         if (this.multiple) {
           if (this.allowBatch) {
-            this.handleBatchSelectItems(oriNode, oriItem)
+            this.handleBatchSelectItems(oriTreeNode, oriItem)
           }
         } else {
-          this.handleSingleSelectItems(oriNode, oriItem)
+          this.handleSingleSelectItems(oriTreeNode, oriItem)
         }
-        console.log('click')
-        this.$emit('item-click', oriNode, oriItem)
+        this.$emit('item-click', oriTreeNode, oriItem)
       },
-      handleSingleSelectItems (oriNode, oriItem) {
-        this.handleRecursionNodeChilds(this, node => {
-          node.model.selected = false
+      handleSingleSelectItems (oriTreeNode, oriItem) {
+        this.handleRecursiontreeNodeChilds(this, treeNode => {
+          treeNode.model.selected = false
         })
-        oriNode.model.selected = true
+        oriTreeNode.model.selected = true
       },
-      handleBatchSelectItems (oriNode, oriItem) {
-        this.handleRecursionNodeChilds(oriNode, node => {
-          if (node.model.disabled) return
-          node.model.selected = oriNode.model.selected
+      handleBatchSelectItems (oriTreeNode, oriItem) {
+        this.handleRecursiontreeNodeChilds(oriTreeNode, treeNode => {
+          if (treeNode.model.disabled) return
+          treeNode.model.selected = oriTreeNode.model.selected
         })
       },
-      onItemToggle (oriNode, oriItem) {
-        if (oriNode.model.opened) {
-          this.handleAsyncLoad(oriNode.model.children, oriNode, oriItem)
+      onItemToggle (oriTreeNode, oriItem) {
+        if (oriTreeNode.model.opened) {
+          this.handleAsyncLoad(oriTreeNode.model.children, oriTreeNode, oriItem)
         }
-        this.$emit('item-toggle', oriNode, oriItem)
+        this.$emit('item-toggle', oriTreeNode, oriItem)
       },
-      handleAsyncLoad (oriParent, oriNode, oriItem) {
+      handleAsyncLoad (oriParent, oriTreeNode, oriItem) {
         var self = this
         if (this.async) {
           if (oriParent[0].loading) {
-            this.async(oriNode, (data) => {
+            this.async(oriTreeNode, (data) => {
               if (data.length > 0) {
                 for (let i in data) {
                   data[i].children = [self.initializeLoading()]
@@ -206,35 +243,29 @@
                   self.$set(oriParent, i, dataItem)
                 }
               } else {
-                oriNode.model.children = []
+                oriTreeNode.model.children = []
               }
             })
           }
         }
       },
-      onItemDragStart (e, oriNode, oriItem) {
-        if (!this.draggable) {
-          return false
-        }
+      onItemDragStart (e, oriTreeNode, oriItem) {
+        if (!this.draggable) return false
         e.dataTransfer.effectAllowed = 'move'
         e.dataTransfer.setData('text', null)
         this.draggedElm = e.target
         this.draggedItem = {
           item: oriItem,
-          parentItem: oriNode.parentItem,
-          index: oriNode.parentItem.indexOf(oriItem)
+          parentItem: oriTreeNode.parentItem,
+          index: oriTreeNode.parentItem.indexOf(oriItem)
         }
       },
-      onItemDragEnd (e, oriNode, oriItem) {
-        if (!this.draggable) {
-          return false
-        }
+      onItemDragEnd (e, oriTreeNode, oriItem) {
+        if (!this.draggable) return false
         this.draggedItem = null
       },
-      onItemDrop (e, oriNode, oriItem) {
-        if (!this.draggable) {
-          return false
-        }
+      onItemDrop (e, oriTreeNode, oriItem) {
+        if (!this.draggable) return false
         if (this.draggedElm === e.target || this.draggedElm.contains(e.target)) {
           return
         }
@@ -245,7 +276,7 @@
             return
           }
           oriItem.children = oriItem.children ? oriItem.children.concat(this.draggedItem.item) : [this.draggedItem.item]
-          var draggedItem = this.draggedItem
+          let draggedItem = this.draggedItem
           this.$nextTick(() => {
             draggedItem.parentItem.splice(draggedItem.index, 1)
           })
@@ -253,49 +284,20 @@
       }
     },
     created () {
-      // console.log(this.itemData)
-      this.initializeData(this.itemData)
+      this.initializeData(this.treeData)
     },
     mounted () {
       if (this.async) {
-        this.$set(this.itemData, 0, this.initializeLoading())
-        this.handleAsyncLoad(this.itemData, this)
+        this.$set(this.treeData, 0, this.initializeLoading())
+        this.handleAsyncLoad(this.treeData, this)
       }
+    },
+    components: {
+      TreeViewItem
     }
   }
 </script>
+
 <style lang="scss" scoped>
-@import "tree-view";
-/* .tree::-webkit-scrollbar {
-    height: 8px;
-    width: 8px;
-}
-
-.tree::-webkit-scrollbar-track {
-    background: #f1f1f1;
-}
-
-.tree::-webkit-scrollbar-thumb {
-    background: #ff0000;
-}
-
-.tree::-webkit-scrollbar-thumb:hover {
-    background: #555;
-} */
-
-.tree {
-  flex: 1;
-  display: flex;
-  overflow-y: hidden;
-  overflow-x: scroll;
-  min-height: 0;
-}
-.tree-container-ul.tree-children {
-  display: block;
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
-  list-style-image: none;
-}
+@import "./scss/all";
 </style>
-

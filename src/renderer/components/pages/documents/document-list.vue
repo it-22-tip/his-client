@@ -4,7 +4,7 @@
       <md-content class="leftist">
         <div class="parentbox">
           <div class="innerbox">
-            <tree-view :item-data="asyncData" @item-click="treeItemClick" ref="tree"></tree-view>
+            <tree-view :tree-data="asyncData" @item-click="treeItemClick" ref="tree"></tree-view>
           </div>
         </div>
       </md-content>
@@ -36,6 +36,7 @@ import file from '@/mixins/file'
 import { map } from 'lodash'
 import moment from 'moment'
 import path from 'path'
+import { appDataPath } from '@/mixins/constants'
 export default {
   mixins: [
     orm,
@@ -72,11 +73,14 @@ export default {
     async populateTree () {
       let tree = []
       try {
-        tree = await this.readJSON(path.join(this.$file.appDataPath, '/example/doctree.json'))
+        tree = await this.readJSON(path.join(appDataPath, '/example/doctree.json'))
+
       } catch (error) {
         console.log(error)
       }
-      this.asyncData = tree
+      this.$nextTick().then(() => {
+        this.asyncData = tree
+      })
     },
     treeItemClick () {
 
