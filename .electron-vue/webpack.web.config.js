@@ -4,7 +4,6 @@ const path = require('path')
 const webpack = require('webpack')
 const babelMinifyWebpackPlugin = require('babel-minify-webpack-plugin')
 const copyWebpackPlugin = require('copy-webpack-plugin')
-const extractTextWebpackPlugin = require('extract-text-webpack-plugin')
 const miniCssExtractPlugin = require('mini-css-extract-plugin')
 const htmlWebpackPlugin = require('html-webpack-plugin')
 
