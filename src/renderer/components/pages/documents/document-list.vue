@@ -4,7 +4,7 @@
       <md-content class="leftist">
         <div class="parentbox">
           <div class="innerbox">
-            <tree-view :tree-data="asyncData" @item-click="treeItemClick" ref="tree"></tree-view>
+            <tree-view :data="initialData" :async="loadData" @item-click="treeItemClick" ref="tree"></tree-view>
           </div>
         </div>
       </md-content>
@@ -57,6 +57,7 @@ export default {
       searchText: '',
       searchBy: 'Name',
       asyncData: [],
+      initialData: []
     }
   },
   mounted () {
@@ -67,6 +68,13 @@ export default {
     await this.closeConnection()
   },
   methods: {
+    loadData (oriNode, resolve) {
+      this.readJSON(path.join(appDataPath, '/example/doctree.json')).then(
+        data => {
+          resolve(data)
+        }
+      )
+    },
     async  asyncTree () {
 
     },
@@ -78,9 +86,7 @@ export default {
       } catch (error) {
         console.log(error)
       }
-      this.$nextTick().then(() => {
-        this.asyncData = tree
-      })
+      this.asyncData = tree
     },
     treeItemClick () {
 

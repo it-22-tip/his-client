@@ -43,6 +43,10 @@ let webConfig = {
         use: [miniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
       },
       {
+        test: /\.less$/,
+        use: [miniCssExtractPlugin.loader, 'css-loader', 'less-loader'],
+      },
+      {
         test: /\.html$/,
         use: 'vue-html-loader'
       },

@@ -49,6 +49,10 @@ let rendererConfig = {
         use: [miniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
       },
       {
+        test: /\.less$/,
+        use: [miniCssExtractPlugin.loader, 'css-loader', 'less-loader'],
+      },
+      {
         test: /\.html$/,
         use: 'vue-html-loader'
       },
@@ -99,6 +103,17 @@ let rendererConfig = {
                 },
                 {
                   loader: 'sass-loader'
+                }
+              ],
+              less: [
+                {
+                  loader: 'vue-style-loader'
+                },
+                {
+                  loader: 'css-loader'
+                },
+                {
+                  loader: 'less-loader'
                 }
               ]
             }
