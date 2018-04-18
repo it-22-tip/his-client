@@ -28,6 +28,7 @@
     }
   },
   "plugins": [
+    ["transform-promise-to-bluebird"],
     ["transform-runtime"],
     ["syntax-dynamic-import"]
   ]

@@ -61,7 +61,7 @@ export default {
       let s
       if (this.reset.length < 1) {
         this.reset = this.model.splice()
-        console.log(this.reset)
+        // console.log(this.reset)
       } else {
         this.model = this.reset
       }
@@ -70,7 +70,7 @@ export default {
       } catch (error) {
         console.log(error)
       }
-      console.log(this.reset)
+      // console.log(this.reset)
       this.model = s
     },
     customSort (value) {
@@ -119,7 +119,7 @@ export default {
           }
         ]
       })
-      console.log(data)
+      // console.log(data)
       return data
     },
     reAssign (item, from, to) {
@@ -169,13 +169,13 @@ export default {
           return o.Id
         })
         test = map(test, (i, k) => {
-          console.log(i)
+          // console.log(i)
           let Id = i[0].Id
           let Name = i[0].Name
           let Count = i.length
           return { Id, Name, Count }
         })
-        console.log(test)
+        // console.log(test)
         let model = test
         this.model = map(model, this.dataMapper)
       } catch (error) {

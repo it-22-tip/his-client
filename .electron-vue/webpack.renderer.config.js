@@ -161,9 +161,6 @@ let rendererConfig = {
     __filename: process.env.NODE_ENV !== 'production'
   },
   plugins: [
-    new webpack.ProvidePlugin({
-      'Handsontable': 'handsontable-pro/dist/handsontable.full.js'
-    }),
     new miniCssExtractPlugin({
       filename: 'minify.css'
     }),

@@ -49,7 +49,12 @@ export default {
     }
   },
   mounted () {
-    this.populate()
+    this.populate().then(
+      data => {
+        let model = data.slice()
+        this.model = map(model, this.dataMapper)
+      }
+    )
   },
   async beforeDestroy () {
     await this.closeConnection()
@@ -139,20 +144,20 @@ export default {
       return item
     },
     async populate () {
+      let data
       this.connection = (new this.$orm).withOption({
         username: 'his',
         password: 'his',
         database: 'his',
       }).connect()
       try {
-        let data = await this.connection.transaction(this.transaction)
-        let model = data.slice()
-        this.model = map(model, this.dataMapper)
+        data = await this.connection.transaction(this.transaction)
       } catch (error) {
         console.log(error)
       } finally {
         await this.closeConnection()
       }
+      return data
     }
   }
 }
