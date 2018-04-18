@@ -52,7 +52,16 @@ export default {
     this.populate().then(
       data => {
         let model = data.slice()
-        this.model = map(model, this.dataMapper)
+        model = map(model, this.dataMapper)
+        console.log(model)
+        this.$nextTick().then(
+          () => {
+            for(let item of model) {
+              this.model.push(item)
+            }
+          }
+        )
+        // this.model = map(model, this.dataMapper)
       }
     )
   },
