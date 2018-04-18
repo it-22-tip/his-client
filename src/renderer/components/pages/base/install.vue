@@ -33,7 +33,7 @@
   import path from 'path'
   import os from 'os'
   import { map } from 'lodash'
-  import bcrypt from 'bcryptjs'
+  import bcrypt from 'bcrypt'
   import file from '@/mixins/file'
   import orm from '@/mixins/orm'
   import { reduce, isEmpty, extend } from 'lodash'

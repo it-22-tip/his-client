@@ -69,11 +69,16 @@ export default {
   },
   methods: {
     loadData (oriNode, resolve) {
-      this.readJSON(path.join(appDataPath, '/example/doctree.json')).then(
-        data => {
-          resolve(data)
-        }
-      )
+      if (this.asyncData.length < 1) {
+        this.readJSON(path.join(appDataPath, '/example/doctree.json')).then(
+          data => {
+            this.asyncData = data
+            resolve(this.asyncData)
+          }
+        )
+      } else {
+        console.log(oriNode)
+      }
     },
     async  asyncTree () {
 
