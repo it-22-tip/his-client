@@ -347,13 +347,25 @@ app-builder-bin-linux@1.8.5:
   version "1.8.5"
   resolved "https://registry.yarnpkg.com/app-builder-bin-linux/-/app-builder-bin-linux-1.8.5.tgz#bf001d3ef347e1179680a1760fea83d0832fc344"
 
+app-builder-bin-linux@1.8.6:
+  version "1.8.6"
+  resolved "https://registry.yarnpkg.com/app-builder-bin-linux/-/app-builder-bin-linux-1.8.6.tgz#81176bbcb2929958a90f2184afb54df90b7210a3"
+
 app-builder-bin-mac@1.8.5:
   version "1.8.5"
   resolved "https://registry.yarnpkg.com/app-builder-bin-mac/-/app-builder-bin-mac-1.8.5.tgz#31282504d232081a9de94d377736bf904bbfbd53"
 
+app-builder-bin-mac@1.8.6:
+  version "1.8.6"
+  resolved "https://registry.yarnpkg.com/app-builder-bin-mac/-/app-builder-bin-mac-1.8.6.tgz#20d7233c5cadf00472e7b0ccaf85627b53f90787"
+
 app-builder-bin-win@1.8.5:
   version "1.8.5"
   resolved "https://registry.yarnpkg.com/app-builder-bin-win/-/app-builder-bin-win-1.8.5.tgz#d7eefc1dff6052e137a3c5d68cd6e68ba862054b"
+
+app-builder-bin-win@1.8.6:
+  version "1.8.6"
+  resolved "https://registry.yarnpkg.com/app-builder-bin-win/-/app-builder-bin-win-1.8.6.tgz#d09f78fb1dd5a5f8ea231294828fd5c9ad0358a5"
 
 app-builder-bin@1.8.5:
   version "1.8.5"
@@ -362,6 +374,14 @@ app-builder-bin@1.8.5:
     app-builder-bin-linux "1.8.5"
     app-builder-bin-mac "1.8.5"
     app-builder-bin-win "1.8.5"
+
+app-builder-bin@1.8.6:
+  version "1.8.6"
+  resolved "https://registry.yarnpkg.com/app-builder-bin/-/app-builder-bin-1.8.6.tgz#85604ece9c1b63ed0437abe92ddaf41c88c3f2e4"
+  optionalDependencies:
+    app-builder-bin-linux "1.8.6"
+    app-builder-bin-mac "1.8.6"
+    app-builder-bin-win "1.8.6"
 
 append-transform@^0.4.0:
   version "0.4.0"
@@ -554,6 +574,17 @@ autoprefixer@^6.3.1:
     normalize-range "^0.1.2"
     num2fraction "^1.2.2"
     postcss "^5.2.16"
+    postcss-value-parser "^3.2.3"
+
+autoprefixer@^8.3.0:
+  version "8.3.0"
+  resolved "https://registry.yarnpkg.com/autoprefixer/-/autoprefixer-8.3.0.tgz#22ac5151c3c8946bb8f75f337d5c5042c0ec6404"
+  dependencies:
+    browserslist "^3.2.4"
+    caniuse-lite "^1.0.30000830"
+    normalize-range "^0.1.2"
+    num2fraction "^1.2.2"
+    postcss "^6.0.21"
     postcss-value-parser "^3.2.3"
 
 aws-sign2@~0.6.0:
@@ -1916,6 +1947,13 @@ browserslist@^2.1.2:
     caniuse-lite "^1.0.30000792"
     electron-to-chromium "^1.3.30"
 
+browserslist@^3.2.4:
+  version "3.2.4"
+  resolved "https://registry.yarnpkg.com/browserslist/-/browserslist-3.2.4.tgz#fb9ad70fd09875137ae943a31ab815ed76896031"
+  dependencies:
+    caniuse-lite "^1.0.30000821"
+    electron-to-chromium "^1.3.41"
+
 bser@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/bser/-/bser-2.0.0.tgz#9ac78d3ed5d915804fd87acb158bc797147a1719"
@@ -1961,6 +1999,25 @@ builder-util@5.7.6, builder-util@^5.7.6:
   dependencies:
     "7zip-bin" "~3.1.0"
     app-builder-bin "1.8.5"
+    bluebird-lst "^1.0.5"
+    builder-util-runtime "^4.2.0"
+    chalk "^2.3.2"
+    debug "^3.1.0"
+    fs-extra-p "^4.5.2"
+    is-ci "^1.1.0"
+    js-yaml "^3.11.0"
+    lazy-val "^1.0.3"
+    semver "^5.5.0"
+    source-map-support "^0.5.4"
+    stat-mode "^0.2.2"
+    temp-file "^3.1.1"
+
+builder-util@5.7.8:
+  version "5.7.8"
+  resolved "https://registry.yarnpkg.com/builder-util/-/builder-util-5.7.8.tgz#dcd590710ed6ad5fefb38f2300c764816c018c98"
+  dependencies:
+    "7zip-bin" "~3.1.0"
+    app-builder-bin "1.8.6"
     bluebird-lst "^1.0.5"
     builder-util-runtime "^4.2.0"
     chalk "^2.3.2"
@@ -2082,6 +2139,10 @@ caniuse-db@^1.0.30000529, caniuse-db@^1.0.30000634, caniuse-db@^1.0.30000639:
 caniuse-lite@^1.0.30000792:
   version "1.0.30000821"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000821.tgz#0f3223f1e048ed96451c56ca6cf197058c42cb93"
+
+caniuse-lite@^1.0.30000821, caniuse-lite@^1.0.30000830:
+  version "1.0.30000830"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000830.tgz#cb96b8a2dd3cbfe04acea2af3c4e894249095328"
 
 capture-stack-trace@^1.0.0:
   version "1.0.0"
@@ -3510,7 +3571,40 @@ ejs@^2.5.8:
   version "2.5.8"
   resolved "https://registry.yarnpkg.com/ejs/-/ejs-2.5.8.tgz#2ab6954619f225e6193b7ac5f7c39c48fefe4380"
 
-electron-builder-lib@20.9.0, electron-builder-lib@~20.9.0:
+ejs@^2.5.9:
+  version "2.5.9"
+  resolved "https://registry.yarnpkg.com/ejs/-/ejs-2.5.9.tgz#7ba254582a560d267437109a68354112475b0ce5"
+
+electron-builder-lib@20.9.2:
+  version "20.9.2"
+  resolved "https://registry.yarnpkg.com/electron-builder-lib/-/electron-builder-lib-20.9.2.tgz#8c0cff79b79206e6bdb796615648c9b1556fe837"
+  dependencies:
+    "7zip-bin" "~3.1.0"
+    app-builder-bin "1.8.6"
+    async-exit-hook "^2.0.1"
+    bluebird-lst "^1.0.5"
+    builder-util "5.7.8"
+    builder-util-runtime "4.2.0"
+    chromium-pickle-js "^0.2.0"
+    debug "^3.1.0"
+    ejs "^2.5.9"
+    electron-osx-sign "0.4.10"
+    electron-publish "20.9.0"
+    fs-extra-p "^4.5.2"
+    hosted-git-info "^2.6.0"
+    is-ci "^1.1.0"
+    isbinaryfile "^3.0.2"
+    js-yaml "^3.11.0"
+    lazy-val "^1.0.3"
+    minimatch "^3.0.4"
+    normalize-package-data "^2.4.0"
+    plist "^3.0.1"
+    read-config-file "3.0.0"
+    sanitize-filename "^1.6.1"
+    semver "^5.5.0"
+    temp-file "^3.1.1"
+
+electron-builder-lib@~20.9.0:
   version "20.9.0"
   resolved "https://registry.yarnpkg.com/electron-builder-lib/-/electron-builder-lib-20.9.0.tgz#bb4725a796e80d15c5512e50a1ed0be08fea0e4f"
   dependencies:
@@ -3539,16 +3633,16 @@ electron-builder-lib@20.9.0, electron-builder-lib@~20.9.0:
     semver "^5.5.0"
     temp-file "^3.1.1"
 
-electron-builder@^20.9.0:
-  version "20.9.0"
-  resolved "https://registry.yarnpkg.com/electron-builder/-/electron-builder-20.9.0.tgz#3010d5fbd927c0e1d5c4db6984d797f4b87cd239"
+electron-builder@^20.9.2:
+  version "20.9.2"
+  resolved "https://registry.yarnpkg.com/electron-builder/-/electron-builder-20.9.2.tgz#a5a3ab2cfa9fe14f9287516998cd7ab8ce273c3c"
   dependencies:
     bluebird-lst "^1.0.5"
-    builder-util "5.7.6"
+    builder-util "5.7.8"
     builder-util-runtime "4.2.0"
     chalk "^2.3.2"
     dmg-builder "4.1.5"
-    electron-builder-lib "20.9.0"
+    electron-builder-lib "20.9.2"
     electron-download-tf "4.3.4"
     fs-extra-p "^4.5.2"
     is-ci "^1.1.0"
@@ -3670,6 +3764,10 @@ electron-store@^1.3.0:
 electron-to-chromium@^1.2.7, electron-to-chromium@^1.3.30:
   version "1.3.41"
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.41.tgz#7e33643e00cd85edfd17e04194f6d00e73737235"
+
+electron-to-chromium@^1.3.41:
+  version "1.3.42"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.42.tgz#95c33bf01d0cc405556aec899fe61fd4d76ea0f9"
 
 electron-unhandled@^1.1.0:
   version "1.1.0"
@@ -3948,9 +4046,9 @@ eslint-plugin-standard@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/eslint-plugin-standard/-/eslint-plugin-standard-3.0.1.tgz#34d0c915b45edc6f010393c7eef3823b08565cf2"
 
-eslint-plugin-vue@^4.4.0:
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-vue/-/eslint-plugin-vue-4.4.0.tgz#bfc3a71f76bd0e139313e4425a807257ae42f768"
+eslint-plugin-vue@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-vue/-/eslint-plugin-vue-4.5.0.tgz#09d6597f4849e31a3846c2c395fccf17685b69c3"
   dependencies:
     vue-eslint-parser "^2.0.3"
 
@@ -4825,6 +4923,10 @@ growl@1.9.2:
 growly@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/growly/-/growly-1.3.0.tgz#f10748cbe76af964b7c96c93c6bcc28af120c081"
+
+gsap@^1.20.4:
+  version "1.20.4"
+  resolved "https://registry.yarnpkg.com/gsap/-/gsap-1.20.4.tgz#005fba2a7bfbb3b9d27bd77e1634d2bad365a86a"
 
 hammerjs@^2.0.8:
   version "2.0.8"
@@ -8243,7 +8345,7 @@ postcss@^5.0.10, postcss@^5.0.11, postcss@^5.0.12, postcss@^5.0.13, postcss@^5.0
     source-map "^0.5.6"
     supports-color "^3.2.3"
 
-postcss@^6.0.1, postcss@^6.0.8:
+postcss@^6.0.1, postcss@^6.0.21, postcss@^6.0.8:
   version "6.0.21"
   resolved "https://registry.yarnpkg.com/postcss/-/postcss-6.0.21.tgz#8265662694eddf9e9a5960db6da33c39e4cd069d"
   dependencies:
