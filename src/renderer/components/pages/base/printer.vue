@@ -12,11 +12,10 @@
 
 <script>
   import printer from 'printer'
-  import file from '@/mixins/file'
+  import { readFile } from '@helpers/files'
   const ele = require('electron')
   export default {
     name: 'Intro',
-    mixins: [file],
     data () {
       return {
         img: `static/svg/logo.svg`,
@@ -28,7 +27,7 @@
     },
     mounted () {
       console.log(printer)
-      this.readFile(__static + '/ps/lv1.ps').then(
+      readFile(__static + '/ps/lv1.ps').then(
         data => {
           console.log(data)
           this.printdata = data

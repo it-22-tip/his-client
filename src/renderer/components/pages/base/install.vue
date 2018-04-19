@@ -29,13 +29,13 @@
 </template>
 
 <script>
+  import { readFile } from '@helpers/files'
   import { default as Promise } from 'bluebird'
   import path from 'path'
   import os from 'os'
   import { map } from 'lodash'
   import bcrypt from 'bcrypt'
-  import file from '@/mixins/file'
-  import orm from '@/mixins/orm'
+  import orm from '@mixins/orm'
   import { reduce, isEmpty, extend } from 'lodash'
   export default {
     mixins: [
@@ -261,7 +261,7 @@
           let image = person.Id + '.jpg'
           image = path.join(this.imageDir, image)
           try {
-            image = await this.readFile(image)
+            image = await readFile(image)
           } catch (error) {
             continue
           }

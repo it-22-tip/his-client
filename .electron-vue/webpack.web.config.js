@@ -119,10 +119,12 @@ let webConfig = {
       '@pages': path.join(__dirname, '../src/renderer/components/pages'),
       '@partials': path.join(__dirname, '../src/renderer/components/partials'),
       '@extras': path.join(__dirname, '../src/renderer/components/extras'),
+      '@helpers': path.join(__dirname, '../src/renderer/components/helpers'),
+      '@mixins': path.join(__dirname, '../src/renderer/components/mixins'),
       '@': path.join(__dirname, '../src/renderer'),
       'vue$': 'vue/dist/vue.esm.js'
     },
-    extensions: ['.js', '.vue', '.json', '.css', '.scss']
+    extensions: ['.js', '.vue', '.json', '.css', '.scss', 'less']
   },
   target: 'web'
 }

@@ -20,14 +20,12 @@
 </template>
 
 <script>
-import orm from '@/mixins/orm'
-import file from '@/mixins/file'
+import orm from '@mixins/orm'
 import { map, groupBy, toPairs } from 'lodash'
 import moment from 'moment'
 export default {
   mixins: [
-    orm,
-    file
+    orm
   ],
   components: {
     'layout-one': () => import('@partials/layout-one')

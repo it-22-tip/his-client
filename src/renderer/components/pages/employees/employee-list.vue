@@ -24,14 +24,12 @@
 
 <script>
 import orm from '@/mixins/orm'
-import file from '@/mixins/file'
 import { map } from 'lodash'
 import moment from 'moment'
-import { toDateDiffToday, toMoment, employeeId } from '@/mixins/databaseTo'
+import { toDateDiffToday, toMoment, employeeId } from '@helpers/databaseTo'
 export default {
   mixins: [
-    orm,
-    file
+    orm
   ],
   components: {
     'layout-one': () => import('@partials/layout-one')

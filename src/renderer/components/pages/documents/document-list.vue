@@ -32,15 +32,14 @@
 
 <script>
 import orm from '@/mixins/orm'
-import file from '@/mixins/file'
+import { readJSON } from '@/helpers/files'
 import { map } from 'lodash'
 import moment from 'moment'
 import path from 'path'
-import { appDataPath } from '@/mixins/constants'
+import { appDataPath } from '@helpers/constants'
 export default {
   mixins: [
-    orm,
-    file
+    orm
   ],
   components: {
     'layout-one': () => import('@partials/layout-one'),
@@ -86,7 +85,7 @@ export default {
     async populateTree () {
       let tree = []
       try {
-        tree = await this.readJSON(path.join(appDataPath, '/example/doctree.json'))
+        tree = await readJSON(path.join(appDataPath, '/example/doctree.json'))
 
       } catch (error) {
         console.log(error)

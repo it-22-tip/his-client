@@ -7,7 +7,6 @@
 </template>
 
 <script>
-  import readline from 'readline'
   import PrinceXML from '@/extras/PrinceXML'
   import PdfTk from '@/extras/PdfTk'
   import orm from '@/mixins/orm'
