@@ -144,7 +144,7 @@
     "del": "^3.0.0",
     "devtron": "^1.4.0",
     "electron": "^1.8.4",
-    "electron-builder": "^20.8.1",
+    "electron-builder": "^20.9.0",
     "electron-debug": "^1.5.0",
     "electron-devtools-installer": "^2.2.3",
     "eslint": "^4.19.1",
@@ -163,7 +163,7 @@
     "less": "^3.0.1",
     "less-loader": "^4.1.0",
     "mini-css-extract-plugin": "^0.4.0",
-    "mocha": "^5.1.0",
+    "mocha": "5.1.1",
     "multispinner": "^0.2.1",
     "nightwatch": "^0.9.19",
     "node-loader": "^0.6.0",
@@ -172,8 +172,8 @@
     "pug": "^2.0.3",
     "raw-loader": "^0.5.1",
     "sass-loader": "^7.0.1",
-    "style-loader": "^0.20.3",
-    "uglifyjs-webpack-plugin": "^1.2.4",
+    "style-loader": "^0.21.0",
+    "uglifyjs-webpack-plugin": "^1.2.5",
     "url-loader": "^1.0.1",
     "vue-html-loader": "^1.2.4",
     "vue-loader": "^14.2.2",
@@ -181,6 +181,6 @@
     "vue-template-compiler": "^2.5.16",
     "webpack": "^4.6.0",
     "webpack-dev-server": "^3.1.3",
-    "webpack-hot-middleware": "^2.22.0"
+    "webpack-hot-middleware": "^2.22.1"
   }
 }
