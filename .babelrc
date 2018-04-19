@@ -3,33 +3,50 @@
   "env": {
     "main": {
       "presets": [
-        ["env", {
-          "targets": { "node": 7 }
-        }],
+        [
+          "env",
+          {
+            "targets": {
+              "node": 7
+            }
+          }
+        ],
         "stage-0"
       ]
     },
     "renderer": {
       "presets": [
-        ["env", {
-          "modules": false
-        }],
+        [
+          "env",
+          {
+            "modules": false
+          }
+        ],
         "stage-0",
         "es2015"
       ]
     },
     "web": {
       "presets": [
-        ["env", {
-          "modules": false
-        }],
+        [
+          "env",
+          {
+            "modules": false
+          }
+        ],
         "stage-0"
       ]
     }
   },
   "plugins": [
-    ["transform-promise-to-bluebird"],
-    ["transform-runtime"],
-    ["syntax-dynamic-import"]
+    [
+      "transform-promise-to-bluebird"
+    ],
+    [
+      "transform-runtime"
+    ],
+    [
+      "syntax-dynamic-import"
+    ]
   ]
 }
