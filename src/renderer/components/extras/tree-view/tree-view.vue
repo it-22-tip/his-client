@@ -238,10 +238,13 @@ export default {
           draggedItem.parentItem.splice(draggedItem.index, 1)
         })
       }
+    },
+    initialize () {
+      this.initializeData(this.itemData)
     }
   },
   created () {
-    this.initializeData(this.itemData)
+    this.initialize()
   },
   mounted () {
     if (this.asyncFunction) {
@@ -254,7 +257,3 @@ export default {
   }
 }
 </script>
-<style lang="scss">
-
-</style>
-

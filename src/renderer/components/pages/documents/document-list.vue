@@ -56,7 +56,12 @@ export default {
       searchText: '',
       searchBy: 'Name',
       asyncData: [],
-      initialData: []
+      initialData: [
+        {
+          id: 1,
+          value: 'test'
+        }
+      ]
     }
   },
   mounted () {
@@ -67,31 +72,20 @@ export default {
     await this.closeConnection()
   },
   methods: {
-    loadData (oriNode, resolve) {
-      if (this.asyncData.length < 1) {
-        this.readJSON(path.join(appDataPath, '/example/doctree.json')).then(
-          data => {
-            this.asyncData = data
-            resolve(this.asyncData)
-          }
-        )
-      } else {
-        console.log(oriNode)
-      }
-    },
-    async  asyncTree () {
-
-    },
     async populateTree () {
       let tree = []
       try {
         tree = await readJSON(path.join(appDataPath, '/example/doctree.json'))
-
+        // this.initialData
       } catch (error) {
         console.log(error)
       }
-      console.log(this.$refs.tree)
-      // this.initialData = this.$refs.tree.initializeData(tree)
+      this.initialData = tree
+      this.$nextTick().then(
+        () => {
+          this.$refs.tree.initialize()
+        }
+      )
     },
     treeItemClick () {
 

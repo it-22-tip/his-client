@@ -23,6 +23,8 @@
 <style lang="scss" scoped>
 .ctc {
   flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 </style>
 

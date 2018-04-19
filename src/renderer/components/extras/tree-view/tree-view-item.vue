@@ -172,6 +172,33 @@ export default {
     },
     handleSetGroupMaxHeight () {
       if (this.$refs.group) {
+        let height = this.handleGroupMaxHeight()
+        this.$refs.group.style.maxHeight = height + 'px'
+        if (height === 0) {
+          this.$refs.group.style.display = 'none'
+        } else {
+          this.$refs.group.style.display = 'block'
+        }
+      }
+      let self = this
+      this.$nextTick().then(
+        () => {
+          this.handleRecursionNodeParents(self, node => {
+            if (node.$refs.group) {
+              let height = node.handleGroupMaxHeight()
+              node.$refs.group.style.maxHeight = height + 'px'
+              if (height === 0) {
+                node.$refs.group.style.display = 'none'
+              } else {
+                node.$refs.group.style.display = 'block'
+              }
+            }
+          })
+        }
+      )
+    },
+    /* handleSetGroupMaxHeight () {
+      if (this.$refs.group) {
         this.$refs.group.style.maxHeight = this.handleGroupMaxHeight() + 'px'
       }
       var self = this
@@ -182,7 +209,7 @@ export default {
           }
         })
       })
-    },
+    }, */
     handleItemClick () {
       if (this.model.disabled) return
       this.model.selected = !this.model.selected

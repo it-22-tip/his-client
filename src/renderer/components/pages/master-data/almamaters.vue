@@ -11,8 +11,6 @@
         <md-table-cell md-label="NIP" md-sort-by="Id">{{ item.EmployeeId }}</md-table-cell>
         <md-table-cell md-label="Nama" md-sort-by="Name">{{ item.Name }}</md-table-cell>
         <md-table-cell md-label="JK" md-sort-by="Gender">{{ item.Gender }}</md-table-cell>
-        <md-table-cell md-label="Posisi" md-sort-by="JobTitle">{{ item.JobTitle }}</md-table-cell>
-        <md-table-cell md-label="Usia" md-sort-by="Age">{{ item.Age }}</md-table-cell>
         <md-table-cell>
           <md-button @click="clickEdit(item.Id)" class="md-icon-button">
             <md-icon>edit</md-icon>
