@@ -22,7 +22,7 @@
       </md-table-row>
     </md-table>
 
-    <md-toolbar class="md-primary md-dense">
+    <md-toolbar class="md-primary md-dense" md-elevation="0">
       <div class="md-toolbar-row">
         <div class="md-toolbar-section-start">
           <md-button class="md-icon-button">

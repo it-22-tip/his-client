@@ -2,7 +2,9 @@
   <layout-one>
     <md-content class="dp">
       <md-toolbar class="md-dense md-primary" md-elevation="0">
-        {{ pageTitle }}
+        <md-button class="md-icon-button" @click="$router.go(-1)">
+          <md-icon>close</md-icon>
+        </md-button>
       </md-toolbar>
       <md-content class="fc">
         <md-content class="scr md-scrollbar">

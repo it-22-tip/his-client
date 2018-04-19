@@ -7,6 +7,11 @@
             <tree-view :item-data="initialData" @item-click="treeItemClick" ref="tree"></tree-view>
           </div>
         </div>
+        <md-toolbar class="md-dense">
+          <md-button>Rak Baru</md-button>
+          <md-button>Kategori Baru</md-button>
+          <md-button>Hapus Rak</md-button>
+        </md-toolbar>
       </md-content>
       <md-table
         class="right-table"
@@ -229,9 +234,9 @@ export default {
     flex: 1;
     display: flex;
     overflow: hidden;
+    flex-direction: column;
   }
   .parentbox {
-    padding: 20px;
     flex: 1;
     overflow: hidden;
     display: flex;
