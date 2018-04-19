@@ -33,25 +33,14 @@ const Employees = [
     ]
   },
   {
-    path: '/employees/employee/:employeeId',
-    component: () => import('@pages/employees/employee-detail-tab'),
+    path: '/employee/:employeeId',
+    name: 'employee.detail',
+    component: () => import('@pages/employees/employee-detail-personal'),
     props: true,
     meta: {
       title: 'Employees Details Personal',
       login: true
-    },
-    children: [
-      {
-        path: '',
-        name: 'employees.employee.detail.personal',
-        component: () => import('@pages/employees/employee-detail-personal'),
-        props: true,
-        meta: {
-          title: 'Employees Details Personal',
-          login: true
-        }
-      }
-    ]
+    }
   }
 ]
 

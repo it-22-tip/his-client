@@ -1,5 +1,8 @@
 <template>
   <layout-one>
+    <md-toolbar class="md-dense" md-elevation="0">
+      {{ pageTitle }}
+    </md-toolbar>
     <md-tabs>
       <md-tab md-label="Karyawan" :to="{ name: 'employees.employee.list' }"/>
       <md-tab md-label="Posisi" :to="{ name: 'employees.jobtitle.list' }"/>
@@ -16,6 +19,20 @@
   export default {
     components: {
       'layout-one': () => import('@partials/layout-one')
+    },
+    data () {
+      return {
+        pageTitle: null
+      }
+    },
+    watch: {
+      '$route': () => {
+        console.log(this)
+        // console.log('test')
+      }
+    },
+    mounted () {
+
     }
   }
 </script>

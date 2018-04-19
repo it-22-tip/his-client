@@ -8,9 +8,7 @@
       :md-sort-fn="customSort"
       md-fixed-header>
       <md-table-row slot="md-table-row" slot-scope="{ item }">
-        <md-table-cell md-label="NIP" md-sort-by="Id">{{ item.EmployeeId }}</md-table-cell>
         <md-table-cell md-label="Nama" md-sort-by="Name">{{ item.Name }}</md-table-cell>
-        <md-table-cell md-label="JK" md-sort-by="Gender">{{ item.Gender }}</md-table-cell>
         <md-table-cell>
           <md-button @click="clickEdit(item.Id)" class="md-icon-button">
             <md-icon>edit</md-icon>
@@ -132,13 +130,9 @@ export default {
       let data = await Provinces.findAll({
         transaction: transaction,
         raw: true,
-        attributes: ['Id'],
-        include: [
-          {
-            all: true,
-          }
-        ]
+        attributes: ['Id', 'Name']
       })
+      console.log(data)
       return data
     },
     reAssign (item, from, to) {
@@ -147,13 +141,13 @@ export default {
       return item
     },
     dataMapper (item) {
-      item = this.reAssign(item, 'Person.Name', 'Name')
+      /* item = this.reAssign(item, 'Person.Name', 'Name')
       item = this.reAssign(item, 'Person.Gender', 'Gender')
       item = this.reAssign(item, 'JobTitle.Name', 'JobTitle')
       item = this.reAssign(item, 'Person.BirthDate', 'Age')
       item = toMoment(item, 'Age')
       item = employeeId(item)
-      item = toDateDiffToday(item, 'Age')
+      item = toDateDiffToday(item, 'Age') */
       return item
     },
     async populate () {

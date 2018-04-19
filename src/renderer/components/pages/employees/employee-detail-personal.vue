@@ -1,9 +1,21 @@
 <template>
-    <md-content>
-    <h1>{{ detail.Name }}</h1>
-    <h2>{{ detail.JobTitle }}</h2>
-    <p class="mo" @click="editAddress">{{ detail.Address }}</p>
+  <layout-one>
+    <md-content class="dp">
+      <md-toolbar class="md-dense md-primary" md-elevation="0">
+        {{ pageTitle }}
+      </md-toolbar>
+      <md-content class="fc">
+        <md-content class="scr md-scrollbar">
+          <div class="hi">
+            <h1>{{ detail.Name }}</h1>
+            <h2>{{ detail.JobTitle }}</h2>
+            <p class="mo" @click="editAddress">{{ detail.Address }}</p>
+            <div class="big">[]</div>
+          </div>
+        </md-content>
+      </md-content>
     </md-content>
+  </layout-one>
 </template>
 
 <script>
@@ -17,6 +29,9 @@
     mixins: [
       orm
     ],
+    components: {
+      'layout-one': () => import('@partials/layout-one')
+    },
     props: [
       'employeeId'
     ],
@@ -210,6 +225,30 @@
 </script>
 
 <style lang="scss" scoped>
+.dp {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.fc {
+  flex: 1;
+  position: relative;
+}
+.scr {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: auto;
+}
+.hi {
+  padding: 20px;
+}
+.big {
+  height: 1000px;
+}
 .mo:hover {
   text-decoration: underline;
 }

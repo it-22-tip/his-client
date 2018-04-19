@@ -21,17 +21,50 @@
         </md-table-cell>
       </md-table-row>
     </md-table>
-    <md-toolbar class="md-primary" md-elevation="0">
-      <div>
-        <md-button class="md-raised">Baru</md-button>
+
+    <md-toolbar class="md-primary md-dense">
+      <div class="md-toolbar-row">
+        <div class="md-toolbar-section-start">
+          <md-button class="md-icon-button">
+            <md-icon>menu</md-icon>
+          </md-button>
+        </div>
+        <!-- <md-field class="search">
+          <md-input/>
+        </md-field> -->
+        <!-- <md-autocomplete
+          class="search"
+          v-model="selectedEmployee"
+          :md-options="employees"
+          md-layout="box">
+          <label>Cari...</label>
+        </md-autocomplete> -->
+
+        <div class="md-toolbar-section-end">
+          <md-button class="md-icon-button">
+            <md-icon>refresh</md-icon>
+          </md-button>
+
+          <md-button class="md-icon-button">
+            <md-icon>more_vert</md-icon>
+          </md-button>
+        </div>
       </div>
     </md-toolbar>
+
+
   </md-content>
 </template>
 
 <style lang="scss" scoped>
 .ctc {
   flex: 1;
+}
+.search {
+  width: 300px;
+}
+.search input {
+  background-color: #fff;
 }
 </style>
 
@@ -56,7 +89,18 @@ export default {
       currentSort: 'Name',
       currentSortOrder: 'asc',
       searchText: '',
-      searchBy: 'Name'
+      searchBy: 'Name',
+      selectedEmployee: null,
+      employees: [
+        'Algeria',
+        'Argentina',
+        'Brazil',
+        'Canada',
+        'Italy',
+        'Japan',
+        'United Kingdom',
+        'United States'
+      ]
     }
   },
   mounted () {
@@ -81,7 +125,7 @@ export default {
   },
   methods: {
     clickEdit($event) {
-      this.$router.push({ name: 'employees.employee.detail.personal', params: { employeeId: $event } })
+      this.$router.push({ name: 'employee.detail', params: { employeeId: $event } })
     },
     clickSearch () {
       const toLower = text => {

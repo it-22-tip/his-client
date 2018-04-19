@@ -9,9 +9,9 @@ const MasterData = [
     },
     children: [
       {
-        path: '',
-        name: 'masterdata.provinces',
-        component: () => import('@pages/master-data/provinces'),
+        path: '/master-data/address',
+        name: 'masterdata.address',
+        component: () => import('@pages/master-data/address'),
         props: true,
         meta: {
           title: 'Master Provinsi',
@@ -19,37 +19,7 @@ const MasterData = [
         }
       },
       {
-        path: '',
-        name: 'masterdata.regencies',
-        component: () => import('@pages/master-data/regencies'),
-        props: true,
-        meta: {
-          title: 'Master Kota/Kabupaten',
-          login: true
-        }
-      },
-      {
-        path: '',
-        name: 'masterdata.districts',
-        component: () => import('@pages/master-data/districts'),
-        props: true,
-        meta: {
-          title: 'Master Kecamatan',
-          login: true
-        }
-      },
-      {
-        path: '',
-        name: 'masterdata.villages',
-        component: () => import('@pages/master-data/villages'),
-        props: true,
-        meta: {
-          title: 'Master Kelurahan/Desa',
-          login: true
-        }
-      },
-      {
-        path: '',
+        path: '/master-data/jobtitles',
         name: 'masterdata.jobtitles',
         component: () => import('@pages/master-data/jobtitles'),
         props: true,
@@ -59,7 +29,7 @@ const MasterData = [
         }
       },
       {
-        path: '',
+        path: '/master-data/almamaters',
         name: 'masterdata.almamaters',
         component: () => import('@pages/master-data/almamaters'),
         props: true,
