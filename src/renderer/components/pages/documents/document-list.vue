@@ -4,7 +4,7 @@
       <md-content class="leftist">
         <div class="parentbox">
           <div class="innerbox">
-            <tree-view :data="initialData" :async="loadData" @item-click="treeItemClick" ref="tree"></tree-view>
+            <tree-view :item-data="initialData" @item-click="treeItemClick" ref="tree"></tree-view>
           </div>
         </div>
       </md-content>
@@ -91,7 +91,8 @@ export default {
       } catch (error) {
         console.log(error)
       }
-      this.asyncData = tree
+      console.log(this.$refs.tree)
+      // this.initialData = this.$refs.tree.initializeData(tree)
     },
     treeItemClick () {
 

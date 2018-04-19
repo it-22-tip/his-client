@@ -1,5 +1,6 @@
 @mixin tree-theme ($base-height, $image, $image-height) {
     $correction: ($image-height - $base-height) / 2;
+    $padding: 5px;
     .tree-node {
         min-height: $base-height;
         line-height: $base-height;
@@ -31,23 +32,23 @@
         background-image:url("#{$image}");
     }
     .tree-node {
-        background-position: -($image-height * 9 + $correction) -$correction;
+        background-position: #{-($image-height * 9 + $correction)} #{-$correction};
         background-repeat: repeat-y;
     }
     .tree-last {
         background: transparent;
     }
     .tree-open>.tree-ocl {
-        background-position: -($image-height * 4 + $correction) -$correction;
+        background-position: #{-($image-height * 4 + $correction)} #{-$correction};
     }
     .tree-closed>.tree-ocl {
-        background-position: -($image-height * 3 + $correction) -$correction;
+        background-position: #{-($image-height * 3 + $correction)} #{-$correction};
     }
     .tree-leaf>.tree-ocl {
-        background-position: -($image-height * 2 + $correction) -$correction;
+        background-position: #{-($image-height * 2 + $correction)} #{-$correction};
     }
     .tree-themeicon {
-        background-position: -($image-height * 8 + $correction) -$correction;
+        background-position: #{-($image-height * 8 + $correction)} #{-$correction};
     }
     >.tree-no-dots {
         .tree-node,
@@ -55,10 +56,10 @@
             background: transparent;
         }
         .tree-open>.tree-ocl {
-            background-position: -($image-height * 1 + $correction) -$correction;
+            background-position: #{-($image-height * 1 + $correction)} #{-$correction};
         }
         .tree-closed>.tree-ocl {
-            background-position: -$correction -$correction;
+            background-position: #{-$correction} #{-$correction};
         }
     }
     .tree-disabled {
@@ -71,25 +72,25 @@
         }
     }
     .tree-checkbox {
-        background-position: -($image-height * 5 + $correction) -$correction;
+        background-position: #{-($image-height * 5 + $correction)} #{-$correction};
         &:hover {
-            background-position: -($image-height * 5 + $correction) -($image-height * 1 + $correction);
+            background-position: #{-($image-height * 5 + $correction)} #{-($image-height * 1 + $correction)};
         }
     }
     &.tree-checkbox-selection .tree-selected,
     .tree-checked {
         >.tree-checkbox {
-            background-position: -($image-height * 7 + $correction) -$correction;
+            background-position: #{-($image-height * 7 + $correction)} #{-$correction};
             &:hover {
-                background-position: -($image-height * 7 + $correction) -($image-height * 1 + $correction);
+                background-position: #{-($image-height * 7 + $correction)} #{-($image-height * 1 + $correction)};
             }
         }
     }
     .tree-anchor {
         >.tree-undetermined {
-            background-position: -($image-height * 6 + $correction) -$correction;
+            background-position: #{-($image-height * 6 + $correction)} #{-$correction};
             &:hover {
-                background-position: -($image-height * 6 + $correction) -($image-height * 1 + $correction);
+                background-position: #{-($image-height * 6 + $correction)} #{-($image-height * 1 + $correction)};
             }
         }
     }
@@ -115,13 +116,13 @@
             background: transparent;
         }
         .tree-open>.tree-ocl {
-            background-position: -($image-height * 4 + $correction) -($image-height * 1 + $correction);
+            background-position: #{-($image-height * 4 + $correction)} #{-($image-height * 1 + $correction)};
         }
         .tree-closed>.tree-ocl {
-            background-position: -($image-height * 3 + $correction) -($image-height * 1 + $correction);
+            background-position: #{-($image-height * 3 + $correction)} #{-($image-height * 1 + $correction)};
         }
         .tree-leaf>.tree-ocl {
-            background-position: -($image-height * 2 + $correction) -($image-height * 1 + $correction);
+            background-position: #{-($image-height * 2 + $correction)} #{-($image-height * 1 + $correction)};
         }
         >.tree-no-dots {
             .tree-node,
@@ -129,10 +130,10 @@
                 background: transparent;
             }
             .tree-open>.tree-ocl {
-                background-position: -($image-height * 1 + $correction) -($image-height * 1 + $correction);
+                background-position: #{-($image-height * 1 + $correction)} #{-($image-height * 1 + $correction)};
             }
             .tree-closed>.tree-ocl {
-                background-position: -$correction -($image-height * 1 + $correction);
+                background-position: #{-$correction} #{-($image-height * 1 + $correction)};
             }
         }
     }
@@ -148,26 +149,24 @@
         background:url("#{$gif1}") center center no-repeat;
     }
     .tree-file {
-        background:url("#{$image}") -($image-height * 3+$correction) -($image-height * 2+$correction) no-repeat;
+        background:url("#{$image}") #{-($image-height * 3+$correction)} #{-($image-height * 2+$correction)} no-repeat;
     }
     .tree-folder {
-        background:url("#{$image}") -($image-height * 8+$correction) -($correction) no-repeat;
+        background:url("#{$image}") #{-($image-height * 8+$correction)} #{-($correction)} no-repeat;
     }
     >.tree-container-ul>.tree-node {
         margin-left: 0;
         margin-right: 0;
-    }
-    // ellipsis
+    } // ellipsis
     .tree-ellipsis {
         overflow: hidden;
-    }
-    // base height + PADDINGS!
+    } // base height + PADDINGS!
     .tree-ellipsis .tree-anchor {
-        width: calc(100% #{"-"} (#{$base-height}+5px));
+        width: calc(100% - #{$base-height+$padding});
         text-overflow: ellipsis;
         overflow: hidden;
     }
     .tree-ellipsis.tree-no-icons .tree-anchor {
-        width: calc(100% #{"-"} 5px);
+        width: calc(100% - #{$padding});
     }
 }
