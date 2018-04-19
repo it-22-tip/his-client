@@ -2,11 +2,7 @@
   <layout-one>
     <md-content class="mc">
       <md-content class="leftist">
-        <div class="parentbox">
-          <div class="innerbox">
-            <tree-view :item-data="initialData" @item-click="treeItemClick" ref="tree"></tree-view>
-          </div>
-        </div>
+        <tree-view :item-data="initialData" @item-click="treeItemClick" ref="tree"></tree-view>
         <md-toolbar class="md-dense">
           <md-button>Rak Baru</md-button>
           <md-button>Kategori Baru</md-button>
@@ -231,48 +227,14 @@ export default {
     height: 100%;
   }
   .leftist {
-    flex: 1;
     display: flex;
     overflow: hidden;
     flex-direction: column;
+    width: 350px;
   }
-  .parentbox {
+  .right-table {
     flex: 1;
-    overflow: hidden;
-    display: flex;
-    min-height: 0;
-    position: relative;
   }
-  .innerbox {
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    position: absolute;
-    height: 100%;
-    display: block;
-    width: 100%;
-    overflow: auto;
-  }
-.innerbox::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-}
-
-/* Track */
-.innerbox::-webkit-scrollbar-track {
-    background: #f1f1f1;
-}
-
-/* Handle */
-.innerbox::-webkit-scrollbar-thumb {
-    background: #888;
-}
-
-/* Handle on hover */
-.innerbox::-webkit-scrollbar-thumb:hover {
-    background: #555;
-}
   .bigger {
     height: 900px;
     width: 800px;
