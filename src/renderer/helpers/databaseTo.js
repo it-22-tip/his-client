@@ -24,7 +24,7 @@ const employeeId = function (item) {
     while (string.length < size) string = '0' + string
     return string
   }
-  item['EmployeeId'] = item['Age'].format('YYYYMMDD') + '' + pad(item['Id'], 5)
+  item['EmployeeId'] = moment(item['BirthDate']).format('YYYYMMDD') + '' + pad(item['Id'], 5)
   return item
 }
 

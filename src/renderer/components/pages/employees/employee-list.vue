@@ -13,7 +13,7 @@
         <md-table-cell md-label="Nama" md-sort-by="Name">{{ item.Name }}</md-table-cell>
         <md-table-cell md-label="JK" md-sort-by="Gender">{{ item.Gender }}</md-table-cell>
         <md-table-cell md-label="Posisi" md-sort-by="JobTitle">{{ item.JobTitle }}</md-table-cell>
-        <!-- <md-table-cell md-label="Usia" md-sort-by="Age">{{ item.Age }}</md-table-cell> -->
+        <md-table-cell md-label="Usia" md-sort-by="Age">{{ item.Age }}</md-table-cell>
       </md-table-row>
     </md-table>
 
@@ -279,9 +279,11 @@ export default {
       item = this.reAssign(item, 'Person.Gender', 'Gender')
       item = this.reAssign(item, 'JobTitle.Name', 'JobTitle')
       item = this.reAssign(item, 'Person.Age', 'Age')
+      item = this.reAssign(item, 'Person.BirthDate', 'BirthDate')
       // item = toMoment(item, 'Age')
       item = employeeId(item)
       // item = toDateDiffToday(item, 'Age')
+      console.log(item)
       return item
     },
     async populate () {

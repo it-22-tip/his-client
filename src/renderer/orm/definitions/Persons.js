@@ -1,5 +1,5 @@
 import { DataTypes } from 'sequelize'
-import moment from 'moment'
+// import moment from 'moment'
 import { Faiths, Genders, BloodTypes, MaritalStatuses, BloodRhTypes } from '../enums'
 const tableName = 'Persons'
 const attributes = {
@@ -44,9 +44,12 @@ const attributes = {
     type: DataTypes.JSON
   },
   Age: {
-    type: DataTypes.VIRTUAL(DataTypes.INTEGER(), ['BirthDate']),
+    type: DataTypes.VIRTUAL(),
     get: function () {
-      return Math.abs(parseInt(this.get('BirthDate').diff(moment(), 'years')))
+      return this.get('BirthDate')// Math.abs(parseInt(this.get('BirthDate').diff(moment(), 'years')))
+    },
+    set: function (val) {
+      // this.setDataValue('password', val)
     }
   }
 }
