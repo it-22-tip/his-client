@@ -259,7 +259,7 @@ export default {
         include: [
           {
             model: Persons,
-            attributes: ['Name', 'Gender', 'BirthDate', 'Age'],
+            attributes: ['Name', 'Gender', 'BirthDate'],
           },
           {
             model: JobTitles,
@@ -278,12 +278,10 @@ export default {
       item = this.reAssign(item, 'Person.Name', 'Name')
       item = this.reAssign(item, 'Person.Gender', 'Gender')
       item = this.reAssign(item, 'JobTitle.Name', 'JobTitle')
-      item = this.reAssign(item, 'Person.Age', 'Age')
-      item = this.reAssign(item, 'Person.BirthDate', 'BirthDate')
-      // item = toMoment(item, 'Age')
+      item = this.reAssign(item, 'Person.BirthDate', 'Age')
+      item = toMoment(item, 'Age')
       item = employeeId(item)
-      // item = toDateDiffToday(item, 'Age')
-      console.log(item)
+      item = toDateDiffToday(item, 'Age')
       return item
     },
     async populate () {
@@ -295,7 +293,6 @@ export default {
       }).connect()
       try {
         data = await this.connection.transaction(this.transaction)
-        console.log(data)
       } catch (error) {
         console.log(error)
       } finally {

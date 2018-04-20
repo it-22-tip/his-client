@@ -44,9 +44,11 @@ const attributes = {
     type: DataTypes.JSON
   },
   Age: {
-    type: DataTypes.VIRTUAL(),
+    type: new DataTypes.VIRTUAL(DataTypes.INTEGER(), ['BirthDate']),
     get: function () {
-      return this.get('BirthDate')// Math.abs(parseInt(this.get('BirthDate').diff(moment(), 'years')))
+      return 1
+      // console.log(this)
+      // return this.get('BirthDate')// Math.abs(parseInt(this.get('BirthDate').diff(moment(), 'years')))
     },
     set: function (val) {
       // this.setDataValue('password', val)

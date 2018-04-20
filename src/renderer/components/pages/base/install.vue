@@ -29,7 +29,7 @@
 </template>
 
 <script>
-  import { readFile } from '@helpers/files'
+  import { readFile, readDir, readJSON } from '@helpers/files'
   import { default as Promise } from 'bluebird'
   import path from 'path'
   import os from 'os'
@@ -39,8 +39,7 @@
   import { reduce, isEmpty, extend } from 'lodash'
   export default {
     mixins: [
-      orm,
-      file
+      orm
     ],
     data () {
       return {
@@ -234,10 +233,10 @@
       async setSeed () {
         let jsonDir = this.jsonDir
         let seeds = {}
-        let files = await this.readDir(jsonDir)
+        let files = await readDir(jsonDir)
         for (let file of files) {
           let modelName = file.split('.')[0]
-          let seed = await this.readJSON(path.join(jsonDir, file))
+          let seed = await readJSON(path.join(jsonDir, file))
           let seedMethod = 'seed' + modelName
           if (typeof this[seedMethod] === 'function') {
             seed = await this[seedMethod](seed)
