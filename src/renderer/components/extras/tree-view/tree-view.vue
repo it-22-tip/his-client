@@ -8,6 +8,7 @@
           :item-data="child"
           :text-field-name="textFieldName"
           :value-field-name="valueFieldName"
+          :children-field-name="childrenFieldName"
           :item-events="itemEvents"
           :whole-row="wholeRow"
           :show-checkbox="showCheckbox"
@@ -45,6 +46,7 @@ export default {
     allowBatch: {type: Boolean, default: false},
     textFieldName: {type: String, default: 'text'},
     valueFieldName: {type: String, default: 'value'},
+    childrenFieldName: {type: String, default: 'children'},
     itemEvents: {type: Object, default: function () { return {} }},
     asyncFunction: {type: Function},
     loadingText: {type: String, default: 'Loading...'},
@@ -92,7 +94,7 @@ export default {
         for (let i in items) {
           let dataItem = this.initializeDataItem(items[i])
           items[i] = dataItem
-          this.initializeData(items[i].children)
+          this.initializeData(items[i][this.childrenFieldName])
         }
       }
     },
@@ -106,7 +108,7 @@ export default {
         this.selected = item.selected || false
         this.disabled = item.disabled || false
         this.loading = item.loading || false
-        this.children = item.children || []
+        this[this.childrenFieldName] = item[this.childrenFieldName] || []
       }
       let node = Object.assign(new Model(item, this.textFieldName, this.valueFieldName, this.collapse), item)
       let self = this
@@ -122,7 +124,7 @@ export default {
       }
       node.addChild = function (data) {
         let newItem = self.initializeDataItem(data)
-        node.children.push(newItem)
+        node[this.childrenFieldName].push(newItem)
       }
       node.openChildren = function () {
         node.opened = true
@@ -156,8 +158,8 @@ export default {
       }
     },
     handleRecursionNodeChildren (node, func) {
-      if (node.children && node.children.length > 0) {
-        for (let childNode of node.children) {
+      if (node[this.childrenFieldName] && node[this.childrenFieldName].length > 0) {
+        for (let childNode of node[this.childrenFieldName]) {
           func(childNode)
           this.handleRecursionNodeChildren(childNode, func)
         }
@@ -187,7 +189,7 @@ export default {
     },
     onItemToggle (oriNode, oriItem) {
       if (oriNode.model.opened) {
-        this.handleAsyncLoad(oriNode.model.children, oriNode, oriItem)
+        this.handleAsyncLoad(oriNode.model[this.childrenFieldName], oriNode, oriItem)
       }
       this.$emit('item-toggle', oriNode, oriItem)
     },
@@ -198,12 +200,12 @@ export default {
           this.asyncFunction(oriNode, (data) => {
             if (data.length > 0) {
               for (let i in data) {
-                data[i].children = [self.initializeLoading()]
+                data[i][this.childrenFieldName] = [self.initializeLoading()]
                 let dataItem = self.initializeDataItem(data[i])
                 self.$set(oriParent, i, dataItem)
               }
             } else {
-              oriNode.model.children = []
+              oriNode.model[this.childrenFieldName] = []
             }
           })
         }
@@ -231,12 +233,12 @@ export default {
       }
       if (this.draggedItem) {
         if (
-          this.draggedItem.parentItem === oriItem.children ||
+          this.draggedItem.parentItem === oriItem[this.childrenFieldName] ||
           this.draggedItem.item === oriItem ||
-          (oriItem.children && oriItem.children.indexOf(this.draggedItem.item) !== -1)
+          (oriItem[this.childrenFieldName] && oriItem[this.childrenFieldName].indexOf(this.draggedItem.item) !== -1)
         ) return
 
-        oriItem.children = oriItem.children ? oriItem.children.concat(this.draggedItem.item) : [this.draggedItem.item]
+        oriItem[this.childrenFieldName] = oriItem[this.childrenFieldName] ? oriItem[this.childrenFieldName].concat(this.draggedItem.item) : [this.draggedItem.item]
         let draggedItem = this.draggedItem
         this.$nextTick(() => {
           draggedItem.parentItem.splice(draggedItem.index, 1)

@@ -2,7 +2,7 @@
   <layout-one>
     <md-content class="mc">
       <md-content class="leftist">
-        <tree-view :item-data="initialData" @item-click="treeItemClick" ref="tree"></tree-view>
+        <tree-view :item-data="initialData" :item-events="itemEvents" ref="tree"></tree-view>
         <md-toolbar class="md-dense">
           <md-button>Rak Baru</md-button>
           <md-button>Kategori Baru</md-button>
@@ -17,8 +17,8 @@
         :md-sort-fn="customSort"
         md-fixed-header>
         <md-table-row slot="md-table-row" slot-scope="{ item }">
-          <md-table-cell md-label="NIP" md-sort-by="Id">{{ item.EmployeeId }}</md-table-cell>
-          <md-table-cell md-label="Nama" md-sort-by="Name">{{ item.Name }}</md-table-cell>
+          <md-table-cell md-label="Kode" md-sort-by="Id">{{ item.EmployeeId }}</md-table-cell>
+          <md-table-cell md-label="Judul" md-sort-by="Name">{{ item.Name }}</md-table-cell>
           <md-table-cell>
             <md-button @click="clickEdit(item.Id)" class="md-icon-button">
               <md-icon>edit</md-icon>
@@ -28,6 +28,11 @@
         </md-table-row>
       </md-table>
     </md-content>
+    <context-menu @ctx-open="onCtxOpen" id="context-menu" ref="ctxMenu">
+      {{menuData.Name}}
+      <div><md-icon>edit</md-icon>Show</div>
+      <div><md-icon>edit</md-icon>Rename</div>
+    </context-menu>
   </layout-one>
 </template>
 
@@ -38,6 +43,7 @@ import { map } from 'lodash'
 import moment from 'moment'
 import path from 'path'
 import { appDataPath } from '@helpers/constants'
+import '@extras/contextmenu/ctx-menu.css'
 export default {
   mixins: [
     orm
@@ -45,6 +51,7 @@ export default {
   components: {
     'layout-one': () => import('@partials/layout-one'),
     'tree-view': () => import('@extras/tree-view'),
+    'context-menu': () => import('@extras/contextmenu')
   },
   data () {
     return {
@@ -62,7 +69,14 @@ export default {
           id: 1,
           value: 'test'
         }
-      ]
+      ],
+      menuData: {},
+      itemEvents: {
+        contextmenu: () => {
+          console.log(arguments)
+          this.$refs.ctxMenu.open(arguments[2], { Name: '' })
+        }
+      }
     }
   },
   mounted () {
@@ -73,6 +87,10 @@ export default {
     await this.closeConnection()
   },
   methods: {
+    onCtxOpen(locals) {
+        console.log('open', locals)
+        this.menuData = locals
+    },
     async populateTree () {
       let tree = []
       try {
@@ -88,8 +106,9 @@ export default {
         }
       )
     },
-    treeItemClick () {
-
+    treeItemClick ($event) {
+      console.log($event)
+      // this.$refs.ctxMenu.open($event, { Name: '' })
     },
     clickEdit($event) {
       this.$router.push({ name: 'employees.employee.detail', params: { employeeId: $event } })

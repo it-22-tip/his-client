@@ -20,7 +20,7 @@
   -webkit-background-clip: padding-box;
   background-clip: padding-box;
   border: 1px solid rgba(0, 0, 0, .15);
-  border-radius: .25rem;
+  border-radius: 0;
   -moz-box-shadow:0 0 5px #CCC; -webkit-box-shadow:0 0 5px #CCC; box-shadow:0 0 5px #CCC
 }
 

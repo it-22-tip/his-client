@@ -8,18 +8,12 @@
       :md-sort-order.sync="currentSortOrder"
       :md-sort-fn="customSort"
       md-fixed-header>
-      <md-table-row slot="md-table-row" slot-scope="{ item }" @click.right="$refs.ctxMenu.open($event, { Name: item.Name })">
+      <md-table-row slot="md-table-row" slot-scope="{ item }" @click.right="$refs.ctxMenu.open($event, { Name: item.Name, Id:item.Id })">
         <md-table-cell md-label="NIP" md-sort-by="Id">{{ item.EmployeeId }}</md-table-cell>
         <md-table-cell md-label="Nama" md-sort-by="Name">{{ item.Name }}</md-table-cell>
         <md-table-cell md-label="JK" md-sort-by="Gender">{{ item.Gender }}</md-table-cell>
         <md-table-cell md-label="Posisi" md-sort-by="JobTitle">{{ item.JobTitle }}</md-table-cell>
         <md-table-cell md-label="Usia" md-sort-by="Age">{{ item.Age }}</md-table-cell>
-        <md-table-cell>
-          <md-button class="md-icon-button">
-            <md-icon>edit</md-icon>
-            <md-tooltip md-direction="top">Edit</md-tooltip>
-          </md-button>
-        </md-table-cell>
       </md-table-row>
     </md-table>
 
@@ -55,21 +49,21 @@
           </md-button>
         </div>
 
-        <div class="md-toolbar-section-end">         
+        <div class="md-toolbar-section-end">
           <md-field class="page-md-field" md-inline md-dense>
             <md-input class="page-input" type="number" min="1" max="12"/>
           </md-field>
           <md-content class="transparent">
             Dari 12 Halaman
-          </md-content> 
+          </md-content>
         </div>
     </md-toolbar>
-<context-menu @ctx-open="onCtxOpen" id="context-menu" ref="ctxMenu">
-  {{menuData.Name}}
-  <div>Show</div>
-  <div>Edit</div>
-  <div>Print</div>
-</context-menu>
+    <context-menu @ctx-open="onCtxOpen" id="context-menu" ref="ctxMenu">
+      {{menuData.Name}}
+      <div><md-icon>edit</md-icon>Show</div>
+      <div @click="clickEdit(menuData.Id)"><md-icon>edit</md-icon>Edit</div>
+      <div><md-icon>print</md-icon>Print</div>
+    </context-menu>
   </md-content>
 </template>
 
@@ -94,7 +88,7 @@
   width: 64px !important;
   padding: 5px;
   background-color: white;
-  border-radius: 3px !important;  
+  border-radius: 3px !important;
 }
 .ctc {
   flex: 1;
