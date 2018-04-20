@@ -1,5 +1,6 @@
 <template>
   <md-content class="ctc">
+    <md-content class="psg">
     <md-table
       class="right-table"
       v-model="model"
@@ -7,14 +8,14 @@
       :md-sort-order.sync="currentSortOrder"
       :md-sort-fn="customSort"
       md-fixed-header>
-      <md-table-row slot="md-table-row" slot-scope="{ item }">
+      <md-table-row slot="md-table-row" slot-scope="{ item }" @click.right="$refs.ctxMenu.open($event, { Name: item.Name })">
         <md-table-cell md-label="NIP" md-sort-by="Id">{{ item.EmployeeId }}</md-table-cell>
         <md-table-cell md-label="Nama" md-sort-by="Name">{{ item.Name }}</md-table-cell>
         <md-table-cell md-label="JK" md-sort-by="Gender">{{ item.Gender }}</md-table-cell>
         <md-table-cell md-label="Posisi" md-sort-by="JobTitle">{{ item.JobTitle }}</md-table-cell>
         <md-table-cell md-label="Usia" md-sort-by="Age">{{ item.Age }}</md-table-cell>
         <md-table-cell>
-          <md-button @click="clickEdit(item.Id)" class="md-icon-button">
+          <md-button class="md-icon-button">
             <md-icon>edit</md-icon>
             <md-tooltip md-direction="top">Edit</md-tooltip>
           </md-button>
@@ -22,43 +23,87 @@
       </md-table-row>
     </md-table>
 
-    <md-toolbar class="md-primary md-dense" md-elevation="0">
-      <div class="md-toolbar-row">
-        <div class="md-toolbar-section-start">
-          <md-button class="md-icon-button">
-            <md-icon>menu</md-icon>
-          </md-button>
-        </div>
-        <!-- <md-field class="search">
+    <md-drawer class="md-right" :md-active.sync="showSearchPanel">
+      <md-content style="padding: 20px;">
+        <md-field md-clearable>
+          <label>Nama</label>
           <md-input/>
-        </md-field> -->
-        <!-- <md-autocomplete
-          class="search"
-          v-model="selectedEmployee"
-          :md-options="employees"
-          md-layout="box">
-          <label>Cari...</label>
-        </md-autocomplete> -->
+        </md-field>
+        <md-checkbox v-model="boolean">L</md-checkbox>
+        <md-checkbox v-model="boolean" class="md-primary">P</md-checkbox>
+        <md-field md-clearable>
+          <label>Masa Kerja (Bulan)</label>
+          <md-input type="number"/>
+        </md-field>
+        <md-button>Cari</md-button>
+      </md-content>
+    </md-drawer>
 
-        <div class="md-toolbar-section-end">
-          <md-button class="md-icon-button">
-            <md-icon>refresh</md-icon>
+    </md-content>
+    <md-toolbar class="md-primary md-dense" md-elevation="0">
+        <div class="md-toolbar-section-start">
+          <md-button @click="showSearchPanel = !showSearchPanel" class="md-icon-button">
+            <md-icon>search</md-icon>
           </md-button>
 
           <md-button class="md-icon-button">
-            <md-icon>more_vert</md-icon>
+            <md-icon>person_add</md-icon>
+          </md-button>
+
+          <md-button class="md-icon-button">
+            <md-icon>help</md-icon>
           </md-button>
         </div>
-      </div>
+
+        <div class="md-toolbar-section-end">         
+          <md-field class="page-md-field" md-inline md-dense>
+            <md-input class="page-input" type="number" min="1" max="12"/>
+          </md-field>
+          <md-content class="transparent">
+            Dari 12 Halaman
+          </md-content> 
+        </div>
     </md-toolbar>
-
-
+<context-menu @ctx-open="onCtxOpen" id="context-menu" ref="ctxMenu">
+  {{menuData.Name}}
+  <div>Show</div>
+  <div>Edit</div>
+  <div>Print</div>
+</context-menu>
   </md-content>
 </template>
 
 <style lang="scss" scoped>
+.transparent {
+  background-color: transparent;
+  padding: 0 10px;
+}
+.page-md-field.md-field {
+  width: 64px;
+  margin-top: 0px;
+  margin-bottom: 12px;
+  padding-top: 12px;
+  min-height: 44px;
+}
+.page-md-field.md-field::before,
+.page-md-field.md-field::after {
+  display: none;
+  width: 64px !important;
+}
+.page-input {
+  width: 64px !important;
+  padding: 5px;
+  background-color: white;
+  border-radius: 3px !important;  
+}
 .ctc {
   flex: 1;
+  display: flex;
+}
+.psg {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
 }
 .search {
   width: 300px;
@@ -66,19 +111,23 @@
 .search input {
   background-color: #fff;
 }
+.right-table {
+}
 </style>
 
 <script>
 import orm from '@/mixins/orm'
-import { map } from 'lodash'
+import { map, rest } from 'lodash'
 import moment from 'moment'
 import { toDateDiffToday, toMoment, employeeId } from '@helpers/databaseTo'
+import '@extras/contextmenu/ctx-menu.css'
 export default {
   mixins: [
     orm
   ],
   components: {
-    'layout-one': () => import('@partials/layout-one')
+    'layout-one': () => import('@partials/layout-one'),
+    'context-menu': () => import('@extras/contextmenu')
   },
   data () {
     return {
@@ -91,16 +140,9 @@ export default {
       searchText: '',
       searchBy: 'Name',
       selectedEmployee: null,
-      employees: [
-        'Algeria',
-        'Argentina',
-        'Brazil',
-        'Canada',
-        'Italy',
-        'Japan',
-        'United Kingdom',
-        'United States'
-      ]
+      boolean: false,
+      showSearchPanel: false,
+      menuData: {}
     }
   },
   mounted () {
@@ -109,13 +151,12 @@ export default {
         let model = data.slice()
         model = map(model, this.dataMapper)
         console.log(model)
-        this.$nextTick().then(
-          () => {
+                    let k = 0
             for(let item of model) {
+              if(k > 10) return
               this.model.push(item)
+              k++
             }
-          }
-        )
         // this.model = map(model, this.dataMapper)
       }
     )
@@ -124,6 +165,29 @@ export default {
     await this.closeConnection()
   },
   methods: {
+    onCtxOpen(locals) {
+        console.log('open', locals)
+        this.menuData = locals
+    },
+    doSomething () {
+
+    },
+    getPaginatedItems(items, page) {
+      var page = page || 1,
+          per_page = 3,
+          offset = (page - 1) * per_page,
+          paginatedItems = rest(items, offset).slice(0, per_page);
+      return {
+        page: page,
+        per_page: per_page,
+        total: items.length,
+        total_pages: Math.ceil(items.length / per_page),
+        data: paginatedItems
+      }
+    },
+    openSearch () {
+
+    },
     clickEdit($event) {
       this.$router.push({ name: 'employee.detail', params: { employeeId: $event } })
     },

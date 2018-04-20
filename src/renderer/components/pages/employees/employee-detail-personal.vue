@@ -12,6 +12,12 @@
             <h1>{{ detail.Name }}</h1>
             <h2>{{ detail.JobTitle }}</h2>
             <p class="mo" @click="editAddress">{{ detail.Address }}</p>
+            <p>{{ selectedDate }}</p>
+            <calendar v-model="selectedDate" :attributes='attrs'>
+              <md-field slot-scope="props">
+                <md-input v-model="selectedDate"/>
+              </md-field>
+            </calendar>
             <div class="big">[]</div>
           </div>
         </md-content>
@@ -21,11 +27,18 @@
 </template>
 
 <script>
+  import Vue from 'vue'
   import PrinceXML from '@/extras/PrinceXML'
   import PdfTk from '@/extras/PdfTk'
   import orm from '@/mixins/orm'
   import { map, startCase, toLower } from 'lodash'
-  import licenseListVue from './license-list.vue';
+  import licenseListVue from './license-list.vue'
+  import {setupCalendar, Calendar as cal, DatePicker as dp} from 'v-calendar'
+  import 'v-calendar/lib/v-calendar.min.css'
+setupCalendar({
+  firstDayOfWeek: 2 // Monday,
+})
+  Vue.component('calendar', dp)
   export default {
     name: 'EmployeeDetail',
     mixins: [
@@ -45,7 +58,18 @@
           Name: '',
           Address: ''
         },
-        showDialog: false
+        showDialog: false,
+        attrs: [
+          {
+            /* key: 'today',
+            highlight: {
+              backgroundColor: '#ff8080',
+              // Other properties are available too, like `height` & `borderRadius`
+            },
+            dates: new Date(2018, 0, 1) */
+          }
+        ],
+        selectedDate: new Date(2018, 0, 9)
       }
     },
     components: {
