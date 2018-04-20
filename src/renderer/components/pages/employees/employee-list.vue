@@ -51,7 +51,7 @@
 
         <div class="md-toolbar-section-end">
           <md-field class="page-md-field" md-inline md-dense>
-            <md-input class="page-input" type="number" min="1" max="12"/>
+            <md-input class="page-input" v-model="cpage" type="number" min="1" max="12"/>
           </md-field>
           <md-content class="transparent">
             Dari 12 Halaman
@@ -123,6 +123,9 @@ export default {
     'layout-one': () => import('@partials/layout-one'),
     'context-menu': () => import('@extras/contextmenu')
   },
+  props: [
+    'page'
+  ],
   data () {
     return {
       searched: [],
@@ -136,10 +139,33 @@ export default {
       selectedEmployee: null,
       boolean: false,
       showSearchPanel: false,
-      menuData: {}
+      menuData: {},
+      cpage: 1,
+    }
+  },
+  watch: {
+    cpage: {
+      handler: function (n, o) {
+        if(n === o) return
+        // this.toPage(newP)
+        this.$router.push({ name: 'employees.employee.list', params: { page: n } })
+      }
+    },
+    '$route': {
+      handler: function (n, o) {
+        if(n === 0) return
+        this.populate().then(
+          data => {
+            let model = data.slice()
+            // model = map(model, this.dataMapper)
+            this.model = map(model, this.dataMapper)
+          }
+        )
+      }
     }
   },
   mounted () {
+    console.log(this)
     this.populate().then(
       data => {
         let model = data.slice()
@@ -159,6 +185,10 @@ export default {
     await this.closeConnection()
   },
   methods: {
+    toPage (page) {
+      console.log(page)
+      this.$router.push({ name: 'employees.employee.list', params: { page: page } })
+    },
     onCtxOpen(locals) {
         console.log('open', locals)
         this.menuData = locals
@@ -233,10 +263,18 @@ export default {
     },
     async transaction (transaction) {
       const { Persons, Employees, JobTitles } = this.connection.models
+      let page = this.page - 1      // page number
+      let limit = 10   // number of records per page
+      let offset = page * limit
       let data = await Employees.findAll({
         transaction: transaction,
         raw: true,
         attributes: ['Id'],
+        limit: limit,
+        offset: offset,
+        order: [
+          ['Id', 'Asc']
+        ],
         include: [
           {
             model: Persons,

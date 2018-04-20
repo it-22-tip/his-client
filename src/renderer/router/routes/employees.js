@@ -1,11 +1,13 @@
 const Employees = [
   {
-    path: '/employees/employee',
+    path: '/employees/employee/:page',
+    props: true,
     component: () => import('@pages/employees/employees-tab'),
     children: [
       {
         path: '',
         name: 'employees.employee.list',
+        props: true,
         component: () => import('@pages/employees/employee-list'),
         meta: {
           title: 'Employees',
