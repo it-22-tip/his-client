@@ -33,11 +33,6 @@ routes.beforeEach((to, from, next) => {
 })
 
 routes.beforeEach((to, from, next) => {
-  console.log(to)
-  next()
-})
-
-routes.beforeEach((to, from, next) => {
   if (to.name === 'base.login') {
     Store.commit('Users/LOGOUT')
   }

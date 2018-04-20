@@ -13,7 +13,7 @@
         <md-table-cell md-label="Nama" md-sort-by="Name">{{ item.Name }}</md-table-cell>
         <md-table-cell md-label="JK" md-sort-by="Gender">{{ item.Gender }}</md-table-cell>
         <md-table-cell md-label="Posisi" md-sort-by="JobTitle">{{ item.JobTitle }}</md-table-cell>
-        <md-table-cell md-label="Usia" md-sort-by="Age">{{ item.Age }}</md-table-cell>
+        <!-- <md-table-cell md-label="Usia" md-sort-by="Age">{{ item.Age }}</md-table-cell> -->
       </md-table-row>
     </md-table>
 
@@ -51,10 +51,10 @@
 
         <div class="md-toolbar-section-end">
           <md-field class="page-md-field" md-inline md-dense>
-            <md-input class="page-input" v-model="cpage" type="number" min="1" max="12"/>
+            <md-input class="page-input" v-model="cpage" type="number" min="1" :max="totalPage"/>
           </md-field>
           <md-content class="transparent">
-            Dari 12 Halaman
+            Dari {{ totalPage }} Halaman
           </md-content>
         </div>
     </md-toolbar>
@@ -141,6 +141,7 @@ export default {
       showSearchPanel: false,
       menuData: {},
       cpage: 1,
+      totalPage: null
     }
   },
   watch: {
@@ -154,32 +155,23 @@ export default {
     '$route': {
       handler: function (n, o) {
         if(n === 0) return
-        this.populate().then(
-          data => {
-            let model = data.slice()
-            // model = map(model, this.dataMapper)
-            this.model = map(model, this.dataMapper)
-          }
-        )
+        this.populate()
       }
-    }
+    }/* ,
+    currentSort: {
+      handle: function (n, o) {
+        console.log(n)
+      }
+    },
+    currentSortOrder: {
+      handle: function (n, o) {
+        console.log(n)
+      }
+    } */
   },
   mounted () {
     console.log(this)
-    this.populate().then(
-      data => {
-        let model = data.slice()
-        model = map(model, this.dataMapper)
-        console.log(model)
-                    let k = 0
-            for(let item of model) {
-              if(k > 10) return
-              this.model.push(item)
-              k++
-            }
-        // this.model = map(model, this.dataMapper)
-      }
-    )
+    this.populate()
   },
   async beforeDestroy () {
     await this.closeConnection()
@@ -193,48 +185,11 @@ export default {
         console.log('open', locals)
         this.menuData = locals
     },
-    doSomething () {
-
-    },
-    getPaginatedItems(items, page) {
-      var page = page || 1,
-          per_page = 3,
-          offset = (page - 1) * per_page,
-          paginatedItems = rest(items, offset).slice(0, per_page);
-      return {
-        page: page,
-        per_page: per_page,
-        total: items.length,
-        total_pages: Math.ceil(items.length / per_page),
-        data: paginatedItems
-      }
-    },
-    openSearch () {
-
-    },
     clickEdit($event) {
       this.$router.push({ name: 'employee.detail', params: { employeeId: $event } })
     },
-    clickSearch () {
-      const toLower = text => {
-          return text.toString().toLowerCase()
-      }
-      let s
-      if (this.reset.length < 1) {
-        this.reset = this.model.splice()
-        console.log(this.reset)
-      } else {
-        this.model = this.reset
-      }
-      try {
-      s = this.model.filter(item => toLower(item.Name).includes(toLower(this.searchText)))
-      } catch (error) {
-        console.log(error)
-      }
-      console.log(this.reset)
-      this.model = s
-    },
     customSort (value) {
+      this.populate()
       return value.sort((left, right) => {
         const sortBy = this.currentSort
         const desc = this.currentSortOrder === 'desc'
@@ -261,24 +216,50 @@ export default {
         }
       }
     },
+    getOrder (Employees) {
+      let order = null
+      let cs = this.currentSort
+        switch (cs) {
+          case 'Id':
+            order = ['Id', this.currentSortOrder]
+            break
+          case 'Name':
+            order = [Employees.associations.Person, 'Name', this.currentSortOrder]
+            break
+          case 'Gender':
+            order = [Employees.associations.Person, 'Gender', this.currentSortOrder]
+            break
+          case 'JobTitle':
+            order = [Employees.associations.JobTitle, 'Name', this.currentSortOrder]
+            break
+          default:
+            order = ['Id', this.currentSortOrder]
+        }
+        console.log(cs)
+          // ['Id', this.currentSortOrder]
+          //[Employees.associations.Person, 'Name', this.currentSortOrder]
+          // [Employees.associations.Person, 'Gender', this.currentSortOrder]
+          // [Employees.associations.JobTitle, 'Name', this.currentSortOrder]
+          // ['Age', this.currentSortOrder]
+      return [order]
+    },
     async transaction (transaction) {
       const { Persons, Employees, JobTitles } = this.connection.models
       let page = this.page - 1      // page number
       let limit = 10   // number of records per page
       let offset = page * limit
-      let data = await Employees.findAll({
+      let order = this.getOrder(Employees)
+      let data = await Employees.findAndCountAll({
         transaction: transaction,
         raw: true,
         attributes: ['Id'],
         limit: limit,
         offset: offset,
-        order: [
-          ['Id', 'Asc']
-        ],
+        order: order,
         include: [
           {
             model: Persons,
-            attributes: ['Name', 'Gender', 'BirthDate'],
+            attributes: ['Name', 'Gender', 'BirthDate', 'Age'],
           },
           {
             model: JobTitles,
@@ -297,10 +278,10 @@ export default {
       item = this.reAssign(item, 'Person.Name', 'Name')
       item = this.reAssign(item, 'Person.Gender', 'Gender')
       item = this.reAssign(item, 'JobTitle.Name', 'JobTitle')
-      item = this.reAssign(item, 'Person.BirthDate', 'Age')
-      item = toMoment(item, 'Age')
+      item = this.reAssign(item, 'Person.Age', 'Age')
+      // item = toMoment(item, 'Age')
       item = employeeId(item)
-      item = toDateDiffToday(item, 'Age')
+      // item = toDateDiffToday(item, 'Age')
       return item
     },
     async populate () {
@@ -312,12 +293,19 @@ export default {
       }).connect()
       try {
         data = await this.connection.transaction(this.transaction)
+        console.log(data)
       } catch (error) {
         console.log(error)
       } finally {
         await this.closeConnection()
       }
-      return data
+      const { rows, count } = data
+      let model = rows.slice()
+            // model = map(model, this.dataMapper)
+      this.model = map(model, this.dataMapper)
+      this.model = model
+      this.total = count
+      this.totalPage = Math.ceil(count / 10)
     }
   }
 }
