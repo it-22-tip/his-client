@@ -11,27 +11,46 @@
     <md-content class="ctc">
 
       <md-content class="padding-10">
-        <md-field>
-          <label>Nama</label>
-          <md-input v-model="saved.Person.Name"/>
-        </md-field>
-        <md-list>
-          <md-subheader>Jenis Kelamin</md-subheader>
-          <md-list-item>
-            <md-radio v-model="saved.Person.Gender" value="P"/>
-            <span class="md-list-item-text">Perempuan</span>
-          </md-list-item>
-          <md-list-item>
-            <md-radio v-model="saved.Person.Gender" value="L"/>
-            <span class="md-list-item-text">Laki-Laki</span>
-          </md-list-item>
-        </md-list>
-        <md-field>
-          <label for="movie">Posisi</label>
-            <md-select v-model="saved.JobTitleId" @md-opened="openPosition">
-              <md-option v-for="posisi in dbPosisi" :value="posisi.Id" :key="posisi.id">{{ posisi.Name }}</md-option>
-            </md-select>
-        </md-field>
+        <div class="md-layout">
+          <div class="md-layout-item md-size-25">
+            Nama
+          </div>
+          <md-field class="md-layout-item md-size-25">
+            <label>Nama</label>
+            <md-input v-model="saved.Person.Name"/>
+          </md-field>
+        </div>
+
+        <div class="md-layout">
+          <div class="md-layout-item md-size-25">
+            Gender
+          </div>
+          <div class="md-layout-item md-size-25">
+            <md-radio v-model="saved.Person.Gender" value="P">Perempuan</md-radio>
+            <md-radio v-model="saved.Person.Gender" value="L">Laki - Laki</md-radio>
+          </div>
+        </div>
+
+        <div class="md-layout">
+          <div class="md-layout-item md-size-25">
+            Posisi
+          </div>
+          <md-field class="md-layout-item md-size-25">
+            <label for="movie">Posisi</label>
+              <md-select v-model="saved.JobTitleId" @md-opened="openPosition">
+                <md-option v-for="posisi in dbPosisi" :value="posisi.Id" :key="posisi.id">{{ posisi.Name }}</md-option>
+              </md-select>
+          </md-field>
+        </div>
+
+        <div class="md-layout">
+          <div class="md-layout-item md-size-25">
+            Tanggal Lahir
+          </div>
+          <div class="md-layout-item md-size-25">
+            <date-picker v-model="saved.Person.BirthDate"/>
+          </div>
+        </div>
       </md-content>
 
     </md-content>
@@ -39,13 +58,15 @@
 </template>
 
 <script>
+  import moment from 'moment'
   import orm from '@/mixins/orm'
   export default {
     mixins: [
       orm
     ],
     components: {
-      'layout-one': () => import('@partials/layout-one')
+      'layout-one': () => import('@partials/layout-one'),
+      'date-picker': () => import('@partials/date-picker')
     },
     data () {
       return {
@@ -53,7 +74,8 @@
         saved: {
           Person: {
             Name: '',
-            Gender: 'P'
+            Gender: 'P',
+            BirthDate: moment().toDate()
           },
           JobTitleId: null
         },
@@ -64,9 +86,6 @@
           }
         ]
       }
-    },
-    mounted () {
-
     },
     methods: {
       save () {
