@@ -44,10 +44,10 @@
   import ModalProvince from '@partials/modal-province'
   console.log(ModalProvince)
   Vue.component('modal-province', ModalProvince)
-setupCalendar({
-  locale: 'id-ID'
-  // firstDayOfWeek: 2 // Monday,
-})
+  setupCalendar({
+    locale: 'id-ID'
+    // firstDayOfWeek: 2 // Monday,
+  })
   Vue.component('calendar', dp)
   export default {
     name: 'EmployeeDetail',
