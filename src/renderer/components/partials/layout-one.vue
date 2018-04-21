@@ -12,7 +12,7 @@
           </div>
           <div class="md-toolbar-section-end">
             <md-button :to="{ name: 'base.dashboard' }">Dasbor</md-button>
-            <md-button :to="{ name: 'employees.employee.list', params: { page: 1 } }">HRD</md-button>
+            <md-button :to="{ name: 'employees.employee.list', params: { page: '1', sort: 'Id', order: 'desc' } }">HRD</md-button>
             <md-button :to="{ name: 'documents.document.list' }">Doc</md-button>
             <md-button :to="{ name: 'masterdata.address' }">Data Induk</md-button>
             <md-button :to="{ name: 'base.login' }">Logout</md-button>

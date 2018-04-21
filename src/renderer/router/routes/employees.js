@@ -1,6 +1,6 @@
 const Employees = [
   {
-    path: '/employees/employee/:page',
+    path: '/employees/employee/:page/:order?/:sort?',
     props: true,
     component: () => import('@pages/employees/employees-tab'),
     children: [

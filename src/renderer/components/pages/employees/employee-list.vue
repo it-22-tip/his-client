@@ -123,9 +123,20 @@ export default {
     'layout-one': () => import('@partials/layout-one'),
     'context-menu': () => import('@extras/contextmenu')
   },
-  props: [
-    'page'
-  ],
+  props: {
+    page: {
+      type: String,
+      required: true
+    },
+    order: {
+      type: String,
+      default: 'desc'
+    },
+    sort: {
+      type: String,
+      default: null
+    }
+  },
   data () {
     return {
       searched: [],
@@ -149,25 +160,17 @@ export default {
       handler: function (n, o) {
         if(n === o) return
         // this.toPage(newP)
-        this.$router.push({ name: 'employees.employee.list', params: { page: n } })
+        // n = parseInt(n)
+        this.$router.push({ name: 'employees.employee.list', params: { page: n, sort: this.currentSort, order: this.currentSortOrder } })
       }
     },
     '$route': {
       handler: function (n, o) {
         if(n === 0) return
+        console.log(n)
         this.populate()
       }
-    }/* ,
-    currentSort: {
-      handle: function (n, o) {
-        console.log(n)
-      }
-    },
-    currentSortOrder: {
-      handle: function (n, o) {
-        console.log(n)
-      }
-    } */
+    }
   },
   mounted () {
     console.log(this)
