@@ -8,7 +8,7 @@
       :md-sort-order.sync="currentSortOrder"
       :md-sort-fn="customSort"
       md-fixed-header>
-      <md-table-row slot="md-table-row" slot-scope="{ item }" @click.right="$refs.ctxMenu.open($event, { Name: item.Name, Id:item.Id })">
+      <md-table-row slot="md-table-row" slot-scope="{ item }" @click.left="test" @click.right="$refs.ctxMenu.open($event, { Name: item.Name, Id:item.Id })">
         <md-table-cell md-label="NIP" md-sort-by="Id">{{ item.EmployeeId }}</md-table-cell>
         <md-table-cell md-label="Nama" md-sort-by="Name">{{ item.Name }}</md-table-cell>
         <md-table-cell md-label="JK" md-sort-by="Gender">{{ item.Gender }}</md-table-cell>
@@ -40,13 +40,13 @@
             <md-icon>search</md-icon>
           </md-button>
 
-          <md-button class="md-icon-button">
+          <md-button @click="$router.push({ name: 'employee.new' })" class="md-icon-button">
             <md-icon>person_add</md-icon>
           </md-button>
 
-          <md-button class="md-icon-button">
+          <!-- <md-button class="md-icon-button">
             <md-icon>help</md-icon>
-          </md-button>
+          </md-button> -->
         </div>
 
         <div class="md-toolbar-section-end">
@@ -59,10 +59,9 @@
         </div>
     </md-toolbar>
     <context-menu @ctx-open="onCtxOpen" id="context-menu" ref="ctxMenu">
-      {{menuData.Name}}
-      <div><md-icon>edit</md-icon>Show</div>
+      <div><h3>{{menuData.Name}}</h3></div>
       <div @click="clickEdit(menuData.Id)"><md-icon>edit</md-icon>Edit</div>
-      <div><md-icon>print</md-icon>Print</div>
+      <div><md-icon>delete</md-icon>Delete</div>
     </context-menu>
   </md-content>
 </template>
@@ -156,43 +155,60 @@ export default {
     }
   },
   watch: {
+    currentSort: {
+      handler: function (newSort, o) {
+        if(newSort === o) return
+        let params = { page: this.page, sort: newSort, order: this.currentSortOrder }
+        this.$router.push({ name: 'employees.employee.list', params: params })
+      }
+    },
+    currentSortOrder: {
+      handler: function (newSortOrder, o) {
+        if(newSortOrder === o) return
+        let params = { page: this.page, sort: this.currentSort, order: newSortOrder }
+        this.$router.push({ name: 'employees.employee.list', params: params })
+      }
+    },
     cpage: {
       handler: function (n, o) {
         if(n === o) return
-        // this.toPage(newP)
-        // n = parseInt(n)
+        if(n === '')
+        console.log(n > this.totalPage)
+        if(n > this.totalPage) return
         this.$router.push({ name: 'employees.employee.list', params: { page: n, sort: this.currentSort, order: this.currentSortOrder } })
       }
     },
     '$route': {
       handler: function (n, o) {
         if(n === 0) return
-        console.log(n)
+        this.cpage = n.params.page
+        this.currentSort = n.params.sort
+        this.currentSortOrder = n.params.order
         this.populate()
       }
     }
   },
   mounted () {
-    console.log(this)
+    this.cpage = this.page
+    this.currentSort = this.sort
+    this.currentSortOrder = this.order
     this.populate()
   },
   async beforeDestroy () {
     await this.closeConnection()
   },
   methods: {
-    toPage (page) {
-      console.log(page)
-      this.$router.push({ name: 'employees.employee.list', params: { page: page } })
+    test () {
+      console.log('test')
     },
     onCtxOpen(locals) {
-        console.log('open', locals)
-        this.menuData = locals
+      this.menuData = locals
     },
     clickEdit($event) {
       this.$router.push({ name: 'employee.detail', params: { employeeId: $event } })
     },
     customSort (value) {
-      this.populate()
+      // this.populate()
       return value.sort((left, right) => {
         const sortBy = this.currentSort
         const desc = this.currentSortOrder === 'desc'
@@ -235,15 +251,12 @@ export default {
           case 'JobTitle':
             order = [Employees.associations.JobTitle, 'Name', this.currentSortOrder]
             break
+          case 'Age':
+            order = [Employees.associations.Person, 'BirthDate', this.currentSortOrder]
+            break
           default:
             order = ['Id', this.currentSortOrder]
         }
-        console.log(cs)
-          // ['Id', this.currentSortOrder]
-          //[Employees.associations.Person, 'Name', this.currentSortOrder]
-          // [Employees.associations.Person, 'Gender', this.currentSortOrder]
-          // [Employees.associations.JobTitle, 'Name', this.currentSortOrder]
-          // ['Age', this.currentSortOrder]
       return [order]
     },
     async transaction (transaction) {

@@ -1,5 +1,8 @@
 <template>
   <layout-one>
+    <md-toolbar class="md-primary md-dense">
+      <md-button @click="$router.go(-1)" class="md-icon-button"><md-icon>close</md-icon></md-button>
+    </md-toolbar>
     <md-content>
       <md-steppers md-linear :md-active-step.sync="active">
         <md-step id="Provinces" md-label="Provinsi" md-description="">
@@ -117,14 +120,12 @@ export default {
     }
   },
   async mounted () {
-    // this.province = '33'
-      // just example
     this.getPersons()
     this.getData('Provinces')
   },
   methods: {
     done () {
-      console.log('done')
+
     },
     async getPersons() {
       const transaction = async transaction => {

@@ -11,18 +11,23 @@
           <div class="hi">
             <h1>{{ detail.Name }}</h1>
             <h2>{{ detail.JobTitle }}</h2>
-            <p class="mo" @click="editAddress">{{ detail.Address }}</p>
-            <p>{{ selectedDate }}</p>
-            <calendar v-model="selectedDate" :attributes='attrs'>
-              <md-field slot-scope="props">
-                <md-input v-model="selectedDate"/>
-              </md-field>
+            <p>{{ detail.BirthDate.age }} Tahun</p>
+            <p class="mo" @click="modalProvince = true">{{ detail.Address }}</p>
+            <calendar v-model="detail.BirthDate.dateObj" :attributes='attrs'>
+              <div slot-scope="props">
+                <md-icon>date</md-icon>{{ detail.BirthDate.human }}
+              </div>
             </calendar>
-            <div class="big">[]</div>
           </div>
         </md-content>
       </md-content>
     </md-content>
+    <md-dialog :md-active.sync="modalProvince">
+        <md-dialog-title>Provinsi</md-dialog-title>
+        <md-content>
+            Pilih Provinsi
+        </md-content>
+    </md-dialog>
   </layout-one>
 </template>
 
@@ -35,8 +40,13 @@
   import licenseListVue from './license-list.vue'
   import {setupCalendar, Calendar as cal, DatePicker as dp} from 'v-calendar'
   import 'v-calendar/lib/v-calendar.min.css'
+  import moment from 'moment'
+  import ModalProvince from '@partials/modal-province'
+  console.log(ModalProvince)
+  Vue.component('modal-province', ModalProvince)
 setupCalendar({
-  firstDayOfWeek: 2 // Monday,
+  locale: 'id-ID'
+  // firstDayOfWeek: 2 // Monday,
 })
   Vue.component('calendar', dp)
   export default {
@@ -45,7 +55,8 @@ setupCalendar({
       orm
     ],
     components: {
-      'layout-one': () => import('@partials/layout-one')
+      // 'layout-one': () => import('@partials/layout-one'),
+      // 'test-comp': ModalProvince
     },
     props: [
       'employeeId'
@@ -56,20 +67,14 @@ setupCalendar({
         connection: null,
         detail: {
           Name: '',
-          Address: ''
+          Address: '',
+          BirthDate: {}
         },
         showDialog: false,
-        attrs: [
-          {
-            /* key: 'today',
-            highlight: {
-              backgroundColor: '#ff8080',
-              // Other properties are available too, like `height` & `borderRadius`
-            },
-            dates: new Date(2018, 0, 1) */
-          }
-        ],
-        selectedDate: new Date(2018, 0, 9)
+        attrs: [{}],
+        selectedDate: new Date(2018, 0, 9),
+        showedDate: null,
+        modalProvince: false
       }
     },
     components: {
@@ -77,6 +82,15 @@ setupCalendar({
     },
     mounted () {
       this.populate()
+    },
+    watch: {
+      'detail.BirthDate.dateObj': {
+        handler: function (val) {
+          let today = moment()
+          this.detail.BirthDate.human = moment(val).format('DD MMMM YYYY')
+          this.detail.BirthDate.age = Math.abs(parseInt(moment(val).diff(moment(), 'years')))
+        }
+      }
     },
     methods: {
       editAddress () {
@@ -111,25 +125,17 @@ setupCalendar({
         } catch (error) {
           console.log({error:error})
         }
-        // console.log(test)
       },
       dataMapper (item) {
-        // console.log(item)
-
-        let Provinces =  item['Person.AddressHistories.AddressVillage.District.Regency.Province.Name'] ? ', ' + startCase(toLower(item['Person.AddressHistories.AddressVillage.District.Regency.Province.Name'])) : ''
-        let Regencies =  item['Person.AddressHistories.AddressVillage.District.Regency.Name'] ? ', ' + startCase(toLower(item['Person.AddressHistories.AddressVillage.District.Regency.Name'])) : ''
-        let Districts =  item['Person.AddressHistories.AddressVillage.District.Name'] ? ', ' + startCase(toLower(item['Person.AddressHistories.AddressVillage.District.Name'])) : ''
-        let Villages =  item['Person.AddressHistories.AddressVillage.Name'] ? ', ' + startCase(toLower(item['Person.AddressHistories.AddressVillage.Name'])) : ''
+        let Provinces =  item['Person.AddressHistories.AddressVillage.District.Regency.Province.Name'] ? startCase(toLower(item['Person.AddressHistories.AddressVillage.District.Regency.Province.Name'])) : ''
+        let Regencies =  item['Person.AddressHistories.AddressVillage.District.Regency.Name'] ? startCase(toLower(item['Person.AddressHistories.AddressVillage.District.Regency.Name'])) : ''
+        let Districts =  item['Person.AddressHistories.AddressVillage.District.Name'] ? startCase(toLower(item['Person.AddressHistories.AddressVillage.District.Name'])) : ''
+        let Villages =  item['Person.AddressHistories.AddressVillage.Name'] ? startCase(toLower(item['Person.AddressHistories.AddressVillage.Name'])) : ''
         let Address = item['Person.AddressHistories.Address']
-        let Rt = item['Person.AddressHistories.Rt'] ? ', rt:' + item['Person.AddressHistories.Rt'] : ''
-        let Rw = item['Person.AddressHistories.Rw'] ? ', rw:' + item['Person.AddressHistories.Rw'] : ''
-
-        // console.log(item)
-
-        item.Address = Address + Rt + Rw + Villages + Districts + Regencies + Provinces
-
-        // console.log(item)
-
+        let Rt = item['Person.AddressHistories.Rt'] ? item['Person.AddressHistories.Rt'] : ''
+        let Rw = item['Person.AddressHistories.Rw'] ? item['Person.AddressHistories.Rw'] : ''
+        item.Address = `${Address}, RT/W:${Rt}/${Rw}, ${Villages}, ${Districts}, ${Regencies}, ${Provinces}`
+        // item.BirthDate = ['Person.BirthDate']
         return item
       },
       async closeConnection () {
@@ -144,7 +150,6 @@ setupCalendar({
       },
       async transaction (transaction) {
         const { Almamaters, EducationHistories, Persons, Employees, JobTitles, Licenses, LicenseTypes, AddressHistories, Villages, Districts, Regencies, Provinces } = this.connection.models
-        // console.log(this.connection)
         let data = await Employees.findAll({
           transaction: transaction,
           raw: true,
@@ -225,7 +230,6 @@ setupCalendar({
         }).connect()
         try {
           let data = await this.connection.transaction(this.transaction)
-          //let model = data.slice()
           let model
           model = map(data, this.dataMapper)
           let first = model.slice()
@@ -235,11 +239,12 @@ setupCalendar({
           this.detail.Address = first['Address']
           this.detail.PersonId = first['Person.Id']
           this.detail.JobTitle = first['JobTitle.Name']
-          // first = first[0]
-          // console.log({a:first['Person.Name']})
-          // console.log(first)
-          // this.detail = first
-
+          this.detail.BirthDate = {
+            dateObj: moment(first['Person.BirthDate']).toDate(),
+            orig: first['Person.BirthDate'],
+            human: moment(first['Person.BirthDate']).format('DD MM YYYY'),
+            age: Math.abs(parseInt(moment(first['Person.BirthDate']).diff(moment(), 'years')))
+          }
         } catch (error) {
           console.log(error)
         } finally {

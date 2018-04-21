@@ -43,6 +43,15 @@ const Employees = [
       title: 'Employees Details Personal',
       login: true
     }
+  },
+  {
+    path: '/employee/new',
+    name: 'employee.new',
+    component: () => import('@pages/employees/employee-new'),
+    meta: {
+      title: 'Employees New',
+      login: true
+    }
   }
 ]
 
