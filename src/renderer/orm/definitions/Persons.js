@@ -1,5 +1,6 @@
 import { DataTypes } from 'sequelize'
-// import moment from 'moment'
+import { startCase, toLower } from 'lodash'
+import moment from 'moment'
 import { Faiths, Genders, BloodTypes, MaritalStatuses, BloodRhTypes } from '../enums'
 const tableName = 'Persons'
 const attributes = {
@@ -9,7 +10,15 @@ const attributes = {
     autoIncrement: true
   },
   Name: {
-    type: DataTypes.STRING()
+    type: DataTypes.STRING(),
+    set: function (Name) {
+      this.setDataValue('Name', toLower(Name))
+    },
+    get: function () {
+      let Name = this.dataValues.Name
+      Name = startCase(toLower(Name))
+      return Name
+    }
   },
   Avatar: {
     type: DataTypes.BLOB
@@ -46,12 +55,11 @@ const attributes = {
   Age: {
     type: new DataTypes.VIRTUAL(DataTypes.INTEGER(), ['BirthDate']),
     get: function () {
-      return 1
-      // console.log(this)
-      // return this.get('BirthDate')// Math.abs(parseInt(this.get('BirthDate').diff(moment(), 'years')))
+      let BirthDate = this.dataValues.BirthDate
+      if (BirthDate === null) return 0
+      return Math.abs(parseInt(moment(BirthDate).diff(moment(), 'years')))
     },
     set: function (val) {
-      // this.setDataValue('password', val)
     }
   }
 }

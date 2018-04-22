@@ -11,6 +11,8 @@
     <md-content class="ctc">
 
       <md-content class="padding-10">
+        <md-steppers>
+          <md-step id="first" md-label="First Step">
         <div class="md-layout">
           <div class="md-layout-item md-size-25">
             Nama
@@ -51,6 +53,11 @@
             <date-picker v-model="saved.Person.BirthDate"/>
           </div>
         </div>
+          </md-step>
+          <md-step id="second" md-label="Second Step">
+            [2]
+          </md-step>
+        </md-steppers>
       </md-content>
 
     </md-content>

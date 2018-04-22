@@ -8,8 +8,8 @@
       :md-sort-order.sync="currentSortOrder"
       :md-sort-fn="customSort"
       md-fixed-header>
-      <md-table-row slot="md-table-row" slot-scope="{ item }" @click.left="test" @click.right="$refs.ctxMenu.open($event, { Name: item.Name, Id:item.Id })">
-        <md-table-cell md-label="NIP" md-sort-by="Id">{{ item.EmployeeId }}</md-table-cell>
+      <md-table-row slot="md-table-row" slot-scope="{ item }" @click.right="$refs.ctxMenu.open($event, { Name: item.Name, Id:item.Ein })">
+        <md-table-cell md-label="NIP" md-sort-by="Ein">{{ item.Ein }}</md-table-cell>
         <md-table-cell md-label="Nama" md-sort-by="Name">{{ item.Name }}</md-table-cell>
         <md-table-cell md-label="JK" md-sort-by="Gender">{{ item.Gender }}</md-table-cell>
         <md-table-cell md-label="Posisi" md-sort-by="JobTitle">{{ item.JobTitle }}</md-table-cell>
@@ -39,14 +39,10 @@
           <md-button @click="showSearchPanel = !showSearchPanel" class="md-icon-button">
             <md-icon>search</md-icon>
           </md-button>
-
           <md-button @click="$router.push({ name: 'employee.new' })" class="md-icon-button">
             <md-icon>person_add</md-icon>
           </md-button>
-
-          <!-- <md-button class="md-icon-button">
-            <md-icon>help</md-icon>
-          </md-button> -->
+          <p>Sort By: {{ currentSort }} | Order By: {{ currentSortOrder }} </p>
         </div>
 
         <div class="md-toolbar-section-end">
@@ -111,8 +107,6 @@
 <script>
 import orm from '@/mixins/orm'
 import { map, rest } from 'lodash'
-import moment from 'moment'
-import { toDateDiffToday, toMoment, employeeId } from '@helpers/databaseTo'
 import '@extras/contextmenu/ctx-menu.css'
 export default {
   mixins: [
@@ -198,8 +192,11 @@ export default {
     await this.closeConnection()
   },
   methods: {
-    test () {
-      console.log('test')
+    onSelect (e) {
+      console.log({e})
+    },
+    test ($event) {
+      console.log($event.target)
     },
     onCtxOpen(locals) {
       this.menuData = locals
@@ -208,12 +205,11 @@ export default {
       this.$router.push({ name: 'employee.detail', params: { employeeId: $event } })
     },
     customSort (value) {
-      // this.populate()
       return value.sort((left, right) => {
-        const sortBy = this.currentSort
+        /* const sortBy = this.currentSort
         const desc = this.currentSortOrder === 'desc'
         let sorted
-        if (sortBy === 'Id' || sortBy === 'Age' ) {
+        if (sortBy === 'Ein' || sortBy === 'Age' ) {
           sorted = desc ?
           left[sortBy] - right[sortBy] :
           right[sortBy] - left[sortBy]
@@ -222,7 +218,9 @@ export default {
           left[sortBy].localeCompare(right[sortBy]) :
           right[sortBy].localeCompare(left[sortBy])
         }
-        return sorted
+        console.log(sorted) */
+        // return sorted
+        return -1
       })
     },
     async closeConnection () {
@@ -261,44 +259,51 @@ export default {
     },
     async transaction (transaction) {
       const { Persons, Employees, JobTitles } = this.connection.models
-      let page = this.page - 1      // page number
-      let limit = 10   // number of records per page
+      let page = this.page - 1
+      let limit = 10
       let offset = page * limit
       let order = this.getOrder(Employees)
-      let data = await Employees.findAndCountAll({
+
+      let options = {
         transaction: transaction,
-        raw: true,
+        raw: false,
         attributes: ['Id'],
         limit: limit,
         offset: offset,
         order: order,
+        distinct: true,
+        col: 'Id',
         include: [
           {
             model: Persons,
-            attributes: ['Name', 'Gender', 'BirthDate'],
+            attributes: ['Name', 'Gender', 'BirthDate', 'Age'],
+            required: true
           },
           {
             model: JobTitles,
             attributes: ['Name']
           }
         ]
+      }
+      let count = null
+      let rows = []
+      try {
+        rows = await Employees.findAll(options)
+        options.raw = true
+        count = await Employees.count(options)
+      } catch (error) {
+        console.log(error)
+      }
+      rows = map(rows, row => {
+        return {
+          Ein: row.Id,
+          Name: row.Person.Name,
+          Age: row.Person.Age,
+          Gender: row.Person.Gender,
+          JobTitle: (row.JobTitle !== null) ? row.JobTitle.Name : null
+        }
       })
-      return data
-    },
-    reAssign (item, from, to) {
-      item[to] = item[from]
-      delete item[from]
-      return item
-    },
-    dataMapper (item) {
-      item = this.reAssign(item, 'Person.Name', 'Name')
-      item = this.reAssign(item, 'Person.Gender', 'Gender')
-      item = this.reAssign(item, 'JobTitle.Name', 'JobTitle')
-      item = this.reAssign(item, 'Person.BirthDate', 'Age')
-      item = toMoment(item, 'Age')
-      item = employeeId(item)
-      item = toDateDiffToday(item, 'Age')
-      return item
+      return { rows, count }
     },
     async populate () {
       let data
@@ -315,10 +320,7 @@ export default {
         await this.closeConnection()
       }
       const { rows, count } = data
-      let model = rows.slice()
-            // model = map(model, this.dataMapper)
-      this.model = map(model, this.dataMapper)
-      this.model = model
+      this.model = rows
       this.total = count
       this.totalPage = Math.ceil(count / 10)
     }

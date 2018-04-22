@@ -6,6 +6,10 @@ const attributes = {
     primaryKey: true,
     autoIncrement: true
   },
+  /* EmployeeId: {
+    type: DataTypes.CHAR(10),
+    unique: true
+  }, */
   PersonId: {
     type: DataTypes.INTEGER()
   },
