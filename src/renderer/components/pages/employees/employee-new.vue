@@ -11,7 +11,7 @@
     <md-content class="ctc">
 
       <md-content class="padding-10">
-        <md-steppers>
+        <md-steppers class="mstepper">
           <md-step id="first" md-label="First Step">
         <div class="md-layout">
           <div class="md-layout-item md-size-25">
@@ -158,6 +158,22 @@
 }
 .padding-10 {
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+</style>
+
+<style lang="scss" scoped>
+.mstepper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.mstepper .md-steppers-wrapper {
+  flex: 1 !important;
+  height: 1;
 }
 </style>
 

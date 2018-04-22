@@ -4,8 +4,8 @@
     <md-table
       class="right-table"
       v-model="model"
-      :md-sort.sync="currentSort"
-      :md-sort-order.sync="currentSortOrder"
+      :md-sort.sync="activeSort"
+      :md-sort-order.sync="activeOrder"
       :md-sort-fn="customSort"
       md-fixed-header>
       <md-table-row slot="md-table-row" slot-scope="{ item }" @click.right="$refs.ctxMenu.open($event, { Name: item.Name, Id:item.Ein })">
@@ -42,12 +42,12 @@
           <md-button @click="$router.push({ name: 'employee.new' })" class="md-icon-button">
             <md-icon>person_add</md-icon>
           </md-button>
-          <p>Sort By: {{ currentSort }} | Order By: {{ currentSortOrder }} </p>
+          <p>Sort By: {{ activeSort }} | Order By: {{ activeOrder }} </p>
         </div>
 
         <div class="md-toolbar-section-end">
           <md-field class="page-md-field" md-inline md-dense>
-            <md-input class="page-input" v-model="cpage" type="number" min="1" :max="totalPage"/>
+            <md-input class="page-input" v-model="activePage" type="number" min="1" :max="totalPage"/>
           </md-field>
           <md-content class="transparent">
             Dari {{ totalPage }} Halaman
@@ -62,51 +62,9 @@
   </md-content>
 </template>
 
-<style lang="scss" scoped>
-.transparent {
-  background-color: transparent;
-  padding: 0 10px;
-}
-.page-md-field.md-field {
-  width: 64px;
-  margin-top: 0px;
-  margin-bottom: 12px;
-  padding-top: 12px;
-  min-height: 44px;
-}
-.page-md-field.md-field::before,
-.page-md-field.md-field::after {
-  display: none;
-  width: 64px !important;
-}
-.page-input {
-  width: 64px !important;
-  padding: 5px;
-  background-color: white;
-  border-radius: 3px !important;
-}
-.ctc {
-  flex: 1;
-  display: flex;
-}
-.psg {
-  flex: 1;
-  position: relative;
-  overflow: hidden;
-}
-.search {
-  width: 300px;
-}
-.search input {
-  background-color: #fff;
-}
-.right-table {
-}
-</style>
-
 <script>
 import orm from '@/mixins/orm'
-import { map, rest } from 'lodash'
+import { map, extend } from 'lodash'
 import '@extras/contextmenu/ctx-menu.css'
 export default {
   mixins: [
@@ -123,7 +81,7 @@ export default {
     },
     order: {
       type: String,
-      default: 'desc'
+      default: 'asc'
     },
     sort: {
       type: String,
@@ -136,67 +94,69 @@ export default {
       model: [],
       reset: [],
       connection: null,
-      currentSort: 'Name',
-      currentSortOrder: 'asc',
       searchText: '',
       searchBy: 'Name',
       selectedEmployee: null,
       boolean: false,
       showSearchPanel: false,
       menuData: {},
-      cpage: 1,
-      totalPage: null
+      totalPage: null,
+      activePage: null,
+      activeSort: null,
+      activeOrder: null
     }
   },
   watch: {
-    currentSort: {
-      handler: function (newSort, o) {
-        if(newSort === o) return
-        let params = { page: this.page, sort: newSort, order: this.currentSortOrder }
-        this.$router.push({ name: 'employees.employee.list', params: params })
+    activeSort: {
+      handler: function (newSort, oldSort) {
+        if(newSort === oldSort) return
+        this.changePage({ sort: newSort })
       }
     },
-    currentSortOrder: {
-      handler: function (newSortOrder, o) {
-        if(newSortOrder === o) return
-        let params = { page: this.page, sort: this.currentSort, order: newSortOrder }
-        this.$router.push({ name: 'employees.employee.list', params: params })
+    activeOrder: {
+      handler: function (newOrder, oldOrder) {
+        if(newOrder === oldOrder) return
+        this.changePage({ order: newOrder })
       }
     },
-    cpage: {
-      handler: function (n, o) {
-        if(n === o) return
-        if(n === '')
-        console.log(n > this.totalPage)
-        if(n > this.totalPage) return
-        this.$router.push({ name: 'employees.employee.list', params: { page: n, sort: this.currentSort, order: this.currentSortOrder } })
+    activePage: {
+      handler: function (newPage, oldActivePage) {
+        if(newPage === oldActivePage) return
+        if(newPage > this.totalPage) return
+        this.changePage({ page: newPage })
       }
     },
     '$route': {
       handler: function (n, o) {
         if(n === 0) return
-        this.cpage = n.params.page
-        this.currentSort = n.params.sort
-        this.currentSortOrder = n.params.order
+        this.activePage = n.params.page
+        this.activeSort = n.params.sort
+        this.activeOrder = n.params.order
         this.populate()
       }
     }
   },
   mounted () {
-    this.cpage = this.page
-    this.currentSort = this.sort
-    this.currentSortOrder = this.order
+    this.setDefault()
     this.populate()
   },
   async beforeDestroy () {
     await this.closeConnection()
   },
   methods: {
-    onSelect (e) {
-      console.log({e})
+    changePage (change) {
+      let params = { page: this.activePage, sort: this.activeSort, order: this.activeOrder }
+      params = extend({}, params, change)
+      let options = {
+        name: 'employees.employee.list',
+        params: params
+      }
+      this.$router.push(options)
     },
-    test ($event) {
-      console.log($event.target)
+    setDefault () {
+      this.activePage = (this.page !== null) ? '1' : null
+      this.activeSort = (this.sort !== null) ? this.sort : null
+      this.activeOrder = (this.order !== null) ? 'asc' : null
     },
     onCtxOpen(locals) {
       this.menuData = locals
@@ -205,23 +165,7 @@ export default {
       this.$router.push({ name: 'employee.detail', params: { employeeId: $event } })
     },
     customSort (value) {
-      return value.sort((left, right) => {
-        /* const sortBy = this.currentSort
-        const desc = this.currentSortOrder === 'desc'
-        let sorted
-        if (sortBy === 'Ein' || sortBy === 'Age' ) {
-          sorted = desc ?
-          left[sortBy] - right[sortBy] :
-          right[sortBy] - left[sortBy]
-        } else {
-          sorted = desc ?
-          left[sortBy].localeCompare(right[sortBy]) :
-          right[sortBy].localeCompare(left[sortBy])
-        }
-        console.log(sorted) */
-        // return sorted
-        return -1
-      })
+      return value.sort((left, right) => { return -1 })
     },
     async closeConnection () {
       if (this.connection !== null && typeof this.connection.close === 'function') {
@@ -235,25 +179,25 @@ export default {
     },
     getOrder (Employees) {
       let order = null
-      let cs = this.currentSort
+      let cs = this.activeSort
         switch (cs) {
           case 'Id':
-            order = ['Id', this.currentSortOrder]
+            order = ['Id', this.activeOrder]
             break
           case 'Name':
-            order = [Employees.associations.Person, 'Name', this.currentSortOrder]
+            order = [Employees.associations.Person, 'Name', this.activeOrder]
             break
           case 'Gender':
-            order = [Employees.associations.Person, 'Gender', this.currentSortOrder]
+            order = [Employees.associations.Person, 'Gender', this.activeOrder]
             break
           case 'JobTitle':
-            order = [Employees.associations.JobTitle, 'Name', this.currentSortOrder]
+            order = [Employees.associations.JobTitle, 'Name', this.activeOrder]
             break
           case 'Age':
-            order = [Employees.associations.Person, 'BirthDate', this.currentSortOrder]
+            order = [Employees.associations.Person, 'BirthDate', this.activeOrder]
             break
           default:
-            order = ['Id', this.currentSortOrder]
+            order = ['Id', this.activeOrder]
         }
       return [order]
     },
@@ -327,3 +271,45 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.transparent {
+  background-color: transparent;
+  padding: 0 10px;
+}
+.page-md-field.md-field {
+  width: 64px;
+  margin-top: 0px;
+  margin-bottom: 12px;
+  padding-top: 12px;
+  min-height: 44px;
+}
+.page-md-field.md-field::before,
+.page-md-field.md-field::after {
+  display: none;
+  width: 64px !important;
+}
+.page-input {
+  width: 64px !important;
+  padding: 5px;
+  background-color: white;
+  border-radius: 3px !important;
+}
+.ctc {
+  flex: 1;
+  display: flex;
+}
+.psg {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+.search {
+  width: 300px;
+}
+.search input {
+  background-color: #fff;
+}
+.right-table {
+}
+</style>
