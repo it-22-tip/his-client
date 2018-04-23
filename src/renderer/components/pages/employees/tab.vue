@@ -1,16 +1,17 @@
 <template>
   <layout-one>
     <md-toolbar class="md-dense md-primary" md-elevation="0">
-      {{ pageTitle }}
+      <md-button class="md-icon-button" @click="$router.push({ name: 'base.dashboard' })">
+        <md-icon>close</md-icon>
+      </md-button>
     </md-toolbar>
-    <md-tabs @md-changed="onChange">
-      <md-tab id="1" md-label="Karyawan" :to="{ name: 'employees.employee.list', params: { page: '1', sort: 'Ein', order: 'asc' } }"/>
-      <md-tab id="2" md-label="Posisi" :to="{ name: 'employees.jobtitle.list' }"/>
-      <!-- <md-tab id="3" md-label="Surat Izin Kerja" :to="{ name: 'employees.license.list' }"/> -->
-      <!-- <md-tab md-label="Kontrak"/> -->
+    <md-tabs :md-sync-route="true" :md-changed="test">
+      <md-tab id="one" md-label="Karyawan" :to="{ name: 'employees.employee.list', params: { page: '1', sort: 'Ein', order: 'asc' } }"/>
+      <md-tab id="two" md-label="Posisi" :to="{ name: 'employees.jobtitle.list', params: { page: '1', sort: 'Name', order: 'asc' } }"/>
     </md-tabs>
     <md-content class="ctc">
-      <router-view/>
+      
+      [a]
     </md-content>
   </layout-one>
 </template>
@@ -26,7 +27,7 @@
       }
     },
     methods: {
-      onChange ($event) {
+      test ($event) {
         console.log($event)
       }
     }
