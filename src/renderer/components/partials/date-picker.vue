@@ -1,5 +1,5 @@
 <template>
-  <v-date-picker :value="value" @input="onInput">
+  <v-date-picker :value="model" @input="onInput">
     <md-field slot-scope="props">
       <md-input :value="showValue()" />
     </md-field>
@@ -28,7 +28,7 @@
     watch: {
       value: {
         handler: function (val) {
-          this.model = val
+          this.model = moment(val).toDate()
         }
       }
     },
@@ -37,9 +37,14 @@
         return moment(this.model).format('D MMMM YYYY')
       },
       onInput ($event) {
-        this.model = $event
-        this.$emit('input', $event)
+        // this.model = $event
+        let ret = moment($event).format('YYYY-MM-DD')
+        // this.$emit('input', moment($event).format('YYYY-MM-DD'))
+        this.$emit('input', ret)
       }
+    },
+    mounted () {
+      this.model = moment(this.value).toDate()
     }
   }
 </script>

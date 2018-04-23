@@ -8,7 +8,7 @@
       :md-sort-order.sync="activeOrder"
       :md-sort-fn="customSort"
       md-fixed-header>
-      <md-table-row slot="md-table-row" slot-scope="{ item }" @click.right="$refs.ctxMenu.open($event, { Name: item.Name, Id:item.Ein })">
+      <md-table-row slot="md-table-row" slot-scope="{ item }" @click.right="$refs.contextMenu.open($event, { Name: item.Name, Id:item.Ein })">
         <md-table-cell md-label="NIP" md-sort-by="Ein">{{ item.Ein }}</md-table-cell>
         <md-table-cell md-label="Nama" md-sort-by="Name">{{ item.Name }}</md-table-cell>
         <md-table-cell md-label="JK" md-sort-by="Gender">{{ item.Gender }}</md-table-cell>
@@ -40,9 +40,8 @@
             <md-icon>search</md-icon>
           </md-button>
           <md-button @click="$router.push({ name: 'employee.new' })" class="md-icon-button">
-            <md-icon>person_add</md-icon>
+            <md-icon>add</md-icon>
           </md-button>
-          <p>Sort By: {{ activeSort }} | Order By: {{ activeOrder }} </p>
         </div>
 
         <div class="md-toolbar-section-end">
@@ -54,7 +53,7 @@
           </md-content>
         </div>
     </md-toolbar>
-    <context-menu @ctx-open="onCtxOpen" id="context-menu" ref="ctxMenu">
+    <context-menu @ctx-open="onCtxOpen" ref="contextMenu">
       <div><h3>{{menuData.Name}}</h3></div>
       <div @click="clickEdit(menuData.Id)"><md-icon>edit</md-icon>Edit</div>
       <div><md-icon>delete</md-icon>Delete</div>
@@ -108,7 +107,6 @@ export default {
       activePage: null,
       activeSort: null,
       activeOrder: null,
-      isSearch: false,
       searchBy: []
     }
   },

@@ -12,47 +12,29 @@
 
       <md-content class="padding-10">
         <md-steppers class="mstepper">
-          <md-step id="first" md-label="First Step">
-        <div class="md-layout">
-          <div class="md-layout-item md-size-25">
-            Nama
-          </div>
-          <md-field class="md-layout-item md-size-25">
-            <label>Nama</label>
-            <md-input v-model="saved.Person.Name"/>
-          </md-field>
-        </div>
-
-        <div class="md-layout">
-          <div class="md-layout-item md-size-25">
-            Gender
-          </div>
-          <div class="md-layout-item md-size-25">
-            <md-radio v-model="saved.Person.Gender" value="P">Perempuan</md-radio>
-            <md-radio v-model="saved.Person.Gender" value="L">Laki - Laki</md-radio>
-          </div>
-        </div>
-
-        <div class="md-layout">
-          <div class="md-layout-item md-size-25">
-            Posisi
-          </div>
-          <md-field class="md-layout-item md-size-25">
-            <label for="movie">Posisi</label>
-              <md-select v-model="saved.JobTitleId" @md-opened="openPosition">
+          <md-step id="first" md-label="Data Personal">
+            <div class="md-layout md-gutter">
+              <div class="md-layout-item md-size-25">
+                <md-field>
+                <label>Nama</label>
+                <md-input v-model="saved.Person.Name"/>
+                </md-field>
+                <md-radio v-model="saved.Person.Gender" value="P">Perempuan</md-radio>
+                <md-radio v-model="saved.Person.Gender" value="L">Laki - Laki</md-radio>
+                <md-field>
+                <label for="movie">Posisi</label>
+                <md-select v-model="saved.JobTitleId" @md-opened="openPosition">
                 <md-option v-for="posisi in dbPosisi" :value="posisi.Id" :key="posisi.id">{{ posisi.Name }}</md-option>
-              </md-select>
-          </md-field>
-        </div>
+                </md-select>
+                </md-field>
+              </div>
 
-        <div class="md-layout">
-          <div class="md-layout-item md-size-25">
-            Tanggal Lahir
-          </div>
-          <div class="md-layout-item md-size-25">
-            <date-picker v-model="saved.Person.BirthDate"/>
-          </div>
-        </div>
+              <div class="md-layout-item md-size-25">
+                <date-picker v-model="saved.Person.BirthDate"/>
+                <province-picker v-model="birthPlaceProvinceCode"/>
+                <regency-picker v-model="birthPlaceRegencyCode" :province-code="birthPlaceProvinceCode"/>
+              </div>
+            </div>
           </md-step>
           <md-step id="second" md-label="Second Step">
             [2]
@@ -73,16 +55,23 @@
     ],
     components: {
       'layout-one': () => import('@partials/layout-one'),
-      'date-picker': () => import('@partials/date-picker')
+      'date-picker': () => import('@partials/date-picker'),
+      'province-picker': () => import('@partials/province-picker'),
+      'regency-picker': () => import('@partials/regency-picker'),
+      'district-picker': () => import('@partials/district-picker'),
+      'village-picker': () => import('@partials/village-picker')
     },
     data () {
       return {
         pageTitle: null,
+        birthPlaceProvinceCode: '',
+        birthPlaceRegencyCode: '',
         saved: {
           Person: {
             Name: '',
             Gender: 'P',
-            BirthDate: moment().toDate()
+            BirthDate: moment().format('YYYY-MM-DD'),
+            BirthPlaceRegencyCode: ''
           },
           JobTitleId: null
         },
@@ -92,6 +81,22 @@
             Name: 'Tidak Ada'
           }
         ]
+      }
+    },
+    watch: {
+      birthPlaceRegencyCode: {
+        handler: function (val) {
+          this.saved.Person.BirthPlaceRegencyCode = val
+        },
+        deep: true
+      },
+      birthPlaceProvinceCode: {
+        handler: function (val) {
+          if (val === '') {
+            this.birthPlaceRegencyCode = ''
+          }
+        },
+        deep: true
       }
     },
     methods: {
@@ -157,7 +162,6 @@
   flex-direction: column;
 }
 .padding-10 {
-  padding: 20px;
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -165,15 +169,14 @@
 
 </style>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .mstepper {
   flex: 1;
   display: flex;
   flex-direction: column;
 }
-.mstepper .md-steppers-wrapper {
+.mstepper>.md-steppers-wrapper {
   flex: 1 !important;
-  height: 1;
 }
 </style>
 

@@ -1,6 +1,6 @@
 <template>
   <md-field>
-    <label>Single select</label>
+    <label>Kecamatan</label>
     <md-select v-model="selectedItem">
       <md-option v-for="item in items" :value="item.id" :key="item.id"> {{ item.name }} </md-option>
     </md-select>
@@ -9,6 +9,7 @@
 
 <script>
 export default {
+  name: 'DistrictPicker',
   data: () => ({
     selectedItem: null,
     items: []

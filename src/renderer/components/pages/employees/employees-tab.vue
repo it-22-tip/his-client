@@ -1,6 +1,6 @@
 <template>
   <layout-one>
-    <md-toolbar class="md-dense" md-elevation="0">
+    <md-toolbar class="md-dense md-primary" md-elevation="0">
       {{ pageTitle }}
     </md-toolbar>
     <md-tabs>
