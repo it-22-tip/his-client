@@ -2184,9 +2184,9 @@ cfb@~1.0.6:
     commander "^2.14.1"
     printj "~1.1.2"
 
-cfonts@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/cfonts/-/cfonts-2.0.0.tgz#fa0acece3d4aa32c9069dbd0325f0720293b7fb6"
+cfonts@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/cfonts/-/cfonts-2.0.1.tgz#49d298687f60d0e09c3c81dd4f6267f90d132663"
   dependencies:
     ansi-styles "^3.2.1"
     babel-runtime "^6.26.0"

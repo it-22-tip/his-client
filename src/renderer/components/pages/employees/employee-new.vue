@@ -31,8 +31,7 @@
 
               <div class="md-layout-item md-size-25">
                 <date-picker v-model="saved.Person.BirthDate"/>
-                <province-picker v-model="birthPlaceProvinceCode"/>
-                <regency-picker v-model="birthPlaceRegencyCode" :province-code="birthPlaceProvinceCode"/>
+                <birthplace-picker v-model="saved.Person.BirthPlaceRegencyCode"/>
               </div>
             </div>
           </md-step>
@@ -56,16 +55,11 @@
     components: {
       'layout-one': () => import('@partials/layout-one'),
       'date-picker': () => import('@partials/date-picker'),
-      'province-picker': () => import('@partials/province-picker'),
-      'regency-picker': () => import('@partials/regency-picker'),
-      'district-picker': () => import('@partials/district-picker'),
-      'village-picker': () => import('@partials/village-picker')
+      'birthplace-picker': () => import('@partials/birthplace-picker')
     },
     data () {
       return {
         pageTitle: null,
-        birthPlaceProvinceCode: '',
-        birthPlaceRegencyCode: '',
         saved: {
           Person: {
             Name: '',
@@ -81,22 +75,6 @@
             Name: 'Tidak Ada'
           }
         ]
-      }
-    },
-    watch: {
-      birthPlaceRegencyCode: {
-        handler: function (val) {
-          this.saved.Person.BirthPlaceRegencyCode = val
-        },
-        deep: true
-      },
-      birthPlaceProvinceCode: {
-        handler: function (val) {
-          if (val === '') {
-            this.birthPlaceRegencyCode = ''
-          }
-        },
-        deep: true
       }
     },
     methods: {
