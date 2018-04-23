@@ -12,7 +12,9 @@ const attributes = {
   Name: {
     type: DataTypes.STRING(),
     set: function (Name) {
-      this.setDataValue('Name', toLower(Name))
+      Name = toLower(Name)
+      Name.replace(/\s+/g, ' ')
+      this.setDataValue('Name', Name)
     },
     get: function () {
       let Name = this.dataValues.Name

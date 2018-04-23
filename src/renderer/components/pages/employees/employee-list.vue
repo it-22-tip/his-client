@@ -86,6 +86,10 @@ export default {
     sort: {
       type: String,
       default: null
+    },
+    isSearch: {
+      type: String,
+      default: 'false'
     }
   },
   data () {
@@ -103,7 +107,9 @@ export default {
       totalPage: null,
       activePage: null,
       activeSort: null,
-      activeOrder: null
+      activeOrder: null,
+      isSearch: false,
+      searchBy: []
     }
   },
   watch: {
