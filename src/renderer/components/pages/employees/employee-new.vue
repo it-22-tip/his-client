@@ -54,8 +54,8 @@
     ],
     components: {
       'layout-one': () => import('@partials/layout-one'),
-      'date-picker': () => import('@partials/date-picker'),
-      'birthplace-picker': () => import('@partials/birthplace-picker')
+      'date-picker': () => import('@partials/picker/date-picker'),
+      'birthplace-picker': () => import('@partials/picker/birthplace-picker')
     },
     data () {
       return {

@@ -54,7 +54,7 @@ export default {
         this.items = data
         this.$nextTick().then(
           () => {
-            this.selected = '33'
+            this.selected = this.value
           }
         )
       } catch (error) {

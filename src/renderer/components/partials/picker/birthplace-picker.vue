@@ -9,8 +9,8 @@
   export default {
     name: 'BirthplacePicker',
     components: {
-      'province-picker': () => import('@partials/province-picker'),
-      'regency-picker': () => import('@partials/regency-picker')
+      'province-picker': () => import('./province-picker'),
+      'regency-picker': () => import('./regency-picker')
     },
     props: [
       'value'

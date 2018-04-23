@@ -77,7 +77,7 @@ export default {
   },
   components: {
     'layout-one': () => import('@partials/layout-one'),
-    'select-province': () => import('@partials/province-picker')
+    'select-province': () => import('@partials/picker/province-picker')
   },
   data: () => ({
       active: 'Provinces',
