@@ -10,14 +10,14 @@
         <md-content class="scr md-scrollbar">
           <div class="hi">
             <h1>{{ detail.Name }}</h1>
-            <h2>{{ detail.JobTitle }}</h2>
-            <p>{{ detail.BirthDate.age }} Tahun</p>
-            <p class="mo" @click="modalProvince = true">{{ detail.Address }}</p>
-            <calendar v-model="detail.BirthDate.dateObj" :attributes='attrs'>
+            <!-- <h2>{{ detail.JobTitle }}</h2> -->
+            <!-- <p>{{ detail.BirthDate.age }} Tahun</p> -->
+            <!-- <p class="mo" @click="modalProvince = true">{{ detail.Address }}</p> -->
+            <!-- <calendar v-model="detail.BirthDate.dateObj" :attributes='attrs'>
               <div slot-scope="props">
                 <md-icon>date</md-icon>{{ detail.BirthDate.human }}
               </div>
-            </calendar>
+            </calendar> -->
           </div>
         </md-content>
       </md-content>
@@ -150,28 +150,25 @@
       },
       async transaction (transaction) {
         const { Almamaters, EducationHistories, Persons, Employees, JobTitles, Licenses, LicenseTypes, AddressHistories, Villages, Districts, Regencies, Provinces } = this.connection.models
-        let data = await Employees.findAll({
+        let data = await Employees.findById(this.employeeId, {
           transaction: transaction,
-          raw: true,
+          raw: false,
           attributes: ['Id'],
-          where: {
+          /* where: {
             id: this.employeeId
-          },
+          }, */
           include: [
             {
               model: Persons,
               attributes: ['Id', 'Name', 'Gender', 'BirthDate'],
               include: [
                 {
-                  model: EducationHistories,
+                  model: Almamaters,
+                  attributes: ['Name'],
                   include: [
                     {
-                      model: Almamaters,
-                      include: [
-                        {
-                          model: Regencies
-                        }
-                      ]
+                      model: Regencies,
+                      attributes: ['Name']
                     }
                   ]
                 },
@@ -220,7 +217,11 @@
             }
           ]
         })
-        return data
+
+        let { JobTitle, Person } = data
+        // Person = Person.dataValues
+        let { Name, BirthDate, Gender } = Person.dataValues
+        console.log(AddressHistories)
       },
       async populate () {
         this.connection = (new this.$orm).withOption({
@@ -230,7 +231,10 @@
         }).connect()
         try {
           let data = await this.connection.transaction(this.transaction)
-          let model
+          // const { JobTitles, Persons } = data
+          // console.log(data)
+          // this.detail = data
+          /* let model
           model = map(data, this.dataMapper)
           let first = model.slice()
           console.log(first)
@@ -244,7 +248,7 @@
             orig: first['Person.BirthDate'],
             human: moment(first['Person.BirthDate']).format('DD MM YYYY'),
             age: Math.abs(parseInt(moment(first['Person.BirthDate']).diff(moment(), 'years')))
-          }
+          } */
         } catch (error) {
           console.log(error)
         } finally {

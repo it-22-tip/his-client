@@ -2,8 +2,8 @@
   <div class="-picker">
     <province-picker v-model="ProvinceCode"/>
     <regency-picker v-model="RegencyCode" :province-code="ProvinceCode"/>
-    <district-picker v-model="DictrictCode" :regency-code="RegencyCode"/>
-    <village-picker v-model="VillageCode" :regency-code="DisctrictCode"/>
+    <district-picker v-model="DistrictCode" :regency-code="RegencyCode"/>
+    <village-picker v-model="VillageCode" :district-code="DistrictCode"/>
   </div>
 </template>
 
@@ -31,32 +31,28 @@
       VillageCode: {
         handler: function (val) {
           this.$emit('input', val)
-        },
-        deep: true
+        }
       },
       DistrictCode: {
         handler: function (val) {
           if (val === '') {
             this.VillageCode = ''
           }
-        },
-        deep: true
+        }
       },
       RegencyCode: {
         handler: function (val) {
           if (val === '') {
             this.DistrictCode = ''
           }
-        },
-        deep: true
+        }
       },
       ProvinceCode: {
         handler: function (val) {
           if (val === '') {
             this.RegencyCode = ''
           }
-        },
-        deep: true
+        }
       }
     },
   }

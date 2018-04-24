@@ -1,47 +1,84 @@
 <template>
-  <md-field>
-    <label>Kelurahan/Desa</label>
-    <md-select v-model="selectedItem">
-      <md-option v-for="item in items" :value="item.id" :key="item.id"> {{ item.name }} </md-option>
+  <md-field md-clearable class="village-picker">
+    <label>Kelurahan Desa</label>
+    <md-select :disabled="disabled" v-model="selected" @md-opened="openSelect" @md-selected="$emit('input', selected)" md-dense>
+      <md-option v-for="item in items" :value="item.Code" :key="item.Code"> {{ item.Name }} </md-option>
     </md-select>
   </md-field>
 </template>
 
+<style>
+.regency-picker.md-field .md-input-action.md-clear {
+  right: -32px;
+}
+</style>
+
 <script>
+import orm from '@mixins/orm'
 export default {
   name: 'VillagePicker',
+  mixins: [
+    orm
+  ],
+  props: [
+    'value',
+    'districtCode'
+  ],
   data: () => ({
-    selectedItem: null,
-    items: []
+    emptyItems: [{ Code: 0, Name: 'Tidak Ada Data' }],
+    selected: '',
+    items: [{ Code: 0, Name: 'Tidak Ada Data' }],
+    connection: null,
+    disabled: true
   }),
-  computed: {
-    getObject() {
-      return this.items.find(item => item.id === this.selectedItem);
-    },
-    getObjects() {
-      return this.items.filter(item => this.selectedItems.includes(item.id));
+  watch: {
+    districtCode: {
+      handler: function (val) {
+        if (val === '') {
+          this.selected = ''
+          this.disabled = true
+        } else {
+          this.selected = ''
+          this.openSelect()
+        }
+      }
     }
   },
-  mounted () {
-    this.items = [
-      {
-        id: 1,
-        name: "test1"
-      },
-      {
-        id: 2,
-        name: "test2"
-      },
-      {
-        id: 3,
-        name: "test3"
+  methods: {
+    openSelect () {
+      this.getData('Villages', { DistrictCode: this.districtCode })
+    },
+    async getData(modelName, where = null) {
+      const transaction = async transaction => {
+        const Model = this.connection.models[modelName]
+        const opt = {
+          transaction: transaction,
+          raw: true,
+          attributes: ['Name', 'Code']
+        }
+        if (where) opt.where = where
+        let data = await Model.findAll(opt)
+        return data
       }
-    ]
-    this.$nextTick().then(
-      () => {
-        this.selectedItem = 2
+      this.connection = (new this.$orm).withOption({
+        username: 'his',
+        password: 'his',
+        database: 'his',
+      }).connect()
+      try {
+        this.items = await this.connection.transaction(transaction)
+        this.disabled = false
+        this.$nextTick().then(
+          () => {
+            // if (this.selected === '') this.selected = this.items[0].Code
+          }
+        )
+      } catch (error) {
+        console.log({error})
+      } finally {
+        await this.closeConnection()
       }
-    )
+    }
   }
 };
 </script>

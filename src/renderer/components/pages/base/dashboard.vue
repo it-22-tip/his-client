@@ -1,17 +1,24 @@
 <template>
   <layout-one>
     <div class="md-layout md-gutter">
-      <div class="md-layout-item">
+      <div class="md-layout-item md-size-33">
         <md-card>
           <md-card-content>
-            <pie-chart></pie-chart>
+            <gender-chart></gender-chart>
           </md-card-content>
         </md-card>
       </div>
-      <div class="md-layout-item">
+      <div class="md-layout-item md-size-33">
         <md-card>
           <md-card-content>
-            <horizontal-bar-chart></horizontal-bar-chart>
+            <education-chart></education-chart>
+          </md-card-content>
+        </md-card>
+      </div>
+      <div class="md-layout-item md-size-33">
+        <md-card>
+          <md-card-content>
+            <intime-chart></intime-chart>
           </md-card-content>
         </md-card>
       </div>
@@ -24,8 +31,9 @@
     components: {
       'base-button': () => import('@partials/base-button'),
       'layout-one': () => import('@partials/layout-one'),
-      'pie-chart': () => import('@extras/charts/pie'),
-      'horizontal-bar-chart': () => import('@extras/charts/horizontal-bar')
+      'gender-chart': () => import('@partials/chart/gender-chart'),
+      'education-chart': () => import('@partials/chart/education-chart'),
+      'intime-chart': () => import('@partials/chart/intime-chart')
     },
     methods: {
       logOut () {
