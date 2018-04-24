@@ -2,24 +2,15 @@ const Employees = [
   {
     path: '/employees/employee/:page/:order?/:sort?',
     props: true,
-    component: () => import('@pages/employees/employees-tab'),
+    component: () => import('@pages/employees/tab'),
     children: [
       {
         path: '',
         name: 'employees.employee.list',
         props: true,
-        component: () => import('@pages/employees/employee-list'),
+        component: () => import('@pages/employees/list'),
         meta: {
           title: 'Employees',
-          login: true
-        }
-      },
-      {
-        path: '/employees/jobtitle/:page/:order?/:sort?',
-        name: 'employees.jobtitle.list',
-        component: () => import('@pages/employees/jobtitle-list'),
-        meta: {
-          title: 'Employee Job Titles',
           login: true
         }
       },

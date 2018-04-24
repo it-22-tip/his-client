@@ -9,9 +9,9 @@ const MasterData = [
     },
     children: [
       {
-        path: '/master-data/address',
-        name: 'masterdata.address',
-        component: () => import('@pages/master-data/address'),
+        path: '/master-data/provinces/:page/:order/:sort',
+        name: 'masterdata.provinces',
+        component: () => import('@pages/master-data/provinces'),
         props: true,
         meta: {
           title: 'Master Provinsi',
@@ -19,7 +19,17 @@ const MasterData = [
         }
       },
       {
-        path: '/master-data/jobtitles',
+        path: '/master-data/regencies/:page/:order/:sort',
+        name: 'masterdata.regencies',
+        component: () => import('@pages/master-data/regencies'),
+        props: true,
+        meta: {
+          title: 'Master Kota/Kabupaten',
+          login: true
+        }
+      },
+      {
+        path: '/master-data/jobtitles/:page/:order/:sort',
         name: 'masterdata.jobtitles',
         component: () => import('@pages/master-data/jobtitles'),
         props: true,
@@ -29,7 +39,7 @@ const MasterData = [
         }
       },
       {
-        path: '/master-data/almamaters',
+        path: '/master-data/almamaters/:page/:order/:sort',
         name: 'masterdata.almamaters',
         component: () => import('@pages/master-data/almamaters'),
         props: true,

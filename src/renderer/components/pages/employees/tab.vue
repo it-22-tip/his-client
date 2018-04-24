@@ -1,11 +1,12 @@
 <template>
   <layout-one>
     <md-toolbar class="md-dense md-primary" md-elevation="0">
-      {{ pageTitle }}
+      <md-button @click="$router.push({ name: 'base.dashboard' })" class="md-icon-button">
+        <md-icon>close</md-icon>
+      </md-button>
     </md-toolbar>
     <md-tabs @md-changed="onChange">
       <md-tab id="1" md-label="Karyawan" :to="{ name: 'employees.employee.list', params: { page: '1', sort: 'Ein', order: 'asc' } }"/>
-      <md-tab id="2" md-label="Posisi" :to="{ name: 'employees.jobtitle.list', params: { page: '1', sort: 'Name', order: 'asc' } }"/>
     </md-tabs>
     <md-content class="ctc">
       <router-view/>

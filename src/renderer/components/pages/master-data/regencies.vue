@@ -1,46 +1,44 @@
 <template>
   <md-content class="ctc">
-    <md-toolbar class="md-primary" md-elevation="0">
-      <div>
-        <md-button class="md-raised">Baru</md-button>
-      </div>
-    </md-toolbar>
-    <md-table
-      class="right-table"
-      v-model="model"
-      :md-sort.sync="currentSort"
-      :md-sort-order.sync="currentSortOrder"
-      :md-sort-fn="customSort"
-      md-fixed-header>
-      <md-table-row slot="md-table-row" slot-scope="{ item }">
-        <md-table-cell md-label="Nama" md-sort-by="Name">{{ item.Name }}</md-table-cell>
-        <md-table-cell>
-          <md-button @click="clickEdit(item.Id)" class="md-icon-button">
-            <md-icon>edit</md-icon>
-            <md-tooltip md-direction="top">Edit</md-tooltip>
+    <md-content class="psg">
+  <md-table
+    v-model="model"
+    :md-sort.sync="activeSort"
+    :md-sort-order.sync="activeOrder"
+    :md-sort-fn="customSort"
+    md-fixed-header>
+    <md-table-row slot="md-table-row" slot-scope="{ item }">
+      <md-table-cell md-label="Nama" md-sort-by="Name">{{ item.Name }}</md-table-cell>
+    </md-table-row>
+  </md-table>
+    </md-content>
+    <md-toolbar class="md-primary md-dense" md-elevation="0">
+        <div class="md-toolbar-section-start">
+          <md-button @click="showSearchPanel = !showSearchPanel" class="md-icon-button">
+            <md-icon>search</md-icon>
           </md-button>
-        </md-table-cell>
-      </md-table-row>
-    </md-table>
-    <md-toolbar class="md-primary" md-elevation="0">
-      <div>
-        <md-button class="md-raised">Baru</md-button>
-      </div>
+          <md-button @click="$router.push({ name: 'employee.new' })" class="md-icon-button">
+            <md-icon>add</md-icon>
+          </md-button>
+          {{ activePage }} / {{ activeSort }} / {{ activeOrder }}
+        </div>
+
+        <div class="md-toolbar-section-end">
+          <md-field class="page-md-field" md-inline md-dense>
+            <md-input class="page-input" v-model="activePage" type="number" min="1" :max="totalPage"/>
+          </md-field>
+          <md-content class="transparent">
+            Dari {{ totalPage }} Halaman
+          </md-content>
+        </div>
     </md-toolbar>
   </md-content>
 </template>
 
-<style lang="scss" scoped>
-.ctc {
-  flex: 1;
-}
-</style>
-
 <script>
-import orm from '@/mixins/orm'
-import { map } from 'lodash'
+import orm from '@mixins/orm'
+import { map, extend } from 'lodash'
 import moment from 'moment'
-import { toDateDiffToday, toMoment, employeeId } from '@helpers/databaseTo'
 export default {
   mixins: [
     orm
@@ -48,77 +46,98 @@ export default {
   components: {
     'layout-one': () => import('@partials/layout-one')
   },
+  props: {
+    page: {
+      type: String,
+      default: '1'
+    },
+    order: {
+      type: String,
+      default: 'asc'
+    },
+    sort: {
+      type: String,
+      default: 'Name'
+    },
+    isSearch: {
+      type: String,
+      default: 'false'
+    }
+  },
   data () {
     return {
       searched: [],
       model: [],
       reset: [],
       connection: null,
-      currentSort: 'Name',
-      currentSortOrder: 'asc',
       searchText: '',
-      searchBy: 'Name'
+      searchBy: 'Name',
+      selectedEmployee: null,
+      boolean: false,
+      showSearchPanel: false,
+      menuData: {},
+      totalPage: null,
+      activePage: null,
+      activeSort: null,
+      activeOrder: null,
+      searchBy: []
+    }
+  },
+  watch: {
+    activeSort: {
+      handler: function (newSort, oldSort) {
+        console.log(newSort)
+        if(newSort === oldSort) return
+        this.changePage({ sort: newSort })
+      }
+    },
+    activeOrder: {
+      handler: function (newOrder, oldOrder) {
+        if(newOrder === oldOrder) return
+        this.changePage({ order: newOrder })
+      }
+    },
+    activePage: {
+      handler: function (newPage, oldActivePage) {
+        if(newPage === oldActivePage) return
+        if(newPage > this.totalPage) return
+        this.changePage({ page: newPage })
+      }
+    },
+    '$route': {
+      handler: function (n, o) {
+        if(n === 0) return
+        this.activePage = n.params.page
+        this.activeSort = n.params.sort
+        this.activeOrder = n.params.order
+        this.populate()
+      }
     }
   },
   mounted () {
-    this.populate().then(
-      data => {
-        let model = data.slice()
-        model = map(model, this.dataMapper)
-        console.log(model)
-        this.$nextTick().then(
-          () => {
-            for(let item of model) {
-              this.model.push(item)
-            }
-          }
-        )
-        // this.model = map(model, this.dataMapper)
-      }
-    )
-  },
-  async beforeDestroy () {
-    await this.closeConnection()
+    this.setDefault()
+    this.populate()
   },
   methods: {
-    clickEdit($event) {
-      this.$router.push({ name: 'employees.employee.detail.personal', params: { employeeId: $event } })
-    },
-    clickSearch () {
-      const toLower = text => {
-          return text.toString().toLowerCase()
-      }
-      let s
-      if (this.reset.length < 1) {
-        this.reset = this.model.splice()
-        console.log(this.reset)
-      } else {
-        this.model = this.reset
-      }
-      try {
-      s = this.model.filter(item => toLower(item.Name).includes(toLower(this.searchText)))
-      } catch (error) {
-        console.log(error)
-      }
-      console.log(this.reset)
-      this.model = s
-    },
     customSort (value) {
       return value.sort((left, right) => {
-        const sortBy = this.currentSort
-        const desc = this.currentSortOrder === 'desc'
-        let sorted
-        if (sortBy === 'Id' || sortBy === 'Age' ) {
-          sorted = desc ?
-          left[sortBy] - right[sortBy] :
-          right[sortBy] - left[sortBy]
-        } else {
-          sorted = desc ?
-          left[sortBy].localeCompare(right[sortBy]) :
-          right[sortBy].localeCompare(left[sortBy])
-        }
-        return sorted
+        return -1
       })
+    },
+    changePage (change) {
+      let params = { page: this.activePage, sort: this.activeSort, order: this.activeOrder }
+      params = extend({}, params, change)
+      let options = {
+        name: 'masterdata.regencies',
+        params: params
+      }
+      this.$router.push(options)
+    },
+    setDefault () {
+      console.log(this.sort)
+      this.activePage = (this.page !== null) ? '1' : null
+      this.activeSort = (this.sort !== null) ? this.sort : null
+      this.activeOrder = (this.order !== null) ? 'asc' : null
     },
     async closeConnection () {
       if (this.connection !== null && typeof this.connection.close === 'function') {
@@ -130,30 +149,63 @@ export default {
         }
       }
     },
+
+    getOrder (Model, sequelize) {
+      let order = null
+      let cs = this.activeSort
+        switch (cs) {
+          case 'Name':
+            order = ['Name', this.activeOrder]
+            break
+          default:
+            order = ['Name', this.activeOrder]
+        }
+      return [order]
+    },
+
     async transaction (transaction) {
-      const { Regencies } = this.connection.models
-      let data = await Regencies.findAll({
+      let sequelize = this.connection
+      const { Regencies } = sequelize.models
+
+      let page = this.activePage - 1
+      let limit = 10
+      let offset = page * limit
+      let order
+      try {
+      order = this.getOrder(Regencies, sequelize)
+      } catch (error) {
+        console.log(error)
+      }
+      let rows = []
+      let count = 0
+      let options = {
         transaction: transaction,
-        raw: true,
-        attributes: ['Id', 'Name']
+        attributes: [
+          'Name'
+        ],
+        order: order,
+        limit: limit,
+        offset: offset,
+        raw: false,
+        distinct: true,
+        col: 'Id',
+        // logging: console.log
+      }
+      try {
+        rows = await Regencies.findAll(options)
+        options.raw = true,
+        options.attributes = undefined
+        count = await Regencies.count(options)
+      } catch (error) {
+        throw error
+      }
+      rows = map(rows, row => {
+        return {
+          Name: row.Name
+        }
       })
-      console.log(data)
-      return data
-    },
-    reAssign (item, from, to) {
-      item[to] = item[from]
-      delete item[from]
-      return item
-    },
-    dataMapper (item) {
-      /* item = this.reAssign(item, 'Person.Name', 'Name')
-      item = this.reAssign(item, 'Person.Gender', 'Gender')
-      item = this.reAssign(item, 'JobTitle.Name', 'JobTitle')
-      item = this.reAssign(item, 'Person.BirthDate', 'Age')
-      item = toMoment(item, 'Age')
-      item = employeeId(item)
-      item = toDateDiffToday(item, 'Age') */
-      return item
+      console.log(count)
+      return {rows, count}
     },
     async populate () {
       let data
@@ -169,8 +221,52 @@ export default {
       } finally {
         await this.closeConnection()
       }
-      return data
+      const { rows, count } = data
+      this.model = rows
+      this.total = count
+      this.totalPage = Math.ceil(count / 10)
     }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.transparent {
+  background-color: transparent;
+  padding: 0 10px;
+}
+.page-md-field.md-field {
+  width: 64px;
+  margin-top: 0px;
+  margin-bottom: 12px;
+  padding-top: 12px;
+  min-height: 44px;
+}
+.page-md-field.md-field::before,
+.page-md-field.md-field::after {
+  display: none;
+  width: 64px !important;
+}
+.page-input {
+  width: 64px !important;
+  padding: 5px;
+  background-color: white;
+  border-radius: 3px !important;
+}
+.ctc {
+  flex: 1;
+  display: flex;
+}
+.psg {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+.search {
+  width: 300px;
+}
+.search input {
+  background-color: #fff;
+}
+</style>
+

@@ -9,7 +9,6 @@
     md-fixed-header>
     <md-table-row slot="md-table-row" slot-scope="{ item }">
       <md-table-cell md-label="Nama" md-sort-by="Name">{{ item.Name }}</md-table-cell>
-      <md-table-cell md-label="Jumlah" md-sort-by="Count">{{ item.Count }}</md-table-cell>
     </md-table-row>
   </md-table>
     </md-content>
@@ -129,7 +128,7 @@ export default {
       let params = { page: this.activePage, sort: this.activeSort, order: this.activeOrder }
       params = extend({}, params, change)
       let options = {
-        name: 'employees.jobtitle.list',
+        name: 'masterdata.provinces',
         params: params
       }
       this.$router.push(options)
@@ -158,9 +157,6 @@ export default {
           case 'Name':
             order = ['Name', this.activeOrder]
             break
-          case 'Count':
-            order = [sequelize.literal('Count'), this.activeOrder]
-            break
           default:
             order = ['Name', this.activeOrder]
         }
@@ -169,14 +165,14 @@ export default {
 
     async transaction (transaction) {
       let sequelize = this.connection
-      const { Persons, Employees, JobTitles } = sequelize.models
+      const { Provinces } = sequelize.models
 
       let page = this.activePage - 1
       let limit = 10
       let offset = page * limit
       let order
       try {
-      order = this.getOrder(JobTitles, sequelize)
+      order = this.getOrder(Provinces, sequelize)
       } catch (error) {
         console.log(error)
       }
@@ -185,8 +181,7 @@ export default {
       let options = {
         transaction: transaction,
         attributes: [
-          'Name',
-          [sequelize.literal('(SELECT COUNT(Id) FROM Employees WHERE Employees.JobTitleId = JobTitles.Id)'), 'Count']
+          'Name'
         ],
         order: order,
         limit: limit,
@@ -194,27 +189,19 @@ export default {
         raw: false,
         distinct: true,
         col: 'Id',
-        // logging: console.log,
-        include: [
-          {
-            model: Employees,
-            attributes: ['JobTitleId'],
-            required: true
-          }
-        ]
+        // logging: console.log
       }
       try {
-        rows = await JobTitles.findAll(options)
+        rows = await Provinces.findAll(options)
         options.raw = true,
         options.attributes = undefined
-        count = await JobTitles.count(options)
+        count = await Provinces.count(options)
       } catch (error) {
         throw error
       }
       rows = map(rows, row => {
         return {
-          Name: row.Name,
-          Count: row.dataValues.Count
+          Name: row.Name
         }
       })
       console.log(count)
