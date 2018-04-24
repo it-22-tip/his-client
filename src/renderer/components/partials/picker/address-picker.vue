@@ -8,8 +8,12 @@
 </template>
 
 <script>
+  import Orm from '@mixins/orm'
   export default {
-    name: 'Picker',
+    name: 'AddressPicker',
+    mixins: [
+      Orm
+    ],
     components: {
       'province-picker': () => import('./province-picker'),
       'regency-picker': () => import('./regency-picker'),
@@ -25,6 +29,70 @@
         RegencyCode: '',
         DistrictCode: '',
         VillageCode: ''
+      }
+    },
+    mounted () {
+      this.getData()
+    },
+    methods: {
+      async getData() {
+        const transaction = async transaction => {
+          const { Provinces, Regencies, Districts, Villages } = this.connection.models
+          const opt = {
+            transaction: transaction,
+            raw: true,
+            attributes: ['Name', 'Code']
+          }
+          opt.where = {
+            Code: '1303051002'
+          }
+          opt.include =  [
+            {
+              model: Districts,
+              attributes: ['Code'],
+              include: [
+                {
+                  model: Regencies,
+                  attributes: ['Code'],
+                  include: [
+                    {
+                      model: Provinces,
+                      attributes: ['Code']
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+          let data = await Villages.findOne(opt)
+              this.ProvinceCode = data['District.Regency.Province.Code'],
+              this.RegencyCode = data['District.Regency.Code'],
+              this.DistrictCode = data['District.Code'],
+              this.VillageCode = data['Code']
+          this.$nextTick().then(
+            () => {
+
+            }
+          )
+        }
+        this.connection = (new this.$orm).withOption({
+          username: 'his',
+          password: 'his',
+          database: 'his',
+        }).connect()
+        try {
+          let data = await this.connection.transaction(transaction)
+          this.items = data
+          this.$nextTick().then(
+            () => {
+              this.selected = this.value
+            }
+          )
+        } catch (error) {
+          console.log({error})
+        } finally {
+          await this.closeConnection()
+        }
       }
     },
     watch: {

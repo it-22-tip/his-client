@@ -8,7 +8,7 @@
 </template>
 
 <style>
-.regency-picker.md-field .md-input-action.md-clear {
+.district-picker.md-field .md-input-action.md-clear {
   right: -32px;
 }
 </style>

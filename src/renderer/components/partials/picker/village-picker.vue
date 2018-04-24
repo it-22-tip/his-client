@@ -8,7 +8,7 @@
 </template>
 
 <style>
-.regency-picker.md-field .md-input-action.md-clear {
+.village-picker.md-field .md-input-action.md-clear {
   right: -32px;
 }
 </style>
@@ -43,6 +43,14 @@ export default {
         }
       }
     }
+  },
+  mounted () {
+    console.log(this.value)
+    this.$nextTick().then(
+      () => {
+        selected = this.value
+      }
+    )
   },
   methods: {
     openSelect () {
