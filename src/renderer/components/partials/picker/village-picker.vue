@@ -48,7 +48,7 @@ export default {
     console.log(this.value)
     this.$nextTick().then(
       () => {
-        selected = this.value
+        this.selected = this.value
       }
     )
   },
