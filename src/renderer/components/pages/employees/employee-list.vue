@@ -76,11 +76,11 @@ export default {
   props: {
     page: {
       type: String,
-      required: true
+      default: '1'
     },
     order: {
       type: String,
-      default: 'asc'
+      default: 'ASC'
     },
     sort: {
       type: String,
@@ -181,7 +181,7 @@ export default {
         }
       }
     },
-    getOrder (Employees) {
+    getOrder (Model) {
       let order = null
       let cs = this.activeSort
         switch (cs) {
@@ -189,16 +189,16 @@ export default {
             order = ['Id', this.activeOrder]
             break
           case 'Name':
-            order = [Employees.associations.Person, 'Name', this.activeOrder]
+            order = [Model.associations.Person, 'Name', this.activeOrder]
             break
           case 'Gender':
-            order = [Employees.associations.Person, 'Gender', this.activeOrder]
+            order = [Model.associations.Person, 'Gender', this.activeOrder]
             break
           case 'JobTitle':
-            order = [Employees.associations.JobTitle, 'Name', this.activeOrder]
+            order = [Model.associations.JobTitle, 'Name', this.activeOrder]
             break
           case 'Age':
-            order = [Employees.associations.Person, 'BirthDate', this.activeOrder]
+            order = [Model.associations.Person, 'BirthDate', this.activeOrder]
             break
           default:
             order = ['Id', this.activeOrder]
@@ -207,7 +207,7 @@ export default {
     },
     async transaction (transaction) {
       const { Persons, Employees, JobTitles } = this.connection.models
-      let page = this.page - 1
+      let page = this.activePage - 1
       let limit = 10
       let offset = page * limit
       let order = this.getOrder(Employees)
@@ -229,7 +229,8 @@ export default {
           },
           {
             model: JobTitles,
-            attributes: ['Name']
+            attributes: ['Name'],
+            required: true
           }
         ]
       }
@@ -237,7 +238,8 @@ export default {
       let rows = []
       try {
         rows = await Employees.findAll(options)
-        options.raw = true
+        options.raw = true,
+        options.attributes = undefined
         count = await Employees.count(options)
       } catch (error) {
         console.log(error)

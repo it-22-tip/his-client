@@ -5,9 +5,7 @@
     </md-toolbar>
     <md-tabs @md-changed="onChange">
       <md-tab id="1" md-label="Karyawan" :to="{ name: 'employees.employee.list', params: { page: '1', sort: 'Ein', order: 'asc' } }"/>
-      <md-tab id="2" md-label="Posisi" :to="{ name: 'employees.jobtitle.list' }"/>
-      <!-- <md-tab id="3" md-label="Surat Izin Kerja" :to="{ name: 'employees.license.list' }"/> -->
-      <!-- <md-tab md-label="Kontrak"/> -->
+      <md-tab id="2" md-label="Posisi" :to="{ name: 'employees.jobtitle.list', params: { page: '1', sort: 'Name', order: 'asc' } }"/>
     </md-tabs>
     <md-content class="ctc">
       <router-view/>

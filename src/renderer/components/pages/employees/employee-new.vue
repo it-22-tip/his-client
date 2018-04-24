@@ -33,6 +33,9 @@
                 <date-picker v-model="saved.Person.BirthDate"/>
                 <birthplace-picker v-model="saved.Person.BirthPlaceRegencyCode"/>
               </div>
+              <div class="md-layout-item md-size-25">
+                <address-picker v-model="saved.Person.AddressVillageCode"/>
+              </div>
             </div>
           </md-step>
           <md-step id="second" md-label="Second Step">
@@ -55,7 +58,8 @@
     components: {
       'layout-one': () => import('@partials/layout-one'),
       'date-picker': () => import('@partials/picker/date-picker'),
-      'birthplace-picker': () => import('@partials/picker/birthplace-picker')
+      'birthplace-picker': () => import('@partials/picker/birthplace-picker'),
+      'address-picker': () => import('@partials/picker/address-picker')
     },
     data () {
       return {
@@ -65,7 +69,7 @@
             Name: '',
             Gender: 'P',
             BirthDate: moment().format('YYYY-MM-DD'),
-            BirthPlaceRegencyCode: ''
+            BirthPlaceRegency: ''
           },
           JobTitleId: null
         },
@@ -101,17 +105,23 @@
       },
       async transaction (transaction) {
         const { Persons, Employees, JobTitles } = this.connection.models
-        let data = await Employees.create(this.saved, {
-          transaction: transaction,
-          include: [
-            {
-              model: Persons
-            },
-            {
-              model: JobTitles
-            }
-          ]
-        })
+        let data
+        try {
+          data = await Employees.create(this.saved, {
+            transaction: transaction,
+            logging: console.log(),
+            include: [
+              {
+                model: Persons
+              },
+              {
+                model: JobTitles
+              }
+            ]
+          })
+        } catch (error) {
+          throw error
+        }
         return data
       },
       async saving () {

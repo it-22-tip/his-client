@@ -15,7 +15,7 @@ const Employees = [
         }
       },
       {
-        path: '/employees/jobtitle',
+        path: '/employees/jobtitle/:page/:order?/:sort?',
         name: 'employees.jobtitle.list',
         component: () => import('@pages/employees/jobtitle-list'),
         meta: {
