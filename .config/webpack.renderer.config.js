@@ -46,16 +46,44 @@ let rendererConfig = {
         test: /\.css$/,
         use: [
           miniCssExtractPlugin.loader,
-          'css-loader'
+          {
+            loader: 'css-loader'
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: true
+            }
+          }
         ]
       },
       {
         test: /\.(scss|sass)$/,
-        use: [miniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+        use: [
+          miniCssExtractPlugin.loader,
+          'css-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: true
+            }
+          },
+          'sass-loader'
+        ],
       },
       {
         test: /\.less$/,
-        use: [miniCssExtractPlugin.loader, 'css-loader', 'less-loader'],
+        use: [
+          miniCssExtractPlugin.loader,
+          'css-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: true
+            }
+          },
+          'less-loader'
+        ],
       },
       {
         test: /\.html$/,

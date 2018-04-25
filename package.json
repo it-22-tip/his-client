@@ -54,6 +54,9 @@
       "target": "AppImage"
     }
   },
+  "browserslist": [
+    "last 2 chrome version"
+  ],
   "dependencies": {
     "@casl/ability": "^2.0.3",
     "@casl/vue": "^0.2.0",
@@ -172,6 +175,7 @@
     "node-loader": "^0.6.0",
     "node-sass": "4.7.2",
     "optimize-css-assets-webpack-plugin": "^4.0.0",
+    "postcss-loader": "^2.1.4",
     "pug": "^2.0.3",
     "raw-loader": "^0.5.1",
     "sass-loader": "^7.0.1",
