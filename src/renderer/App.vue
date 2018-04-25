@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <router-view/>
     <p class="idle">{{ idle }}</p>
   </div>
 </template>
@@ -15,41 +15,41 @@
 </style>
 
 <script>
-  export default {
-    name: 'App',
-    data () {
-      return {
-        timer: 0,
-        idle: 0
-      }
+export default {
+  name: 'App',
+  data () {
+    return {
+      timer: 0,
+      idle: 0
+    }
+  },
+  created () {
+    document.addEventListener('keyup', this.globalKeyup)
+    document.addEventListener('mouseup', this.globalMouseup)
+    document.addEventListener('mousemove', this.globalMousemove)
+    this.refresh()
+  },
+  beforeDestroy () {
+    document.removeEventListener('keyup', this.globalKeyup)
+    document.removeEventListener('mouseup', this.globalMouseup)
+    document.removeEventListener('mousemove', this.globalMousemove)
+  },
+  methods: {
+    refresh () {
+      setInterval(this.timerIncrement, 60000)
     },
-    created () {
-      document.addEventListener('keyup', this.globalKeyup)
-      document.addEventListener('mouseup', this.globalMouseup)
-      document.addEventListener('mousemove', this.globalMousemove)
-      this.refresh()
+    timerIncrement () {
+      this.idle = this.idle + 1
     },
-    beforeDestroy () {
-      document.removeEventListener('keyup', this.globalKeyup)
-      document.removeEventListener('mouseup', this.globalMouseup)
-      document.removeEventListener('mousemove', this.globalMousemove)
+    globalMouseup ($event) {
+      this.idle = 0
     },
-    methods: {
-      refresh () {
-        setInterval(this.timerIncrement, 60000)
-      },
-      timerIncrement () {
-        this.idle = this.idle + 1
-      },
-      globalMouseup ($event) {
-        this.idle = 0
-      },
-      globalKeyup ($event) {
-        this.idle = 0
-      },
-      globalMousemove ($event) {
-        this.idle = 0
-      }
+    globalKeyup ($event) {
+      this.idle = 0
+    },
+    globalMousemove ($event) {
+      this.idle = 0
     }
   }
+}
 </script>

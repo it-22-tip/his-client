@@ -1,8 +1,18 @@
 <template>
-  <md-field md-clearable class="district-picker">
+  <md-field
+    md-clearable
+    class="district-picker">
     <label>Kecamatan</label>
-    <md-select :disabled="disabled" v-model="selected" @md-opened="openSelect" @md-selected="$emit('input', selected)" md-dense>
-      <md-option v-for="item in items" :value="item.Code" :key="item.Code"> {{ item.Name }} </md-option>
+    <md-select
+      :disabled="disabled"
+      v-model="selected"
+      md-dense
+      @md-opened="openSelect"
+      @md-selected="$emit('input', selected)">
+      <md-option
+        v-for="item in items"
+        :value="item.Code"
+        :key="item.Code">{{ item.Name }}</md-option>
     </md-select>
   </md-field>
 </template>
@@ -20,10 +30,16 @@ export default {
   mixins: [
     orm
   ],
-  props: [
-    'value',
-    'regencyCode'
-  ],
+  props: {
+    value: {
+      type: String,
+      default: null
+    },
+    regencyCode: {
+      type: String,
+      default: null
+    }
+  },
   data: () => ({
     emptyItems: [{ Code: 0, Name: 'Tidak Ada Data' }],
     selected: '',
@@ -48,7 +64,7 @@ export default {
     openSelect () {
       this.getData('Districts', { RegencyCode: this.regencyCode })
     },
-    async getData(modelName, where = null) {
+    async getData (modelName, where = null) {
       const transaction = async transaction => {
         const Model = this.connection.models[modelName]
         const opt = {
@@ -60,10 +76,10 @@ export default {
         let data = await Model.findAll(opt)
         return data
       }
-      this.connection = (new this.$orm).withOption({
+      this.connection = (new this.$orm()).withOption({
         username: 'his',
         password: 'his',
-        database: 'his',
+        database: 'his'
       }).connect()
       try {
         this.items = await this.connection.transaction(transaction)
@@ -80,6 +96,5 @@ export default {
       }
     }
   }
-};
+}
 </script>
-

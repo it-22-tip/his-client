@@ -1,9 +1,5 @@
 <template>
   <md-content class="wrapper">
-<!--     <md-content class="left">
-      <md-content class="md-primary left-content">
-      </md-content>
-    </md-content> -->
     <md-content class="right">
       <md-content class="right-top">
         <md-toolbar class="md-dense md-primary" md-elevation="0">
@@ -13,7 +9,6 @@
           <div class="md-toolbar-section-end">
             <md-button :to="{ name: 'base.dashboard' }">Dasbor</md-button>
             <md-button :to="{ name: 'employees.employee.list', params: { page: '1', sort: 'Ein', order: 'desc' } }">HRD</md-button>
-            <!-- <md-button :to="{ name: 'documents.document.list' }">Doc</md-button> -->
             <md-button :to="{ name: 'masterdata.provinces', params: { page: '1', sort: 'Name', order: 'desc' } }">Data Induk</md-button>
             <md-button :to="{ name: 'base.login' }">Logout</md-button>
           </div>
@@ -91,4 +86,3 @@
     }
   }
 </script>
-

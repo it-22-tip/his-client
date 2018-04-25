@@ -12,9 +12,12 @@
       'province-picker': () => import('./province-picker'),
       'regency-picker': () => import('./regency-picker')
     },
-    props: [
-      'value'
-    ],
+    props: {
+      value: {
+        type: String,
+        default: null
+      }
+    },
     data () {
       return {
         birthPlaceProvinceCode: '',
@@ -36,6 +39,6 @@
         },
         deep: true
       }
-    },
+    }
   }
 </script>

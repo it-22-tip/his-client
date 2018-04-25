@@ -32,4 +32,3 @@
   flex-direction: column;
 }
 </style>
-

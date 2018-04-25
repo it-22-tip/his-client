@@ -1,2 +1,2 @@
-import ContextMenu from './index.vue'
+import ContextMenu from './ctx-menu.vue'
 export default ContextMenu

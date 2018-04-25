@@ -188,7 +188,7 @@ export default {
         offset: offset,
         raw: false,
         distinct: true,
-        col: 'Id',
+        col: 'Id'
         // logging: console.log
       }
       try {

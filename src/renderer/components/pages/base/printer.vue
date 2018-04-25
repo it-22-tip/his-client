@@ -28,10 +28,10 @@
     mounted () {
       console.log(printer)
       readFile(__static + '/ps/lv1.ps').then(
-        data => {
-          console.log(data)
-          this.printdata = data
-        }
+      data => {
+        console.log(data)
+        this.printdata = data
+      }
       )
     },
     methods: {

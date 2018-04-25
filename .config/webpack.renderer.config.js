@@ -9,6 +9,7 @@ const miniCssExtractPlugin = require('mini-css-extract-plugin')
 const htmlWebpackPlugin = require('html-webpack-plugin')
 const eslintFriendlyFormatter = require('eslint-friendly-formatter')
 let whiteListedModules = require('./whiteListedModules')
+const { VueLoaderPlugin } = require('vue-loader')
 
 let rendererConfig = {
   devtool: '#cheap-module-eval-source-map',
@@ -38,6 +39,10 @@ let rendererConfig = {
         }
       },
       {
+        test: /\.vue$/,
+        loader: 'vue-loader'
+      },
+      {
         test: /\.css$/,
         use: [
           miniCssExtractPlugin.loader,
@@ -64,61 +69,6 @@ let rendererConfig = {
       {
         test: /\.node$/,
         use: 'node-loader'
-      },
-      {
-        test: /\.vue$/,
-        use: {
-          loader: 'vue-loader',
-          options: {
-            extractCSS: false,// process.env.NODE_ENV === 'production',
-            loaders: {
-              css: [
-                {
-                  loader: miniCssExtractPlugin.loader
-                },
-                {
-                  loader: 'css-loader'
-                }
-              ],
-              sass: [
-                {
-                  loader: 'vue-style-loader'
-                },
-                {
-                  loader: 'css-loader'
-                },
-                {
-                  loader: 'sass-loader',
-                  options: {
-                    indentedSyntax: true
-                  }
-                }
-              ],
-              scss: [
-                {
-                  loader: 'vue-style-loader'
-                },
-                {
-                  loader: 'css-loader'
-                },
-                {
-                  loader: 'sass-loader'
-                }
-              ],
-              less: [
-                {
-                  loader: 'vue-style-loader'
-                },
-                {
-                  loader: 'css-loader'
-                },
-                {
-                  loader: 'less-loader'
-                }
-              ]
-            }
-          }
-        }
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
@@ -161,6 +111,7 @@ let rendererConfig = {
     __filename: process.env.NODE_ENV !== 'production'
   },
   plugins: [
+    new VueLoaderPlugin(),
     new miniCssExtractPlugin({
       filename: 'minify.css'
     }),

@@ -6,6 +6,7 @@ const babelMinifyWebpackPlugin = require('babel-minify-webpack-plugin')
 const copyWebpackPlugin = require('copy-webpack-plugin')
 const miniCssExtractPlugin = require('mini-css-extract-plugin')
 const htmlWebpackPlugin = require('html-webpack-plugin')
+const { VueLoaderPlugin } = require('vue-loader')
 
 let webConfig = {
   devtool: '#cheap-module-eval-source-map',
@@ -29,6 +30,10 @@ let webConfig = {
             formatter: require('eslint-friendly-formatter')
           }
         }
+      },
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader'
       },
       {
         test: /\.css$/,
@@ -56,19 +61,6 @@ let webConfig = {
         exclude: /node_modules/
       },
       {
-        test: /\.vue$/,
-        use: {
-          loader: 'vue-loader',
-          options: {
-            extractCSS: true,
-            loaders: {
-              sass: 'vue-style-loader!css-loader!sass-loader?indentedSyntax=1',
-              scss: 'vue-style-loader!css-loader!sass-loader'
-            }
-          }
-        }
-      },
-      {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         use: {
           loader: 'url-loader',
@@ -91,6 +83,7 @@ let webConfig = {
     ]
   },
   plugins: [
+    new VueLoaderPlugin(),
     new miniCssExtractPlugin({
       filename: 'styles.css'
     }),

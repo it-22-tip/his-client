@@ -1,54 +1,54 @@
 <script>
-  'use-strict'
-  import Vue from 'vue'
-  const MdButton = Vue.component('MdButton')
-  export default {
-    name: 'BaseButton',
-    extends: MdButton,
-    props: {
-      'href': {
-        type: String,
-        default: null
-      },
-      'type': {
-        type: String,
-        default: 'button'
-      },
-      'disabled': {
-        type: Boolean,
-        default: false
-      },
-      'md-ripple': {
-        type: Boolean,
-        default: true
-      }
+'use-strict'
+import Vue from 'vue'
+const MdButton = Vue.component('MdButton')
+export default {
+  name: 'BaseButton',
+  extends: MdButton,
+  props: {
+    'href': {
+      type: String,
+      default: null
     },
-    render (createElement) {
-      const options = {
-        staticClass: 'md-custom-button',
-        attrs: {
-          ...this.attrs,
-          disabled: this.disabled,
-          type: !this.href && (this.type || 'button')
-        },
-        on: {
-          ...this.$listeners,
-          focus: this.onFocus,
-          blur: this.onBlur
-        }
-      }
-      const button = createElement('md-button', options, [this.$slots.default])
-      return button
+    'type': {
+      type: String,
+      default: 'button'
     },
-    methods: {
-      onFocus () {
-        this.$children[0].mdHasFocus = true
+    'disabled': {
+      type: Boolean,
+      default: false
+    },
+    'md-ripple': {
+      type: Boolean,
+      default: true
+    }
+  },
+  render (createElement) {
+    const options = {
+      staticClass: 'md-custom-button',
+      attrs: {
+        ...this.attrs,
+        disabled: this.disabled,
+        type: !this.href && (this.type || 'button')
       },
-      onBlur () {
-        this.$children[0].mdHasFocus = false
+      on: {
+        ...this.$listeners,
+        focus: this.onFocus,
+        blur: this.onBlur
       }
     }
+    const button = createElement('md-button', options, [this.$slots.default])
+    return button
+  },
+  methods: {
+    onFocus () {
+      this.$children[0].mdHasFocus = true
+    },
+    onBlur () {
+      this.$children[0].mdHasFocus = false
+    }
   }
+}
 </script>
 
 <style lang="scss" scoped>

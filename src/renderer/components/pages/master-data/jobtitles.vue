@@ -194,7 +194,6 @@ export default {
         raw: false,
         distinct: true,
         col: 'Id',
-        // logging: console.log,
         include: [
           {
             model: Employees,

@@ -30,9 +30,12 @@
       'district-picker': () => import('./district-picker'),
       'village-picker': () => import('./village-picker')
     },
-    props: [
-      'value'
-    ],
+    props: {
+      value: {
+        type: String,
+        default: null
+      }
+    },
     data () {
       return {
         ProvinceCode: '',
@@ -45,7 +48,7 @@
       this.getData()
     },
     methods: {
-      async getData() {
+      async getData () {
         const transaction = async transaction => {
           const { Provinces, Regencies, Districts, Villages } = this.connection.models
           const opt = {
@@ -132,6 +135,6 @@
           }
         }
       }
-    },
+    }
   }
 </script>

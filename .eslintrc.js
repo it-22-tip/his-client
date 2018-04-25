@@ -17,7 +17,6 @@ module.exports = {
     __static: true
   },
   plugins: [
-    'html',
     'promise'
   ],
   'rules': {
