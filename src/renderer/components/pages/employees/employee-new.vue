@@ -47,8 +47,7 @@
               </div>
 
               <div class="md-layout-item md-size-25">
-                <date-picker v-model="saved.Person.BirthDate"/>
-                <birthplace-picker v-model="saved.Person.BirthPlaceRegencyCode"/>
+                <birthdateplace-picker v-model="birthDatePlace"/>
               </div>
               <div class="md-layout-item md-size-25">
                 <address-picker v-model="saved.Person.AddressVillageCode"/>
@@ -74,7 +73,7 @@ export default {
   components: {
     'layout-one': () => import('@partials/layout-one'),
     'date-picker': () => import('@partials/picker/date-picker'),
-    'birthplace-picker': () => import('@partials/picker/birthplace-picker'),
+    'birthdateplace-picker': () => import('@partials/picker/birthdateplace-picker'),
     'address-picker': () => import('@partials/picker/address-picker')
   },
   mixins: [
@@ -83,6 +82,10 @@ export default {
   data () {
     return {
       pageTitle: null,
+      birthDatePlace: {
+        BirthDate: '',
+        BirthPlaceRegency: ''
+      },
       saved: {
         Person: {
           Name: '',
