@@ -50,7 +50,8 @@
       "icon": "icons/icon.ico"
     },
     "linux": {
-      "category": "Utility"
+      "category": "Utility",
+      "target": "AppImage"
     }
   },
   "dependencies": {
