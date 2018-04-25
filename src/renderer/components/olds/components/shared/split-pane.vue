@@ -1,11 +1,22 @@
 <template>
-  <div class="split-pane" @mousemove="dragMove" @mouseup="dragEnd" @mouseleave="dragEnd" :class="{ 'is-dragging': dragging }">
-    <div class="split-pane-item split-pane-item-left" :style="{ width: splitLeft }">
-      <slot name="left"></slot>
+  <div
+    :class="{ 'is-dragging': dragging }"
+    class="split-pane"
+    @mousemove="dragMove"
+    @mouseup="dragEnd"
+    @mouseleave="dragEnd">
+    <div
+      :style="{ width: splitLeft }"
+      class="split-pane-item split-pane-item-left">
+      <slot name="left"/>
     </div>
-    <div class="split-pane-gutter" @mousedown="dragStart"></div>
-    <div class="split-pane-item split-pane-item-right" :style="{ 'width': splitRight }">
-      <slot name="right"></slot>
+    <div
+      class="split-pane-gutter"
+      @mousedown="dragStart"/>
+    <div
+      :style="{ 'width': splitRight }"
+      class="split-pane-item split-pane-item-right">
+      <slot name="right"/>
     </div>
   </div>
 </template>

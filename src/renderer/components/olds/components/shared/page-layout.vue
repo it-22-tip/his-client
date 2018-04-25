@@ -2,20 +2,20 @@
   <div class="page-layout">
     <layout-toolbar/>
     <md-content class="layout-content">
-      <slot></slot>
+      <slot/>
     </md-content>
     <layout-footer/>
   </div>
 </template>
 
 <script>
-  export default {
-    name: 'PageLayout',
-    components: {
-      'layout-toolbar': () => import('@shared/layout-toolbar'),
-      'layout-footer': () => import('@shared/layout-footer')
-    }
+export default {
+  name: 'PageLayout',
+  components: {
+    'layout-toolbar': () => import('@shared/layout-toolbar'),
+    'layout-footer': () => import('@shared/layout-footer')
   }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -39,5 +39,3 @@
     background: grey;
   }
 </style>
-
-

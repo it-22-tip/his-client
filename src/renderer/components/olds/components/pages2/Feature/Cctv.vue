@@ -2,11 +2,15 @@
   <app-wrapper>
     <page-container>
       <template slot="header">
-      <h3 class="md-title" style="flex: 1">Title</h3>
-       <menu-feature></menu-feature>
+        <h3
+          class="md-title"
+          style="flex: 1">Title</h3>
+        <menu-feature/>
       </template>
-      <div slot="default" class="padding-20">
-        <video src=""></video>
+      <div
+        slot="default"
+        class="padding-20">
+        <video src=""/>
       </div>
       <page-footer slot="footer">
         <div>FOOTER</div>
@@ -16,17 +20,16 @@
 </template>
 
 <script>
-  export default {
-    data () {
-      return {
-      }
-    },
-    mounted () {
-
+export default {
+  data () {
+    return {
     }
-  }
-</script>
+  },
+  mounted () {
 
+  }
+}
+</script>
 
 <style lang="scss" scoped>
   .padding-20 {

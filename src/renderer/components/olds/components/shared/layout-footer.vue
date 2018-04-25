@@ -1,12 +1,9 @@
 <template>
-  <div class="layout-footer">
-
-  </div>
+  <div class="layout-footer"/>
 </template>
 
 <script>
-  export default {
-    name: 'LayoutFooter'
-  }
+export default {
+  name: 'LayoutFooter'
+}
 </script>
-

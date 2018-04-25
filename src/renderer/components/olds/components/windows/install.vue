@@ -5,9 +5,9 @@
 </template>
 
 <script>
-  export default {
-    name: 'window-install',
-  }
+export default {
+  name: 'WindowInstall'
+}
 </script>
 
 <style scoped>

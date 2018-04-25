@@ -2,11 +2,15 @@
   <app-wrapper>
     <page-container>
       <template slot="header">
-      <h3 class="md-title" style="flex: 1">Title</h3>
-       <menu-feature></menu-feature>
+        <h3
+          class="md-title"
+          style="flex: 1">Title</h3>
+        <menu-feature/>
       </template>
-      <div slot="default" class="test">
-        <table-viewer :json="json"></table-viewer>
+      <div
+        slot="default"
+        class="test">
+        <table-viewer :json="json"/>
       </div>
       <template slot="footer">
         <div>FOOTER</div>
@@ -16,18 +20,17 @@
 </template>
 
 <script>
-  export default {
-    data () {
-      return {
-        json: null
-      }
-    },
-    methods: {
-
+export default {
+  data () {
+    return {
+      json: null
     }
-  }
-</script>
+  },
+  methods: {
 
+  }
+}
+</script>
 
 <style lang="scss" scoped>
   .test {

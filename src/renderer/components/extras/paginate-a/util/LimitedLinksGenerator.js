@@ -41,7 +41,7 @@ export default class LimitedLinksGenerator {
 
   _currentChunkIndex () {
     const currentChunk = Math.floor(this.currentPage / this.limit)
-    return currentChunk * this.limit 
+    return currentChunk * this.limit
   }
 
   _allPagesButLast () {

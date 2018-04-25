@@ -1,6 +1,5 @@
 <template>
-  <splash-window>
-  </splash-window>
+  <splash-window/>
 </template>
 
 <script>
@@ -11,4 +10,3 @@ export default {
   }
 }
 </script>
-

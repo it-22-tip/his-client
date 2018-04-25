@@ -62,74 +62,74 @@
 </template>
 
 <script>
-  import BarExample from './BarExample'
-  import LineExample from './LineExample'
-  import DoughnutExample from './DoughnutExample'
-  import PieExample from './PieExample'
-  import RadarExample from './RadarExample'
-  import PolarAreaExample from './PolarAreaExample'
-  import BubbleExample from './BubbleExample'
-  import ReactiveExample from './ReactiveExample'
-  import ReactivePropExample from './ReactivePropExample'
-  import ScatterExample from './ScatterExample'
-  import HorizontalBarExample from './HorizontalBarExample'
-  import CustomLine from './CustomExample'
+import BarExample from './BarExample'
+import LineExample from './LineExample'
+import DoughnutExample from './DoughnutExample'
+import PieExample from './PieExample'
+import RadarExample from './RadarExample'
+import PolarAreaExample from './PolarAreaExample'
+import BubbleExample from './BubbleExample'
+import ReactiveExample from './ReactiveExample'
+import ReactivePropExample from './ReactivePropExample'
+import ScatterExample from './ScatterExample'
+import HorizontalBarExample from './HorizontalBarExample'
+import CustomLine from './CustomExample'
 
-  export default {
-    components: {
-      BarExample,
-      LineExample,
-      DoughnutExample,
-      CustomLine,
-      PieExample,
-      RadarExample,
-      PolarAreaExample,
-      BubbleExample,
-      ReactiveExample,
-      ReactivePropExample,
-      ScatterExample,
-      HorizontalBarExample
-    },
-    data () {
+export default {
+  components: {
+    BarExample,
+    LineExample,
+    DoughnutExample,
+    CustomLine,
+    PieExample,
+    RadarExample,
+    PolarAreaExample,
+    BubbleExample,
+    ReactiveExample,
+    ReactivePropExample,
+    ScatterExample,
+    HorizontalBarExample
+  },
+  data () {
+    return {
+      dataPoints: null,
+      height: 20
+    }
+  },
+  computed: {
+    myStyles () {
       return {
-        dataPoints: null,
-        height: 20
+        height: `${this.height}px`,
+        position: 'relative'
       }
+    }
+  },
+  mounted () {
+    setInterval(() => {
+      this.fillData()
+    }, 2000)
+  },
+  methods: {
+    increaseHeight () {
+      this.height += 10
     },
-    mounted () {
-      setInterval(() => {
-        this.fillData()
-      }, 2000)
+    getRandomInt () {
+      return Math.floor(Math.random() * (50 - 5 + 1)) + 5
     },
-    methods: {
-      increaseHeight () {
-        this.height += 10
-      },
-      getRandomInt () {
-        return Math.floor(Math.random() * (50 - 5 + 1)) + 5
-      },
-      fillData () {
-        this.dataPoints = {
-          labels: ['January' + this.getRandomInt(), 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-          datasets: [
-            {
-              label: 'Data One',
-              backgroundColor: '#f87979',
-              data: [this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt()]
-            }
-          ]
-        }
-      }
-    },
-    computed: {
-      myStyles () {
-        return {
-          height: `${this.height}px`,
-          position: 'relative'
-        }
+    fillData () {
+      this.dataPoints = {
+        labels: ['January' + this.getRandomInt(), 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+        datasets: [
+          {
+            label: 'Data One',
+            backgroundColor: '#f87979',
+            data: [this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt()]
+          }
+        ]
       }
     }
   }
+}
 </script>
 
 <style>

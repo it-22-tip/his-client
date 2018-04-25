@@ -1,23 +1,42 @@
 <template>
   <li
-    role="treeitem"
     :class="classes"
     :draggable="draggable"
+    role="treeitem"
     @dragstart.stop="onItemDragStart($event, _self, _self.model)"
     @dragend.stop.prevent="onItemDragEnd($event, _self, _self.model)"
     @dragover.stop.prevent="() => false"
     @dragenter.stop.prevent="isDragEnter = true"
     @dragleave.stop.prevent="isDragEnter = false"
     @drop.stop.prevent="handleItemDrop($event, _self, _self.model)">
-    <div role="presentation" :class="wholeRowClasses" v-if="isWholeRow">&nbsp;</div>
-    <i class="tree-icon tree-ocl" role="presentation" @click="handleItemToggle"></i>
-    <div :class="anchorClasses" v-on="events">
-      <i class="tree-icon tree-checkbox" role="presentation" v-if="showCheckbox && !model.loading"></i>
-      <i :class="themeIconClasses" role="presentation" v-if="!model.loading"></i>
-      {{model[textFieldName]}}
+    <div
+      v-if="isWholeRow"
+      :class="wholeRowClasses"
+      role="presentation">&nbsp;</div>
+    <i
+      class="tree-icon tree-ocl"
+      role="presentation"
+      @click="handleItemToggle"/>
+    <div
+      :class="anchorClasses"
+      v-on="events">
+      <i
+        v-if="showCheckbox && !model.loading"
+        class="tree-icon tree-checkbox"
+        role="presentation"/>
+      <i
+        v-if="!model.loading"
+        :class="themeIconClasses"
+        role="presentation"/>
+      {{ model[textFieldName] }}
     </div>
-    <ul role="group" ref="group" class="tree-children" v-if="isFolder">
-      <tree-view-item v-for="(child, index) in model[childrenFieldName]"
+    <ul
+      v-if="isFolder"
+      ref="group"
+      role="group"
+      class="tree-children">
+      <tree-view-item
+        v-for="(child, index) in model[childrenFieldName]"
         :key="index"
         :item-data="child"
         :text-field-name="textFieldName"
@@ -34,8 +53,7 @@
         :on-item-drag-start="onItemDragStart"
         :on-item-drag-end="onItemDragEnd"
         :on-item-drop="onItemDrop"
-        :item-class="index === model[childrenFieldName].length-1 ? 'tree-last' : ''">
-      </tree-view-item>
+        :item-class="index === model[childrenFieldName].length-1 ? 'tree-last' : ''"/>
     </ul>
   </li>
 </template>
@@ -76,25 +94,6 @@ export default {
       isDragEnter: false,
       model: this.itemData,
       events: {}
-    }
-  },
-  watch: {
-    isDragEnter (newValue) {
-      if (newValue) {
-        this.$el.style.backgroundColor = '#C9FDC9'
-      } else {
-        this.$el.style.backgroundColor = 'inherit'
-      }
-    },
-    itemData (newValue) {
-      this.model = newValue
-    },
-    'model.opened': {
-      handler: function (val, oldVal) {
-        this.onItemToggle(this, this.model)
-        this.handleSetGroupMaxHeight()
-      },
-      deep: true
     }
   },
   computed: {
@@ -146,6 +145,51 @@ export default {
         }
       }
     }
+  },
+  watch: {
+    isDragEnter (newValue) {
+      if (newValue) {
+        this.$el.style.backgroundColor = '#C9FDC9'
+      } else {
+        this.$el.style.backgroundColor = 'inherit'
+      }
+    },
+    itemData (newValue) {
+      this.model = newValue
+    },
+    'model.opened': {
+      handler: function (val, oldVal) {
+        this.onItemToggle(this, this.model)
+        this.handleSetGroupMaxHeight()
+      },
+      deep: true
+    }
+  },
+  created () {
+    const self = this
+    const events = {
+      'click': this.handleItemClick,
+      'mouseover': this.handleItemMouseOver,
+      'mouseout': this.handleItemMouseOut
+    }
+    for (let itemEvent in this.itemEvents) {
+      let itemEventCallback = this.itemEvents[itemEvent]
+      if (events.hasOwnProperty(itemEvent)) {
+        let eventCallback = events[itemEvent]
+        events[itemEvent] = function (event) {
+          eventCallback(self, self.model, event)
+          itemEventCallback(self, self.model, event)
+        }
+      } else {
+        events[itemEvent] = function (event) {
+          itemEventCallback(self, self.model, event)
+        }
+      }
+    }
+    this.events = events
+  },
+  mounted () {
+    this.handleSetGroupMaxHeight()
   },
   methods: {
     handleRecursionNodeParents (node, func) {
@@ -227,32 +271,6 @@ export default {
       this.$el.style.backgroundColor = 'inherit'
       this.onItemDrop(e, oriNode, oriItem)
     }
-  },
-  created () {
-    const self = this
-    const events = {
-      'click': this.handleItemClick,
-      'mouseover': this.handleItemMouseOver,
-      'mouseout': this.handleItemMouseOut
-    }
-    for (let itemEvent in this.itemEvents) {
-      let itemEventCallback = this.itemEvents[itemEvent]
-      if (events.hasOwnProperty(itemEvent)) {
-        let eventCallback = events[itemEvent]
-        events[itemEvent] = function (event) {
-          eventCallback(self, self.model, event)
-          itemEventCallback(self, self.model, event)
-        }
-      } else {
-        events[itemEvent] = function (event) {
-          itemEventCallback(self, self.model, event)
-        }
-      }
-    }
-    this.events = events
-  },
-  mounted () {
-    this.handleSetGroupMaxHeight()
   }
 }
 </script>

@@ -1,71 +1,88 @@
 <template>
-  <div class="login-page" :style="style()">
+  <div
+    :style="style()"
+    class="login-page">
     <md-card class="md-flex-50 md-flex-small-100 login-form">
-    <md-card-header class="login-header">
-
-    </md-card-header>
+      <md-card-header class="login-header"/>
       <md-card-content>
-        <img :src="`static/svg/logo.svg`" />
+        <img :src="`static/svg/logo.svg`" >
 
         <md-field>
           <md-icon>email</md-icon>
-          <md-input type="email" name="email" id="email" autocomplete="email" v-model="form.email" :disabled="sending" />
+          <md-input
+            id="email"
+            v-model="form.email"
+            :disabled="sending"
+            type="email"
+            name="email"
+            autocomplete="email" />
         </md-field>
 
         <md-field>
           <md-icon>vpn_key</md-icon>
-          <md-input type="password" name="key" id="key" v-model="form.key" :disabled="sending" />
+          <md-input
+            id="key"
+            v-model="form.key"
+            :disabled="sending"
+            type="password"
+            name="key" />
         </md-field>
 
       </md-card-content>
 
       <md-card-actions>
         <div>{{ error }}</div>
-        <md-button tabindex="10" @click="onClickInstall" class="md-raised md-primary">Install</md-button>
-        <md-button tabindex="11" @click="onClickLogin" class="md-raised md-primary">Masuk</md-button>
+        <md-button
+          tabindex="10"
+          class="md-raised md-primary"
+          @click="onClickInstall">Install</md-button>
+        <md-button
+          tabindex="11"
+          class="md-raised md-primary"
+          @click="onClickLogin">Masuk</md-button>
       </md-card-actions>
     </md-card>
   </div>
 </template>
 
 <script>
-  import os from 'os'
-  export default {
-    name: 'Login',
-    data () {
+import os from 'os'
+export default {
+  name: 'Login',
+  data () {
+    return {
+      form: {
+        email: null,
+        key: null
+      },
+      sending: false
+    }
+  },
+  computed: {
+    error () {
+      return this.$store.getters['Users/errorMessage']
+    }
+  },
+  mounted () {
+    console.log(this.$store)
+  },
+  methods: {
+    style () {
       return {
-        form: {
-          email: null,
-          key: null
-        },
-        sending: false
+        backgroundImage: `url('static/jpg/login.jpg')`,
+        backgroundSize: 'cover'
       }
     },
-    computed: {
-      error () {
-        return this.$store.getters['Users/errorMessage']
-      }
+    onClickInstall () {
+      this.$router.push({ name: 'page.install.database' })
     },
-    methods: {
-      style () {
-        return {
-          backgroundImage: `url('static/jpg/login.jpg')`,
-          backgroundSize: 'cover'
-        }
-      },
-      onClickInstall () {
-        this.$router.push({ name: 'page.install.database' })
-      },
-      onClickLogin () {
-        this.$store.dispatch('Users/LOGIN', this.form)
-          .then(() => { this.$router.push({ name: 'page.base.dashboard' }) })
-          .catch(error => { console.log(error) })
-      }
-    },
-    mounted () {
-      console.log(this.$store)
+    onClickLogin () {
+      this.$store.dispatch('Users/LOGIN', this.form)
+        .then(() => { this.$router.push({ name: 'page.base.dashboard' }) })
+        .catch(error => { console.log(error) })
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>

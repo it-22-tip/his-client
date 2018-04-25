@@ -2,15 +2,21 @@
   <app-wrapper>
     <page-container>
       <template slot="header">
-      <h3 class="md-title" style="flex: 1">Title</h3>
-       <menu-feature></menu-feature>
+        <h3
+          class="md-title"
+          style="flex: 1">Title</h3>
+        <menu-feature/>
       </template>
-      <div slot="default" class="padding-20">
+      <div
+        slot="default"
+        class="padding-20">
         <md-field>
           <label>Ketik Di Sini</label>
-          <md-input v-model="qrtext"></md-input>
+          <md-input v-model="qrtext"/>
         </md-field>
-        <extra-qrcode class="qr" :text="qrtext"></extra-qrcode>
+        <extra-qrcode
+          :text="qrtext"
+          class="qr"/>
       </div>
       <page-footer slot="footer">
         <div>FOOTER</div>
@@ -20,18 +26,17 @@
 </template>
 
 <script>
-  export default {
-    data () {
-      return {
-        qrtext: ''
-      }
-    },
-    methods: {
-
+export default {
+  data () {
+    return {
+      qrtext: ''
     }
-  }
-</script>
+  },
+  methods: {
 
+  }
+}
+</script>
 
 <style lang="scss" scoped>
   .padding-20 {

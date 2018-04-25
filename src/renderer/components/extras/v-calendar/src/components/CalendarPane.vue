@@ -1,162 +1,166 @@
 <template>
-<div
-  ref='pane'
-  class='c-pane'
-  :style='paneStyle'>
-  <!--Header slot-->
-  <slot name='header' v-bind='page_'>
-    <div class='c-header' :style='headerStyle'>
-      <!--Header prev button-->
-      <div class='c-arrow-layout'>
-        <slot
-          name='header-left-button'
-          v-bind='page_'
-          v-if='!hideLeftButton'>
-          <svg-icon
-            :glyph='angleLeft'
-            class='c-arrow'
-            :class='{ "c-disabled": !canMovePrevMonth || hideLeftButton }'
-            :style='arrowStyle'
-            @click='movePrevMonth'>
-          </svg-icon>
-        </slot>
-      </div>
-      <!--Header title-->
+  <div
+    ref="pane"
+    :style="paneStyle"
+    class="c-pane">
+    <!--Header slot-->
+    <slot
+      v-bind="page_"
+      name="header">
       <div
-        :class='["c-title-layout", titleClass]'>   
-        <!--Navigation popover--> 
-        <popover
-          class='c-title-popover'
-          direction='bottom'
-          :align='titlePosition'
-          :visibility='navVisibility'
-          :content-style='navWrapperStyle'
-          :force-hidden.sync='navForceHidden'
-          toggle-visible-on-click
-          is-interactive>
-          <!--Title content-->
-          <transition-group
-            tag='div'
-            class='c-title-anchor'
-            :name='titleTransition_'>
-            <div
-              class='c-title'
-              :style='titleStyle'
-              v-for='p in pages'
-              :key='p.key'
-              v-if='p === page_'>
-              <slot
-                name='header-title'
-                v-bind='p'>
-                {{ p.title }}
-              </slot>
-            </div>
-          </transition-group>
-          <!--Navigation pane-->
-          <calendar-nav
-            slot='popover-content'
-            :value='page_'
-            :validator='canMove'
-            :styles='styles'
-            :formats='formats'
-            @input='navPageSelected($event)'>
-            <!-- Pass through nav slots -->
-            <template
-              v-for='slot in navSlots'
-              :slot='slot'
-              slot-scope='props'>
-              <slot :name='slot' v-bind='props'></slot>
-            </template>
-          </calendar-nav>
-        </popover>
+        :style="headerStyle"
+        class="c-header">
+        <!--Header prev button-->
+        <div class="c-arrow-layout">
+          <slot
+            v-if="!hideLeftButton"
+            v-bind="page_"
+            name="header-left-button">
+            <svg-icon
+              :glyph="angleLeft"
+              :class="{ &quot;c-disabled&quot;: !canMovePrevMonth || hideLeftButton }"
+              :style="arrowStyle"
+              class="c-arrow"
+              @click="movePrevMonth"/>
+          </slot>
+        </div>
+        <!--Header title-->
+        <div
+          :class="[&quot;c-title-layout&quot;, titleClass]">
+          <!--Navigation popover-->
+          <popover
+            :align="titlePosition"
+            :visibility="navVisibility"
+            :content-style="navWrapperStyle"
+            :force-hidden.sync="navForceHidden"
+            class="c-title-popover"
+            direction="bottom"
+            toggle-visible-on-click
+            is-interactive>
+            <!--Title content-->
+            <transition-group
+              :name="titleTransition_"
+              tag="div"
+              class="c-title-anchor">
+              <div
+                v-for="p in pages"
+                v-if="p === page_"
+                :style="titleStyle"
+                :key="p.key"
+                class="c-title">
+                <slot
+                  v-bind="p"
+                  name="header-title">
+                  {{ p.title }}
+                </slot>
+              </div>
+            </transition-group>
+            <!--Navigation pane-->
+            <calendar-nav
+              slot="popover-content"
+              :value="page_"
+              :validator="canMove"
+              :styles="styles"
+              :formats="formats"
+              @input="navPageSelected($event)">
+              <!-- Pass through nav slots -->
+              <template
+                v-for="slot in navSlots"
+                slot-scope="props"
+                :slot="slot">
+                <slot
+                  :name="slot"
+                  v-bind="props"/>
+              </template>
+            </calendar-nav>
+          </popover>
+        </div>
+        <!--Header next button-->
+        <div class="c-arrow-layout">
+          <slot
+            v-if="!hideRightButton"
+            v-bind="page_"
+            name="header-right-button">
+            <svg-icon
+              :glyph="angleRight"
+              :class="{ &quot;c-disabled&quot;: !canMoveNextMonth }"
+              :style="arrowStyle"
+              class="c-arrow"
+              @click="moveNextMonth"/>
+          </slot>
+        </div>
       </div>
-      <!--Header next button-->
-      <div class='c-arrow-layout'>
-        <slot
-          name='header-right-button'
-          v-bind='page_'
-          v-if='!hideRightButton'>
-          <svg-icon
-            :glyph='angleRight'
-            class='c-arrow'
-            :class='{ "c-disabled": !canMoveNextMonth }'
-            :style='arrowStyle'
-            @click='moveNextMonth'>
-          </svg-icon>
-        </slot>
-      </div>
-    </div>
-  </slot>
-  <!--Header horizontal divider-->
-  <div
-    class='c-horizontal-divider'
-    :style='headerHorizontalDividerStyle_'
-    v-if='headerHorizontalDividerStyle_'>
-  </div>
-  <!--Weekday labels-->
-  <div
-    class='c-weekdays'
-    :style='weekdaysStyle_'>
+    </slot>
+    <!--Header horizontal divider-->
     <div
-      v-for='(weekday, i) in weekdayLabels'
-      :key='i + 1'
-      class='c-weekday'>
-      {{ weekday }}
+      v-if="headerHorizontalDividerStyle_"
+      :style="headerHorizontalDividerStyle_"
+      class="c-horizontal-divider"/>
+    <!--Weekday labels-->
+    <div
+      :style="weekdaysStyle_"
+      class="c-weekdays">
+      <div
+        v-for="(weekday, i) in weekdayLabels"
+        :key="i + 1"
+        class="c-weekday">
+        {{ weekday }}
+      </div>
+    </div>
+    <!--Weekdays horizontal divider-->
+    <div
+      v-if="weekdaysHorizontalDividerStyle_"
+      :style="weekdaysHorizontalDividerStyle_"
+      class="c-horizontal-divider"/>
+    <!--Weeks-->
+    <div
+      :style="weeksStyle_"
+      class="c-weeks">
+      <transition-group
+        :name="weeksTransition_"
+        tag="div"
+        class="c-weeks-rows-wrapper"
+        @before-enter="weeksTransitioning = true"
+        @after-enter="weeksTransitioning = false">
+        <calendar-weeks
+          v-for="p in pages"
+          :key="p.key"
+          :month-comps="p.monthComps"
+          :prev-month-comps="p.prevMonthComps"
+          :next-month-comps="p.nextMonthComps"
+          :styles="styles"
+          :formats="formats"
+          v-bind="$attrs"
+          v-if="p === page_"
+          class="c-weeks-rows"
+          @touchstart.passive="touchStart($event)"
+          @touchmove.passive="touchMove($event)"
+          @touchend.passive="touchEnd($event)"
+          v-on="$listeners">
+          <template
+            v-for="slot in Object.keys($scopedSlots)"
+            slot-scope="props"
+            :slot="slot">
+            <slot
+              :name="slot"
+              v-bind="props"/>
+          </template>
+        </calendar-weeks>
+      </transition-group>
     </div>
   </div>
-  <!--Weekdays horizontal divider-->
-  <div
-    class='c-horizontal-divider'
-    :style='weekdaysHorizontalDividerStyle_'
-    v-if='weekdaysHorizontalDividerStyle_'>
-  </div>
-  <!--Weeks-->
-  <div
-    class='c-weeks'
-    :style='weeksStyle_'>
-    <transition-group
-      tag='div'
-      class='c-weeks-rows-wrapper'
-      :name='weeksTransition_'
-      @before-enter='weeksTransitioning = true'
-      @after-enter='weeksTransitioning = false'>
-      <calendar-weeks
-        class='c-weeks-rows'
-        v-for='p in pages'
-        :key='p.key'
-        :month-comps='p.monthComps'
-        :prev-month-comps='p.prevMonthComps'
-        :next-month-comps='p.nextMonthComps'
-        :styles='styles'
-        :formats='formats'
-        v-bind='$attrs'
-        @touchstart.passive='touchStart($event)'
-        @touchmove.passive='touchMove($event)'
-        @touchend.passive='touchEnd($event)'
-        v-on='$listeners'
-        v-if='p === page_'>
-        <template
-          v-for='slot in Object.keys($scopedSlots)'
-          :slot='slot'
-          slot-scope='props'>
-          <slot :name='slot' v-bind='props'></slot>
-        </template>
-      </calendar-weeks>
-    </transition-group>
-  </div>
-</div>
 </template>
 
 <script>
-import Popover from './Popover';
-import CalendarWeeks from './CalendarWeeks';
-import CalendarNav from './CalendarNav';
-import SvgIcon from './SvgIcon';
-import angleLeft from '@/assets/icons/angle-left.svg';
-import angleRight from '@/assets/icons/angle-right.svg';
-import defaults from '@/utils/defaults';
-import { getWeekdayDates, evalFn } from '@/utils/helpers';
-import { format } from '@/utils/fecha';
+import Popover from './Popover'
+import CalendarWeeks from './CalendarWeeks'
+import CalendarNav from './CalendarNav'
+import SvgIcon from './SvgIcon'
+import angleLeft from '@/assets/icons/angle-left.svg'
+import angleRight from '@/assets/icons/angle-right.svg'
+import defaults from '@/utils/defaults'
+import { getWeekdayDates, evalFn } from '@/utils/helpers'
+import { format } from '@/utils/fecha'
 
 import {
   todayComps,
@@ -164,15 +168,15 @@ import {
   getPrevMonthComps,
   getNextMonthComps,
   pageIsBeforePage,
-  pageIsAfterPage,
-} from '../utils/helpers';
+  pageIsAfterPage
+} from '../utils/helpers'
 
 export default {
   components: {
     CalendarWeeks,
     CalendarNav,
     Popover,
-    SvgIcon,
+    SvgIcon
   },
   props: {
     position: { type: Number, default: 1 },
@@ -187,9 +191,9 @@ export default {
     weeksTransition: { type: String, default: () => defaults.weeksTransition },
     paneWidth: Number,
     hideLeftButton: Boolean,
-    hideRightButton: Boolean,
+    hideRightButton: Boolean
   },
-  data() {
+  data () {
     return {
       todayComps,
       pages: [],
@@ -200,148 +204,146 @@ export default {
       weeksTransitioning: false,
       moveTimeout: null,
       angleLeft,
-      angleRight,
-    };
+      angleRight
+    }
   },
   computed: {
-    navSlots() {
+    navSlots () {
       return ['nav-left-button', 'nav-right-button'].filter(
-        slot => this.$scopedSlots[slot],
-      );
+        slot => this.$scopedSlots[slot]
+      )
     },
-    weekdayLabels() {
+    weekdayLabels () {
       return getWeekdayDates({ firstDayOfWeek: defaults.firstDayOfWeek }).map(
-        d => format(d, this.formats.weekdays),
-      );
+        d => format(d, this.formats.weekdays)
+      )
     },
-    titleClass() {
-      return this.titlePosition ? `align-${this.titlePosition}` : '';
+    titleClass () {
+      return this.titlePosition ? `align-${this.titlePosition}` : ''
     },
-    titleTransition_() {
+    titleTransition_ () {
       return this.getTransitionName(
         'title',
         this.titleTransition,
-        this.transitionDirection,
-      );
+        this.transitionDirection
+      )
     },
-    weeksTransition_() {
+    weeksTransition_ () {
       return this.getTransitionName(
         'weeks',
         this.weeksTransition,
-        this.transitionDirection,
-      );
+        this.transitionDirection
+      )
     },
-    paneStyle() {
+    paneStyle () {
       return {
-        minWidth: `${this.paneWidth}px`,
-      };
+        minWidth: `${this.paneWidth}px`
+      }
     },
-    headerStyle() {
-      return evalFn(this.styles.header, this.page_);
+    headerStyle () {
+      return evalFn(this.styles.header, this.page_)
     },
-    titleStyle() {
-      return evalFn(this.styles.headerTitle, this.page_);
+    titleStyle () {
+      return evalFn(this.styles.headerTitle, this.page_)
     },
-    arrowStyle() {
-      return evalFn(this.styles.headerArrows, this.page_);
+    arrowStyle () {
+      return evalFn(this.styles.headerArrows, this.page_)
     },
-    headerHorizontalDividerStyle_() {
-      return evalFn(this.styles.headerHorizontalDivider, this.page_);
+    headerHorizontalDividerStyle_ () {
+      return evalFn(this.styles.headerHorizontalDivider, this.page_)
     },
-    weekdaysStyle_() {
-      return evalFn(this.styles.weekdays, this.page_);
+    weekdaysStyle_ () {
+      return evalFn(this.styles.weekdays, this.page_)
     },
-    weekdaysHorizontalDividerStyle_() {
-      return evalFn(this.styles.weekdaysHorizontalDivider, this.page_);
+    weekdaysHorizontalDividerStyle_ () {
+      return evalFn(this.styles.weekdaysHorizontalDivider, this.page_)
     },
-    weeksStyle_() {
+    weeksStyle_ () {
       return {
         ...evalFn(this.styles.weeks, this.page_),
-        ...(this.weeksTransitioning ? { overflow: 'hidden' } : null),
-      };
+        ...(this.weeksTransitioning ? { overflow: 'hidden' } : null)
+      }
     },
-    navWrapperStyle() {
+    navWrapperStyle () {
       return {
         padding: '1px',
-        ...evalFn(this.styles.navWrapper, this.page_),
-      };
+        ...evalFn(this.styles.navWrapper, this.page_)
+      }
     },
-    canMovePrevMonth() {
-      return this.canMove(this.page_.prevMonthComps);
+    canMovePrevMonth () {
+      return this.canMove(this.page_.prevMonthComps)
     },
-    canMoveNextMonth() {
-      return this.canMove(this.page_.nextMonthComps);
-    },
+    canMoveNextMonth () {
+      return this.canMove(this.page_.nextMonthComps)
+    }
   },
   watch: {
-    page(val) {
-      this.move(val);
+    page (val) {
+      this.move(val)
     },
-    page_(val, oldVal) {
-      this.transitionDirection = this.getTransitionDirection(oldVal, val);
-    },
-  },
-  created() {
-    if (this.page) {
-      this.page_ = this.loadPage(this.page);
-    } else {
-      this.page_ = this.loadPage(todayComps);
-      this.$emit('update:page', this.page_);
+    page_ (val, oldVal) {
+      this.transitionDirection = this.getTransitionDirection(oldVal, val)
     }
-    this.preloadPages();
+  },
+  created () {
+    if (this.page) {
+      this.page_ = this.loadPage(this.page)
+    } else {
+      this.page_ = this.loadPage(todayComps)
+      this.$emit('update:page', this.page_)
+    }
+    this.preloadPages()
   },
   methods: {
-    navPageSelected(page) {
-      this.navForceHidden = true;
-      this.move(page);
+    navPageSelected (page) {
+      this.navForceHidden = true
+      this.move(page)
     },
-    monthIsDisabled(month) {
-      if (this.minPage && this.yearNumber === this.minPage.year)
-        return month < this.minPage.month;
-      if (this.maxPage && this.yearNumber === this.maxPage.year)
-        return month > this.maxPage.month;
-      return false;
+    monthIsDisabled (month) {
+      if (this.minPage && this.yearNumber === this.minPage.year) { return month < this.minPage.month }
+      if (this.maxPage && this.yearNumber === this.maxPage.year) { return month > this.maxPage.month }
+      return false
     },
-    yearIsDisabled(year) {
-      if (this.minPage && year < this.minPage.year) return true;
-      if (this.maxPage && year > this.maxPage.year) return true;
-      return false;
+    yearIsDisabled (year) {
+      if (this.minPage && year < this.minPage.year) return true
+      if (this.maxPage && year > this.maxPage.year) return true
+      return false
     },
-    touchStart(e) {
-      const t = e.changedTouches[0];
+    touchStart (e) {
+      const t = e.changedTouches[0]
       this.touchState = {
         active: true,
         startX: t.screenX,
         startY: t.screenY,
         startTime: new Date().getTime(),
         isSwiping: false,
-        isMonitoringSwipe: true,
-      };
+        isMonitoringSwipe: true
+      }
     },
-    touchMove(e) {
+    touchMove (e) {
       if (!this.touchState.isMonitoringSwipe) {
-        if (this.touchState.isSwiping) e.preventDefault();
-        return;
+        if (this.touchState.isSwiping) e.preventDefault()
+        return
       }
-      const deltaTime = new Date().getTime() - this.touchState.startTime;
+      const deltaTime = new Date().getTime() - this.touchState.startTime
       if (deltaTime <= 5) {
-        e.preventDefault();
-        return;
+        e.preventDefault()
+        return
       }
-      const t = e.changedTouches[0];
-      const deltaX = t.screenX - this.touchState.startX;
-      const deltaY = t.screenY - this.touchState.startY;
+      const t = e.changedTouches[0]
+      const deltaX = t.screenX - this.touchState.startX
+      const deltaY = t.screenY - this.touchState.startY
       if (Math.abs(deltaX) >= Math.abs(deltaY)) {
-        this.touchState.isSwiping = true;
-        e.preventDefault();
+        this.touchState.isSwiping = true
+        e.preventDefault()
       }
-      this.touchState.isMonitoringSwipe = false;
+      this.touchState.isMonitoringSwipe = false
     },
-    touchEnd(e) {
-      const t = e.changedTouches[0];
-      const deltaX = t.screenX - this.touchState.startX;
-      const deltaY = t.screenY - this.touchState.startY;
-      const deltaTime = new Date().getTime() - this.touchState.startTime;
+    touchEnd (e) {
+      const t = e.changedTouches[0]
+      const deltaX = t.screenX - this.touchState.startX
+      const deltaY = t.screenY - this.touchState.startY
+      const deltaTime = new Date().getTime() - this.touchState.startTime
       if (deltaTime < defaults.maxSwipeTime) {
         if (
           Math.abs(deltaX) >= defaults.minHorizontalSwipeDistance &&
@@ -350,72 +352,70 @@ export default {
           // Swipe left
           if (deltaX < 0) {
             // Move to previous month
-            this.moveNextMonth();
+            this.moveNextMonth()
           } else {
             // Move to next month
-            this.movePrevMonth();
+            this.movePrevMonth()
           }
         }
       }
     },
-    canMove(pageInfo) {
-      if (this.minPage && pageIsBeforePage(pageInfo, this.minPage))
-        return false;
-      if (this.maxPage && pageIsAfterPage(pageInfo, this.maxPage)) return false;
-      return true;
+    canMove (pageInfo) {
+      if (this.minPage && pageIsBeforePage(pageInfo, this.minPage)) { return false }
+      if (this.maxPage && pageIsAfterPage(pageInfo, this.maxPage)) return false
+      return true
     },
-    movePrevYear() {
-      this.move({ month: this.page_.month, year: this.page_.year - 1 });
+    movePrevYear () {
+      this.move({ month: this.page_.month, year: this.page_.year - 1 })
     },
-    movePrevMonth() {
-      this.move(this.page_.prevMonthComps);
+    movePrevMonth () {
+      this.move(this.page_.prevMonthComps)
     },
-    moveThisMonth() {
-      this.move(todayComps);
+    moveThisMonth () {
+      this.move(todayComps)
     },
-    moveNextMonth() {
-      this.move(this.page_.nextMonthComps);
+    moveNextMonth () {
+      this.move(this.page_.nextMonthComps)
     },
-    moveNextYear() {
-      this.move({ month: this.page_.month, year: this.page_.year + 1 });
+    moveNextYear () {
+      this.move({ month: this.page_.month, year: this.page_.year + 1 })
     },
-    move(pageInfo) {
+    move (pageInfo) {
       if (this.canMove(pageInfo)) {
-        this.forceMove(pageInfo);
+        this.forceMove(pageInfo)
       } else if (pageIsBeforePage(todayComps, this.minPage)) {
-        this.forceMove(this.minPage);
+        this.forceMove(this.minPage)
       } else if (pageIsAfterPage(pageInfo, this.maxPage)) {
-        this.forceMove(this.maxPage);
+        this.forceMove(this.maxPage)
       }
     },
-    forceMove(pageInfo) {
+    forceMove (pageInfo) {
       // Check that timeout requirement is met
-      const date = new Date();
-      if (this.moveTimeout && date < this.moveTimeout) return;
+      const date = new Date()
+      if (this.moveTimeout && date < this.moveTimeout) return
       // Reset move timeout
-      this.moveTimeout = new Date(date.getTime() + 250);
+      this.moveTimeout = new Date(date.getTime() + 250)
       // Exit if there is no page info or page info matches the current page
       if (
         !pageInfo ||
         (pageInfo.month === this.page_.month &&
           pageInfo.year === this.page_.year)
-      )
-        return;
+      ) { return }
       // Set the active page
-      this.page_ = this.loadPage(pageInfo);
+      this.page_ = this.loadPage(pageInfo)
       // Flag that page was updated
-      this.$emit('update:page', this.page_);
+      this.$emit('update:page', this.page_)
       // Preload other pages
-      this.preloadPages();
+      this.preloadPages()
     },
-    loadPage({ month, year }) {
-      const key = `${year.toString()}.${month.toString()}`;
-      let page = this.pages.find(p => p.key === key);
+    loadPage ({ month, year }) {
+      const key = `${year.toString()}.${month.toString()}`
+      let page = this.pages.find(p => p.key === key)
       if (!page) {
-        const date = new Date(year, month - 1, 15);
-        const monthComps = getMonthComps(month, year);
-        const prevMonthComps = getPrevMonthComps(month, year);
-        const nextMonthComps = getNextMonthComps(month, year);
+        const date = new Date(year, month - 1, 15)
+        const monthComps = getMonthComps(month, year)
+        const prevMonthComps = getPrevMonthComps(month, year)
+        const nextMonthComps = getNextMonthComps(month, year)
         page = {
           key,
           month,
@@ -432,45 +432,43 @@ export default {
           move: pg => this.move(pg),
           moveThisMonth: () => this.moveThisMonth(),
           movePrevMonth: () => this.move(prevMonthComps),
-          moveNextMonth: () => this.move(nextMonthComps),
-        };
-        this.pages.push(page);
+          moveNextMonth: () => this.move(nextMonthComps)
+        }
+        this.pages.push(page)
       }
-      page.position = this.position;
-      page.loaded = true;
-      return page;
+      page.position = this.position
+      page.loaded = true
+      return page
     },
-    preloadPages() {
+    preloadPages () {
       // Load the next and previous pages
       this.$nextTick(() => {
-        this.loadPage(this.page_.prevMonthComps);
-        this.loadPage(this.page_.nextMonthComps);
-        this.pages = this.pages.filter(p => p.loaded);
+        this.loadPage(this.page_.prevMonthComps)
+        this.loadPage(this.page_.nextMonthComps)
+        this.pages = this.pages.filter(p => p.loaded)
         this.pages.forEach(p => {
-          p.loaded = false;
-        });
-      });
+          p.loaded = false
+        })
+      })
     },
-    getTransitionDirection(fromPage, toPage) {
-      if (!fromPage || !toPage) return '';
-      if (fromPage.year !== toPage.year)
-        return fromPage.year < toPage.year ? 'next' : 'prev';
-      if (fromPage.month !== toPage.month)
-        return fromPage.month < toPage.month ? 'next' : 'prev';
-      return '';
+    getTransitionDirection (fromPage, toPage) {
+      if (!fromPage || !toPage) return ''
+      if (fromPage.year !== toPage.year) { return fromPage.year < toPage.year ? 'next' : 'prev' }
+      if (fromPage.month !== toPage.month) { return fromPage.month < toPage.month ? 'next' : 'prev' }
+      return ''
     },
-    getTransitionName(prefix, type, direction) {
+    getTransitionName (prefix, type, direction) {
       if (type === 'slide-h') {
         return `${prefix}-${
           direction === 'next' ? 'slide-left' : 'slide-right'
-        }`;
+        }`
       } else if (type === 'slide-v') {
-        return `${prefix}-${direction === 'next' ? 'slide-up' : 'slide-down'}`;
+        return `${prefix}-${direction === 'next' ? 'slide-up' : 'slide-down'}`
       }
-      return `${prefix}-${type}`;
-    },
-  },
-};
+      return `${prefix}-${type}`
+    }
+  }
+}
 </script>
 
 <style lang='sass' scoped>

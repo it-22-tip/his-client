@@ -8,30 +8,30 @@
 </template>
 
 <script>
-  import Vue from 'vue'
-  console.log(Promise.version)
-  export default {
-    name: 'LoginForm',
-    components: {
-      'login-form': () => import('@partials/login-form'),
-      'base-button': () => import('@partials/base-button')
+import Vue from 'vue'
+console.log(Promise.version)
+export default {
+  name: 'LoginForm',
+  components: {
+    'login-form': () => import('@partials/login-form'),
+    'base-button': () => import('@partials/base-button')
+  },
+  data () {
+    return {
+      person: null,
+      employee: null
+    }
+  },
+  mounted () {
+  },
+  methods: {
+    onLogin () {
+      this.$store.commit('Users/LOGIN_SUCCESS')
+      this.$router.push({ name: 'base.dashboard' })
     },
-    mounted () {
-    },
-    data () {
-      return {
-        person: null,
-        employee: null
-      }
-    },
-    methods: {
-      onLogin () {
-        this.$store.commit('Users/LOGIN_SUCCESS')
-        this.$router.push({ name: 'base.dashboard' })
-      },
-      onInstall($event) {
-        this.$router.push({ name: 'base.install' })
-      }
+    onInstall ($event) {
+      this.$router.push({ name: 'base.install' })
     }
   }
+}
 </script>

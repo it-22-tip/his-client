@@ -2,7 +2,9 @@
   <md-content class="wrapper">
     <md-content class="right">
       <md-content class="right-top">
-        <md-toolbar class="md-dense md-primary" md-elevation="0">
+        <md-toolbar
+          class="md-dense md-primary"
+          md-elevation="0">
           <div class="md-toolbar-section-start">
             <h1 class="md-title">Hospital Information System</h1>
           </div>
@@ -80,9 +82,9 @@
 </style>
 
 <script>
-  export default {
-    components: {
-      'left-menu': () => import('@partials/left-menu')
-    }
+export default {
+  components: {
+    'left-menu': () => import('@partials/left-menu')
   }
+}
 </script>

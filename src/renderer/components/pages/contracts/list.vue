@@ -1,9 +1,21 @@
 <template>
   <layout-one>
-    <md-table class="right-table" v-model="model" md-sort="Name" md-sort-order="asc" md-fixed-header>
-      <md-table-row slot="md-table-row" slot-scope="{ item }">
-        <md-table-cell md-label="ID" md-sort-by="Id" md-numeric>{{ item.Id }}</md-table-cell>
-        <md-table-cell md-label="Name" md-sort-by="Name">{{ item.Name }}</md-table-cell>
+    <md-table
+      v-model="model"
+      class="right-table"
+      md-sort="Name"
+      md-sort-order="asc"
+      md-fixed-header>
+      <md-table-row
+        slot="md-table-row"
+        slot-scope="{ item }">
+        <md-table-cell
+          md-label="ID"
+          md-sort-by="Id"
+          md-numeric>{{ item.Id }}</md-table-cell>
+        <md-table-cell
+          md-label="Name"
+          md-sort-by="Name">{{ item.Name }}</md-table-cell>
         <md-table-cell md-label="Job Title">{{ item.JobTitle }}</md-table-cell>
       </md-table-row>
     </md-table>
@@ -18,13 +30,13 @@ import orm from '@/mixins/orm'
 import file from '@/mixins/file'
 import { map } from 'lodash'
 export default {
+  components: {
+    'layout-one': () => import('@partials/layout-one')
+  },
   mixins: [
     orm,
     file
   ],
-  components: {
-    'layout-one': () => import('@partials/layout-one')
-  },
   data () {
     return {
       model: []
@@ -51,7 +63,7 @@ export default {
     },
     async test1 ($event) {
       console.clear()
-      let b = (new this.$orm).withOption({
+      let b = (new this.$orm()).withOption({
         username: 'his',
         password: 'his',
         database: 'his',
@@ -69,7 +81,7 @@ export default {
                 '$IdAddressVillage.District.Regency.Name$': 'KOTA SURAKARTA'
               }, */
               include: [
-                 {
+                {
                   model: Employees,
                   attributes: ['Id'],
                   include: [
@@ -103,4 +115,3 @@ export default {
   }
 }
 </script>
-

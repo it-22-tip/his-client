@@ -1,6 +1,10 @@
 <template>
   <li class="timeline-item">
-    <div class="timeline-circle" :class="slotClass" :style="circleStyle" ref="others">
+    <div
+      ref="others"
+      :class="slotClass"
+      :style="circleStyle"
+      class="timeline-circle">
       <slot name="others" />
     </div>
     <slot />
@@ -8,9 +12,9 @@
 </template>
 
 <script>
-  import timelineItemBase from './timelineItemBase.vue'
+import timelineItemBase from './timelineItemBase.vue'
 
-  export default {
-    extends: timelineItemBase,
-  }
+export default {
+  extends: timelineItemBase
+}
 </script>

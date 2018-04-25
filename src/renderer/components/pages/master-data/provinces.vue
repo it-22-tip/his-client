@@ -1,36 +1,54 @@
 <template>
   <md-content class="ctc">
     <md-content class="psg">
-  <md-table
-    v-model="model"
-    :md-sort.sync="activeSort"
-    :md-sort-order.sync="activeOrder"
-    :md-sort-fn="customSort"
-    md-fixed-header>
-    <md-table-row slot="md-table-row" slot-scope="{ item }">
-      <md-table-cell md-label="Nama" md-sort-by="Name">{{ item.Name }}</md-table-cell>
-    </md-table-row>
-  </md-table>
+      <md-table
+        v-model="model"
+        :md-sort.sync="activeSort"
+        :md-sort-order.sync="activeOrder"
+        :md-sort-fn="customSort"
+        md-fixed-header>
+        <md-table-row
+          slot="md-table-row"
+          slot-scope="{ item }">
+          <md-table-cell
+            md-label="Nama"
+            md-sort-by="Name">{{ item.Name }}</md-table-cell>
+        </md-table-row>
+      </md-table>
     </md-content>
-    <md-toolbar class="md-primary md-dense" md-elevation="0">
-        <div class="md-toolbar-section-start">
-          <md-button @click="showSearchPanel = !showSearchPanel" class="md-icon-button">
-            <md-icon>search</md-icon>
-          </md-button>
-          <md-button @click="$router.push({ name: 'employee.new' })" class="md-icon-button">
-            <md-icon>add</md-icon>
-          </md-button>
-          {{ activePage }} / {{ activeSort }} / {{ activeOrder }}
-        </div>
+    <md-toolbar
+      class="md-primary md-dense"
+      md-elevation="0">
+      <div class="md-toolbar-section-start">
+        <md-button
+          class="md-icon-button"
+          @click="showSearchPanel = !showSearchPanel">
+          <md-icon>search</md-icon>
+        </md-button>
+        <md-button
+          class="md-icon-button"
+          @click="$router.push({ name: 'employee.new' })">
+          <md-icon>add</md-icon>
+        </md-button>
+        {{ activePage }} / {{ activeSort }} / {{ activeOrder }}
+      </div>
 
-        <div class="md-toolbar-section-end">
-          <md-field class="page-md-field" md-inline md-dense>
-            <md-input class="page-input" v-model="activePage" type="number" min="1" :max="totalPage"/>
-          </md-field>
-          <md-content class="transparent">
-            Dari {{ totalPage }} Halaman
-          </md-content>
-        </div>
+      <div class="md-toolbar-section-end">
+        <md-field
+          class="page-md-field"
+          md-inline
+          md-dense>
+          <md-input
+            v-model="activePage"
+            :max="totalPage"
+            class="page-input"
+            type="number"
+            min="1"/>
+        </md-field>
+        <md-content class="transparent">
+          Dari {{ totalPage }} Halaman
+        </md-content>
+      </div>
     </md-toolbar>
   </md-content>
 </template>
@@ -40,12 +58,12 @@ import orm from '@mixins/orm'
 import { map, extend } from 'lodash'
 import moment from 'moment'
 export default {
-  mixins: [
-    orm
-  ],
   components: {
     'layout-one': () => import('@partials/layout-one')
   },
+  mixins: [
+    orm
+  ],
   props: {
     page: {
       type: String,
@@ -87,26 +105,26 @@ export default {
     activeSort: {
       handler: function (newSort, oldSort) {
         console.log(newSort)
-        if(newSort === oldSort) return
+        if (newSort === oldSort) return
         this.changePage({ sort: newSort })
       }
     },
     activeOrder: {
       handler: function (newOrder, oldOrder) {
-        if(newOrder === oldOrder) return
+        if (newOrder === oldOrder) return
         this.changePage({ order: newOrder })
       }
     },
     activePage: {
       handler: function (newPage, oldActivePage) {
-        if(newPage === oldActivePage) return
-        if(newPage > this.totalPage) return
+        if (newPage === oldActivePage) return
+        if (newPage > this.totalPage) return
         this.changePage({ page: newPage })
       }
     },
     '$route': {
       handler: function (n, o) {
-        if(n === 0) return
+        if (n === 0) return
         this.activePage = n.params.page
         this.activeSort = n.params.sort
         this.activeOrder = n.params.order
@@ -153,13 +171,13 @@ export default {
     getOrder (Model, sequelize) {
       let order = null
       let cs = this.activeSort
-        switch (cs) {
-          case 'Name':
-            order = ['Name', this.activeOrder]
-            break
-          default:
-            order = ['Name', this.activeOrder]
-        }
+      switch (cs) {
+        case 'Name':
+          order = ['Name', this.activeOrder]
+          break
+        default:
+          order = ['Name', this.activeOrder]
+      }
       return [order]
     },
 
@@ -172,7 +190,7 @@ export default {
       let offset = page * limit
       let order
       try {
-      order = this.getOrder(Provinces, sequelize)
+        order = this.getOrder(Provinces, sequelize)
       } catch (error) {
         console.log(error)
       }
@@ -209,10 +227,10 @@ export default {
     },
     async populate () {
       let data
-      this.connection = (new this.$orm).withOption({
+      this.connection = (new this.$orm()).withOption({
         username: 'his',
         password: 'his',
-        database: 'his',
+        database: 'his'
       }).connect()
       try {
         data = await this.connection.transaction(this.transaction)
@@ -269,4 +287,3 @@ export default {
   background-color: #fff;
 }
 </style>
-

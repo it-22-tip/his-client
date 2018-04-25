@@ -13,13 +13,15 @@
         </md-field>
         <md-field>
           <label>Password</label>
-          <md-input v-model="options.root.password" type="password"/>
+          <md-input
+            v-model="options.root.password"
+            type="password"/>
         </md-field>
         <md-content>
           <md-button
             :disabled="progress"
-            @click="runAll"
-            class="md-primary md-raised">All</md-button>
+            class="md-primary md-raised"
+            @click="runAll">All</md-button>
           <md-button
             :to="{ name: 'base.login' }"
             class="md-primary md-raised">Login</md-button>
@@ -28,7 +30,10 @@
     </div>
     <p v-if="progress">{{ parseInt(percentage / total * 100) }}% {{ message }}</p>
     <div class="progress">
-      <md-progress-bar v-if="progress" :md-value="parseInt(percentage / total * 100)" md-mode="determinate"/>
+      <md-progress-bar
+        v-if="progress"
+        :md-value="parseInt(percentage / total * 100)"
+        md-mode="determinate"/>
     </div>
   </md-content>
 </template>
@@ -164,8 +169,8 @@ export default {
       const { root, common, application } = this.options
       this.progress = true
       // this.reset()
-      this.PreQueriesConnection = (new this.$orm).withOption(root).connect()
-      this.ApplicationConnection = (new this.$orm).withOption(application).connect()
+      this.PreQueriesConnection = (new this.$orm()).withOption(root).connect()
+      this.ApplicationConnection = (new this.$orm()).withOption(application).connect()
       console.log(this.ApplicationConnection)
       await this.setTotal(this.ApplicationConnection)
       try {
@@ -178,7 +183,7 @@ export default {
         await this.closeConnection()
       }
     },
-    async PreQueries(connection) {
+    async PreQueries (connection) {
       return connection.transaction(
         async transaction => {
           let options = {
@@ -216,7 +221,7 @@ export default {
         }
       )
     },
-    async SeedTable(connection) {
+    async SeedTable (connection) {
       return connection.transaction(
         async transaction => {
           let options = { transaction: transaction }
@@ -254,7 +259,7 @@ export default {
     seedUsers (seed) {
       return Promise.resolve(map(seed, this.givePassword))
     },
-    givePassword(User) {
+    givePassword (User) {
       let Salt = bcrypt.genSaltSync(10)
       User.PassKey = bcrypt.hashSync(User.PassKey, Salt)
       User.Salt = Salt

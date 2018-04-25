@@ -1,14 +1,14 @@
 <script>
-  'use-strict'
-  import Vue from 'vue'
-  let timer = null
-  const MdButton = Vue.component('MdButton')
-  export default {
-    name: 'LongpressButton',
-    extends: MdButton,
-    mixins: [],
+'use-strict'
+import Vue from 'vue'
+let timer = null
+const MdButton = Vue.component('MdButton')
+export default {
+  name: 'LongpressButton',
+  extends: MdButton,
+  mixins: [],
 
-/*     props: ['value', 'onConfirm', 'duration', 'pressingText', 'actionText'],
+  /*     props: ['value', 'onConfirm', 'duration', 'pressingText', 'actionText'],
 
     created () {
       document.addEventListener('mouseup', () => this.cancel())
@@ -92,8 +92,8 @@
           .replace(/\{\$duration\}/gi, this.duration)
       }
     }, */
-    render (createElement) {
-      /* const progressBarAttrs = {
+  render (createElement) {
+    /* const progressBarAttrs = {
         'md-mode': 'determinate',
         'md-value': 50
       }
@@ -115,27 +115,27 @@
       const MdButtonWrapper = createElement('div', {
         staticClass: 'md-longpress'
       }, [MdButton, MdProgressBar]) */
-      return createElement(
-        'md-button',
-        {
-          attrs: {
-            ...this.attrs,
-            'md-ripple': false
-          },
-          nativeOn: {
-            ...this.$listeners,
-            mouseup: () => {
-              console.log('up')
-            },
-            mousedown: () => {
-              console.log('down')
-            }
-          }
+    return createElement(
+      'md-button',
+      {
+        attrs: {
+          ...this.attrs,
+          'md-ripple': false
         },
-        [this.$slots.default]
-      )
-    }
+        nativeOn: {
+          ...this.$listeners,
+          mouseup: () => {
+            console.log('up')
+          },
+          mousedown: () => {
+            console.log('down')
+          }
+        }
+      },
+      [this.$slots.default]
+    )
   }
+}
 </script>
 <!--
 <template>

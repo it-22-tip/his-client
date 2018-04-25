@@ -2,11 +2,13 @@
   <app-wrapper>
     <page-container>
       <template slot="header">
-      <h3 class="md-title" style="flex: 1">PDF</h3>
-       <menu-feature></menu-feature>
+        <h3
+          class="md-title"
+          style="flex: 1">PDF</h3>
+        <menu-feature/>
       </template>
       <div slot="default">
-        <pdf-viewer></pdf-viewer>
+        <pdf-viewer/>
       </div>
       <page-footer slot="footer">
         <div>FOOTER</div>
@@ -16,18 +18,18 @@
 </template>
 
 <script>
-  export default {
-    data () {
-      return {
-
-      }
-    },
-    mounted () {
-    },
-    methods: {
+export default {
+  data () {
+    return {
 
     }
+  },
+  mounted () {
+  },
+  methods: {
+
   }
+}
 </script>
 
 <style lang="scss" scoped>

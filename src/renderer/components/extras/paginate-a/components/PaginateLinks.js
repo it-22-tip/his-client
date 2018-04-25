@@ -126,8 +126,8 @@ export default {
     let links = this.simple
       ? getSimpleLinks(this, h)
       : this.limit > 1
-      ? getLimitedLinks(this, h)
-      : getFullLinks(this, h)
+        ? getLimitedLinks(this, h)
+        : getFullLinks(this, h)
 
     if (this.hideSinglePage && this.numberOfPages <= 1) {
       return null
@@ -261,7 +261,7 @@ function getListOfPageNumbers (numberOfPages) {
     .map((val, index) => index)
 }
 
-function getClassesForLink(link, currentPage, lastPage, { prev, next }) {
+function getClassesForLink (link, currentPage, lastPage, { prev, next }) {
   let liClass = []
   if (link === prev) {
     liClass.push('left-arrow')

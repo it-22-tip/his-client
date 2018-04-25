@@ -1,33 +1,37 @@
 <template>
-  <div class="splash-screen" :style="getStyle()">
+  <div
+    :style="getStyle()"
+    class="splash-screen">
     <div class="main">
       <!-- <div class="logo"><img :src="logo" /></div> -->
       <!-- <info></info> -->
     </div>
-  <md-progress-bar class="progress" md-mode="indeterminate"></md-progress-bar>
+    <md-progress-bar
+      class="progress"
+      md-mode="indeterminate"/>
   </div>
 </template>
 
 <script>
-  export default {
-    name: 'splash-screen',
-    data () {
+export default {
+  name: 'SplashScreen',
+  components: {
+    'info': () => import('./SystemInfo')
+  },
+  data () {
+    return {
+      logo: 'static/svg/logo.svg'
+    }
+  },
+  methods: {
+    getStyle () {
       return {
-        logo: 'static/svg/logo.svg'
-      }
-    },
-    components: {
-      'info': () => import('./SystemInfo')
-    },
-    methods: {
-      getStyle () {
-        return {
-          backgroundImage: `url('static/svg/splash.svg')`,
-          backgroundSize: 'cover'
-        }
+        backgroundImage: `url('static/svg/splash.svg')`,
+        backgroundSize: 'cover'
       }
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -41,4 +45,3 @@
     flex: 1;
   }
 </style>
-

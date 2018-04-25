@@ -1,25 +1,37 @@
 <template>
   <md-content class="ctc">
     <md-table
-      class="right-table"
       v-model="model"
       :md-sort.sync="currentSort"
       :md-sort-order.sync="currentSortOrder"
       :md-sort-fn="customSort"
+      class="right-table"
       md-fixed-header>
-      <md-table-row slot="md-table-row" slot-scope="{ item }">
-        <md-table-cell md-label="NIP" md-sort-by="Id">{{ item.EmployeeId }}</md-table-cell>
-        <md-table-cell md-label="Nama" md-sort-by="Name">{{ item.Name }}</md-table-cell>
-        <md-table-cell md-label="JK" md-sort-by="Gender">{{ item.Gender }}</md-table-cell>
+      <md-table-row
+        slot="md-table-row"
+        slot-scope="{ item }">
+        <md-table-cell
+          md-label="NIP"
+          md-sort-by="Id">{{ item.EmployeeId }}</md-table-cell>
+        <md-table-cell
+          md-label="Nama"
+          md-sort-by="Name">{{ item.Name }}</md-table-cell>
+        <md-table-cell
+          md-label="JK"
+          md-sort-by="Gender">{{ item.Gender }}</md-table-cell>
         <md-table-cell>
-          <md-button @click="clickEdit(item.Id)" class="md-icon-button">
+          <md-button
+            class="md-icon-button"
+            @click="clickEdit(item.Id)">
             <md-icon>edit</md-icon>
             <md-tooltip md-direction="top">Edit</md-tooltip>
           </md-button>
         </md-table-cell>
       </md-table-row>
     </md-table>
-    <md-toolbar class="md-primary" md-elevation="0">
+    <md-toolbar
+      class="md-primary"
+      md-elevation="0">
       <div>
         <md-button class="md-raised">Baru</md-button>
       </div>
@@ -39,12 +51,12 @@ import { map } from 'lodash'
 import moment from 'moment'
 import { toDateDiffToday, toMoment, employeeId } from '@helpers/databaseTo'
 export default {
-  mixins: [
-    orm
-  ],
   components: {
     'layout-one': () => import('@partials/layout-one')
   },
+  mixins: [
+    orm
+  ],
   data () {
     return {
       searched: [],
@@ -65,7 +77,7 @@ export default {
         console.log(model)
         this.$nextTick().then(
           () => {
-            for(let item of model) {
+            for (let item of model) {
               this.model.push(item)
             }
           }
@@ -78,12 +90,12 @@ export default {
     await this.closeConnection()
   },
   methods: {
-    clickEdit($event) {
+    clickEdit ($event) {
       this.$router.push({ name: 'employees.employee.detail.personal', params: { employeeId: $event } })
     },
     clickSearch () {
       const toLower = text => {
-          return text.toString().toLowerCase()
+        return text.toString().toLowerCase()
       }
       let s
       if (this.reset.length < 1) {
@@ -93,7 +105,7 @@ export default {
         this.model = this.reset
       }
       try {
-      s = this.model.filter(item => toLower(item.Name).includes(toLower(this.searchText)))
+        s = this.model.filter(item => toLower(item.Name).includes(toLower(this.searchText)))
       } catch (error) {
         console.log(error)
       }
@@ -105,14 +117,14 @@ export default {
         const sortBy = this.currentSort
         const desc = this.currentSortOrder === 'desc'
         let sorted
-        if (sortBy === 'Id' || sortBy === 'Age' ) {
-          sorted = desc ?
-          left[sortBy] - right[sortBy] :
-          right[sortBy] - left[sortBy]
+        if (sortBy === 'Id' || sortBy === 'Age') {
+          sorted = desc
+            ? left[sortBy] - right[sortBy]
+            : right[sortBy] - left[sortBy]
         } else {
-          sorted = desc ?
-          left[sortBy].localeCompare(right[sortBy]) :
-          right[sortBy].localeCompare(left[sortBy])
+          sorted = desc
+            ? left[sortBy].localeCompare(right[sortBy])
+            : right[sortBy].localeCompare(left[sortBy])
         }
         return sorted
       })
@@ -136,7 +148,7 @@ export default {
         include: [
           {
             model: Persons,
-            attributes: ['Name', 'Gender', 'BirthDate'],
+            attributes: ['Name', 'Gender', 'BirthDate']
           },
           {
             model: JobTitles,
@@ -163,10 +175,10 @@ export default {
     },
     async populate () {
       let data
-      this.connection = (new this.$orm).withOption({
+      this.connection = (new this.$orm()).withOption({
         username: 'his',
         password: 'his',
-        database: 'his',
+        database: 'his'
       }).connect()
       try {
         data = await this.connection.transaction(this.transaction)

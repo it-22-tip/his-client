@@ -1,7 +1,9 @@
 <template>
   <div>
     <md-menu md-direction="bottom-start">
-      <md-button class="md-accent md-dense md-raised" md-menu-trigger>
+      <md-button
+        class="md-accent md-dense md-raised"
+        md-menu-trigger>
         Base
       </md-button>
 
@@ -11,7 +13,9 @@
       </md-menu-content>
     </md-menu>
     <md-menu md-direction="bottom-start">
-      <md-button class="md-accent md-dense md-raised" md-menu-trigger>
+      <md-button
+        class="md-accent md-dense md-raised"
+        md-menu-trigger>
         Fitur
       </md-button>
 
@@ -27,8 +31,7 @@
 </template>
 
 <script>
-  export default {
+export default {
 
-  }
+}
 </script>
-

@@ -1,92 +1,90 @@
 <template>
-<div>
-  <div class='date-label'>
-    <div v-if='dateLabel'>
-      {{ this.dateLabel }}
+  <div>
+    <div class="date-label">
+      <div v-if="dateLabel">
+        {{ this.dateLabel }}
+      </div>
+      <div v-if="startDateLabel">
+        {{ this.startDateLabel }}
+      </div>
+      <div v-if="endDateLabel">
+        {{ this.endDateLabel }}
+      </div>
     </div>
-    <div v-if='startDateLabel'>
-      {{ this.startDateLabel }}
-    </div>
-    <div v-if='endDateLabel'>
-      {{ this.endDateLabel }}
+    <div
+      v-if="isRange"
+      class="days-nights">
+      <span class="days">
+        <svg-icon
+          :glyph="sun"
+          class="vc-sun-o"/>
+        {{ days }}
+      </span>
+      <span class="nights">
+        <svg-icon
+          :glyph="moon"
+          class="vc-moon-o"/>
+        {{ nights }}
+      </span>
     </div>
   </div>
-  <div
-    v-if='isRange'
-    class='days-nights'>
-    <span class='days'>
-      <svg-icon
-        :glyph='sun'
-        class='vc-sun-o'>
-      </svg-icon>
-      {{ days }}
-    </span>
-    <span class='nights'>
-      <svg-icon
-        :glyph='moon'
-        class='vc-moon-o'>
-      </svg-icon>
-      {{ nights }}
-    </span>
-  </div>
-</div>
 </template>
 
 <script>
-import SvgIcon from './SvgIcon';
-import sun from '@/assets/icons/sun-o.svg';
-import moon from '@/assets/icons/moon-o.svg';
-import { format } from '@/utils/fecha';
+import SvgIcon from './SvgIcon'
+import sun from '@/assets/icons/sun-o.svg'
+import moon from '@/assets/icons/moon-o.svg'
+import { format } from '@/utils/fecha'
 
 export default {
   components: {
-    SvgIcon,
+    SvgIcon
   },
   props: {
     attribute: Object,
-    format: String,
+    format: String
   },
-  data() {
+  data () {
     return {
       sun,
-      moon,
-    };
+      moon
+    }
   },
   computed: {
-    date() {
-      return this.attribute.targetDate;
+    date () {
+      return this.attribute.targetDate
     },
-    isDate() {
-      return this.date.isDate;
+    isDate () {
+      return this.date.isDate
     },
-    isRange() {
-      return this.date.isRange;
+    isRange () {
+      return this.date.isRange
     },
-    days() {
-      return this.date.daySpan + 1;
+    days () {
+      return this.date.daySpan + 1
     },
-    nights() {
-      return this.date.daySpan;
+    nights () {
+      return this.date.daySpan
     },
-    dateLabel() {
-      if (!this.date || !this.date.date) return '';
-      return this.getDateString(this.date.date);
+    dateLabel () {
+      if (!this.date || !this.date.date) return ''
+      return this.getDateString(this.date.date)
     },
-    startDateLabel() {
-      if (!this.date || !this.date.start) return '';
-      return this.getDateString(this.date.start);
+    startDateLabel () {
+      if (!this.date || !this.date.start) return ''
+      return this.getDateString(this.date.start)
     },
-    endDateLabel() {
-      if (!this.date || !this.date.end) return '';
-      return this.getDateString(this.date.end);
-    },
+    endDateLabel () {
+      if (!this.date || !this.date.end) return ''
+      return this.getDateString(this.date.end)
+    }
   },
   methods: {
-    getDateString(date) {
-      return format(date, this.format);
-    },
-  },
-};
+    getDateString (date) {
+      return format(date, this.format)
+    }
+  }
+}
 </script>
 
 <style lang='sass' scoped>
@@ -112,5 +110,5 @@ export default {
     color: #ffb366
   .vc-moon-o
     color: #4d4d64
-    
+
 </style>

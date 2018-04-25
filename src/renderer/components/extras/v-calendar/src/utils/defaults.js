@@ -1,5 +1,5 @@
-import { POPOVER_VISIBILITIES } from './constants';
-import { isObject, isFunction } from './typeCheckers';
+import { POPOVER_VISIBILITIES } from './constants'
+import { isObject, isFunction } from './typeCheckers'
 
 const defaults = {
   componentPrefix: 'v',
@@ -16,30 +16,30 @@ const defaults = {
     navMonths: 'MMM',
     input: ['L', 'YYYY-MM-DD', 'YYYY/MM/DD'],
     dayPopover: 'WWW, MMM D, YYYY',
-    data: ['L', 'YYYY-MM-DD', 'YYYY/MM/DD'],
+    data: ['L', 'YYYY-MM-DD', 'YYYY/MM/DD']
   },
   datePickerInputProps: ({ dragValue, mode, format }) => ({
     ...(mode === 'single' && {
       style: {
-        minWidth: '100px',
+        minWidth: '100px'
       },
-      placeholder: format,
+      placeholder: format
     }),
     ...(mode === 'multiple' && {
       style: {
-        minWidth: '200px',
+        minWidth: '200px'
       },
-      placeholder: `${format}, ...`,
+      placeholder: `${format}, ...`
     }),
     ...(mode === 'range' && {
       style: {
         minWidth: '150px',
         ...(dragValue && {
-          color: 'rgba(0, 0, 0, 0.3)',
-        }),
+          color: 'rgba(0, 0, 0, 0.3)'
+        })
       },
-      placeholder: `${format} - ${format}`,
-    }),
+      placeholder: `${format} - ${format}`
+    })
   }),
   datePickerUpdateOnInput: false,
   datePickerTintColor: '#66B3CC',
@@ -53,9 +53,9 @@ const defaults = {
       borderRadius: '0',
       ...(isHovered && {
         cursor: 'not-allowed',
-        backgroundColor: 'transparent',
-      }),
-    }),
+        backgroundColor: 'transparent'
+      })
+    })
   },
   popoverExpanded: false,
   popoverDirection: 'bottom',
@@ -73,14 +73,14 @@ const defaults = {
     height: '1.8rem',
     borderWidth: '0',
     borderStyle: 'solid',
-    opacity: 1,
+    opacity: 1
   },
   highlightCaps: {
     animated: true,
     height: '1.8rem',
     borderWidth: '0',
     borderStyle: 'solid',
-    opacity: 1,
+    opacity: 1
   },
   dot: {
     diameter: '5px',
@@ -88,14 +88,14 @@ const defaults = {
     borderWidth: '0',
     borderStyle: 'solid',
     borderRadius: '50%',
-    opacity: 1,
+    opacity: 1
   },
   bar: {
     height: '3px',
     backgroundColor: '#66b3cc',
     borderWidth: '0',
     borderStyle: 'solid',
-    opacity: 1,
+    opacity: 1
   },
   themeStyles: {
     wrapper: { backgroundColor: '#fafafa', border: '1px solid #dadada' },
@@ -118,20 +118,20 @@ const defaults = {
     dayPopoverContent: {
       color: '#333333',
       fontSize: '.8rem',
-      whiteSpace: 'nowrap',
+      whiteSpace: 'nowrap'
     },
     navHeader: null,
     navHeaderTitle: null,
     navHeaderArrows: null,
     navMonthCell: null,
-    navYearCell: null,
-  },
-};
+    navYearCell: null
+  }
+}
 
-export default defaults;
+export default defaults
 
 export const resolveDefault = (def, args) =>
-  (isObject(def) && def) || (isFunction(def) && def(args)) || def;
+  (isObject(def) && def) || (isFunction(def) && def(args)) || def
 
 export const mergeDefaults = (...defaultArgs) =>
-  Object.assign(defaults, ...defaultArgs);
+  Object.assign(defaults, ...defaultArgs)

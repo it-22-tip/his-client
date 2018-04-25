@@ -1,7 +1,7 @@
 <template>
   <div :style="containerStyle">
-    <slot name="input"></slot>
-   <!--  <img ref="img" :src="src" :alt="alt || 'image'" style="max-width: 100%;" :style="imgStyle" /> -->
+    <slot name="input"/>
+    <!--  <img ref="img" :src="src" :alt="alt || 'image'" style="max-width: 100%;" :style="imgStyle" /> -->
   </div>
 </template>
 

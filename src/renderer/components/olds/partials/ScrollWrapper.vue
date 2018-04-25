@@ -1,5 +1,7 @@
 <template>
-  <div class="scroll-wrapper" v-bar>
+  <div
+    v-bar
+    class="scroll-wrapper">
     <div>
       <slot/>
     </div>
@@ -7,12 +9,12 @@
 </template>
 
 <script>
-  import Vuebar from 'vuebar'
-  import Vue from 'vue'
-  Vue.use(Vuebar)
-  export default {
-    name: 'scroll-wrapper'
-  }
+import Vuebar from 'vuebar'
+import Vue from 'vue'
+Vue.use(Vuebar)
+export default {
+  name: 'ScrollWrapper'
+}
 </script>
 
 <style lang="scss" scoped>

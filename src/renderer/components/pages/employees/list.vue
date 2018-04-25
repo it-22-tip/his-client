@@ -1,60 +1,93 @@
 <template>
   <md-content class="ctc">
     <md-content class="psg">
-    <md-table
-      class="right-table"
-      v-model="model"
-      :md-sort.sync="activeSort"
-      :md-sort-order.sync="activeOrder"
-      :md-sort-fn="customSort"
-      md-fixed-header>
-      <md-table-row slot="md-table-row" slot-scope="{ item }" @click.right="$refs.contextMenu.open($event, { Name: item.Name, Id:item.Ein })">
-        <md-table-cell md-label="NIP" md-sort-by="Ein">{{ item.Ein }}</md-table-cell>
-        <md-table-cell md-label="Nama" md-sort-by="Name">{{ item.Name }}</md-table-cell>
-        <md-table-cell md-label="JK" md-sort-by="Gender">{{ item.Gender }}</md-table-cell>
-        <md-table-cell md-label="Posisi" md-sort-by="JobTitle">{{ item.JobTitle }}</md-table-cell>
-        <md-table-cell md-label="Usia" md-sort-by="Age">{{ item.Age }}</md-table-cell>
-      </md-table-row>
-    </md-table>
+      <md-table
+        v-model="model"
+        :md-sort.sync="activeSort"
+        :md-sort-order.sync="activeOrder"
+        :md-sort-fn="customSort"
+        class="right-table"
+        md-fixed-header>
+        <md-table-row
+          slot="md-table-row"
+          slot-scope="{ item }"
+          @click.right="$refs.contextMenu.open($event, { Name: item.Name, Id:item.Ein })">
+          <md-table-cell
+            md-label="NIP"
+            md-sort-by="Ein">{{ item.Ein }}</md-table-cell>
+          <md-table-cell
+            md-label="Nama"
+            md-sort-by="Name">{{ item.Name }}</md-table-cell>
+          <md-table-cell
+            md-label="JK"
+            md-sort-by="Gender">{{ item.Gender }}</md-table-cell>
+          <md-table-cell
+            md-label="Posisi"
+            md-sort-by="JobTitle">{{ item.JobTitle }}</md-table-cell>
+          <md-table-cell
+            md-label="Usia"
+            md-sort-by="Age">{{ item.Age }}</md-table-cell>
+        </md-table-row>
+      </md-table>
 
-    <md-drawer class="md-right" :md-active.sync="showSearchPanel">
-      <md-content style="padding: 20px;">
-        <md-field md-clearable>
-          <label>Nama</label>
-          <md-input/>
-        </md-field>
-        <md-checkbox v-model="boolean">L</md-checkbox>
-        <md-checkbox v-model="boolean" class="md-primary">P</md-checkbox>
-        <md-field md-clearable>
-          <label>Masa Kerja (Bulan)</label>
-          <md-input type="number"/>
-        </md-field>
-        <md-button>Cari</md-button>
-      </md-content>
-    </md-drawer>
+      <md-drawer
+        :md-active.sync="showSearchPanel"
+        class="md-right">
+        <md-content style="padding: 20px;">
+          <md-field md-clearable>
+            <label>Nama</label>
+            <md-input/>
+          </md-field>
+          <md-checkbox v-model="boolean">L</md-checkbox>
+          <md-checkbox
+            v-model="boolean"
+            class="md-primary">P</md-checkbox>
+          <md-field md-clearable>
+            <label>Masa Kerja (Bulan)</label>
+            <md-input type="number"/>
+          </md-field>
+          <md-button>Cari</md-button>
+        </md-content>
+      </md-drawer>
 
     </md-content>
-    <md-toolbar class="md-primary md-dense" md-elevation="0">
-        <div class="md-toolbar-section-start">
-          <md-button @click="showSearchPanel = !showSearchPanel" class="md-icon-button">
-            <md-icon>search</md-icon>
-          </md-button>
-          <md-button @click="$router.push({ name: 'employee.new' })" class="md-icon-button">
-            <md-icon>add</md-icon>
-          </md-button>
-        </div>
+    <md-toolbar
+      class="md-primary md-dense"
+      md-elevation="0">
+      <div class="md-toolbar-section-start">
+        <md-button
+          class="md-icon-button"
+          @click="showSearchPanel = !showSearchPanel">
+          <md-icon>search</md-icon>
+        </md-button>
+        <md-button
+          class="md-icon-button"
+          @click="$router.push({ name: 'employee.new' })">
+          <md-icon>add</md-icon>
+        </md-button>
+      </div>
 
-        <div class="md-toolbar-section-end">
-          <md-field class="page-md-field" md-inline md-dense>
-            <md-input class="page-input" v-model="activePage" type="number" min="1" :max="totalPage"/>
-          </md-field>
-          <md-content class="transparent">
-            Dari {{ totalPage }} Halaman
-          </md-content>
-        </div>
+      <div class="md-toolbar-section-end">
+        <md-field
+          class="page-md-field"
+          md-inline
+          md-dense>
+          <md-input
+            v-model="activePage"
+            :max="totalPage"
+            class="page-input"
+            type="number"
+            min="1"/>
+        </md-field>
+        <md-content class="transparent">
+          Dari {{ totalPage }} Halaman
+        </md-content>
+      </div>
     </md-toolbar>
-    <context-menu @ctx-open="onCtxOpen" ref="contextMenu">
-      <div><h3>{{menuData.Name}}</h3></div>
+    <context-menu
+      ref="contextMenu"
+      @ctx-open="onCtxOpen">
+      <div><h3>{{ menuData.Name }}</h3></div>
       <div @click="clickEdit(menuData.Id)"><md-icon>edit</md-icon>Edit</div>
       <div><md-icon>delete</md-icon>Delete</div>
     </context-menu>
@@ -66,13 +99,13 @@ import orm from '@/mixins/orm'
 import { map, extend } from 'lodash'
 import '@extras/contextmenu/ctx-menu.css'
 export default {
-  mixins: [
-    orm
-  ],
   components: {
     'layout-one': () => import('@partials/layout-one'),
     'context-menu': () => import('@extras/contextmenu')
   },
+  mixins: [
+    orm
+  ],
   props: {
     page: {
       type: String,
@@ -113,26 +146,26 @@ export default {
   watch: {
     activeSort: {
       handler: function (newSort, oldSort) {
-        if(newSort === oldSort) return
+        if (newSort === oldSort) return
         this.changePage({ sort: newSort })
       }
     },
     activeOrder: {
       handler: function (newOrder, oldOrder) {
-        if(newOrder === oldOrder) return
+        if (newOrder === oldOrder) return
         this.changePage({ order: newOrder })
       }
     },
     activePage: {
       handler: function (newPage, oldActivePage) {
-        if(newPage === oldActivePage) return
-        if(newPage > this.totalPage) return
+        if (newPage === oldActivePage) return
+        if (newPage > this.totalPage) return
         this.changePage({ page: newPage })
       }
     },
     '$route': {
       handler: function (n, o) {
-        if(n === 0) return
+        if (n === 0) return
         this.activePage = n.params.page
         this.activeSort = n.params.sort
         this.activeOrder = n.params.order
@@ -162,10 +195,10 @@ export default {
       this.activeSort = (this.sort !== null) ? this.sort : null
       this.activeOrder = (this.order !== null) ? 'asc' : null
     },
-    onCtxOpen(locals) {
+    onCtxOpen (locals) {
       this.menuData = locals
     },
-    clickEdit($event) {
+    clickEdit ($event) {
       this.$router.push({ name: 'employee.detail', params: { employeeId: $event } })
     },
     customSort (value) {
@@ -184,25 +217,25 @@ export default {
     getOrder (Model) {
       let order = null
       let cs = this.activeSort
-        switch (cs) {
-          case 'Id':
-            order = ['Id', this.activeOrder]
-            break
-          case 'Name':
-            order = [Model.associations.Person, 'Name', this.activeOrder]
-            break
-          case 'Gender':
-            order = [Model.associations.Person, 'Gender', this.activeOrder]
-            break
-          case 'JobTitle':
-            order = [Model.associations.JobTitle, 'Name', this.activeOrder]
-            break
-          case 'Age':
-            order = [Model.associations.Person, 'BirthDate', this.activeOrder]
-            break
-          default:
-            order = ['Id', this.activeOrder]
-        }
+      switch (cs) {
+        case 'Id':
+          order = ['Id', this.activeOrder]
+          break
+        case 'Name':
+          order = [Model.associations.Person, 'Name', this.activeOrder]
+          break
+        case 'Gender':
+          order = [Model.associations.Person, 'Gender', this.activeOrder]
+          break
+        case 'JobTitle':
+          order = [Model.associations.JobTitle, 'Name', this.activeOrder]
+          break
+        case 'Age':
+          order = [Model.associations.Person, 'BirthDate', this.activeOrder]
+          break
+        default:
+          order = ['Id', this.activeOrder]
+      }
       return [order]
     },
     async transaction (transaction) {
@@ -257,10 +290,10 @@ export default {
     },
     async populate () {
       let data
-      this.connection = (new this.$orm).withOption({
+      this.connection = (new this.$orm()).withOption({
         username: 'his',
         password: 'his',
-        database: 'his',
+        database: 'his'
       }).connect()
       try {
         data = await this.connection.transaction(this.transaction)

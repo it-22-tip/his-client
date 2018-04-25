@@ -2,86 +2,126 @@
   <app-wrapper>
     <page-container>
       <template slot="header">
-      <h3 class="md-title" style="flex: 1">Title</h3>
-       <menu-feature></menu-feature>
+        <h3
+          class="md-title"
+          style="flex: 1">Title</h3>
+        <menu-feature/>
       </template>
-      <div slot="default" class="padding-20">
+      <div
+        slot="default"
+        class="padding-20">
         <div class="center"><h2>Vue Date Picker</h2></div>
 
         <div class="example">
           <label for="regular-date">Select a date:</label>
-          <input type="text" id="regular-date" readonly @focus="showRegularDate = true" v-model="regularDate">
+          <input
+            id="regular-date"
+            v-model="regularDate"
+            type="text"
+            readonly
+            @focus="showRegularDate = true">
 
           <transition name="calendar-fade">
-            <date-picker color="#E91E63"
-                         @close="showRegularDate = false"
-                         v-if="showRegularDate"
-                         v-model="regularDate"></date-picker>
+            <date-picker
+              v-if="showRegularDate"
+              v-model="regularDate"
+              color="#E91E63"
+              @close="showRegularDate = false"/>
           </transition>
         </div>
 
         <div class="example">
           <label for="min-date">Select a date starting from today:</label>
-          <input type="text" id="min-date" readonly @focus="showMinDate = true" v-model="minDate">
+          <input
+            id="min-date"
+            v-model="minDate"
+            type="text"
+            readonly
+            @focus="showMinDate = true">
 
           <transition name="calendar-fade">
-            <date-picker color="#3F51B5"
-                         :min="minDateLimit"
-                         @close="showMinDate = false"
-                         v-if="showMinDate"
-                         v-model="minDate"></date-picker>
+            <date-picker
+              v-if="showMinDate"
+              :min="minDateLimit"
+              v-model="minDate"
+              color="#3F51B5"
+              @close="showMinDate = false"/>
           </transition>
         </div>
 
         <div class="example">
           <label for="max-date">Select a date less than a week from now:</label>
-          <input type="text" id="max-date" readonly @focus="showMaxDate = true" v-model="maxDate">
+          <input
+            id="max-date"
+            v-model="maxDate"
+            type="text"
+            readonly
+            @focus="showMaxDate = true">
 
           <transition name="calendar-fade">
-            <date-picker color="#00BCD4"
-                         :max="maxDateLimit"
-                         @close="showMaxDate = false"
-                         v-if="showMaxDate"
-                         v-model="maxDate"></date-picker>
+            <date-picker
+              v-if="showMaxDate"
+              :max="maxDateLimit"
+              v-model="maxDate"
+              color="#00BCD4"
+              @close="showMaxDate = false"/>
           </transition>
         </div>
 
         <div class="example">
           <label for="range-date">Select a date within a week from now:</label>
-          <input type="text" id="range-date" readonly @focus="showRangeDate = true" v-model="rangeDate">
+          <input
+            id="range-date"
+            v-model="rangeDate"
+            type="text"
+            readonly
+            @focus="showRangeDate = true">
 
           <transition name="calendar-fade">
-            <date-picker color="#4CAF50"
-                         :min="minDateLimit"
-                         :max="maxDateLimit"
-                         @close="showRangeDate = false"
-                         v-if="showRangeDate"
-                         v-model="rangeDate"></date-picker>
+            <date-picker
+              v-if="showRangeDate"
+              :min="minDateLimit"
+              :max="maxDateLimit"
+              v-model="rangeDate"
+              color="#4CAF50"
+              @close="showRangeDate = false"/>
           </transition>
         </div>
 
         <div class="example">
           <label for="range-date">Start at a specified date:</label>
-          <input type="text" id="range-date" readonly @focus="showSpecifiedDate = true" v-model="specifiedDate">
+          <input
+            id="range-date"
+            v-model="specifiedDate"
+            type="text"
+            readonly
+            @focus="showSpecifiedDate = true">
 
           <transition name="calendar-fade">
-            <date-picker color="#FF9800"
-                         @close="showSpecifiedDate = false"
-                         v-if="showSpecifiedDate"
-                         v-model="specifiedDate"></date-picker>
+            <date-picker
+              v-if="showSpecifiedDate"
+              v-model="specifiedDate"
+              color="#FF9800"
+              @close="showSpecifiedDate = false"/>
           </transition>
         </div>
 
         <div class="example">
           <label for="range-date">Format the chosen date:</label>
-          <input type="text" id="formatted-date" readonly @focus="showFormattedDate = true" v-model="formattedDate">
+          <input
+            id="formatted-date"
+            v-model="formattedDate"
+            type="text"
+            readonly
+            @focus="showFormattedDate = true">
 
           <transition name="calendar-fade">
-            <date-picker color="#FF5722"
-                         :format="formatDate"
-                         @close="showFormattedDate = false"
-                         v-if="showFormattedDate"
-                         v-model="formattedDate"></date-picker>
+            <date-picker
+              v-if="showFormattedDate"
+              :format="formatDate"
+              v-model="formattedDate"
+              color="#FF5722"
+              @close="showFormattedDate = false"/>
           </transition>
         </div>
       </div>
@@ -95,13 +135,6 @@
 <script>
 import moment from 'moment'
 export default {
-  created: function () {
-    var today = new Date
-
-    this.minDateLimit = '' + today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
-
-    this.maxDateLimit = '' + today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + (today.getDate() + 7)
-  },
 
   data () {
     return {
@@ -125,6 +158,13 @@ export default {
       formattedDate: '',
       showFormattedDate: false
     }
+  },
+  created: function () {
+    var today = new Date()
+
+    this.minDateLimit = '' + today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
+
+    this.maxDateLimit = '' + today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + (today.getDate() + 7)
   },
 
   methods: {

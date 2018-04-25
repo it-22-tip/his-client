@@ -3,10 +3,10 @@ import { Pie } from '@extras/chartjs/BaseCharts'
 import Orm from '@mixins/orm'
 
 export default {
+  extends: Pie,
   mixins: [
     Orm
   ],
-  extends: Pie,
   mounted () {
     this.renderChart({
       labels: ['Laki-Laki', 'Perempuan'],

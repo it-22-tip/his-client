@@ -1,19 +1,32 @@
 <template>
-  <div class="db-log" :class="toggle ? 'db-log-open' : 'db-log-closed'">
-    <div class="db-log-toggle" @click="clickToggle">
+  <div
+    :class="toggle ? 'db-log-open' : 'db-log-closed'"
+    class="db-log">
+    <div
+      class="db-log-toggle"
+      @click="clickToggle">
       <md-icon class="toggle-icon">more_vert</md-icon>
     </div>
     <md-content class="db-log-main">
-      <md-toolbar class="md-accent" md-elevation="0">
-        <h3 class="md-title" style="flex: 1">Log</h3>
-        <md-button @click="clear" class="md-icon-button">
+      <md-toolbar
+        class="md-accent"
+        md-elevation="0">
+        <h3
+          class="md-title"
+          style="flex: 1">Log</h3>
+        <md-button
+          class="md-icon-button"
+          @click="clear">
           <md-icon>delete</md-icon>
         </md-button>
       </md-toolbar>
       <md-content class="md-scrollbar">
         <md-subheader>Logs</md-subheader>
         <div style="padding: 10px;">
-        <p v-for="(log) in value" :key="log.key" :class="log.type">{{ log.message }}</p>
+          <p
+            v-for="(log) in value"
+            :key="log.key"
+            :class="log.type">{{ log.message }}</p>
         </div>
       </md-content>
     </md-content>
@@ -57,23 +70,22 @@
 </style>
 
 <script>
-  export default {
-    props: ['value'],
-    data () {
-      return {
-        messages: [],
-        toggle: false
-      }
+export default {
+  props: ['value'],
+  data () {
+    return {
+      messages: [],
+      toggle: false
+    }
+  },
+  watch: {},
+  methods: {
+    clear () {
+      this.$emit('input')
     },
-    watch: {},
-    methods: {
-      clear () {
-        this.$emit('input')
-      },
-      clickToggle () {
-        this.toggle = !this.toggle
-      }
+    clickToggle () {
+      this.toggle = !this.toggle
     }
   }
+}
 </script>
-

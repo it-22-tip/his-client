@@ -3,10 +3,10 @@ import { Pie } from '@extras/chartjs/BaseCharts'
 import Orm from '@mixins/orm'
 
 export default {
+  extends: Pie,
   mixins: [
     Orm
   ],
-  extends: Pie,
   mounted () {
     this.populate()
     this.renderChart({
@@ -28,10 +28,10 @@ export default {
     },
     async populate () {
       let data
-      this.connection = (new this.$orm).withOption({
+      this.connection = (new this.$orm()).withOption({
         username: 'his',
         password: 'his',
-        database: 'his',
+        database: 'his'
       }).connect()
       try {
         data = await this.connection.query(

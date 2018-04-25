@@ -2,8 +2,10 @@
   <app-wrapper>
     <page-container>
       <template slot="header">
-      <h3 class="md-title" style="flex: 1">Title</h3>
-       <menu-feature></menu-feature>
+        <h3
+          class="md-title"
+          style="flex: 1">Title</h3>
+        <menu-feature/>
       </template>
       <div>
         [Izin Medis]

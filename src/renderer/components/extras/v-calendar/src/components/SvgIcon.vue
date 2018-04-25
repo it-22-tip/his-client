@@ -1,11 +1,10 @@
 <template>
   <div
-    :class='["svg-icon", { "baseline": baseline }]'
-    v-bind='$attrs'
-    v-on='$listeners'
-    v-html='glyph'
-    v-once>
-  </div>
+    v-once
+    :class="[&quot;svg-icon&quot;, { &quot;baseline&quot;: baseline }]"
+    v-bind="$attrs"
+    v-on="$listeners"
+    v-html="glyph"/>
 </template>
 
 <script>
@@ -14,10 +13,10 @@ export default {
     glyph: null,
     baseline: {
       type: Boolean,
-      default: false,
-    },
-  },
-};
+      default: false
+    }
+  }
+}
 </script>
 
 <style lang='scss' scoped>

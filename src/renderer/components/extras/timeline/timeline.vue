@@ -1,25 +1,27 @@
 <template>
-  <ul class="timeline" ref="timeline">
+  <ul
+    ref="timeline"
+    class="timeline">
     <slot />
   </ul>
 </template>
 
 <script>
-  export default {
-    name: 'Timeline',
+export default {
+  name: 'Timeline',
 
-    props: {
-      timelineTheme: {
-        type: String,
-        default: '#dbdde0'
-      }
-    },
-
-    mounted() {
-      const timeline = this.$refs.timeline
-      timeline.style.setProperty('--timelineTheme', this.timelineTheme)
+  props: {
+    timelineTheme: {
+      type: String,
+      default: '#dbdde0'
     }
+  },
+
+  mounted () {
+    const timeline = this.$refs.timeline
+    timeline.style.setProperty('--timelineTheme', this.timelineTheme)
   }
+}
 </script>
 
 <style>

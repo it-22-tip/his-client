@@ -1,4 +1,4 @@
-import { getMonthDates, getWeekdayDates } from './helpers';
+import { getMonthDates, getWeekdayDates } from './helpers'
 
 // Infer first day of week === 1 if not listed (dow)
 const locales = {
@@ -73,51 +73,51 @@ const locales = {
   // Turkish
   tr: { dow: 2, L: 'DD.MM.YYYY' },
   // Ukrainian
-  uk: { dow: 2, L: 'DD.MM.YYYY' },
-};
-locales.en = locales['en-US'];
-locales.zh = locales['zh-CN'];
+  uk: { dow: 2, L: 'DD.MM.YYYY' }
+}
+locales.en = locales['en-US']
+locales.zh = locales['zh-CN']
 
 // Month and day names are derived from Intl.DateTimeFormat
 const getMonthNames = (locale, length) => {
   const dtf = new Intl.DateTimeFormat(locale, {
     month: length,
-    timezome: 'UTC',
-  });
-  return getMonthDates().map(d => dtf.format(d));
-};
+    timezome: 'UTC'
+  })
+  return getMonthDates().map(d => dtf.format(d))
+}
 const getDayNames = (locale, length) => {
   const dtf = new Intl.DateTimeFormat(locale, {
     weekday: length,
-    timeZone: 'UTC',
-  });
-  return getWeekdayDates({ utc: true }).map(d => dtf.format(d));
-};
+    timeZone: 'UTC'
+  })
+  return getWeekdayDates({ utc: true }).map(d => dtf.format(d))
+}
 
 /* eslint-disable no-bitwise */
 const DoFn = d =>
-  `${d}${[null, 'st', 'nd', 'rd'][((d % 100) >> 3) ^ 1 && d % 10] || 'th'}`;
+  `${d}${[null, 'st', 'nd', 'rd'][((d % 100) >> 3) ^ 1 && d % 10] || 'th'}`
 
 export default locale => {
-  const detectedLocale = new Intl.DateTimeFormat().resolvedOptions().locale;
+  const detectedLocale = new Intl.DateTimeFormat().resolvedOptions().locale
   const searchLocales = [
     locale,
     locale && locale.substring(0, 2),
-    detectedLocale,
-  ];
+    detectedLocale
+  ]
   const resolvedLocale =
-    searchLocales.find(l => locales[l]) || locale || detectedLocale;
+    searchLocales.find(l => locales[l]) || locale || detectedLocale
   const localeExtra = {
     dow: 1,
     L: 'DD/MM/YYYY',
-    ...locales[resolvedLocale],
-  };
-  const dayNames = getDayNames(resolvedLocale, 'long');
-  const dayNamesShort = getDayNames(resolvedLocale, 'short');
-  const dayNamesShorter = dayNamesShort.map(s => s.substring(0, 2));
-  const dayNamesNarrow = getDayNames(resolvedLocale, 'narrow');
-  const monthNames = getMonthNames(resolvedLocale, 'long');
-  const monthNamesShort = getMonthNames(resolvedLocale, 'short');
+    ...locales[resolvedLocale]
+  }
+  const dayNames = getDayNames(resolvedLocale, 'long')
+  const dayNamesShort = getDayNames(resolvedLocale, 'short')
+  const dayNamesShorter = dayNamesShort.map(s => s.substring(0, 2))
+  const dayNamesNarrow = getDayNames(resolvedLocale, 'narrow')
+  const monthNames = getMonthNames(resolvedLocale, 'long')
+  const monthNamesShort = getMonthNames(resolvedLocale, 'short')
   return {
     locale: resolvedLocale,
     firstDayOfWeek: localeExtra.dow,
@@ -128,6 +128,6 @@ export default locale => {
     dayNamesNarrow,
     monthNames,
     monthNamesShort,
-    DoFn,
-  };
-};
+    DoFn
+  }
+}

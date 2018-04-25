@@ -125,7 +125,7 @@ export default {
           }
 
           items[index] = page
-        };
+        }
 
         let setBreakView = index => {
           let breakView = {

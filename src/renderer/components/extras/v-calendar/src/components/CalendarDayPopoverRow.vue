@@ -1,43 +1,43 @@
 <template>
-<!-- Content row -->
-<div
-  :class='["c-day-popover-row", { "selectable": isSelectable }]'
-  @click='$emit("select")'>
-  <!-- Indicator -->
+  <!-- Content row -->
   <div
-    v-if='!hideIndicator && indicatorStyle'
-    class='c-day-popover-indicator'>
-    <span :style='indicatorStyle'></span>
+    :class="[&quot;c-day-popover-row&quot;, { &quot;selectable&quot;: isSelectable }]"
+    @click="$emit(&quot;select&quot;)">
+    <!-- Indicator -->
+    <div
+      v-if="!hideIndicator && indicatorStyle"
+      class="c-day-popover-indicator">
+      <span :style="indicatorStyle"/>
+    </div>
+    <!-- Content -->
+    <div class="c-day-popover-content">
+      <slot>
+        This is the default content slot.
+      </slot>
+    </div>
   </div>
-  <!-- Content -->
-  <div class='c-day-popover-content'>
-    <slot>
-      This is the default content slot.
-    </slot>
-  </div>
-</div>
 </template>
 
 <script>
 export default {
   props: {
     attribute: Object,
-    hideIndicator: Boolean,
+    hideIndicator: Boolean
   },
   computed: {
-    isSelectable() {
-      return this.$listeners.select;
+    isSelectable () {
+      return this.$listeners.select
     },
-    indicatorStyle() {
-      const attr = this.attribute;
+    indicatorStyle () {
+      const attr = this.attribute
       if (attr.highlight) {
         return {
           backgroundColor: attr.highlight.backgroundColor,
           width: '10px',
           height: '5px',
           borderRadius: '3px',
-          opacity: attr.highlight.opacity,
-        };
+          opacity: attr.highlight.opacity
+        }
       }
       if (attr.dot) {
         return {
@@ -45,28 +45,28 @@ export default {
           width: '5px',
           height: '5px',
           borderRadius: '50%',
-          opacity: attr.dot.opacity,
-        };
+          opacity: attr.dot.opacity
+        }
       }
       if (attr.bar) {
         return {
           backgroundColor: attr.bar.backgroundColor,
           width: '10px',
           height: '3px',
-          opacity: attr.bar.opacity,
-        };
+          opacity: attr.bar.opacity
+        }
       }
       if (attr.contentStyle) {
         return {
           backgroundColor: attr.contentStyle.color,
           width: '5px',
-          height: '5px',
-        };
+          height: '5px'
+        }
       }
-      return null;
-    },
-  },
-};
+      return null
+    }
+  }
+}
 </script>
 
 <style lang='sass' scoped>

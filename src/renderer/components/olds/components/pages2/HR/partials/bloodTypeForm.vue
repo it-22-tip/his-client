@@ -4,8 +4,12 @@
       <div class="md-layout-item">
         <md-subheader>Golongan Darah</md-subheader>
         <md-list>
-          <md-list-item v-for="(type) in bloodTypesRadio" :key="type">
-            <md-radio v-model="selectedBloodType" :value="type"/>
+          <md-list-item
+            v-for="(type) in bloodTypesRadio"
+            :key="type">
+            <md-radio
+              v-model="selectedBloodType"
+              :value="type"/>
             <span class="md-list-item-text">{{ type }}</span>
           </md-list-item>
         </md-list>
@@ -13,8 +17,12 @@
       <div class="md-layout-item">
         <md-subheader>Rhesus</md-subheader>
         <md-list>
-          <md-list-item v-for="(typeRh) in bloodTypesRhRadios" :key="typeRh">
-            <md-radio v-model="selectedBloodTypeRh" :value="typeRh"/>
+          <md-list-item
+            v-for="(typeRh) in bloodTypesRhRadios"
+            :key="typeRh">
+            <md-radio
+              v-model="selectedBloodTypeRh"
+              :value="typeRh"/>
             <span class="md-list-item-text">{{ typeRh }}</span>
           </md-list-item>
         </md-list>
@@ -24,29 +32,29 @@
 </template>
 
 <script>
-  export default {
-    name: 'bloodTypeForm',
-    props: [
-      'bloodtype',
-      'bloodtyperh'
-    ],
-    data() {
-      return {
-        selectedBloodType: 'N/A',
-        selectedBloodTypeRh: 'N/A',
-        bloodTypesRadio: [
-          'A',
-          'B',
-          'AB',
-          'O',
-          'N/A'
-        ],
-        bloodTypesRhRadios: [
-          'Positive',
-          'Negative',
-          'N/A'
-        ]
-      }
+export default {
+  name: 'BloodTypeForm',
+  props: [
+    'bloodtype',
+    'bloodtyperh'
+  ],
+  data () {
+    return {
+      selectedBloodType: 'N/A',
+      selectedBloodTypeRh: 'N/A',
+      bloodTypesRadio: [
+        'A',
+        'B',
+        'AB',
+        'O',
+        'N/A'
+      ],
+      bloodTypesRhRadios: [
+        'Positive',
+        'Negative',
+        'N/A'
+      ]
     }
   }
+}
 </script>

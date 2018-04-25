@@ -13,10 +13,10 @@ export default {
   props: {
     initial: {
       type: Boolean,
-      default: false,
+      default: false
     }
   },
-  data: function() {
+  data: function () {
     return {
       size: {
         width: -1,
@@ -24,43 +24,64 @@ export default {
       }
     }
   },
-  methods: {
-    reset: function() {
-
-      var expand = this.$el.firstChild;
-      var shrink = this.$el.lastChild;
-      expand.scrollLeft = 100000;
-      expand.scrollTop = 100000;
-      shrink.scrollLeft = 100000;
-      shrink.scrollTop = 100000;
-    },
-    update: function() {
-
-      this.size.width = this.$el.offsetWidth;
-      this.size.height = this.$el.offsetHeight;
-    }
-  },
   watch: {
     size: {
       deep: true,
-      handler: function(size) {
-
-        this.reset();
-        this.$emit('resize', { width: this.size.width, height: this.size.height });
+      handler: function (size) {
+        this.reset()
+        this.$emit('resize', { width: this.size.width, height: this.size.height })
       }
     }
   },
-  render: function(create) {
+  beforeDestroy: function () {
+    this.$emit('resize', { width: 0, height: 0 })
+    this.$emit('resizeSensorBeforeDestroy')
+  },
+  mounted: function () {
+    if (this.initial === true) { this.$nextTick(this.update) }
 
-    var style = 'position: absolute; left: 0; top: 0; right: 0; bottom: 0; overflow: hidden; z-index: -1; visibility: hidden;';
-    var styleChild = 'position: absolute; left: 0; top: 0;';
+    if (this.$el.offsetParent !== this.$el.parentNode) { this.$el.parentNode.style.position = 'relative' }
+
+    if ('attachEvent' in this.$el && !('AnimationEvent' in window)) {
+      var onresizeHandler = function () {
+        this.update()
+        removeOnresizeEvent()
+      }.bind(this)
+
+      var removeOnresizeEvent = function () {
+        this.$el.detachEvent('onresize', onresizeHandler)
+        this.$off('resizeSensorBeforeDestroy', removeOnresizeEvent)
+      }.bind(this)
+
+      this.$el.attachEvent('onresize', onresizeHandler)
+      this.$on('resizeSensorBeforeDestroy', removeOnresizeEvent)
+      this.reset()
+    }
+  },
+  methods: {
+    reset: function () {
+      var expand = this.$el.firstChild
+      var shrink = this.$el.lastChild
+      expand.scrollLeft = 100000
+      expand.scrollTop = 100000
+      shrink.scrollLeft = 100000
+      shrink.scrollTop = 100000
+    },
+    update: function () {
+      this.size.width = this.$el.offsetWidth
+      this.size.height = this.$el.offsetHeight
+    }
+  },
+  render: function (create) {
+    var style = 'position: absolute; left: 0; top: 0; right: 0; bottom: 0; overflow: hidden; z-index: -1; visibility: hidden;'
+    var styleChild = 'position: absolute; left: 0; top: 0;'
 
     return create('div', {
       style: style + 'animation-name: resizeSensorVisibility;',
       on: {
         '~animationstart': this.update
       }
-    },[
+    }, [
       create('div', {
         style: style,
         on: {
@@ -80,40 +101,8 @@ export default {
         create('div', {
           style: styleChild + 'width: 200%; height: 200%;'
         })
-      ]),
-    ]);
-  },
-  beforeDestroy: function() {
-
-    this.$emit('resize', { width: 0, height: 0 });
-    this.$emit('resizeSensorBeforeDestroy');
-  },
-  mounted: function() {
-
-    if ( this.initial === true )
-      this.$nextTick(this.update);
-
-    if ( this.$el.offsetParent !== this.$el.parentNode )
-      this.$el.parentNode.style.position = 'relative';
-
-    if ( 'attachEvent' in this.$el && !('AnimationEvent' in window) ) {
-
-      var onresizeHandler = function() {
-
-        this.update();
-        removeOnresizeEvent();
-      }.bind(this);
-
-      var removeOnresizeEvent = function() {
-
-        this.$el.detachEvent('onresize', onresizeHandler);
-        this.$off('resizeSensorBeforeDestroy', removeOnresizeEvent);
-      }.bind(this);
-
-      this.$el.attachEvent('onresize', onresizeHandler);
-      this.$on('resizeSensorBeforeDestroy', removeOnresizeEvent);
-      this.reset();
-    }
+      ])
+    ])
   }
 }
 </script>

@@ -1,31 +1,36 @@
 <template>
-<div class="tree-outer">
-  <div class="tree-inner">
-    <div :class="classes" role="tree" onselectstart="return false">
-      <ul :class="containerClasses" role="group">
-        <tree-view-item v-for="(child, index) in itemData"
-          :key="index"
-          :item-data="child"
-          :text-field-name="textFieldName"
-          :value-field-name="valueFieldName"
-          :children-field-name="childrenFieldName"
-          :item-events="itemEvents"
-          :whole-row="wholeRow"
-          :show-checkbox="showCheckbox"
-          :height="sizeHight"
-          :parent-item="itemData"
-          :draggable="draggable"
-          :on-item-click="onItemClick"
-          :on-item-toggle="onItemToggle"
-          :on-item-drag-start="onItemDragStart"
-          :on-item-drag-end="onItemDragEnd"
-          :on-item-drop="onItemDrop"
-          :item-class="index === itemData.length-1 ? 'tree-last' : ''">
-        </tree-view-item>
-      </ul>
+  <div class="tree-outer">
+    <div class="tree-inner">
+      <div
+        :class="classes"
+        role="tree"
+        onselectstart="return false">
+        <ul
+          :class="containerClasses"
+          role="group">
+          <tree-view-item
+            v-for="(child, index) in itemData"
+            :key="index"
+            :item-data="child"
+            :text-field-name="textFieldName"
+            :value-field-name="valueFieldName"
+            :children-field-name="childrenFieldName"
+            :item-events="itemEvents"
+            :whole-row="wholeRow"
+            :show-checkbox="showCheckbox"
+            :height="sizeHight"
+            :parent-item="itemData"
+            :draggable="draggable"
+            :on-item-click="onItemClick"
+            :on-item-toggle="onItemToggle"
+            :on-item-drag-start="onItemDragStart"
+            :on-item-drag-end="onItemDragEnd"
+            :on-item-drop="onItemDrop"
+            :item-class="index === itemData.length-1 ? 'tree-last' : ''"/>
+        </ul>
+      </div>
     </div>
   </div>
-</div>
 </template>
 <script>
 let ITEM_ID = 0
@@ -35,6 +40,9 @@ let ITEM_HEIGHT_LARGE = 32
 
 export default {
   name: 'TreeView',
+  components: {
+    'tree-view-item': () => import('./tree-view-item')
+  },
   props: {
     itemData: {type: Array},
     size: {type: String, validator: value => ['large', 'small'].indexOf(value) > -1},
@@ -86,6 +94,15 @@ export default {
         default:
           return ITEM_HEIGHT_DEFAULT
       }
+    }
+  },
+  created () {
+    this.initialize()
+  },
+  mounted () {
+    if (this.asyncFunction) {
+      this.$set(this.itemData, 0, this.initializeLoading())
+      this.handleAsyncLoad(this.itemData, this)
     }
   },
   methods: {
@@ -248,18 +265,6 @@ export default {
     initialize () {
       this.initializeData(this.itemData)
     }
-  },
-  created () {
-    this.initialize()
-  },
-  mounted () {
-    if (this.asyncFunction) {
-      this.$set(this.itemData, 0, this.initializeLoading())
-      this.handleAsyncLoad(this.itemData, this)
-    }
-  },
-  components: {
-    'tree-view-item': () => import('./tree-view-item')
   }
 }
 </script>

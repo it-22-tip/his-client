@@ -3,10 +3,10 @@ import { Line } from '@extras/chartjs/BaseCharts'
 import Orm from '@mixins/orm'
 
 export default {
+  extends: Line,
   mixins: [
     Orm
   ],
-  extends: Line,
   mounted () {
     this.renderChart({
       labels: ['January', 'February', 'March', 'April', 'Mei'],

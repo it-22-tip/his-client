@@ -1,37 +1,39 @@
 <template>
   <div class="image-cropper">
-   <input type="file" name="image" accept="image/*"
-    style="font-size: 1.2em padding: 10px 0"
-    @change="setImage"
-  />
-  <div>
-    <extra-cropper
-      ref="cropper"
-      :guides="false"
-      :view-mode="2"
-      drag-mode="crop"
-      :movable="false"
-      :cropBoxMovable="false"
-      :cropBoxResizable="false"
-      :auto-crop-area="0.5"
-      :min-container-width="200"
-      :min-container-height="200"
-      :background="true"
-      :rotatable="false"
-      :zoomable="false"
-      :src="imgSrc"
-      alt="Source Image"
-      :img-style="imgStyle"
-      :ready="onCropReady"
-      :cropmove="onCropMove">
-    </extra-cropper>
+    <input
+      type="file"
+      name="image"
+      accept="image/*"
+      style="font-size: 1.2em padding: 10px 0"
+      @change="setImage"
+    >
+    <div>
+      <extra-cropper
+        ref="cropper"
+        :guides="false"
+        :view-mode="2"
+        :movable="false"
+        :crop-box-movable="false"
+        :crop-box-resizable="false"
+        :auto-crop-area="0.5"
+        :min-container-width="200"
+        :min-container-height="200"
+        :background="true"
+        :rotatable="false"
+        :zoomable="false"
+        drag-mode="crop"
+        :src="imgSrc"
+        :img-style="imgStyle"
+        :ready="onCropReady"
+        :cropmove="onCropMove"
+        alt="Source Image"/>
+    </div>
+    <img
+      :src="cropImg"
+      style="width: 200px height: 200px border: 1px solid gray"
+      alt="Cropped Image"
+    >
   </div>
-  <img
-    :src="cropImg"
-    style="width: 200px height: 200px border: 1px solid gray"
-    alt="Cropped Image"
-  />
-</div>
 </template>
 
 <script>
@@ -84,4 +86,3 @@ export default {
     height: 200px;
   }
 </style>
-

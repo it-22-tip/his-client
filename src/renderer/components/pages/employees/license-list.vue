@@ -1,17 +1,27 @@
 <template>
   <md-table
-    class="right-table"
     v-model="model"
     :md-sort.sync="currentSort"
     :md-sort-order.sync="currentSortOrder"
     :md-sort-fn="customSort"
+    class="right-table"
     md-fixed-header>
-    <md-table-row slot="md-table-row" slot-scope="{ item }">
-      <md-table-cell md-label="Id" md-sort-by="Id">{{ item.Id }}</md-table-cell>
-      <md-table-cell md-label="Nama" md-sort-by="Name">{{ item.Name }}</md-table-cell>
-      <md-table-cell md-label="No Registrasi" md-sort-by="LicenseType">{{ item.LicenseType }}<br/>{{ item.Number }}</md-table-cell>
-      <md-table-cell md-label="Berlaku Hingga" md-sort-by="DueDateDiffToday">{{ item.DueDateFormated }}</md-table-cell>
-      <!-- <md-table-cell>
+    <md-table-row
+      slot="md-table-row"
+      slot-scope="{ item }">
+      <md-table-cell
+        md-label="Id"
+        md-sort-by="Id">{{ item.Id }}</md-table-cell>
+      <md-table-cell
+        md-label="Nama"
+        md-sort-by="Name">{{ item.Name }}</md-table-cell>
+      <md-table-cell
+        md-label="No Registrasi"
+        md-sort-by="LicenseType">{{ item.LicenseType }}<br>{{ item.Number }}</md-table-cell>
+      <md-table-cell
+        md-label="Berlaku Hingga"
+        md-sort-by="DueDateDiffToday">{{ item.DueDateFormated }}</md-table-cell>
+        <!-- <md-table-cell>
         <md-button @click="clickEdit(item.Id)" class="md-icon-button">
           <md-icon>edit</md-icon>
           <md-tooltip md-direction="top">Edit</md-tooltip>
@@ -26,12 +36,12 @@ import orm from '@/mixins/orm'
 import { map } from 'lodash'
 import moment from 'moment'
 export default {
-  mixins: [
-    orm
-  ],
   components: {
     'layout-one': () => import('@partials/layout-one')
   },
+  mixins: [
+    orm
+  ],
   data () {
     return {
       model: [],
@@ -56,19 +66,18 @@ export default {
         const desc = this.currentSortOrder === 'desc'
         let sorted
         if (sortBy === 'Id') {
-          sorted = desc ?
-          left[sortBy] - right[sortBy] :
-          right[sortBy] - left[sortBy]
-        }
-        else if (sortBy === 'DueDateDiffToday') {
-          sorted = desc ?
-          left[sortBy] - right[sortBy] :
-          right[sortBy] - left[sortBy]
+          sorted = desc
+            ? left[sortBy] - right[sortBy]
+            : right[sortBy] - left[sortBy]
+        } else if (sortBy === 'DueDateDiffToday') {
+          sorted = desc
+            ? left[sortBy] - right[sortBy]
+            : right[sortBy] - left[sortBy]
         } else {
           console.log(sortBy)
-          sorted = desc ?
-          left[sortBy].localeCompare(right[sortBy]) :
-          right[sortBy].localeCompare(left[sortBy])
+          sorted = desc
+            ? left[sortBy].localeCompare(right[sortBy])
+            : right[sortBy].localeCompare(left[sortBy])
         }
         return sorted
       })
@@ -128,7 +137,7 @@ export default {
       return item
     },
     toDateDiffToday (item, key, by = 'years') {
-      if(item[key] === null) {
+      if (item[key] === null) {
         item[key] = 0
       } else {
         item[key] = parseInt(item[key].diff(moment(), by))
@@ -146,10 +155,10 @@ export default {
       return item
     },
     async populate () {
-      this.connection = (new this.$orm).withOption({
+      this.connection = (new this.$orm()).withOption({
         username: 'his',
         password: 'his',
-        database: 'his',
+        database: 'his'
       }).connect()
       try {
         let data = await this.connection.transaction(this.transaction)

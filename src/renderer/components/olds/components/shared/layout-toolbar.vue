@@ -1,13 +1,15 @@
 <template>
-  <md-toolbar class="layout-toolbar md-dense" md-elevation="0">
+  <md-toolbar
+    class="layout-toolbar md-dense"
+    md-elevation="0">
     [layout toolbar]
   </md-toolbar>
 </template>
 
 <script>
-  export default {
-    name: 'LayoutToolbar'
-  }
+export default {
+  name: 'LayoutToolbar'
+}
 </script>
 
 <style lang="scss" scoped>
@@ -16,5 +18,3 @@
     color: White;
   }
 </style>
-
-

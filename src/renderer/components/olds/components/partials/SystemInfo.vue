@@ -31,19 +31,19 @@
 </template>
 
 <script>
-  export default {
-    name: 'system-info',
-    data () {
-      return {
-        electron: process.versions['atom-shell'],
-        name: this.$route.name,
-        node: process.versions.node,
-        path: this.$route.path,
-        platform: require('os').platform(),
-        vue: require('vue/package.json').version
-      }
+export default {
+  name: 'SystemInfo',
+  data () {
+    return {
+      electron: process.versions['atom-shell'],
+      name: this.$route.name,
+      node: process.versions.node,
+      path: this.$route.path,
+      platform: require('os').platform(),
+      vue: require('vue/package.json').version
     }
   }
+}
 </script>
 
 <style scoped>

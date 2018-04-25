@@ -1,35 +1,50 @@
 <template>
-  <div class="date-picker-container flex-center" :class="{'hidden-footer': footer }">
-    <div class="date-picker-background flex-center" @click.stop.prevent="onClose"></div>
+  <div
+    :class="{'hidden-footer': footer }"
+    class="date-picker-container flex-center">
+    <div
+      class="date-picker-background flex-center"
+      @click.stop.prevent="onClose"/>
 
     <div class="calendar-container">
       <div class="calendar">
-        <div :style="{ 'background-color': color }" class="calendar-header flex-center">
+        <div
+          :style="{ 'background-color': color }"
+          class="calendar-header flex-center">
           <div>
-            <h3 :class="{ 'calendar-faint': selecting === 'date' }"
-                @click="setSelecting('year')">
+            <h3
+              :class="{ 'calendar-faint': selecting === 'date' }"
+              @click="setSelecting('year')">
               {{ selectedYear }}
             </h3>
 
-            <h2 :class="{ 'calendar-faint': selecting === 'year' }"
-                @click="setSelecting('date')">
+            <h2
+              :class="{ 'calendar-faint': selecting === 'year' }"
+              @click="setSelecting('date')">
               {{ abbrivatedDay }}, {{ selectedDay }} {{ selectedMonthWord }}
             </h2>
           </div>
         </div>
 
         <!-- Calendar -->
-        <div class="calendar-body" v-if="selecting === 'date'">
+        <div
+          v-if="selecting === 'date'"
+          class="calendar-body">
           <div class="calendar-date">
             <div>
               <!-- The svg's are from the material design chevron arrows -->
-              <div class="calendar-arrows flex left" @click="setByMonth(currentMonth - 1)"
-                   v-if="showLeftArrow">
-                <svg xmlns="http://www.w3.org/2000/svg"
-                     width="24"
-                     height="24"
-                     viewBox="0 0 24 24">
-                  <path fill="#212121" d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+              <div
+                v-if="showLeftArrow"
+                class="calendar-arrows flex left"
+                @click="setByMonth(currentMonth - 1)">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24">
+                  <path
+                    fill="#212121"
+                    d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
                 </svg>
               </div>
             </div>
@@ -39,13 +54,18 @@
             </div>
 
             <div>
-              <div class="calendar-arrows flex right" @click="setByMonth(currentMonth + 1)"
-                   v-if="showRightArrow">
-                <svg xmlns="http://www.w3.org/2000/svg"
-                     width="24"
-                     height="24"
-                     viewBox="0 0 24 24">
-                  <path fill="#212121" d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+              <div
+                v-if="showRightArrow"
+                class="calendar-arrows flex right"
+                @click="setByMonth(currentMonth + 1)">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24">
+                  <path
+                    fill="#212121"
+                    d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
                 </svg>
               </div>
             </div>
@@ -65,44 +85,56 @@
             </thead>
 
             <tbody>
-              <tr v-for="(days, index) in calendar" :key="index">
-                <td :style="{
-                      'color': day.currentDay && ! day.selected ? color : '',
-                      'background-color': day.selected ? color : ''
-                    }"
-                    :class="{
-                      'current-day': day.currentDay,
-                      'disabled': day.disabled,
-                      'selected': day.selected
-                    }"
-                    v-for="day in days"
-                    :key="`day-${day.day}`"
-                    tabindex="0"
-                    @keydown.enter="onInput"
-                    @keydown.space.stop.prevent="onInput"
-                    @keydown.esc="onClose"
-                    @click="setByDay(day)">{{ (day.day >= 0) ? day.day : '' }}</td>
+              <tr
+                v-for="(days, index) in calendar"
+                :key="index">
+                <td
+                  v-for="day in days"
+                  :style="{
+                    'color': day.currentDay && ! day.selected ? color : '',
+                    'background-color': day.selected ? color : ''
+                  }"
+                  :class="{
+                    'current-day': day.currentDay,
+                    'disabled': day.disabled,
+                    'selected': day.selected
+                  }"
+                  :key="`day-${day.day}`"
+                  tabindex="0"
+                  @keydown.enter="onInput"
+                  @keydown.space.stop.prevent="onInput"
+                  @keydown.esc="onClose"
+                  @click="setByDay(day)">{{ (day.day >= 0) ? day.day : '' }}</td>
               </tr>
             </tbody>
           </table>
         </div>
 
         <!-- Years -->
-        <div class="calendar-year-select" v-if="selecting === 'year'">
-          <div :style="{ 'color': year.selected ? color : '' }"
-               :class="{ 'selected': year.selected }"
-               :id="`${year.year}-calendar-year`"
-               v-for="year in years"
-               :key="year.year"
-               @click="setByYear(year.year)">
+        <div
+          v-if="selecting === 'year'"
+          class="calendar-year-select">
+          <div
+            v-for="year in years"
+            :style="{ 'color': year.selected ? color : '' }"
+            :class="{ 'selected': year.selected }"
+            :id="`${year.year}-calendar-year`"
+            :key="year.year"
+            @click="setByYear(year.year)">
             {{ year.year }}
           </div>
         </div>
 
-        <div class="calendar-footer" v-if="! footer">
-          <button :style="{ 'color': color }" @click.stop.prevent="onClose">Cancel</button>
+        <div
+          v-if="! footer"
+          class="calendar-footer">
+          <button
+            :style="{ 'color': color }"
+            @click.stop.prevent="onClose">Cancel</button>
 
-          <button :style="{ 'color': color }" @click.stop.prevent="onInput">Ok</button>
+          <button
+            :style="{ 'color': color }"
+            @click.stop.prevent="onInput">Ok</button>
         </div>
       </div>
     </div>
@@ -110,491 +142,487 @@
 </template>
 
 <script>
-  import { slice, chunk } from 'lodash'
-  /**
+import { slice, chunk } from 'lodash'
+/**
    * Helpers for no dependencies™
    */
 
-  const dayMap = {
-    0: 'Minggu',
-    1: 'Senin',
-    2: 'Selasa',
-    3: 'Rabu',
-    4: 'Kamis',
-    5: 'Jumat',
-    6: 'Sabtu',
-  }
+const dayMap = {
+  0: 'Minggu',
+  1: 'Senin',
+  2: 'Selasa',
+  3: 'Rabu',
+  4: 'Kamis',
+  5: 'Jumat',
+  6: 'Sabtu'
+}
 
-  const monthMap = {
-    0: 'Januari',
-    1: 'Februari',
-    2: 'Maret',
-    3: 'April',
-    4: 'Mei',
-    5: 'Juni',
-    6: 'Juli',
-    7: 'Agustus',
-    8: 'September',
-    9: 'Oktober',
-    10: 'November',
-    11: 'Desember'
-  }
+const monthMap = {
+  0: 'Januari',
+  1: 'Februari',
+  2: 'Maret',
+  3: 'April',
+  4: 'Mei',
+  5: 'Juni',
+  6: 'Juli',
+  7: 'Agustus',
+  8: 'September',
+  9: 'Oktober',
+  10: 'November',
+  11: 'Desember'
+}
 
-  /**
+/**
    * Actual component stuff
    */
 
-  export default {
-    props: {
-      color: {
-        type: String,
-        required: false,
-        default: '#009688'
-      },
-
-      format: {
-        type: Function,
-        required: false
-      },
-
-      min: {
-        type: String,
-        required: false
-      },
-
-      max: {
-        type: String,
-        required: false
-      },
-
-      value: {
-        type: String,
-        required: false
-      },
-
-       footer: {
-         type: Boolean,
-         required: false,
-         default: false
-       }
+export default {
+  props: {
+    color: {
+      type: String,
+      required: false,
+      default: '#009688'
     },
 
-    computed: {
-      /**
+    format: {
+      type: Function,
+      required: false
+    },
+
+    min: {
+      type: String,
+      required: false
+    },
+
+    max: {
+      type: String,
+      required: false
+    },
+
+    value: {
+      type: String,
+      required: false
+    },
+
+    footer: {
+      type: Boolean,
+      required: false,
+      default: false
+    }
+  },
+
+  data: () => ({
+    selecting: 'date',
+    currentMonth: '',
+    currentYear: '',
+    selectedDayOfWeek: '',
+    selectedDay: '',
+    selectedMonth: '',
+    selectedYear: ''
+  }),
+
+  computed: {
+    /**
        * Returns if there was any initial date settings.
        *
        * @return {Boolean}
        */
-      initialDate () {
-        return !! (this.value || this.min)
-      },
+    initialDate () {
+      return !!(this.value || this.min)
+    },
 
-      /**
+    /**
        * The date property, converted to a date.
        *
        * @return {Date}
        */
-      specifiedDate () {
-        return new Date(this.value)
-      },
+    specifiedDate () {
+      return new Date(this.value)
+    },
 
-      /**
+    /**
        * Returns a formatted date e.g. 2016-4-19. This is emiited on the input event.
        *
        * @return {String}
        */
-      calculatedDate () {
-        const day = this.selectedDay >= 10 ? this.selectedDay : `0${this.selectedDay}`
+    calculatedDate () {
+      const day = this.selectedDay >= 10 ? this.selectedDay : `0${this.selectedDay}`
 
-        const month = this.selectedMonth + 1 >= 10 ? this.selectedMonth + 1 : `0${this.selectedMonth + 1}`
+      const month = this.selectedMonth + 1 >= 10 ? this.selectedMonth + 1 : `0${this.selectedMonth + 1}`
 
-        return `${this.selectedYear}-${month}-${day}`
-      },
+      return `${this.selectedYear}-${month}-${day}`
+    },
 
-      /**
+    /**
        * Returns an abbreviation of a day e.g. Sun, Mon, etc.
        *
        * @return {String}
        */
-      abbrivatedDay () {
-        return dayMap[this.selectedDayOfWeek]
-      },
+    abbrivatedDay () {
+      return dayMap[this.selectedDayOfWeek]
+    },
 
-      /**
+    /**
        * Returns the currently viewed month as a word.
        *
        * @return {String}
        */
-      currentMonthWord () {
-        return monthMap[this.currentMonth]
-      },
+    currentMonthWord () {
+      return monthMap[this.currentMonth]
+    },
 
-      /**
+    /**
        * Returns the selected month as a word.
        *
        * @return {String}
        */
-      selectedMonthWord () {
-        return monthMap[this.selectedMonth]
-      },
+    selectedMonthWord () {
+      return monthMap[this.selectedMonth]
+    },
 
-      /**
+    /**
        * The minimum date the calendar will allow you to select.
        *
        * @return {Date}
        */
-      minDate () {
-        if (this.min) {
-          const minDateSplit = this.min.split('-')
+    minDate () {
+      if (this.min) {
+        const minDateSplit = this.min.split('-')
 
-          return new Date(minDateSplit[0], minDateSplit[1], minDateSplit[2])
-        }
+        return new Date(minDateSplit[0], minDateSplit[1], minDateSplit[2])
+      }
+    },
 
-        return
-      },
-
-      /**
+    /**
        * The maximum date the calendar will allow you to select.
        *
        * @return {Date}
        */
-      maxDate () {
-        if (this.max) {
-          const maxDateSplit = this.max.split('-')
+    maxDate () {
+      if (this.max) {
+        const maxDateSplit = this.max.split('-')
 
-          return new Date(maxDateSplit[0], maxDateSplit[1], maxDateSplit[2])
-        }
+        return new Date(maxDateSplit[0], maxDateSplit[1], maxDateSplit[2])
+      }
+    },
 
-        return
-      },
-
-      /**
+    /**
        * Determines if the left arrow for the current date should be shown.
        *
        * @return {Boolean}
        */
-      showLeftArrow () {
-        // Show the left arrow when there is either no mininum date, or when the
-        // minimum year and minimum month are the same as the current year and
-        // current month.
-        if (! this.min) return true
+    showLeftArrow () {
+      // Show the left arrow when there is either no mininum date, or when the
+      // minimum year and minimum month are the same as the current year and
+      // current month.
+      if (!this.min) return true
 
-        if (this.minDate.getFullYear() === this.currentYear &&
+      if (this.minDate.getFullYear() === this.currentYear &&
             this.minDate.getMonth() - 1 === this.currentMonth) {
-          return false
-        }
+        return false
+      }
 
-        return true
-      },
+      return true
+    },
 
-      /**
+    /**
        * Determines if the right arrow for the current date should be shown.
        *
        * @return {Boolean}
        */
-      showRightArrow () {
-        // Show the right arrow when there is either no maximum date, or when
-        // the maximum year and maximum month are the same as the current
-        // year and current month.
-        if (! this.max) return true
+    showRightArrow () {
+      // Show the right arrow when there is either no maximum date, or when
+      // the maximum year and maximum month are the same as the current
+      // year and current month.
+      if (!this.max) return true
 
-        if (this.maxDate.getFullYear() === this.currentYear &&
+      if (this.maxDate.getFullYear() === this.currentYear &&
             this.maxDate.getMonth() - 1 === this.currentMonth) {
-          return false
-        }
+        return false
+      }
 
-        return true
-      },
+      return true
+    },
 
-      /**
+    /**
        * Computes a formatted array of days for a given month and year.
        *
        * @return {Array}
        */
-      calendar () {
-        // The calendar's output is a function of all of the days in a given
-        // month, chunked into an array of arrays, each containing 5 or 6
-        // and 7 elements respectively.
-        const days = []
+    calendar () {
+      // The calendar's output is a function of all of the days in a given
+      // month, chunked into an array of arrays, each containing 5 or 6
+      // and 7 elements respectively.
+      const days = []
 
-        // Padding for the first row, e.g. if the month's first day starts on
-        // Friday, the first array will be ['', '', '', '', '', '1', '2']
-        const startOfMonthDay = new Date(this.currentYear, this.currentMonth, 1).getDay()
+      // Padding for the first row, e.g. if the month's first day starts on
+      // Friday, the first array will be ['', '', '', '', '', '1', '2']
+      const startOfMonthDay = new Date(this.currentYear, this.currentMonth, 1).getDay()
 
-        for (let i = 0, len = startOfMonthDay; i < len; i++) {
-          // let min = 0-i-1
-          // days.push(min)
-          day.push('')
-        }
+      for (let i = 0, len = startOfMonthDay; i < len; i++) {
+        // let min = 0-i-1
+        // days.push(min)
+        day.push('')
+      }
 
-        // Create an array containing all days in the current month
-        const daysInMonth = 32 - new Date(this.currentYear, this.currentMonth, 32).getDate()
+      // Create an array containing all days in the current month
+      const daysInMonth = 32 - new Date(this.currentYear, this.currentMonth, 32).getDate()
 
-        for (let i = 0, len = daysInMonth; i < daysInMonth; i++) {
-          days.push(i + 1)
-        }
+      for (let i = 0, len = daysInMonth; i < daysInMonth; i++) {
+        days.push(i + 1)
+      }
 
-        // Map the days from numbers to objects that have current day,
-        // selected, and disabled properties for the view.
-        const today = new Date()
+      // Map the days from numbers to objects that have current day,
+      // selected, and disabled properties for the view.
+      const today = new Date()
 
-        const dayObjects = days.map((day) => {
-          const currentDay = (day === today.getDate()) &&
+      const dayObjects = days.map((day) => {
+        const currentDay = (day === today.getDate()) &&
                              (this.currentMonth === today.getMonth()) &&
                              (this.currentYear === today.getFullYear())
 
-          const selected = (this.selectedDay === day) &&
+        const selected = (this.selectedDay === day) &&
                            (this.currentMonth === this.selectedMonth) &&
                            (this.currentYear === this.selectedYear)
 
-          const disabled = this.dayDisabled(day)
+        const disabled = this.dayDisabled(day)
 
-          return { day, currentDay, selected, disabled }
-        })
+        return { day, currentDay, selected, disabled }
+      })
 
-        // Chunk all of the days into an array of arrays, by seven.
-        let dO = chunk(dayObjects, 7)
-        return dO
-      },
+      // Chunk all of the days into an array of arrays, by seven.
+      let dO = chunk(dayObjects, 7)
+      return dO
+    },
 
-      /**
+    /**
        * Computes a list of years.
        *
        * @return {Array}
        */
-      years () {
-        // Set the first year of the array.
-        let firstYear
+    years () {
+      // Set the first year of the array.
+      let firstYear
 
-        if (this.min) {
-          firstYear = this.minDate.getFullYear()
-        } else if (this.value) {
-          firstYear = this.specifiedDate.getFullYear()
-        } else {
-          firstYear = (new Date).getFullYear()
-        }
+      if (this.min) {
+        firstYear = this.minDate.getFullYear()
+      } else if (this.value) {
+        firstYear = this.specifiedDate.getFullYear()
+      } else {
+        firstYear = (new Date()).getFullYear()
+      }
 
-        // Create a range of years to loop through which is either the maximum
-        // date minus the first year, or simply 100.
-        let through = this.max ? (this.maxDate.getFullYear() + 1) - firstYear : 101
+      // Create a range of years to loop through which is either the maximum
+      // date minus the first year, or simply 100.
+      let through = this.max ? (this.maxDate.getFullYear() + 1) - firstYear : 101
 
-        let years = []
+      let years = []
 
-        for (let i = firstYear, len = firstYear + through; i < len; i++) {
-          years.push(i)
-        }
+      for (let i = firstYear, len = firstYear + through; i < len; i++) {
+        years.push(i)
+      }
 
-        return years.map((year) => {
-          return { year, selected: year === this.selectedYear }
+      return years.map((year) => {
+        return { year, selected: year === this.selectedYear }
+      })
+    }
+  },
+
+  created () {
+    this.hideBodyOverflow(true)
+
+    this.setDate()
+
+    this.setEscapeEvent()
+  },
+
+  methods: {
+    /**
+       * Changes the display to the calendar or years depending on the value.
+       */
+    setSelecting (value) {
+      this.selecting = value
+
+      // If the user is selecting a year, we want to go to the selected year
+      // minus two (as does the material design date picker).
+      if (value === 'year') {
+        this.$nextTick(() => {
+          const container = document.querySelector('.calendar-year-select')
+
+          const el = document.getElementById(`${this.selectedYear}-calendar-year`)
+
+          container.scrollTop = (el.offsetTop - 100) - 76
         })
       }
     },
 
-    created () {
-      this.hideBodyOverflow(true)
-
-      this.setDate()
-
-      this.setEscapeEvent()
-    },
-
-    data: () => ({
-      selecting: 'date',
-      currentMonth: '',
-      currentYear: '',
-      selectedDayOfWeek: '',
-      selectedDay: '',
-      selectedMonth: '',
-      selectedYear: ''
-    }),
-
-    methods: {
-      /**
-       * Changes the display to the calendar or years depending on the value.
-       */
-      setSelecting (value) {
-        this.selecting = value
-
-        // If the user is selecting a year, we want to go to the selected year
-        // minus two (as does the material design date picker).
-        if (value === 'year') {
-          this.$nextTick(() => {
-            const container = document.querySelector('.calendar-year-select')
-
-            const el = document.getElementById(`${this.selectedYear}-calendar-year`)
-
-            container.scrollTop = (el.offsetTop - 100) - 76
-          })
-        }
-      },
-
-      /**
+    /**
        * Set the date by the given day.
        *
        * @param {Object}
        */
-      setByDay (day) {
-        if (day.disabled) return
+    setByDay (day) {
+      if (day.disabled) return
 
-        this.selectedYear = this.currentYear
+      this.selectedYear = this.currentYear
 
-        this.selectedDay = day.day
+      this.selectedDay = day.day
 
-        this.selectedMonth = this.currentMonth
+      this.selectedMonth = this.currentMonth
 
-        this.selectedDayOfWeek = new Date(this.selectedYear, this.selectedMonth, day.day).getDay()
+      this.selectedDayOfWeek = new Date(this.selectedYear, this.selectedMonth, day.day).getDay()
 
-        if (this.footer) {
-          this.onInput();
-        }
-      },
+      if (this.footer) {
+        this.onInput()
+      }
+    },
 
-      /**
+    /**
        * Set the date by the given month.
        *
        * @param {[String, Number]}
        */
-      setByMonth (month) {
-        if (month === 12) {
-          this.currentYear = this.currentYear + 1
+    setByMonth (month) {
+      if (month === 12) {
+        this.currentYear = this.currentYear + 1
 
-          this.currentMonth = 0
+        this.currentMonth = 0
 
-          return
-        }
+        return
+      }
 
-        if (month === -1) {
-          this.currentYear = this.currentYear - 1
+      if (month === -1) {
+        this.currentYear = this.currentYear - 1
 
-          this.currentMonth = 11
+        this.currentMonth = 11
 
-          return
-        }
+        return
+      }
 
-        this.currentMonth = month
-      },
+      this.currentMonth = month
+    },
 
-      /**
+    /**
        * Set the date by the given year.
        *
        * @param {[String, Number]}
        */
-      setByYear (year) {
-        this.selectedYear = year
+    setByYear (year) {
+      this.selectedYear = year
 
-        this.currentYear = year
+      this.currentYear = year
 
-        this.selecting = 'date'
-      },
+      this.selecting = 'date'
+    },
 
-      /**
+    /**
        * Set the initial date for the calendar.
        */
-      setDate () {
-        // If a date property has been passed to the component, that will be
-        // used instead of the current day.
-        let date
+    setDate () {
+      // If a date property has been passed to the component, that will be
+      // used instead of the current day.
+      let date
 
-        if (this.min && this.min && ! this.value) {
-          date = new Date(this.min)
-        } else if (this.value && this.value) {
-          date = new Date(this.value)
-        } else {
-          date = new Date()
-        }
+      if (this.min && this.min && !this.value) {
+        date = new Date(this.min)
+      } else if (this.value && this.value) {
+        date = new Date(this.value)
+      } else {
+        date = new Date()
+      }
 
-        if (this.initialDate) {
-          this.selectedDay = date.getDate() + 1
-        } else {
-          this.selectedDay = date.getDate()
-        }
+      if (this.initialDate) {
+        this.selectedDay = date.getDate() + 1
+      } else {
+        this.selectedDay = date.getDate()
+      }
 
-        this.selectedDayOfWeek = date.getDay()
+      this.selectedDayOfWeek = date.getDay()
 
-        this.selectedMonth = date.getMonth()
+      this.selectedMonth = date.getMonth()
 
-        this.currentMonth = date.getMonth()
+      this.currentMonth = date.getMonth()
 
-        this.selectedYear = date.getFullYear()
+      this.selectedYear = date.getFullYear()
 
-        this.currentYear = date.getFullYear()
-      },
+      this.currentYear = date.getFullYear()
+    },
 
-      dayDisabled (day) {
-        // A day is disabled when the minimum month and minimum year are equal
-        // to the current month and year and the day is less than the min date's day
-        if (this.min &&
+    dayDisabled (day) {
+      // A day is disabled when the minimum month and minimum year are equal
+      // to the current month and year and the day is less than the min date's day
+      if (this.min &&
             (this.minDate.getMonth() - 1 === this.currentMonth &&
             this.minDate.getFullYear() === this.currentYear) &&
             day < this.minDate.getDate()) {
-          return true
-        }
+        return true
+      }
 
-        //  Or when the maximum month and maximum year are equal to the current
-        //  month and year and the day is greater than the max date's day
-        if (this.max &&
+      //  Or when the maximum month and maximum year are equal to the current
+      //  month and year and the day is greater than the max date's day
+      if (this.max &&
             (this.maxDate.getMonth() - 1 === this.currentMonth &&
             this.maxDate.getFullYear() === this.currentYear) &&
             day > this.maxDate.getDate()) {
-          return true
-        }
+        return true
+      }
 
-        return false
-      },
+      return false
+    },
 
-      // Misc methods that have nothing to do with calendar stuff.
+    // Misc methods that have nothing to do with calendar stuff.
 
-      /**
+    /**
        * Hides the overflow of the body when the date picker is active.
        *
        * @param  {Boolean}
        */
-      hideBodyOverflow (show) {
-        const bodyEl = document.querySelector('body')
+    hideBodyOverflow (show) {
+      const bodyEl = document.querySelector('body')
 
-        if (show === true) {
-          bodyEl.style.overflow = 'hidden'
+      if (show === true) {
+        bodyEl.style.overflow = 'hidden'
 
-          return
-        }
+        return
+      }
 
-        bodyEl.style.overflow = ''
-      },
+      bodyEl.style.overflow = ''
+    },
 
-      /**
+    /**
        * Close the date picker if the escape key is pressed.
        */
-      setEscapeEvent () {
-        document.addEventListener('keydown', (event) => {
-          if (event.keyCode == 27 || event.key == 'Escape') {
-            this.onClose()
-          }
-        })
-      },
+    setEscapeEvent () {
+      document.addEventListener('keydown', (event) => {
+        if (event.keyCode == 27 || event.key == 'Escape') {
+          this.onClose()
+        }
+      })
+    },
 
-      /**
+    /**
        * When the "Ok" button is pressed, or enter is pressed, emit the input
        * event and close the date picker.
        */
-      onInput () {
-        const date = this.format ? this.format(this.calculatedDate) : this.calculatedDate
+    onInput () {
+      const date = this.format ? this.format(this.calculatedDate) : this.calculatedDate
 
-        this.$emit('input', date)
+      this.$emit('input', date)
 
-        this.onClose()
-      },
+      this.onClose()
+    },
 
-      /**
+    /**
        * Emit a close event so the developer can close the date picker as they
        * see fit.
        */
-      onClose () {
-        this.hideBodyOverflow(false)
+    onClose () {
+      this.hideBodyOverflow(false)
 
-        this.$emit('close')
-      }
+      this.$emit('close')
     }
   }
+}
 </script>
 
 <style scoped>

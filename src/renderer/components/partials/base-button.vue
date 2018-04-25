@@ -23,6 +23,14 @@ export default {
       default: true
     }
   },
+  methods: {
+    onFocus () {
+      this.$children[0].mdHasFocus = true
+    },
+    onBlur () {
+      this.$children[0].mdHasFocus = false
+    }
+  },
   render (createElement) {
     const options = {
       staticClass: 'md-custom-button',
@@ -39,14 +47,6 @@ export default {
     }
     const button = createElement('md-button', options, [this.$slots.default])
     return button
-  },
-  methods: {
-    onFocus () {
-      this.$children[0].mdHasFocus = true
-    },
-    onBlur () {
-      this.$children[0].mdHasFocus = false
-    }
   }
 }
 </script>

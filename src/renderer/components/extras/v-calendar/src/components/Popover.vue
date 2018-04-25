@@ -1,53 +1,53 @@
 <template>
-<div
-  ref='popover'
-  :class='["popover-container", { expanded: isExpanded }]'
-  :tabindex='visibility === "focus" && -1 || undefined'
-  :style='containerStyle'
-  @focusin='focusin'
-  @focusout='focusout'
-  @mouseleave='mouseleave'
-  @mousemove='mousemove'
-  @click.stop='click'>
-  <transition
-    tag='div'
-    :name='transition'
-    @enter='contentEnter'
-    @before-enter='beforeContentEnter'
-    @after-enter='afterContentEnter'
-    @leave='contentLeave'
-    @before-leave='beforeContentLeave'
-    @after-leave='afterContentLeave'>
-    <div
-      ref='popoverOrigin'
-      :class='["popover-origin", "direction-" + direction, "align-" + align]'
-      v-if='visible'>
+  <div
+    ref="popover"
+    :class="[&quot;popover-container&quot;, { expanded: isExpanded }]"
+    :tabindex="visibility === &quot;focus&quot; && -1 || undefined"
+    :style="containerStyle"
+    @focusin="focusin"
+    @focusout="focusout"
+    @mouseleave="mouseleave"
+    @mousemove="mousemove"
+    @click.stop="click">
+    <transition
+      :name="transition"
+      tag="div"
+      @enter="contentEnter"
+      @before-enter="beforeContentEnter"
+      @after-enter="afterContentEnter"
+      @leave="contentLeave"
+      @before-leave="beforeContentLeave"
+      @after-leave="afterContentLeave">
       <div
-        ref='popoverContentWrapper'
-        :class='["popover-content-wrapper", "direction-" + direction, "align-" + align, { "interactive": isInteractive }]'
-        :style='contentWrapperStyle'>
+        v-if="visible"
+        ref="popoverOrigin"
+        :class="[&quot;popover-origin&quot;, &quot;direction-&quot; + direction, &quot;align-&quot; + align]">
         <div
-          ref='popoverContent'
-          :class='["popover-content", "direction-" + direction, "align-" + align]'
-          :style='contentStyle'>
-          <slot name='popover-content'>
-            <div>Popover content goes here</div>
-          </slot>
+          ref="popoverContentWrapper"
+          :class="[&quot;popover-content-wrapper&quot;, &quot;direction-&quot; + direction, &quot;align-&quot; + align, { &quot;interactive&quot;: isInteractive }]"
+          :style="contentWrapperStyle">
+          <div
+            ref="popoverContent"
+            :class="[&quot;popover-content&quot;, &quot;direction-&quot; + direction, &quot;align-&quot; + align]"
+            :style="contentStyle">
+            <slot name="popover-content">
+              <div>Popover content goes here</div>
+            </slot>
+          </div>
         </div>
       </div>
-    </div>
-  </transition>
-  <slot>
-    <span>Popover trigger goes here</span>
-  </slot>
-</div>
+    </transition>
+    <slot>
+      <span>Popover trigger goes here</span>
+    </slot>
+  </div>
 </template>
 
 <script>
-import defaults from '../utils/defaults';
-import { registerTapOrClick } from '../utils/touchHandlers';
-import { elementHasAncestor } from '../utils/helpers';
-import { POPOVER_VISIBILITIES as VISIBILITIES } from '../utils/constants';
+import defaults from '../utils/defaults'
+import { registerTapOrClick } from '../utils/touchHandlers'
+import { elementHasAncestor } from '../utils/helpers'
+import { POPOVER_VISIBILITIES as VISIBILITIES } from '../utils/constants'
 
 export default {
   props: {
@@ -61,12 +61,12 @@ export default {
     contentStyle: Object,
     contentOffset: {
       type: Number,
-      default: () => defaults.popoverContentOffset,
+      default: () => defaults.popoverContentOffset
     },
     transition: { type: String, default: 'slide-fade' },
-    showClearMargin: Boolean,
+    showClearMargin: Boolean
   },
-  data() {
+  data () {
     return {
       hoverVisible: false,
       focusVisible: false,
@@ -74,86 +74,86 @@ export default {
       contentTransitioning: false,
       contentTransitioningCancelled: false,
       disableNextClick: false,
-      windowTapClickRegistration: null,
-    };
+      windowTapClickRegistration: null
+    }
   },
   computed: {
-    containerStyle() {
+    containerStyle () {
       return (
         this.visible && {
-          [`margin-${this.direction}`]: `${this.clearMargin}px`,
+          [`margin-${this.direction}`]: `${this.clearMargin}px`
         }
-      );
+      )
     },
-    contentWrapperStyle() {
-      const style = {};
+    contentWrapperStyle () {
+      const style = {}
       style[`padding${this.contentOffsetDirection}`] = `${
         this.contentOffset
-      }px`;
-      return style;
+      }px`
+      return style
     },
-    contentOffsetDirection() {
+    contentOffsetDirection () {
       switch (this.direction) {
         case 'bottom':
-          return 'Top';
+          return 'Top'
         case 'top':
-          return 'Bottom';
+          return 'Bottom'
         case 'left':
-          return 'Right';
+          return 'Right'
         case 'right':
-          return 'Left';
+          return 'Left'
         default:
-          return '';
+          return ''
       }
     },
-    visibilityIsManaged() {
-      return VISIBILITIES.isManaged(this.visibility);
+    visibilityIsManaged () {
+      return VISIBILITIES.isManaged(this.visibility)
     },
-    visible() {
-      if (this.visibility === VISIBILITIES.HOVER) return this.hoverVisible;
-      if (this.visibility === VISIBILITIES.FOCUS) return this.focusVisible;
-      return this.visibility === VISIBILITIES.VISIBLE;
-    },
+    visible () {
+      if (this.visibility === VISIBILITIES.HOVER) return this.hoverVisible
+      if (this.visibility === VISIBILITIES.FOCUS) return this.focusVisible
+      return this.visibility === VISIBILITIES.VISIBLE
+    }
   },
   watch: {
-    forceHidden() {
+    forceHidden () {
       if (this.hoverVisible || this.focusVisible) {
-        this.hoverVisible = false;
-        this.focusVisible = false;
+        this.hoverVisible = false
+        this.focusVisible = false
       } else {
-        this.$emit('update:forcehidden', false);
-        this.$emit('update:forceHidden', false);
+        this.$emit('update:forcehidden', false)
+        this.$emit('update:forceHidden', false)
       }
-    },
+    }
   },
-  created() {
+  created () {
     this.windowTapClickRegistration = registerTapOrClick(
       window,
-      this.windowTapOrClick,
-    );
+      this.windowTapOrClick
+    )
   },
-  mounted() {
-    this.refreshClearMargin();
+  mounted () {
+    this.refreshClearMargin()
   },
-  beforeDestroy() {
-    this.windowTapClickRegistration.cleanup();
+  beforeDestroy () {
+    this.windowTapClickRegistration.cleanup()
   },
   methods: {
-    focusin(e) {
+    focusin (e) {
       if (!this.contentTransitioning) {
-        if (!this.focusVisible) this.$emit('got-focus', e);
-        this.focusVisible = true;
-        this.disableNextClick = true;
+        if (!this.focusVisible) this.$emit('got-focus', e)
+        this.focusVisible = true
+        this.disableNextClick = true
       }
     },
-    focusout(e) {
+    focusout (e) {
       // Hide when outside element (e.relatedTarget) receives focus
       if (!elementHasAncestor(e.relatedTarget, this.$refs.popover)) {
-        this.$emit('lost-focus', e);
-        this.focusVisible = false;
+        this.$emit('lost-focus', e)
+        this.focusVisible = false
       }
     },
-    click(e) {
+    click (e) {
       // Toggle focusVisible state on click if enabled
       // Be sure to ignore clicks on the popover content though
       if (
@@ -163,76 +163,76 @@ export default {
         !elementHasAncestor(e.target, this.$refs.popoverOrigin) &&
         !this.disableNextClick
       ) {
-        this.focusVisible = !this.focusVisible;
+        this.focusVisible = !this.focusVisible
       }
       // Reset click ignore flag
-      this.disableNextClick = false;
+      this.disableNextClick = false
     },
-    mousemove() {
+    mousemove () {
       if (!this.forceHidden && !this.contentTransitioning) {
-        this.hoverVisible = true;
+        this.hoverVisible = true
       }
     },
-    mouseleave(e) {
+    mouseleave (e) {
       if (
         !this.forceHidden &&
         !elementHasAncestor(e.relatedTarget, this.$refs.popover)
       ) {
-        this.hoverVisible = false;
+        this.hoverVisible = false
       }
     },
-    windowTapOrClick(e) {
+    windowTapOrClick (e) {
       if (!elementHasAncestor(e.target, this.$refs.popover)) {
-        this.hoverVisible = false;
-        this.focusVisible = false;
+        this.hoverVisible = false
+        this.focusVisible = false
       }
     },
-    refreshClearMargin() {
+    refreshClearMargin () {
       if (this.showClearMargin && this.visible && this.$refs.popoverContent) {
         const {
           width,
-          height,
-        } = this.$refs.popoverContent.getBoundingClientRect();
+          height
+        } = this.$refs.popoverContent.getBoundingClientRect()
         const span =
           ((this.direction === 'left' || this.direction === 'right') &&
             width) ||
-          height;
-        this.clearMargin = span + this.contentOffset;
+          height
+        this.clearMargin = span + this.contentOffset
       } else {
-        this.clearMargin = 0;
+        this.clearMargin = 0
       }
     },
-    beforeContentEnter() {
-      this.contentTransitioning = true;
-      this.$emit('will-appear');
+    beforeContentEnter () {
+      this.contentTransitioning = true
+      this.$emit('will-appear')
     },
-    contentEnter() {
-      this.refreshClearMargin();
+    contentEnter () {
+      this.refreshClearMargin()
     },
-    afterContentEnter() {
-      this.contentTransitioning = false;
-      this.$emit('did-appear');
+    afterContentEnter () {
+      this.contentTransitioning = false
+      this.$emit('did-appear')
     },
-    contentLeave() {
-      this.refreshClearMargin();
+    contentLeave () {
+      this.refreshClearMargin()
     },
-    beforeContentLeave() {
-      this.contentTransitioningCancelled = this.contentTransitioning;
-      this.contentTransitioning = true;
-      this.$emit('will-disappear', this.contentTransitioningCancelled);
+    beforeContentLeave () {
+      this.contentTransitioningCancelled = this.contentTransitioning
+      this.contentTransitioning = true
+      this.$emit('will-disappear', this.contentTransitioningCancelled)
     },
-    afterContentLeave() {
-      this.contentTransitioning = false;
-      this.$emit('did-disappear', this.contentTransitioningCancelled);
-      this.contentTransitioningCancelled = false;
+    afterContentLeave () {
+      this.contentTransitioning = false
+      this.$emit('did-disappear', this.contentTransitioningCancelled)
+      this.contentTransitioningCancelled = false
       // Reset forceHidden state if needed
       if (this.forceHidden) {
-        this.$emit('update:forcehidden', false);
-        this.$emit('update:forceHidden', false);
+        this.$emit('update:forcehidden', false)
+        this.$emit('update:forceHidden', false)
       }
-    },
-  },
-};
+    }
+  }
+}
 </script>
 
 <style lang='sass' scoped>

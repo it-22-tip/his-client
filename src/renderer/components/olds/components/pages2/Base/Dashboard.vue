@@ -2,10 +2,14 @@
   <app-wrapper>
     <page-container>
       <template slot="header">
-      <h3 class="md-title" style="flex: 1">Title</h3>
-       <menu-feature></menu-feature>
+        <h3
+          class="md-title"
+          style="flex: 1">Title</h3>
+        <menu-feature/>
       </template>
-      <div slot="default" class="test">
+      <div
+        slot="default"
+        class="test">
         [Dashboard]
         {{ employee.count }} {{ employee.version }}
         <md-button @click="add">Add</md-button>
@@ -20,33 +24,33 @@
 </template>
 
 <script>
-  export default {
-    data () {
-      return {
-      }
+export default {
+  data () {
+    return {
+    }
+  },
+  computed: {
+    employee () {
+      return this.$store.getters['ModelInfos/getCountByName']('Employees')
+      // return this.$store.state.Employee
+    }
+  },
+  mounted () {
+    // console.log(this)
+    // console.log(this.$store.state.table)
+  },
+  methods: {
+    add () {
+      this.$store.dispatch('ModelInfos/INCREASE_COUNT', { table: 'Employees'})
     },
-    computed: {
-      employee () {
-        return this.$store.getters['ModelInfos/getCountByName']('Employees')
-        // return this.$store.state.Employee
-      }
+    remove () {
+      this.$store.dispatch('ModelInfos/DECREASE_COUNT', { table: 'Employees' })
     },
-    methods: {
-      add () {
-        this.$store.dispatch('ModelInfos/INCREASE_COUNT', { table: 'Employees'} )
-      },
-      remove () {
-        this.$store.dispatch('ModelInfos/DECREASE_COUNT', { table: 'Employees' })
-      },
-      sync () {
-        this.$store.dispatch('ModelInfos/SYNC_TABLE', { table: 'Employees' })
-      }
-    },
-    mounted () {
-      // console.log(this)
-      // console.log(this.$store.state.table)
+    sync () {
+      this.$store.dispatch('ModelInfos/SYNC_TABLE', { table: 'Employees' })
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>

@@ -1,15 +1,19 @@
 <template>
-<span class='c-tag' @click.prevent='$emit("click")'>
-  <slot></slot>
-  <span class='c-delete' @click.prevent='$emit("delete")'></span>
-</span>
+  <span
+    class="c-tag"
+    @click.prevent="$emit(&quot;click&quot;)">
+    <slot/>
+    <span
+      class="c-delete"
+      @click.prevent="$emit(&quot;delete&quot;)"/>
+  </span>
 </template>
 
 <script>
 export default {
   props: {
-  },
-};
+  }
+}
 </script>
 
 <style lang='sass' scoped>
@@ -66,7 +70,6 @@ $backgroundColor: #fafafa
         background-color: darken(red, 10%)
     &.is-rounded
       border-radius: 290486px
-
 
 .c-delete
   line-height: 1.5

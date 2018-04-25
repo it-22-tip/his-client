@@ -1,8 +1,10 @@
 <template>
   <div class="page-container">
     <div class="page-container-header">
-      <md-toolbar class="md-primary md-dense" md-elevation="0"><slot name="header" /></md-toolbar>
-      <template slot-scope="toolbar"></template>
+      <md-toolbar
+        class="md-primary md-dense"
+        md-elevation="0"><slot name="header" /></md-toolbar>
+      <template slot-scope="toolbar"/>
     </div>
     <md-content class="page-container-content md-scrollbar">
       <div>
@@ -14,12 +16,12 @@
 </template>
 
 <script>
-  import Vuebar from 'vuebar'
-  import Vue from 'vue'
-  Vue.use(Vuebar)
-  export default {
-    name: 'page-container'
-  }
+import Vuebar from 'vuebar'
+import Vue from 'vue'
+Vue.use(Vuebar)
+export default {
+  name: 'PageContainer'
+}
 </script>
 
 <style lang="scss" scoped>
@@ -43,5 +45,3 @@
     flex: 1;
   }
 </style>
-
-

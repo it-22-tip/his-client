@@ -1,15 +1,21 @@
 <template>
   <div>
     <md-steppers>
-      <md-step id="first" md-label="Kota">
+      <md-step
+        id="first"
+        md-label="Kota">
         [1]
       </md-step>
 
-      <md-step id="second" md-label="Alamat">
+      <md-step
+        id="second"
+        md-label="Alamat">
         [2]
       </md-step>
 
-      <md-step id="third" md-label="Pendidikan">
+      <md-step
+        id="third"
+        md-label="Pendidikan">
         [3]
       </md-step>
     </md-steppers>
@@ -17,7 +23,7 @@
 </template>
 
 <script>
-  export default {
-    name: 'StepperAlternative'
-  }
+export default {
+  name: 'StepperAlternative'
+}
 </script>

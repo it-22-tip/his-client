@@ -5,9 +5,9 @@
 </template>
 
 <script>
-  export default {
-    name: 'app-wrapper'
-  }
+export default {
+  name: 'AppWrapper'
+}
 </script>
 
 <style lang="scss" scoped>
@@ -18,5 +18,3 @@
     position: relative;
   }
 </style>
-
-

@@ -1,61 +1,61 @@
 <script>
-  'use-strict'
-  import Vue from 'vue'
-  const MdButton = Vue.component('MdButton')
-  export default {
-    name: 'BaseButton',
-    extends: MdButton,
-    props: {
-      'href': {
-        type: String,
-        default: null
-      },
-      'type': {
-        type: String,
-        default: 'button'
-      },
-      'disabled': {
-        type: Boolean,
-        default: false
-      },
-      'md-ripple': {
-        type: Boolean,
-        default: true
-      }
+'use-strict'
+import Vue from 'vue'
+const MdButton = Vue.component('MdButton')
+export default {
+  name: 'BaseButton',
+  extends: MdButton,
+  props: {
+    'href': {
+      type: String,
+      default: null
     },
-    render (createElement) {
-      const buttonOptions = {
-        staticClass: 'md-custom-button',
-        attrs: {
-          ...this.attrs,
-          disabled: this.disabled,
-          type: !this.href && (this.type || 'button')
-        },
-        on: {
-          ...this.$listeners,
-          focus: this.onFocus,
-          blur: this.onBlur
-        }
-      }
-      const wrapperOptions = {
+    'type': {
+      type: String,
+      default: 'button'
+    },
+    'disabled': {
+      type: Boolean,
+      default: false
+    },
+    'md-ripple': {
+      type: Boolean,
+      default: true
+    }
+  },
+  methods: {
+    onFocus () {
+      this.$children[0].mdHasFocus = true
+    },
+    onBlur () {
+      this.$children[0].mdHasFocus = false
+    }
+  },
+  render (createElement) {
+    const buttonOptions = {
+      staticClass: 'md-custom-button',
+      attrs: {
         ...this.attrs,
-        style: {
-          display: 'inline-block'
-        }
-      }
-      const button = createElement('md-button', buttonOptions, [this.$slots.default])
-      const wrapper = createElement('div', wrapperOptions, [button])
-      return wrapper
-    },
-    methods: {
-      onFocus () {
-        this.$children[0].mdHasFocus = true
+        disabled: this.disabled,
+        type: !this.href && (this.type || 'button')
       },
-      onBlur () {
-        this.$children[0].mdHasFocus = false
+      on: {
+        ...this.$listeners,
+        focus: this.onFocus,
+        blur: this.onBlur
       }
     }
+    const wrapperOptions = {
+      ...this.attrs,
+      style: {
+        display: 'inline-block'
+      }
+    }
+    const button = createElement('md-button', buttonOptions, [this.$slots.default])
+    const wrapper = createElement('div', wrapperOptions, [button])
+    return wrapper
   }
+}
 </script>
 
 <style lang="scss" scoped>

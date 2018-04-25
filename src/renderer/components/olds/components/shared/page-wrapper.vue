@@ -1,22 +1,24 @@
 <template>
-  <div class="page-wrapper" :style="pageStyle">
+  <div
+    :style="pageStyle"
+    class="page-wrapper">
     <slot/>
   </div>
 </template>
 
 <script>
-  export default {
-    name: 'wrapper',
-    props: {
-      pageStyle: {
-        type: Object,
-        default: () => {
-          return {
-          }
+export default {
+  name: 'Wrapper',
+  props: {
+    pageStyle: {
+      type: Object,
+      default: () => {
+        return {
         }
       }
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -30,4 +32,3 @@
     padding: 0;
   }
 </style>
-

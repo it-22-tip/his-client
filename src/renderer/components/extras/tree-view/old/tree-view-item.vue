@@ -1,5 +1,6 @@
 <template>
-  <li :class="classes"
+  <li
+    :class="classes"
     :draggable="draggable"
     @dragstart.stop="onItemDragStart($event, _self, _self.model)"
     @dragend.stop.prevent="onItemDragEnd($event, _self, _self.model)"
@@ -7,15 +8,32 @@
     @dragenter.stop.prevent="isDragEnter = true"
     @dragleave.stop.prevent="isDragEnter = false"
     @drop.stop.prevent="handleItemDrop($event, _self, _self.model)">
-    <div :class="wholeRowClasses" v-if="isWholeRow">&nbsp;</div>
-    <i class="tree-icon tree-ocl" @click="handleItemToggle"></i>
-    <div :class="anchorClasses" @click="handleItemClick" @mouseover="isHover=true" @mouseout="isHover=false">
-      <i class="tree-icon tree-checkbox" v-if="showCheckbox && !model.loading"></i>
-      <i :class="themeIconClasses" v-if="!model.loading"></i>
-      {{model.text}}
+    <div
+      v-if="isWholeRow"
+      :class="wholeRowClasses">&nbsp;</div>
+    <i
+      class="tree-icon tree-ocl"
+      @click="handleItemToggle"/>
+    <div
+      :class="anchorClasses"
+      @click="handleItemClick"
+      @mouseover="isHover=true"
+      @mouseout="isHover=false">
+      <i
+        v-if="showCheckbox && !model.loading"
+        class="tree-icon tree-checkbox"/>
+      <i
+        v-if="!model.loading"
+        :class="themeIconClasses"/>
+      {{ model.text }}
     </div>
-    <ul role="group" ref="group" class="tree-children" v-if="isFolder">
-      <tree-view-item v-for="(child, index) in model.children"
+    <ul
+      v-if="isFolder"
+      ref="group"
+      role="group"
+      class="tree-children">
+      <tree-view-item
+        v-for="(child, index) in model.children"
         :key="index"
         :item-data="child"
         :whole-row="wholeRow"
@@ -30,228 +48,227 @@
         :on-item-drop="onItemDrop"
         :index="index"
         :item-class="index === model.children.length-1 ? 'tree-last' : ''"
-        >
-      </tree-view-item>
+      />
     </ul>
   </li>
 </template>
 <script>
-  export default {
-    name: 'tree-view-item',
-    props: {
-      itemData: {
-        type: Object,
-        default: () => {
-          return {
-            icon: '',
-            opened: false,
-            selected: false,
-            disabled: false,
-            loading: false,
-            children: []
-          }
-        },
-        required: true
+export default {
+  name: 'TreeViewItem',
+  props: {
+    itemData: {
+      type: Object,
+      default: () => {
+        return {
+          icon: '',
+          opened: false,
+          selected: false,
+          disabled: false,
+          loading: false,
+          children: []
+        }
       },
-      wholeRow: {
-        type: Boolean,
-        default: false
-      },
-      showCheckbox: {
-        type: Boolean,
-        default: false
-      },
-      height: {
-        type: Number,
-        default: 24
-      },
-      parentItem: {
-        type: Array
-      },
-      draggable: {
-        type: Boolean,
-        default: false
-      },
-      onItemClick: {
-        type: Function,
-        default: () => false
-      },
-      onItemToggle: {
-        type: Function,
-        default: () => false
-      },
-      onItemDragStart: {
-        type: Function,
-        default: () => false
-      },
-      onItemDragEnd: {
-        type: Function,
-        default: () => false
-      },
-      onItemDrop: {
-        type: Function,
-        default: () => false
-      },
-      itemClass: String,
-      last: {
-        type: Boolean,
-        required: false
-      },
-      index: false
+      required: true
     },
-    data () {
-      return {
-        isHover: false,
-        isDragEnter: false,
-        model: this.itemData
-      }
+    wholeRow: {
+      type: Boolean,
+      default: false
     },
-    watch: {
-      isDragEnter (newValue) {
-        if (newValue) {
-          this.$el.style.backgroundColor = '#C9FDC9'
+    showCheckbox: {
+      type: Boolean,
+      default: false
+    },
+    height: {
+      type: Number,
+      default: 24
+    },
+    parentItem: {
+      type: Array
+    },
+    draggable: {
+      type: Boolean,
+      default: false
+    },
+    onItemClick: {
+      type: Function,
+      default: () => false
+    },
+    onItemToggle: {
+      type: Function,
+      default: () => false
+    },
+    onItemDragStart: {
+      type: Function,
+      default: () => false
+    },
+    onItemDragEnd: {
+      type: Function,
+      default: () => false
+    },
+    onItemDrop: {
+      type: Function,
+      default: () => false
+    },
+    itemClass: String,
+    last: {
+      type: Boolean,
+      required: false
+    },
+    index: false
+  },
+  data () {
+    return {
+      isHover: false,
+      isDragEnter: false,
+      model: this.itemData
+    }
+  },
+  computed: {
+    isFolder () {
+      return this.model.children && this.model.children.length
+    },
+    classes () {
+      return [
+        {'tree-node': true},
+        {'tree-open': this.model.opened},
+        {'tree-closed': !this.model.opened},
+        {'tree-leaf': !this.isFolder},
+        {'tree-loading': !!this.model.loading},
+        {'tree-drag-enter': this.isDragEnter},
+        {[this.itemClass]: !!this.itemClass}
+      ]
+    },
+    anchorClasses () {
+      return [
+        {'tree-anchor': true},
+        {'tree-disabled': this.model.disabled},
+        {'tree-selected': this.model.selected},
+        {'tree-hovered': this.isHover}
+      ]
+    },
+    wholeRowClasses () {
+      return [
+        {'tree-wholerow': true},
+        {'tree-wholerow-clicked': this.model.selected},
+        {'tree-wholerow-hovered': this.isHover}
+      ]
+    },
+    themeIconClasses () {
+      return [
+        {'tree-icon': true},
+        {'tree-themeicon': true},
+        {[this.model.icon]: !!this.model.icon},
+        {'tree-themeicon-custom': !!this.model.icon}
+      ]
+    },
+    isWholeRow () {
+      if (this.wholeRow) {
+        if (this.$parent.model === undefined) {
+          return true
+        } else if (this.$parent.model.opened === true) {
+          return true
         } else {
-          this.$el.style.backgroundColor = 'inherit'
-        }
-      },
-      itemData (newValue) {
-        this.model = newValue
-      },
-      'model.opened': {
-        handler: function (val, oldVal) {
-          this.onItemToggle(this, this.model)
-          this.handleSetGroupMaxHeight()
-        },
-        deep: true
-      },
-      model (value) {
-        console.log(value)
-      }
-    },
-    computed: {
-      isFolder () {
-        return this.model.children && this.model.children.length
-      },
-      classes () {
-        return [
-          {'tree-node': true},
-          {'tree-open': this.model.opened},
-          {'tree-closed': !this.model.opened},
-          {'tree-leaf': !this.isFolder},
-          {'tree-loading': !!this.model.loading},
-          {'tree-drag-enter': this.isDragEnter},
-          {[this.itemClass]: !!this.itemClass}
-        ]
-      },
-      anchorClasses () {
-        return [
-          {'tree-anchor': true},
-          {'tree-disabled': this.model.disabled},
-          {'tree-selected': this.model.selected},
-          {'tree-hovered': this.isHover}
-        ]
-      },
-      wholeRowClasses () {
-        return [
-          {'tree-wholerow': true},
-          {'tree-wholerow-clicked': this.model.selected},
-          {'tree-wholerow-hovered': this.isHover}
-        ]
-      },
-      themeIconClasses () {
-        return [
-          {'tree-icon': true},
-          {'tree-themeicon': true},
-          {[this.model.icon]: !!this.model.icon},
-          {'tree-themeicon-custom': !!this.model.icon}
-        ]
-      },
-      isWholeRow () {
-        if (this.wholeRow) {
-          if (this.$parent.model === undefined) {
-            return true
-          } else if (this.$parent.model.opened === true) {
-            return true
-          } else {
-            return false
-          }
+          return false
         }
       }
-    },
-    methods: {
-      handleRecursionNodeParents (node, func) {
-        if (node.$parent) {
-          func(node.$parent)
-          this.handleRecursionNodeParents(node.$parent, func)
-        }
-      },
-      handleItemToggle () {
-        if (this.isFolder) {
-          this.model.opened = !this.model.opened
-          this.onItemToggle(this, this.model)
-          this.handleSetGroupMaxHeight()
-        }
-      },
-      handleGroupMaxHeight () {
-        let length = 0
-        let childHeight = 0
-        if (this.model.opened) {
-          length = this.$children.length
-          for (let children of this.$children) {
-            childHeight += children.handleGroupMaxHeight()
-          }
-        }
-        return length * this.height + childHeight
-      },
-      handleGroupDisplay () {
-        let display = 'none'
-        if (this.model.opened) {
-          display = 'block'
-        }
-        return display
-      },
-      handleSetGroupMaxHeight () {
-        if (this.$refs.group) {
-          let height = this.handleGroupMaxHeight()
-          this.$refs.group.style.maxHeight = height + 'px'
-          if (height === 0) {
-            this.$refs.group.style.display = 'none'
-          } else {
-            this.$refs.group.style.display = 'block'
-          }
-        }
-        let self = this
-        this.$nextTick().then(
-          () => {
-            this.handleRecursionNodeParents(self, node => {
-              if (node.$refs.group) {
-                let height = node.handleGroupMaxHeight()
-                node.$refs.group.style.maxHeight = height + 'px'
-                if (height === 0) {
-                  node.$refs.group.style.display = 'none'
-                } else {
-                  node.$refs.group.style.display = 'block'
-                }
-              }
-            })
-          }
-        )
-      },
-      handleItemClick () {
-        if (this.model.disabled) return
-        console.log('tree-view-item-click')
-        this.model.selected = !this.model.selected
-        this.onItemClick(this, this.model)
-      },
-      handleItemDrop (e, oriNode, oriItem) {
+    }
+  },
+  watch: {
+    isDragEnter (newValue) {
+      if (newValue) {
+        this.$el.style.backgroundColor = '#C9FDC9'
+      } else {
         this.$el.style.backgroundColor = 'inherit'
-        this.onItemDrop(e, oriNode, oriItem)
       }
     },
-    mounted () {
-      this.handleSetGroupMaxHeight()
+    itemData (newValue) {
+      this.model = newValue
+    },
+    'model.opened': {
+      handler: function (val, oldVal) {
+        this.onItemToggle(this, this.model)
+        this.handleSetGroupMaxHeight()
+      },
+      deep: true
+    },
+    model (value) {
+      console.log(value)
+    }
+  },
+  mounted () {
+    this.handleSetGroupMaxHeight()
+  },
+  methods: {
+    handleRecursionNodeParents (node, func) {
+      if (node.$parent) {
+        func(node.$parent)
+        this.handleRecursionNodeParents(node.$parent, func)
+      }
+    },
+    handleItemToggle () {
+      if (this.isFolder) {
+        this.model.opened = !this.model.opened
+        this.onItemToggle(this, this.model)
+        this.handleSetGroupMaxHeight()
+      }
+    },
+    handleGroupMaxHeight () {
+      let length = 0
+      let childHeight = 0
+      if (this.model.opened) {
+        length = this.$children.length
+        for (let children of this.$children) {
+          childHeight += children.handleGroupMaxHeight()
+        }
+      }
+      return length * this.height + childHeight
+    },
+    handleGroupDisplay () {
+      let display = 'none'
+      if (this.model.opened) {
+        display = 'block'
+      }
+      return display
+    },
+    handleSetGroupMaxHeight () {
+      if (this.$refs.group) {
+        let height = this.handleGroupMaxHeight()
+        this.$refs.group.style.maxHeight = height + 'px'
+        if (height === 0) {
+          this.$refs.group.style.display = 'none'
+        } else {
+          this.$refs.group.style.display = 'block'
+        }
+      }
+      let self = this
+      this.$nextTick().then(
+        () => {
+          this.handleRecursionNodeParents(self, node => {
+            if (node.$refs.group) {
+              let height = node.handleGroupMaxHeight()
+              node.$refs.group.style.maxHeight = height + 'px'
+              if (height === 0) {
+                node.$refs.group.style.display = 'none'
+              } else {
+                node.$refs.group.style.display = 'block'
+              }
+            }
+          })
+        }
+      )
+    },
+    handleItemClick () {
+      if (this.model.disabled) return
+      console.log('tree-view-item-click')
+      this.model.selected = !this.model.selected
+      this.onItemClick(this, this.model)
+    },
+    handleItemDrop (e, oriNode, oriItem) {
+      this.$el.style.backgroundColor = 'inherit'
+      this.onItemDrop(e, oriNode, oriItem)
     }
   }
+}
 </script>
 
 <style lang="css" scoped>
@@ -678,4 +695,3 @@
 }
 
 </style>
-

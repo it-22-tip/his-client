@@ -1,7 +1,7 @@
 <template>
   <label :class="className">
-    <slot></slot>
-    <file-input></file-input>
+    <slot/>
+    <file-input/>
   </label>
 </template>
 <style>
@@ -36,74 +36,74 @@ const CHUNK_DEFAULT_OPTIONS = {
 export default {
   props: {
     inputId: {
-      type: String,
+      type: String
     },
     name: {
       type: String,
-      default: 'file',
+      default: 'file'
     },
     accept: {
-      type: String,
+      type: String
     },
     capture: {
     },
     multiple: {
-      type: Boolean,
+      type: Boolean
     },
     maximum: {
       type: Number,
-      default() {
+      default () {
         return this.multiple ? 0 : 1
       }
     },
     addIndex: {
-      type: [Boolean, Number],
+      type: [Boolean, Number]
     },
     directory: {
-      type: Boolean,
+      type: Boolean
     },
     postAction: {
-      type: String,
+      type: String
     },
     putAction: {
-      type: String,
+      type: String
     },
     customAction: {
-      type: Function,
+      type: Function
     },
     headers: {
       type: Object,
-      default: Object,
+      default: Object
     },
     data: {
       type: Object,
-      default: Object,
+      default: Object
     },
     timeout: {
       type: Number,
-      default: 0,
+      default: 0
     },
     drop: {
-      default: false,
+      default: false
     },
     dropDirectory: {
       type: Boolean,
-      default: true,
+      default: true
     },
     size: {
       type: Number,
-      default: 0,
+      default: 0
     },
     extensions: {
-      default: Array,
+      default: Array
     },
     value: {
       type: Array,
-      default: Array,
+      default: Array
     },
     thread: {
       type: Number,
-      default: 1,
+      default: 1
     },
     // Chunk upload enabled
     chunkEnabled: {
@@ -119,13 +119,13 @@ export default {
     }
   },
 
-  data() {
+  data () {
     return {
       files: this.value,
       features: {
         html5: true,
         directory: false,
-        drag: false,
+        drag: false
       },
 
       active: false,
@@ -133,50 +133,8 @@ export default {
 
       uploading: 0,
 
-      destroy: false,
+      destroy: false
     }
-  },
-
-  /**
-   * mounted
-   * @return {[type]} [description]
-   */
-  mounted() {
-    let input = document.createElement('input')
-    input.type = 'file'
-    input.multiple = true
-
-    // html5
-    if (window.FormData && input.files) {
-      if (typeof input.webkitdirectory === 'boolean' || typeof input.directory === 'boolean') {
-        this.features.directory = true
-      }
-      if (this.features.html5 && typeof input.ondrop !== 'undefined') {
-        this.features.drop = true
-      }
-    } else {
-      this.features.html5 = false
-    }
-
-    this.maps = {}
-
-    this.$nextTick(function () {
-
-      if (this.$parent) {
-        this.$parent.$forceUpdate()
-      }
-
-      this.watchDrop(this.drop)
-    })
-  },
-
-  /**
-   * beforeDestroy
-   * @return {[type]} [description]
-   */
-  beforeDestroy() {
-    this.destroy = true
-    this.active = false
   },
 
   computed: {
@@ -189,7 +147,7 @@ export default {
      * uploaded
      * @return {[type]} [description]
      */
-    uploaded() {
+    uploaded () {
       let file
       for (let i = 0; i < this.files.length; i++) {
         file = this.files[i]
@@ -204,32 +162,32 @@ export default {
       return Object.assign(CHUNK_DEFAULT_OPTIONS, this.chunk)
     },
 
-    className() {
+    className () {
       return [
         'file-uploads',
         this.features.html5 ? 'file-uploads-html5' : '',
         this.features.directory && this.directory ? 'file-uploads-directory' : undefined,
-        this.features.drop && this.drop ? 'file-uploads-drop' : undefined,
+        this.features.drop && this.drop ? 'file-uploads-drop' : undefined
       ]
     }
   },
 
   watch: {
-    active(active) {
+    active (active) {
       this.watchActive(active)
     },
 
-    dropActive() {
+    dropActive () {
       if (this.$parent) {
         this.$parent.$forceUpdate()
       }
     },
 
-    drop(value) {
+    drop (value) {
       this.watchDrop(value)
     },
 
-    value(files) {
+    value (files) {
       if (this.files === files) {
         return
       }
@@ -259,11 +217,52 @@ export default {
           this.emitFile(undefined, oldMaps[key])
         }
       }
-    },
+    }
+  },
+
+  /**
+   * mounted
+   * @return {[type]} [description]
+   */
+  mounted () {
+    let input = document.createElement('input')
+    input.type = 'file'
+    input.multiple = true
+
+    // html5
+    if (window.FormData && input.files) {
+      if (typeof input.webkitdirectory === 'boolean' || typeof input.directory === 'boolean') {
+        this.features.directory = true
+      }
+      if (this.features.html5 && typeof input.ondrop !== 'undefined') {
+        this.features.drop = true
+      }
+    } else {
+      this.features.html5 = false
+    }
+
+    this.maps = {}
+
+    this.$nextTick(function () {
+      if (this.$parent) {
+        this.$parent.$forceUpdate()
+      }
+
+      this.watchDrop(this.drop)
+    })
+  },
+
+  /**
+   * beforeDestroy
+   * @return {[type]} [description]
+   */
+  beforeDestroy () {
+    this.destroy = true
+    this.active = false
   },
 
   methods: {
-    clear() {
+    clear () {
       if (this.files.length) {
         let files = this.files
         this.files = []
@@ -278,7 +277,7 @@ export default {
       return true
     },
 
-    get(id) {
+    get (id) {
       if (!id) {
         return false
       }
@@ -290,7 +289,7 @@ export default {
       return this.maps[id] || false
     },
 
-    add(_files, index = this.addIndex) {
+    add (_files, index = this.addIndex) {
       let files = _files
       let isArray = files instanceof Array
 
@@ -306,7 +305,7 @@ export default {
             file,
             size: file.size,
             name: file.webkitRelativePath || file.relativePath || file.name || 'unknown',
-            type: file.type,
+            type: file.type
           }
         }
         let fileObject = false
@@ -335,19 +334,19 @@ export default {
             response: {},
 
             progress: '0.00',
-            speed: 0,
+            speed: 0
             // xhr: false,
             // iframe: false,
           }
 
           file.data = {
             ...this.data,
-            ...file.data ? file.data : {},
+            ...file.data ? file.data : {}
           }
 
           file.headers = {
             ...this.headers,
-            ...file.headers ? file.headers : {},
+            ...file.headers ? file.headers : {}
           }
         }
 
@@ -406,7 +405,7 @@ export default {
       return isArray ? addFiles : addFiles[0]
     },
 
-    addInputFile(el) {
+    addInputFile (el) {
       let files = []
       if (el.files) {
         for (let i = 0; i < el.files.length; i++) {
@@ -422,14 +421,14 @@ export default {
       } else {
         files.push({
           name: el.value.replace(/^.*?([^\/\\\r\n]+)$/, '$1'),
-          el,
+          el
         })
       }
       return this.add(files)
     },
 
     //  DataTransfer
-    addDataTransfer(dataTransfer) {
+    addDataTransfer (dataTransfer) {
       let files = []
       if (dataTransfer.items && dataTransfer.items.length) {
         let items = []
@@ -477,7 +476,7 @@ export default {
     },
 
     //  entry
-    getEntry(entry, path = '') {
+    getEntry (entry, path = '') {
       return new Promise((resolve, reject) => {
         if (entry.isFile) {
           entry.file(function (file) {
@@ -486,7 +485,7 @@ export default {
                 size: file.size,
                 name: path + file.name,
                 type: file.type,
-                file,
+                file
               }
             ])
           })
@@ -517,7 +516,7 @@ export default {
       })
     },
 
-    replace(id1, id2) {
+    replace (id1, id2) {
       let file1 = this.get(id1)
       let file2 = this.get(id2)
       if (!file1 || !file2 || file1 === file2) {
@@ -536,7 +535,7 @@ export default {
       return true
     },
 
-    remove(id) {
+    remove (id) {
       let file = this.get(id)
       if (file) {
         if (this.emitFilter(undefined, file)) {
@@ -559,7 +558,7 @@ export default {
       return file
     },
 
-    update(id, data) {
+    update (id, data) {
       let file = this.get(id)
       if (file) {
         let newFile = {
@@ -595,7 +594,7 @@ export default {
       return false
     },
 
-    emitFilter(newFile, oldFile) {
+    emitFilter (newFile, oldFile) {
       let isPrevent = false
       this.$emit('input-filter', newFile, oldFile, function () {
         isPrevent = true
@@ -604,7 +603,7 @@ export default {
       return isPrevent
     },
 
-    emitFile(newFile, oldFile) {
+    emitFile (newFile, oldFile) {
       this.$emit('input-file', newFile, oldFile)
       if (newFile && newFile.fileObject && newFile.active && (!oldFile || !oldFile.active)) {
         this.uploading++
@@ -630,7 +629,6 @@ export default {
           }, parseInt(Math.random() * 50 + 50, 10))
         })
       } else if ((!newFile || !newFile.fileObject || !newFile.active) && oldFile && oldFile.fileObject && oldFile.active) {
-
         this.uploading--
       }
 
@@ -639,11 +637,11 @@ export default {
       }
     },
 
-    emitInput() {
+    emitInput () {
       this.$emit('input', this.files)
     },
 
-    upload(id) {
+    upload (id) {
       let file = this.get(id)
 
       if (!file) {
@@ -720,7 +718,7 @@ export default {
       return file.chunk.upload()
     },
 
-    uploadPut(file) {
+    uploadPut (file) {
       let querys = []
       let value
       for (let key in file.data) {
@@ -735,7 +733,7 @@ export default {
       return this.uploadXhr(xhr, file, file.file)
     },
 
-    uploadHtml5(file) {
+    uploadHtml5 (file) {
       let form = new window.FormData()
       let value
       for (let key in file.data) {
@@ -756,13 +754,12 @@ export default {
       return this.uploadXhr(xhr, file, form)
     },
 
-    uploadXhr(xhr, _file, body) {
+    uploadXhr (xhr, _file, body) {
       let file = _file
       let speedTime = 0
       let speedLoaded = 0
 
       xhr.upload.onprogress = (e) => {
-
         file = this.get(file)
         if (!e.lengthComputable || !file || !file.fileObject || !file.active) {
           return
@@ -776,7 +773,7 @@ export default {
 
         file = this.update(file, {
           progress: (e.loaded / e.total * 100).toFixed(2),
-          speed: e.loaded - speedLoaded,
+          speed: e.loaded - speedLoaded
         })
         speedLoaded = e.loaded
       }
@@ -802,7 +799,6 @@ export default {
       return new Promise((resolve, reject) => {
         let complete
         let fn = (e) => {
-
           if (complete) {
             return
           }
@@ -899,7 +895,7 @@ export default {
       })
     },
 
-    watchActive(active) {
+    watchActive (active) {
       let file
       let index = 0
       while ((file = this.files[index])) {
@@ -924,7 +920,7 @@ export default {
       }
     },
 
-    watchDrop(_el) {
+    watchDrop (_el) {
       let el = _el
       if (!this.features.drop) {
         return
@@ -960,32 +956,32 @@ export default {
       }
     },
 
-    onDragenter(e) {
+    onDragenter (e) {
       e.preventDefault()
       if (!this.dropActive) {
         this.dropActive = true
       }
     },
 
-    onDragleave(e) {
+    onDragleave (e) {
       e.preventDefault()
       if (e.target.nodeName === 'HTML' || (e.screenX === 0 && e.screenY === 0 && !e.fromElement && e.offsetX <= 0)) {
         this.dropActive = false
       }
     },
 
-    onDragover(e) {
+    onDragover (e) {
       e.preventDefault()
     },
 
-    onDocumentDrop() {
+    onDocumentDrop () {
       this.dropActive = false
     },
 
-    onDrop(e) {
+    onDrop (e) {
       e.preventDefault()
       this.addDataTransfer(e.dataTransfer)
-    },
+    }
   }
 }
 </script>

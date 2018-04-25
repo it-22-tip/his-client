@@ -1,8 +1,8 @@
 <script>
-import CalendarPane from './CalendarPane';
-import AttributeStore from '../utils/attributeStore';
-import defaults from '../utils/defaults';
-import { mergeListeners } from '@/mixins';
+import CalendarPane from './CalendarPane'
+import AttributeStore from '../utils/attributeStore'
+import defaults from '../utils/defaults'
+import { mergeListeners } from '@/mixins'
 import {
   todayComps,
   pageIsEqualToPage,
@@ -12,11 +12,176 @@ import {
   getNextPage,
   getPageBetweenPages,
   getFirstValidPage,
-  getPageForDate,
-} from '../utils/helpers';
+  getPageForDate
+} from '../utils/helpers'
 
 export default {
+  name: 'VCalendar',
+  components: {
+    CalendarPane
+  },
   mixins: [mergeListeners],
+  props: {
+    minDate: Date,
+    maxDate: Date,
+    minPage: Object,
+    maxPage: Object,
+    fromPage: Object,
+    toPage: Object,
+    showLinkedButtons: {
+      type: Boolean,
+      default: () => defaults.showLinkedButtons
+    },
+    isDoublePaned: Boolean,
+    isLinked: Boolean,
+    isVertical: Boolean,
+    isExpanded: Boolean,
+    paneWidth: { type: Number, default: () => defaults.paneWidth },
+    themeStyles: Object,
+    attributes: Array,
+    formats: Object
+  },
+  data () {
+    return {
+      isConstrained: true,
+      fromPage_: null,
+      toPage_: null
+    }
+  },
+  computed: {
+    isDoublePaned_ () {
+      return this.isDoublePaned && (this.isVertical || !this.isConstrained)
+    },
+    minPage_ () {
+      return (
+        this.minPage || (this.minDate && getPageForDate(this.minDate)) || null
+      )
+    },
+    rightButtonHidden () {
+      return this.position === 1 && this.isLinked && !this.isVertical
+    },
+    leftButtonHidden () {
+      return this.position === 2 && this.isLinked && !this.isVertical
+    },
+    maxPage_ () {
+      return (
+        this.maxPage || (this.maxDate && getPageForDate(this.maxDate)) || null
+      )
+    },
+    maxFromPage () {
+      if (this.isDoublePaned_) return getPrevPage(this.maxPage_)
+      return this.maxPage_
+    },
+    minToPage () {
+      if (this.isDoublePaned_) return getNextPage(this.minPage_)
+      return null
+    },
+    themeStyles_ () {
+      return {
+        ...defaults.themeStyles,
+        ...this.themeStyles
+      }
+    },
+    wrapperStyle () {
+      return this.themeStyles_.wrapper
+    },
+    dividerStyle () {
+      return this.isVertical
+        ? this.themeStyles_.horizontalDivider
+        : this.themeStyles_.verticalDivider
+    },
+    attributes_ () {
+      return AttributeStore(this.attributes)
+    },
+    formats_ () {
+      return {
+        ...defaults.formats,
+        ...this.formats
+      }
+    }
+  },
+  watch: {
+    fromPage () {
+      this.refreshFromPage()
+    },
+    toPage () {
+      this.refreshToPage()
+    },
+    fromPage_ (val, oldVal) {
+      if (pageIsEqualToPage(val, oldVal)) return
+      this.$emit('update:frompage', val)
+      this.$emit('update:fromPage', val)
+      if (!this.isDoublePaned) return
+      if (this.isLinked || !pageIsBeforePage(val, this.toPage_)) { this.toPage_ = getNextPage(val) }
+    },
+    toPage_ (val, oldVal) {
+      if (pageIsEqualToPage(val, oldVal)) return
+      this.$emit('update:topage', val)
+      this.$emit('update:toPage', val)
+      if (!this.isDoublePaned) return
+      if (this.isLinked || !pageIsAfterPage(val, this.fromPage_)) { this.fromPage_ = getPrevPage(val) }
+    },
+    isDoublePaned_ () {
+      this.refreshIsConstrained()
+      this.refreshToPage()
+    },
+    isLinked (val) {
+      if (val) this.toPage_ = getNextPage(this.fromPage_)
+    },
+    isExpanded () {
+      this.refreshIsConstrained()
+    }
+  },
+  created () {
+    this.refreshFromPage()
+    this.refreshToPage()
+  },
+  mounted () {
+    this.$nextTick(() => {
+      this.refreshIsConstrained()
+      window.addEventListener('resize', this.refreshIsConstrained)
+    })
+  },
+  beforeDestroy () {
+    window.removeEventListener('resize', this.refreshIsConstrained)
+  },
+  methods: {
+    refreshFromPage () {
+      this.fromPage_ = getFirstValidPage(
+        ...[
+          this.fromPage,
+          { month: todayComps.month, year: todayComps.year }
+        ].map(p => getPageBetweenPages(p, this.minPage_, this.maxPage_)),
+        this.minPage_,
+        getPrevPage(this.maxPage_)
+      )
+    },
+    refreshToPage () {
+      this.toPage_ = getFirstValidPage(
+        ...[this.toPage, getNextPage(this.fromPage_)].map(p =>
+          getPageBetweenPages(p, this.minPage_, this.maxPage_)
+        ),
+        this.maxPage_,
+        getNextPage(this.minPage_)
+      )
+    },
+    refreshIsConstrained () {
+      // Get the root calendar element
+      const root = this.$refs.root
+      // Only test for constrained environment if needed
+      if (!window || !root || !this.isDoublePaned || this.isVertical) {
+        this.isConstrained = false
+        // Test for constrained window
+      } else if (window && window.innerWidth < 2 * this.paneWidth + 30) {
+        this.isConstrained = true
+      } else if (this.isExpanded) {
+        this.isConstrained =
+          root.parentElement.offsetWidth < 2 * this.paneWidth + 2
+      } else {
+        this.isConstrained = false
+      }
+    }
+  },
   render(h) {
     const getPaneComponent = position =>
       h(CalendarPane, {
@@ -73,174 +238,7 @@ export default {
       ],
     );
   },
-  name: 'VCalendar',
-  components: {
-    CalendarPane,
-  },
-  props: {
-    minDate: Date,
-    maxDate: Date,
-    minPage: Object,
-    maxPage: Object,
-    fromPage: Object,
-    toPage: Object,
-    showLinkedButtons: {
-      type: Boolean,
-      default: () => defaults.showLinkedButtons,
-    },
-    isDoublePaned: Boolean,
-    isLinked: Boolean,
-    isVertical: Boolean,
-    isExpanded: Boolean,
-    paneWidth: { type: Number, default: () => defaults.paneWidth },
-    themeStyles: Object,
-    attributes: Array,
-    formats: Object,
-  },
-  data() {
-    return {
-      isConstrained: true,
-      fromPage_: null,
-      toPage_: null,
-    };
-  },
-  computed: {
-    isDoublePaned_() {
-      return this.isDoublePaned && (this.isVertical || !this.isConstrained);
-    },
-    minPage_() {
-      return (
-        this.minPage || (this.minDate && getPageForDate(this.minDate)) || null
-      );
-    },
-    rightButtonHidden() {
-      return this.position === 1 && this.isLinked && !this.isVertical;
-    },
-    leftButtonHidden() {
-      return this.position === 2 && this.isLinked && !this.isVertical;
-    },
-    maxPage_() {
-      return (
-        this.maxPage || (this.maxDate && getPageForDate(this.maxDate)) || null
-      );
-    },
-    maxFromPage() {
-      if (this.isDoublePaned_) return getPrevPage(this.maxPage_);
-      return this.maxPage_;
-    },
-    minToPage() {
-      if (this.isDoublePaned_) return getNextPage(this.minPage_);
-      return null;
-    },
-    themeStyles_() {
-      return {
-        ...defaults.themeStyles,
-        ...this.themeStyles,
-      };
-    },
-    wrapperStyle() {
-      return this.themeStyles_.wrapper;
-    },
-    dividerStyle() {
-      return this.isVertical
-        ? this.themeStyles_.horizontalDivider
-        : this.themeStyles_.verticalDivider;
-    },
-    attributes_() {
-      return AttributeStore(this.attributes);
-    },
-    formats_() {
-      return {
-        ...defaults.formats,
-        ...this.formats,
-      };
-    },
-  },
-  watch: {
-    fromPage() {
-      this.refreshFromPage();
-    },
-    toPage() {
-      this.refreshToPage();
-    },
-    fromPage_(val, oldVal) {
-      if (pageIsEqualToPage(val, oldVal)) return;
-      this.$emit('update:frompage', val);
-      this.$emit('update:fromPage', val);
-      if (!this.isDoublePaned) return;
-      if (this.isLinked || !pageIsBeforePage(val, this.toPage_))
-        this.toPage_ = getNextPage(val);
-    },
-    toPage_(val, oldVal) {
-      if (pageIsEqualToPage(val, oldVal)) return;
-      this.$emit('update:topage', val);
-      this.$emit('update:toPage', val);
-      if (!this.isDoublePaned) return;
-      if (this.isLinked || !pageIsAfterPage(val, this.fromPage_))
-        this.fromPage_ = getPrevPage(val);
-    },
-    isDoublePaned_() {
-      this.refreshIsConstrained();
-      this.refreshToPage();
-    },
-    isLinked(val) {
-      if (val) this.toPage_ = getNextPage(this.fromPage_);
-    },
-    isExpanded() {
-      this.refreshIsConstrained();
-    },
-  },
-  created() {
-    this.refreshFromPage();
-    this.refreshToPage();
-  },
-  mounted() {
-    this.$nextTick(() => {
-      this.refreshIsConstrained();
-      window.addEventListener('resize', this.refreshIsConstrained);
-    });
-  },
-  beforeDestroy() {
-    window.removeEventListener('resize', this.refreshIsConstrained);
-  },
-  methods: {
-    refreshFromPage() {
-      this.fromPage_ = getFirstValidPage(
-        ...[
-          this.fromPage,
-          { month: todayComps.month, year: todayComps.year },
-        ].map(p => getPageBetweenPages(p, this.minPage_, this.maxPage_)),
-        this.minPage_,
-        getPrevPage(this.maxPage_),
-      );
-    },
-    refreshToPage() {
-      this.toPage_ = getFirstValidPage(
-        ...[this.toPage, getNextPage(this.fromPage_)].map(p =>
-          getPageBetweenPages(p, this.minPage_, this.maxPage_),
-        ),
-        this.maxPage_,
-        getNextPage(this.minPage_),
-      );
-    },
-    refreshIsConstrained() {
-      // Get the root calendar element
-      const root = this.$refs.root;
-      // Only test for constrained environment if needed
-      if (!window || !root || !this.isDoublePaned || this.isVertical) {
-        this.isConstrained = false;
-        // Test for constrained window
-      } else if (window && window.innerWidth < 2 * this.paneWidth + 30) {
-        this.isConstrained = true;
-      } else if (this.isExpanded) {
-        this.isConstrained =
-          root.parentElement.offsetWidth < 2 * this.paneWidth + 2;
-      } else {
-        this.isConstrained = false;
-      }
-    },
-  },
-};
+}
 </script>
 
 <style lang='sass' scoped>

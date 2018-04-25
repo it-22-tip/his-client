@@ -2,15 +2,22 @@
   <app-wrapper>
     <page-container>
       <template slot="header">
-      <h3 class="md-title" style="flex: 1">Title</h3>
-       <menu-feature></menu-feature>
+        <h3
+          class="md-title"
+          style="flex: 1">Title</h3>
+        <menu-feature/>
       </template>
-      <div slot="default" class="padding-20">
+      <div
+        slot="default"
+        class="padding-20">
         <md-field>
           <label>Ketik Di Sini</label>
-          <md-input v-model="barcodetext"></md-input>
+          <md-input v-model="barcodetext"/>
         </md-field>
-        <extra-barcode class="barcode" :value="barcodetext" :format="barcodeformat"></extra-barcode>
+        <extra-barcode
+          :value="barcodetext"
+          :format="barcodeformat"
+          class="barcode"/>
       </div>
       <page-footer slot="footer">
         <div>FOOTER</div>
@@ -20,19 +27,18 @@
 </template>
 
 <script>
-  export default {
-    data () {
-      return {
-        barcodetext: '',
-        barcodeformat: 'CODE128'
-      }
-    },
-    methods: {
-
+export default {
+  data () {
+    return {
+      barcodetext: '',
+      barcodeformat: 'CODE128'
     }
-  }
-</script>
+  },
+  methods: {
 
+  }
+}
+</script>
 
 <style lang="scss" scoped>
   .padding-20 {

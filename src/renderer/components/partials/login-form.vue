@@ -1,9 +1,11 @@
 <template>
-  <md-card class="login-form" :style="style">
+  <md-card
+    :style="style"
+    class="login-form">
     <md-card-content>
       <div
-        class="logo"
-        :style="formLogo"/>
+        :style="formLogo"
+        class="logo"/>
       <md-field>
         <label>Username / Email</label>
         <md-input v-model="credentials.account_name"/>
@@ -11,19 +13,19 @@
       <md-field>
         <label>Password</label>
         <md-input
-          type="password"
-          v-model="credentials.password"/>
+          v-model="credentials.password"
+          type="password"/>
       </md-field>
     </md-card-content>
     <md-card-actions>
-    <login-button
-      :to="{ name: 'base.install' }"
-      class="md-primary md-raised"
-      @click="onClickInstall">Install</login-button>
-    <login-button
-      :to="{ name: 'base.dashboard' }"
-      class="md-primary md-raised"
-      @click="onClickLogin">Login</login-button>
+      <login-button
+        :to="{ name: 'base.install' }"
+        class="md-primary md-raised"
+        @click="onClickInstall">Install</login-button>
+      <login-button
+        :to="{ name: 'base.dashboard' }"
+        class="md-primary md-raised"
+        @click="onClickLogin">Login</login-button>
     </md-card-actions>
   </md-card>
 </template>

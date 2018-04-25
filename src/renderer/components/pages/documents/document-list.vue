@@ -2,7 +2,10 @@
   <layout-one>
     <md-content class="mc">
       <md-content class="leftist">
-        <tree-view :item-data="initialData" :item-events="itemEvents" ref="tree"></tree-view>
+        <tree-view
+          ref="tree"
+          :item-data="initialData"
+          :item-events="itemEvents"/>
         <md-toolbar class="md-dense">
           <md-button>Rak Baru</md-button>
           <md-button>Kategori Baru</md-button>
@@ -10,17 +13,25 @@
         </md-toolbar>
       </md-content>
       <md-table
-        class="right-table"
         v-model="model"
         :md-sort.sync="currentSort"
         :md-sort-order.sync="currentSortOrder"
         :md-sort-fn="customSort"
+        class="right-table"
         md-fixed-header>
-        <md-table-row slot="md-table-row" slot-scope="{ item }">
-          <md-table-cell md-label="Kode" md-sort-by="Id">{{ item.EmployeeId }}</md-table-cell>
-          <md-table-cell md-label="Judul" md-sort-by="Name">{{ item.Name }}</md-table-cell>
+        <md-table-row
+          slot="md-table-row"
+          slot-scope="{ item }">
+          <md-table-cell
+            md-label="Kode"
+            md-sort-by="Id">{{ item.EmployeeId }}</md-table-cell>
+          <md-table-cell
+            md-label="Judul"
+            md-sort-by="Name">{{ item.Name }}</md-table-cell>
           <md-table-cell>
-            <md-button @click="clickEdit(item.Id)" class="md-icon-button">
+            <md-button
+              class="md-icon-button"
+              @click="clickEdit(item.Id)">
               <md-icon>edit</md-icon>
               <md-tooltip md-direction="top">Edit</md-tooltip>
             </md-button>
@@ -28,8 +39,11 @@
         </md-table-row>
       </md-table>
     </md-content>
-    <context-menu @ctx-open="onCtxOpen" id="context-menu" ref="ctxMenu">
-      {{menuData.Name}}
+    <context-menu
+      id="context-menu"
+      ref="ctxMenu"
+      @ctx-open="onCtxOpen">
+      {{ menuData.Name }}
       <div><md-icon>edit</md-icon>Show</div>
       <div><md-icon>edit</md-icon>Rename</div>
     </context-menu>
@@ -45,14 +59,14 @@ import path from 'path'
 import { appDataPath } from '@helpers/constants'
 import '@extras/contextmenu/ctx-menu.css'
 export default {
-  mixins: [
-    orm
-  ],
   components: {
     'layout-one': () => import('@partials/layout-one'),
     'tree-view': () => import('@extras/tree-view'),
     'context-menu': () => import('@extras/contextmenu')
   },
+  mixins: [
+    orm
+  ],
   data () {
     return {
       searched: [],
@@ -87,9 +101,9 @@ export default {
     await this.closeConnection()
   },
   methods: {
-    onCtxOpen(locals) {
-        console.log('open', locals)
-        this.menuData = locals
+    onCtxOpen (locals) {
+      console.log('open', locals)
+      this.menuData = locals
     },
     async populateTree () {
       let tree = []
@@ -110,12 +124,12 @@ export default {
       console.log($event)
       // this.$refs.ctxMenu.open($event, { Name: '' })
     },
-    clickEdit($event) {
+    clickEdit ($event) {
       this.$router.push({ name: 'employees.employee.detail', params: { employeeId: $event } })
     },
     clickSearch () {
       const toLower = text => {
-          return text.toString().toLowerCase()
+        return text.toString().toLowerCase()
       }
       let s
       if (this.reset.length < 1) {
@@ -125,7 +139,7 @@ export default {
         this.model = this.reset
       }
       try {
-      s = this.model.filter(item => toLower(item.Name).includes(toLower(this.searchText)))
+        s = this.model.filter(item => toLower(item.Name).includes(toLower(this.searchText)))
       } catch (error) {
         console.log(error)
       }
@@ -137,14 +151,14 @@ export default {
         const sortBy = this.currentSort
         const desc = this.currentSortOrder === 'desc'
         let sorted
-        if (sortBy === 'Id' || sortBy === 'Age' ) {
-          sorted = desc ?
-          left[sortBy] - right[sortBy] :
-          right[sortBy] - left[sortBy]
+        if (sortBy === 'Id' || sortBy === 'Age') {
+          sorted = desc
+            ? left[sortBy] - right[sortBy]
+            : right[sortBy] - left[sortBy]
         } else {
-          sorted = desc ?
-          left[sortBy].localeCompare(right[sortBy]) :
-          right[sortBy].localeCompare(left[sortBy])
+          sorted = desc
+            ? left[sortBy].localeCompare(right[sortBy])
+            : right[sortBy].localeCompare(left[sortBy])
         }
         return sorted
       })
@@ -168,7 +182,7 @@ export default {
         include: [
           {
             model: Persons,
-            attributes: ['Name', 'Gender', 'BirthDate'],
+            attributes: ['Name', 'Gender', 'BirthDate']
           },
           {
             model: JobTitles,
@@ -192,7 +206,7 @@ export default {
       return item
     },
     toDateDiffToday (item, key, by = 'years') {
-      if(item[key] === null) {
+      if (item[key] === null) {
         item[key] = 0
       } else {
         item[key] = Math.abs(parseInt(item[key].diff(moment(), by)))
@@ -201,7 +215,7 @@ export default {
     },
     employeeId (item) {
       const pad = function (num, size) {
-        let string = num + ""
+        let string = num + ''
         while (string.length < size) string = '0' + string
         return string
       }
@@ -220,10 +234,10 @@ export default {
       return item
     },
     async populate () {
-      this.connection = (new this.$orm).withOption({
+      this.connection = (new this.$orm()).withOption({
         username: 'his',
         password: 'his',
-        database: 'his',
+        database: 'his'
       }).connect()
       try {
         let data = await this.connection.transaction(this.transaction)
@@ -260,5 +274,3 @@ export default {
     display: block;
   }
 </style>
-
-

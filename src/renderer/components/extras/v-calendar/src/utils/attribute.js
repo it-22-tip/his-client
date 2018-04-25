@@ -1,28 +1,27 @@
-import DateInfo from './dateInfo';
+import DateInfo from './dateInfo'
 // import defaults from './defaults';
-import { arrayHasItems } from './helpers';
-import { isArray } from './typeCheckers';
+import { arrayHasItems } from './helpers'
+import { isArray } from './typeCheckers'
 
 const Attribute = config => {
-  if (!config) return null;
-  if (config.isAttribute) return config;
-  if (config.dates && !isArray(config.dates)) config.dates = [config.dates];
-  if (config.excludeDates && !isArray(config.excludeDates))
-    config.excludeDates = [config.excludeDates];
-  const hasDates = arrayHasItems(config.dates);
-  const hasExcludeDates = arrayHasItems(config.excludeDates);
-  const excludeMode = config.excludeMode || 'intersects';
+  if (!config) return null
+  if (config.isAttribute) return config
+  if (config.dates && !isArray(config.dates)) config.dates = [config.dates]
+  if (config.excludeDates && !isArray(config.excludeDates)) { config.excludeDates = [config.excludeDates] }
+  const hasDates = arrayHasItems(config.dates)
+  const hasExcludeDates = arrayHasItems(config.excludeDates)
+  const excludeMode = config.excludeMode || 'intersects'
   const dates = (
     (hasDates && config.dates) || // Use provided dates if they have items
     (hasExcludeDates && [{}]) || // Use infinite range if exclude dates were provided
     []
   ) // Use just an empty array
     .map(d => d && (d.isDateInfo ? d : DateInfo(d, config.order)))
-    .filter(d => d);
+    .filter(d => d)
   const excludeDates = ((hasExcludeDates && config.excludeDates) || [])
     .map(d => d && (d.isDateInfo ? d : DateInfo(d, config.order)))
-    .filter(d => d);
-  const isComplex = dates.some(d => d.isComplex);
+    .filter(d => d)
+  const isComplex = dates.some(d => d.isComplex)
   const attr = {
     ...config,
     isAttribute: true,
@@ -46,17 +45,17 @@ const Attribute = config => {
       excludeDates.find(
         ed =>
           (excludeMode === 'intersects' && ed.intersectsDate(date)) ||
-          (excludeMode === 'includes' && ed.includesDate(date)),
+          (excludeMode === 'includes' && ed.includesDate(date))
       ),
     // Accepts: Day object
     // Returns: First attribute date info that occurs on given day.
     includesDay: day =>
       !attr.excludesDay(day) && (dates.find(d => d.includesDay(day)) || false),
     excludesDay: day =>
-      hasExcludeDates && excludeDates.find(ed => ed.includesDay(day)),
-  };
+      hasExcludeDates && excludeDates.find(ed => ed.includesDay(day))
+  }
   // Return the attribute
-  return attr;
-};
+  return attr
+}
 
-export default Attribute;
+export default Attribute
