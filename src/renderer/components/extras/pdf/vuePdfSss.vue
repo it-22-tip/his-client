@@ -2,12 +2,13 @@
 <script>
 import componentFactory from './componentFactory'
 import pdfjsWrapper from './pdfjsWrapper'
+let PDFJS
 
 if (process.env.VUE_ENV === 'server') {
-  var PDFJS = require('pdfjs-dist/build/pdf.js')
+  PDFJS = require('pdfjs-dist/build/pdf.js')
   PDFJS.PDFJS.disableWorker = true
 } else {
-  var PDFJS = require('pdfjs-dist/webpack.js')
+  PDFJS = require('pdfjs-dist/webpack.js')
 }
 
 var component = componentFactory(pdfjsWrapper(PDFJS))

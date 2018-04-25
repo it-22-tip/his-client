@@ -1,13 +1,14 @@
 <style src="./annotationLayer.css"></style>
 <script>
 import componentFactory from './componentFactory.js'
+let component
 
 if (process.env.VUE_ENV === 'server') {
-  var component = componentFactory({})
+  component = componentFactory({})
 } else {
   var pdfjsWrapper = require('./pdfjsWrapper.js').default
   var PDFJS = require('pdfjs-dist/webpack.js')
-  var component = componentFactory(pdfjsWrapper(PDFJS))
+  component = componentFactory(pdfjsWrapper(PDFJS))
 }
 
 export default component

@@ -45,7 +45,7 @@ export default {
   },
   props: {
     itemData: {type: Array, default: []},
-    size: {type: String, validator: value => ['large', 'small'].indexOf(value) > -1},
+    size: {type: String, default: '', validator: value => ['large', 'small'].indexOf(value) > -1},
     showCheckbox: {type: Boolean, default: false},
     wholeRow: {type: Boolean, default: false},
     noDots: {type: Boolean, default: false},
@@ -56,10 +56,10 @@ export default {
     valueFieldName: {type: String, default: 'value'},
     childrenFieldName: {type: String, default: 'children'},
     itemEvents: {type: Object, default: function () { return {} }},
-    asyncFunction: {type: Function},
+    asyncFunction: {type: Function, default: () => {}},
     loadingText: {type: String, default: 'Loading...'},
     draggable: {type: Boolean, default: false},
-    itemClass: String
+    itemClass: {type: String, default: null}
   },
   data () {
     return {

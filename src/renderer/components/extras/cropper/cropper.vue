@@ -10,141 +10,193 @@
 </style>
 
 <script>
+import Cropper from 'cropperjs'
 export default {
   props: {
     // Library props
-    'containerStyle': {
+    containerStyle: {
       type: Object,
       default () {
         return {
-
         }
       }
     },
-    'src': {
+    src: {
       type: String,
       default: ''
     },
-    'alt': String,
-    'imgStyle': {
+    alt: {
+      type: String,
+      default: ''
+    },
+    imgStyle: {
       type: Object,
       default () {
         return {
-
         }
       }
     },
 
     // CropperJS props
-    'viewMode': Number,
-    'dragMode': {
+    viewMode: {
+      type: Number,
+      default: null
+    },
+    dragMode: {
       type: String,
       default: 'move'
     },
-    'aspectRatio': Number,
-    'data': {
+    aspectRatio: {
+      type: Number,
+      default: null
+    },
+    data: {
       type: Object,
       default () {
         return {
-
         }
       }
     },
-    'preview': String,
-    'responsive': {
+    preview: {
+      type: String,
+      default: null
+    },
+    responsive: {
       type: Boolean,
       default: true
     },
-    'restore': {
+    restore: {
       type: Boolean,
       default: true
     },
-    'checkCrossOrigin': {
+    checkCrossOrigin: {
       type: Boolean,
       default: true
     },
-    'checkOrientation': {
+    checkOrientation: {
       type: Boolean,
       default: true
     },
-    'modal': {
+    modal: {
       type: Boolean,
       default: true
     },
-    'guides': {
+    guides: {
       type: Boolean,
       default: true
     },
-    'center': {
+    center: {
       type: Boolean,
       default: true
     },
-    'highlight': {
+    highlight: {
       type: Boolean,
       default: true
     },
-    'background': {
+    background: {
       type: Boolean,
       default: true
     },
-    'autoCrop': {
+    autoCrop: {
       type: Boolean,
       default: true
     },
-    'autoCropArea': Number,
-    'movable': {
+    autoCropArea: {
+      type: Number,
+      default: null
+    },
+    movable: {
       type: Boolean,
       default: true
     },
-    'rotatable': {
+    rotatable: {
       type: Boolean,
       default: true
     },
-    'scalable': {
+    scalable: {
       type: Boolean,
       default: true
     },
-    'zoomable': {
+    zoomable: {
       type: Boolean,
       default: true
     },
-    'zoomOnTouch': {
+    zoomOnTouch: {
       type: Boolean,
       default: true
     },
-    'zoomOnWheel': {
+    zoomOnWheel: {
       type: Boolean,
       default: true
     },
-    'wheelZoomRatio': Number,
-    'cropBoxMovable': {
+    wheelZoomRatio: {
+      type: Number,
+      default: null
+    },
+    cropBoxMovable: {
       type: Boolean,
       default: true
     },
-    'cropBoxResizable': {
+    cropBoxResizable: {
       type: Boolean,
       default: true
     },
-    'toggleDragModeOnDblclick': {
+    toggleDragModeOnDblclick: {
       type: Boolean,
       default: true
     },
 
     // Size limitation
-    'minCanvasWidth': Number,
-    'minCanvasHeight': Number,
-    'minCropBoxWidth': Number,
-    'minCropBoxHeight': Number,
-    'minContainerWidth': Number,
-    'minContainerHeight': Number,
+    minCanvasWidth: {
+      type: Number,
+      default: null
+    },
+    minCanvasHeight: {
+      type: Number,
+      default: null
+    },
+    minCropBoxWidth: {
+      type: Number,
+      default: null
+    },
+    minCropBoxHeight: {
+      type: Number,
+      default: null
+    },
+    minContainerWidth: {
+      type: Number,
+      default: null
+    },
+    minContainerHeight: {
+      type: Number,
+      default: null
+    },
 
     // callbacks
-    'ready': Function,
-    'cropstart': Function,
-    'cropmove': Function,
-    'cropend': Function,
-    'crop': Function,
-    'zoom': Function
+    ready: {
+      type: Function,
+      default: () => {}
+    },
+    cropstart: {
+      type: Function,
+      default: () => {}
+    },
+    cropmove: {
+      type: Function,
+      default: () => {}
+    },
+    cropend: {
+      type: Function,
+      default: () => {}
+    },
+    crop: {
+      type: Function,
+      default: () => {}
+    },
+    zoom: {
+      type: Function,
+      default: () => {}
+    }
   },
   mounted () {
     const { containerStyle, src, alt, imgStyle, ...data } = this.$options.props

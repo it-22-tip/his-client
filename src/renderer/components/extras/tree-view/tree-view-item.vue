@@ -61,15 +61,15 @@
 export default {
   name: 'TreeViewItem',
   props: {
-    itemData: {type: Object, required: true},
+    itemData: {type: Object, required: true, default: () => {}},
     textFieldName: {type: String, default: null},
-    valueFieldName: {type: String},
-    childrenFieldName: {type: String},
+    valueFieldName: {type: String, default: null},
+    childrenFieldName: {type: String, default: null},
     itemEvents: {type: Object, default: () => null},
     wholeRow: {type: Boolean, default: false},
     showCheckbox: {type: Boolean, default: false},
     height: {type: Number, default: 24},
-    parentItem: {type: Array},
+    parentItem: {type: Array, default: []},
     draggable: {type: Boolean, default: false},
     onItemClick: {
       type: Function, default: () => false
