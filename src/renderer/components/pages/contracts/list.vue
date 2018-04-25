@@ -69,7 +69,7 @@ export default {
         database: 'his',
         logging: console.log
       }).connect()
-      const { Persons, Regencies, Villages, Districts, Employees, JobTitles, Provinces } = b.models
+      const { Persons, Employees, JobTitles } = b.models
       try {
         let data = await b.transaction(
           async transaction => {

@@ -44,7 +44,7 @@ export default {
     'tree-view-item': () => import('./tree-view-item')
   },
   props: {
-    itemData: {type: Array, default: []},
+    itemData: {type: Array, default: () => {}},
     size: {type: String, default: '', validator: value => ['large', 'small'].indexOf(value) > -1},
     showCheckbox: {type: Boolean, default: false},
     wholeRow: {type: Boolean, default: false},

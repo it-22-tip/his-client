@@ -187,7 +187,7 @@ export default {
 
     async transaction (transaction) {
       let sequelize = this.connection
-      const { Persons, Employees, JobTitles } = sequelize.models
+      const { Employees, JobTitles } = sequelize.models
 
       let page = this.activePage - 1
       let limit = 10
@@ -222,7 +222,7 @@ export default {
       }
       try {
         rows = await JobTitles.findAll(options)
-        options.raw = true,
+        options.raw = true
         options.attributes = undefined
         count = await JobTitles.count(options)
       } catch (error) {

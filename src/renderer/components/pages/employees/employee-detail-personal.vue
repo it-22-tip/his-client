@@ -37,12 +37,10 @@
 
 <script>
 import Vue from 'vue'
-import PrinceXML from '@/extras/PrinceXML'
 import PdfTk from '@/extras/PdfTk'
 import orm from '@/mixins/orm'
-import { map, startCase, toLower } from 'lodash'
-import licenseListVue from './license-list.vue'
-import {setupCalendar, Calendar as cal, DatePicker as dp} from 'v-calendar'
+import { startCase, toLower } from 'lodash'
+import {setupCalendar, DatePicker as dp} from 'v-calendar'
 import 'v-calendar/lib/v-calendar.min.css'
 import moment from 'moment'
 import ModalProvince from '@partials/modal-province'
@@ -56,18 +54,17 @@ Vue.component('calendar', dp)
 export default {
   name: 'EmployeeDetail',
   components: {
-    // 'layout-one': () => import('@partials/layout-one'),
-    // 'test-comp': ModalProvince
-  },
-  components: {
     'layout-one': () => import('@partials/layout-one')
   },
   mixins: [
     orm
   ],
-  props: [
-    'employeeId'
-  ],
+  props: {
+    employeeId: {
+      type: String,
+      default: ''
+    }
+  },
   data () {
     return {
       model: {},
@@ -87,7 +84,6 @@ export default {
   watch: {
     'detail.BirthDate.dateObj': {
       handler: function (val) {
-        let today = moment()
         this.detail.BirthDate.human = moment(val).format('DD MMMM YYYY')
         this.detail.BirthDate.age = Math.abs(parseInt(moment(val).diff(moment(), 'years')))
       }
@@ -113,8 +109,6 @@ export default {
       }
     },
     async clickMe () {
-      let test
-
       try {
         PdfTk
           .input('/home/it1/.hisdata/test.pdf')
@@ -124,6 +118,7 @@ export default {
             // Do stuff with the output buffer
           })
           .catch(err => {
+            console.log(err)
             // handle errors
           })
       } catch (error) {
@@ -153,7 +148,7 @@ export default {
       }
     },
     async transaction (transaction) {
-      const { Almamaters, EducationHistories, Persons, Employees, JobTitles, Licenses, LicenseTypes, AddressHistories, Villages, Districts, Regencies, Provinces } = this.connection.models
+      const { Almamaters, Persons, Employees, JobTitles, Licenses, LicenseTypes, AddressHistories, Villages, Districts, Regencies, Provinces } = this.connection.models
       let data = await Employees.findById(this.employeeId, {
         transaction: transaction,
         raw: false,
@@ -221,11 +216,7 @@ export default {
           }
         ]
       })
-
-      let { JobTitle, Person } = data
-      // Person = Person.dataValues
-      let { Name, BirthDate, Gender } = Person.dataValues
-      console.log(AddressHistories)
+      return data
     },
     async populate () {
       this.connection = (new this.$orm()).withOption({
@@ -235,6 +226,7 @@ export default {
       }).connect()
       try {
         let data = await this.connection.transaction(this.transaction)
+        console.log(data)
         // const { JobTitles, Persons } = data
         // console.log(data)
         // this.detail = data

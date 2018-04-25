@@ -130,8 +130,6 @@
 </template>
 
 <script>
-import Vue from 'vue'
-import { default as Promise } from 'bluebird'
 import orm from '@/mixins/orm'
 export default {
   components: {

@@ -8,8 +8,6 @@
 </template>
 
 <script>
-import Vue from 'vue'
-console.log(Promise.version)
 export default {
   name: 'LoginForm',
   components: {

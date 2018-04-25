@@ -48,7 +48,6 @@
 <script>
 import orm from '@/mixins/orm'
 import { map } from 'lodash'
-import moment from 'moment'
 import { toDateDiffToday, toMoment, employeeId } from '@helpers/databaseTo'
 export default {
   components: {

@@ -144,7 +144,6 @@ export default {
       return data
     },
     async saving () {
-      let data
       this.connection = (new this.$orm()).withOption({
         username: 'his',
         password: 'his',

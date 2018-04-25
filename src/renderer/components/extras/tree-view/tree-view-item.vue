@@ -69,7 +69,7 @@ export default {
     wholeRow: {type: Boolean, default: false},
     showCheckbox: {type: Boolean, default: false},
     height: {type: Number, default: 24},
-    parentItem: {type: Array, default: []},
+    parentItem: {type: Array, default: () => {}},
     draggable: {type: Boolean, default: false},
     onItemClick: {
       type: Function, default: () => false
@@ -86,7 +86,10 @@ export default {
     onItemDrop: {
       type: Function, default: () => false
     },
-    itemClass: String
+    itemClass: {
+      type: String,
+      default: null
+    }
   },
   data () {
     return {

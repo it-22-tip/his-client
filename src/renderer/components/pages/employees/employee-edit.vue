@@ -12,7 +12,6 @@
 import PdfTk from '@/extras/PdfTk'
 import orm from '@/mixins/orm'
 import { map } from 'lodash'
-import licenseListVue from './license-list.vue'
 export default {
   name: 'EmployeeDetail',
   components: {
@@ -21,9 +20,12 @@ export default {
   mixins: [
     orm
   ],
-  props: [
-    'employeeId'
-  ],
+  props: {
+    employeeId: {
+      type: String,
+      default: ''
+    }
+  },
   data () {
     return {
       model: {},
@@ -42,10 +44,12 @@ export default {
           .input('/home/it1/.hisdata/test.pdf')
           .stamp(__static + '/stamp/logo.pdf')
           .output('/home/it1/.hisdata/output.pdf')
-          .then(buffer => {
+          /* .then(buffer => {
+            conc
             // Do stuff with the output buffer
-          })
+          }) */
           .catch(err => {
+            console.log(err)
             // handle errors
           })
       } catch (error) {
@@ -111,7 +115,6 @@ export default {
         // let model = data.slice()
         console.log(data)
         this.model = map(data, this.dataMapper)
-        this.model
       } catch (error) {
         console.log(error)
       } finally {

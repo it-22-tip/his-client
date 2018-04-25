@@ -17,9 +17,12 @@ export default {
   components: {
     'layout-one': () => import('@partials/layout-one')
   },
-  props: [
-    'employeeId'
-  ]
+  props: {
+    employeeId: {
+      type: String,
+      default: ''
+    }
+  }
 }
 </script>
 

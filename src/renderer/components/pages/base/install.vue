@@ -43,10 +43,9 @@ import { readFile, readDir, readJSON } from '@helpers/files'
 import { default as Promise } from 'bluebird'
 import path from 'path'
 import os from 'os'
-import { map } from 'lodash'
+import { map, extend } from 'lodash'
 import bcrypt from 'bcrypt'
 import orm from '@mixins/orm'
-import { reduce, isEmpty, extend } from 'lodash'
 export default {
   mixins: [
     orm
@@ -117,7 +116,7 @@ export default {
           this.ApplicationConnection = null
         }
       }
-      this.message = 'done',
+      this.message = 'done'
       this.percentage = 0
       this.progress = false
     },
@@ -166,7 +165,7 @@ export default {
       this.options = options
     },
     async runAll () {
-      const { root, common, application } = this.options
+      const { root, application } = this.options
       this.progress = true
       // this.reset()
       this.PreQueriesConnection = (new this.$orm()).withOption(root).connect()

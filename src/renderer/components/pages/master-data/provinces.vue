@@ -208,7 +208,7 @@ export default {
       }
       try {
         rows = await Provinces.findAll(options)
-        options.raw = true,
+        options.raw = true
         options.attributes = undefined
         count = await Provinces.count(options)
       } catch (error) {
