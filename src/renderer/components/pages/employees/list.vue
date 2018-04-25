@@ -139,8 +139,7 @@ export default {
       totalPage: null,
       activePage: null,
       activeSort: null,
-      activeOrder: null,
-      searchBy: []
+      activeOrder: null
     }
   },
   watch: {
@@ -271,7 +270,7 @@ export default {
       let rows = []
       try {
         rows = await Employees.findAll(options)
-        options.raw = true,
+        options.raw = true
         options.attributes = undefined
         count = await Employees.count(options)
       } catch (error) {

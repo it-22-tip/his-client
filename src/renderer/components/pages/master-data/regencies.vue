@@ -56,7 +56,6 @@
 <script>
 import orm from '@mixins/orm'
 import { map, extend } from 'lodash'
-import moment from 'moment'
 export default {
   components: {
     'layout-one': () => import('@partials/layout-one')
@@ -97,8 +96,7 @@ export default {
       totalPage: null,
       activePage: null,
       activeSort: null,
-      activeOrder: null,
-      searchBy: []
+      activeOrder: null
     }
   },
   watch: {
@@ -207,11 +205,10 @@ export default {
         raw: false,
         distinct: true,
         col: 'Id'
-        // logging: console.log
       }
       try {
         rows = await Regencies.findAll(options)
-        options.raw = true,
+        options.raw = true
         options.attributes = undefined
         count = await Regencies.count(options)
       } catch (error) {

@@ -62,7 +62,6 @@
 <script>
 import orm from '@mixins/orm'
 import { map, extend } from 'lodash'
-import moment from 'moment'
 export default {
   components: {
     'layout-one': () => import('@partials/layout-one')
