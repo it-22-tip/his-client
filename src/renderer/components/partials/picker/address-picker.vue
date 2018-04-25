@@ -1,10 +1,20 @@
 <template>
-  <div class="-picker">
+  <md-content class="address-picker md-layout">
+    <md-content class="md-layout-item md-size-85">
     <province-picker v-model="ProvinceCode"/>
     <regency-picker v-model="RegencyCode" :province-code="ProvinceCode"/>
     <district-picker v-model="DistrictCode" :regency-code="RegencyCode"/>
     <village-picker v-model="VillageCode" :district-code="DistrictCode"/>
-  </div>
+    <md-field md-clearable>
+      <label>RT</label>
+      <md-input type="number" min="1" max="20"/>
+    </md-field>
+    <md-field md-clearable>
+      <label>RW</label>
+      <md-input type="number" min="1" max="20"/>
+    </md-field>
+    </md-content>
+  </md-content>
 </template>
 
 <script>
