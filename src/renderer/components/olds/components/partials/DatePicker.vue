@@ -594,7 +594,7 @@ export default {
        */
     setEscapeEvent () {
       document.addEventListener('keydown', (event) => {
-        if (event.keyCode == 27 || event.key == 'Escape') {
+        if (event.keyCode === 27 || event.key === 'Escape') {
           this.onClose()
         }
       })

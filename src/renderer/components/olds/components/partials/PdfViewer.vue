@@ -77,7 +77,7 @@ export default {
       }
 
       // Deal with the remaining bytes and padding
-      if (byteRemainder == 1) {
+      if (byteRemainder === 1) {
         chunk = bytes[mainLength]
 
         a = (chunk & 252) >> 2 // 252 = (2^6 - 1) << 2
@@ -86,7 +86,7 @@ export default {
         b = (chunk & 3) << 4 // 3   = 2^2 - 1
 
         base64 += encodings[a] + encodings[b] + '=='
-      } else if (byteRemainder == 2) {
+      } else if (byteRemainder === 2) {
         chunk = (bytes[mainLength] << 8) | bytes[mainLength + 1]
 
         a = (chunk & 64512) >> 10 // 64512 = (2^6 - 1) << 10
