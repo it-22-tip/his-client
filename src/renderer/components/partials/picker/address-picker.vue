@@ -118,9 +118,9 @@ export default {
           }
         ]
         let data = await Villages.findOne(opt)
-        this.ProvinceCode = data['District.Regency.Province.Code'],
-        this.RegencyCode = data['District.Regency.Code'],
-        this.DistrictCode = data['District.Code'],
+        this.ProvinceCode = data['District.Regency.Province.Code']
+        this.RegencyCode = data['District.Regency.Code']
+        this.DistrictCode = data['District.Code']
         this.VillageCode = data['Code']
         this.$nextTick().then(
           () => {

@@ -62,10 +62,10 @@ export default {
   name: 'TreeViewItem',
   props: {
     itemData: {type: Object, required: true},
-    textFieldName: {type: String},
+    textFieldName: {type: String, default: null},
     valueFieldName: {type: String},
     childrenFieldName: {type: String},
-    itemEvents: {type: Object},
+    itemEvents: {type: Object, default: () => null},
     wholeRow: {type: Boolean, default: false},
     showCheckbox: {type: Boolean, default: false},
     height: {type: Number, default: 24},

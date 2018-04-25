@@ -41,12 +41,12 @@
     <svg
       v-if="showRemoveButton && img && !passive"
       :style="`top: -${height/40}px; right: -${width/40}px`"
+      :width="removeButtonSize || width/10"
+      :height="removeButtonSize || width/10"
       class="icon icon-remove"
       viewBox="0 0 1024 1024"
       version="1.1"
-      :width="removeButtonSize || width/10"
       xmlns="http://www.w3.org/2000/svg"
-      :height="removeButtonSize || width/10"
       xmlns:xlink="http://www.w3.org/1999/xlink"
       @click="remove">
       <path
@@ -492,7 +492,7 @@ export default {
     _initialize () {
       this.canvas = this.$refs.canvas
       this._setSize()
-      this.canvas.style.backgroundColor = (!this.canvasColor || this.canvasColor == 'default') ? 'transparent' : (typeof this.canvasColor === 'string' ? this.canvasColor : '')
+      this.canvas.style.backgroundColor = (!this.canvasColor || this.canvasColor === 'default') ? 'transparent' : (typeof this.canvasColor === 'string' ? this.canvasColor : '')
       this.ctx = this.canvas.getContext('2d')
       this.originalImage = null
       this.img = null
@@ -540,7 +540,7 @@ export default {
       if (this.$slots.placeholder && this.$slots.placeholder[0]) {
         let vNode = this.$slots.placeholder[0]
         let { tag, elm } = vNode
-        if (tag == 'img' && elm) {
+        if (tag === 'img' && elm) {
           img = elm
         }
       }
@@ -563,9 +563,9 @@ export default {
       ctx.textBaseline = 'middle'
       ctx.textAlign = 'center'
       let defaultFontSize = this.outputWidth * DEFAULT_PLACEHOLDER_TAKEUP / this.placeholder.length
-      let fontSize = (!this.computedPlaceholderFontSize || this.computedPlaceholderFontSize == 0) ? defaultFontSize : this.computedPlaceholderFontSize
+      let fontSize = (!this.computedPlaceholderFontSize || this.computedPlaceholderFontSize === 0) ? defaultFontSize : this.computedPlaceholderFontSize
       ctx.font = fontSize + 'px sans-serif'
-      ctx.fillStyle = (!this.placeholderColor || this.placeholderColor == 'default') ? '#606060' : this.placeholderColor
+      ctx.fillStyle = (!this.placeholderColor || this.placeholderColor === 'default') ? '#606060' : this.placeholderColor
       ctx.fillText(this.placeholder, this.outputWidth / 2, this.outputHeight / 2)
     },
 
@@ -580,7 +580,7 @@ export default {
       if (this.$slots.initial && this.$slots.initial[0]) {
         let vNode = this.$slots.initial[0]
         let { tag, elm } = vNode
-        if (tag == 'img' && elm) {
+        if (tag === 'img' && elm) {
           img = elm
         }
       }
@@ -681,7 +681,7 @@ export default {
 
     _fileSizeIsValid (file) {
       if (!file) return false
-      if (!this.fileSizeLimit || this.fileSizeLimit == 0) return true
+      if (!this.fileSizeLimit || this.fileSizeLimit === 0) return true
 
       return file.size < this.fileSizeLimit
     },
@@ -694,7 +694,7 @@ export default {
       for (let i = 0, len = types.length; i < len; i++) {
         let type = types[i]
         let t = type.trim()
-        if (t.charAt(0) == '.') {
+        if (t.charAt(0) === '.') {
           if (file.name.toLowerCase().split('.').pop() === t.toLowerCase().slice(1)) return true
         } else if (/\/\*$/.test(t)) {
           var fileBaseType = file.type.replace(/\/.*$/, '')
@@ -722,9 +722,9 @@ export default {
       if (this.preventWhiteSpace) {
         this._aspectFill()
       } else if (!this.imageSet) {
-        if (this.initialSize == 'contain') {
+        if (this.initialSize === 'contain') {
           this._aspectFit()
-        } else if (this.initialSize == 'natural') {
+        } else if (this.initialSize === 'natural') {
           this._naturalSize()
         } else {
           this._aspectFill()
@@ -955,7 +955,7 @@ export default {
       if (dt.items) {
         for (var i = 0, len = dt.items.length; i < len; i++) {
           let item = dt.items[i]
-          if (item.kind == 'file') {
+          if (item.kind === 'file') {
             file = item.getAsFile()
             break
           }
@@ -1008,19 +1008,19 @@ export default {
         this._placeImage(applyMetadata)
       }
 
-      if (orientation == 2) {
+      if (orientation === 2) {
         // flip x
         this.orientation = u.flipX(this.orientation)
-      } else if (orientation == 4) {
+      } else if (orientation === 4) {
         // flip y
         this.orientation = u.flipY(this.orientation)
-      } else if (orientation == 6) {
+      } else if (orientation === 6) {
         // 90 deg
         this.orientation = u.rotate90(this.orientation)
-      } else if (orientation == 3) {
+      } else if (orientation === 3) {
         // 180 deg
         this.orientation = u.rotate90(u.rotate90(this.orientation))
-      } else if (orientation == 8) {
+      } else if (orientation === 8) {
         // 270 deg
         this.orientation = u.rotate90(u.rotate90(u.rotate90(this.orientation)))
       } else {
@@ -1033,7 +1033,7 @@ export default {
     },
 
     _paintBackground () {
-      let backgroundColor = (!this.canvasColor || this.canvasColor == 'default') ? 'transparent' : this.canvasColor
+      let backgroundColor = (!this.canvasColor || this.canvasColor === 'default') ? 'transparent' : this.canvasColor
       this.ctx.fillStyle = backgroundColor
       this.ctx.clearRect(0, 0, this.outputWidth, this.outputHeight)
       this.ctx.fillRect(0, 0, this.outputWidth, this.outputHeight)

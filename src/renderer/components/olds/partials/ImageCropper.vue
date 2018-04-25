@@ -21,11 +21,11 @@
         :background="true"
         :rotatable="false"
         :zoomable="false"
-        drag-mode="crop"
         :src="imgSrc"
         :img-style="imgStyle"
         :ready="onCropReady"
         :cropmove="onCropMove"
+        drag-mode="crop"
         alt="Source Image"/>
     </div>
     <img

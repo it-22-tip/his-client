@@ -85,8 +85,8 @@ export default function (PDFJS) {
     this.printPage = function (dpi, pageNumberOnly) {
       if (pdfPage === null) return
 
-      // 1in == 72pt
-      // 1in == 96px
+      // 1in === 72pt
+      // 1in === 96px
       let PRINT_RESOLUTION = dpi === undefined ? 150 : dpi
       let PRINT_UNITS = PRINT_RESOLUTION / 72.0
       let CSS_UNITS = 96.0 / 72.0

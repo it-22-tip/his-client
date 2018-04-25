@@ -64,9 +64,9 @@
                 <img class="imgs" v-if="editImage" height="400" width="300" :src="editImage"/>
             </div> -->
         <extra-cropper
+          ref="cropper"
           :min-container-width="300"
           :min-container-height="400"
-          ref="cropper"
           :img-style="{ width: '300px', height: '400px' }"
           :container-style="{ width: '300px', height: '400px' }"
           :data="{ data: null }"
