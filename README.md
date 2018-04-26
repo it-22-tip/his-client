@@ -1,7 +1,7 @@
 # HIS Desktop Client
 
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg?longCache=true&style=for-the-badge)](https://standardjs.com)
-[![License](https://img.shields.io/npm/l/express.svg)](https://github.com/idnesdotlink/his-client/blob/master/LICENSE)
+[![License](https://img.shields.io/npm/l/express.svg?longCache=true&style=for-the-badge)](https://github.com/idnesdotlink/his-client/blob/master/LICENSE)
 [![Not Tested](https://img.shields.io/badge/tests-not%20tested-pink.svg?longCache=true&style=for-the-badge)]()
 [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?longCache=true&style=for-the-badge)]()
 [![MacOs-Linux-Windows](https://img.shields.io/badge/platform-macOS%20%7C%20Windows%20%7C%20Linux-orange.svg?longCache=true&style=for-the-badge)]()
