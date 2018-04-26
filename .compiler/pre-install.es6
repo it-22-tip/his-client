@@ -1,6 +1,7 @@
+'use-strict'
+import path  from 'path'
+import fs from 'fs'
 const packageJson = require('./package.json')
-// const fs = require('fs')
-const path = require('path')
 const electronVersion = packageJson.devDependencies.electron
 const arch = process.arch
 const platform = process.platform

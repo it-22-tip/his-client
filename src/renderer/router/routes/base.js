@@ -35,6 +35,14 @@ const Base = [
     }
   },
   {
+    path: '/settings',
+    name: 'base.settings',
+    component: () => import('@pages/base/settings'),
+    meta: {
+      title: 'Settings'
+    }
+  },
+  {
     path: '/dashboard',
     name: 'base.dashboard',
     component: () => import('@pages/base/dashboard'),

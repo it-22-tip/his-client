@@ -1,4 +1,5 @@
 'use strict'
+
 import { say } from 'cfonts'
 import chalk from 'chalk'
 import del from 'del'

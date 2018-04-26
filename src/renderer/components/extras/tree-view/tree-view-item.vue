@@ -246,19 +246,6 @@ export default {
         }
       )
     },
-    /* handleSetGroupMaxHeight () {
-      if (this.$refs.group) {
-        this.$refs.group.style.maxHeight = this.handleGroupMaxHeight() + 'px'
-      }
-      var self = this
-      this.$nextTick(() => {
-        this.handleRecursionNodeParents(self, node => {
-          if (node.$refs.group) {
-            node.$refs.group.style.maxHeight = node.handleGroupMaxHeight() + 'px'
-          }
-        })
-      })
-    }, */
     handleItemClick () {
       if (this.model.disabled) return
       this.model.selected = !this.model.selected

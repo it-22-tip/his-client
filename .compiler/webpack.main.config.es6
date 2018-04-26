@@ -87,4 +87,4 @@ if (process.env.NODE_ENV !== 'production') {
   mainConfig.mode = 'production'
 }
 
-module.exports = mainConfig
+export default mainConfig
