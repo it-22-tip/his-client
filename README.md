@@ -2,6 +2,7 @@
 
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg?longCache=true&style=flat-square)](https://standardjs.com)
 [![License](https://img.shields.io/badge/license-mit-green.svg?longCache=true&style=flat-square)](https://github.com/idnesdotlink/his-client/blob/master/LICENSE)
+[![David](https://img.shields.io/david/idnesdotlink/his-client.svg?style=flat-square)]
 [![Not Tested](https://img.shields.io/badge/tests-not%20tested-red.svg?longCache=true&style=flat-square)]()
 [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-green.svg?longCache=true&style=flat-square)]()
 [![MacOs-Linux-Windows](https://img.shields.io/badge/platform-macOS%20%7C%20Windows%20%7C%20Linux-orange.svg?longCache=true&style=flat-square)]()
