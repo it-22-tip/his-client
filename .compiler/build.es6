@@ -32,14 +32,14 @@ function build () {
   del.sync(['dist/electron/*', '!.gitkeep'])
 
   const tasks = ['main', 'renderer']
-  const m = new Multispinner(tasks, {
+  const spinner = new Multispinner(tasks, {
     preText: 'building',
     postText: 'process'
   })
 
   let results = ''
 
-  m.on('success', () => {
+  spinner.on('success', () => {
     process.stdout.write('\x1B[2J\x1B[0f')
     console.log(`\n\n${results}`)
     console.log(`${okayLog}take it away ${chalk.yellow('`electron-builder`')}\n`)
@@ -48,9 +48,9 @@ function build () {
 
   pack(mainConfig).then(result => {
     results += result + '\n\n'
-    m.success('main')
+    spinner.success('main')
   }).catch(err => {
-    m.error('main')
+    spinner.error('main')
     console.log(`\n  ${errorLog}failed to build main process`)
     console.error(`\n${err}\n`)
     process.exit(1)
@@ -58,9 +58,9 @@ function build () {
 
   pack(rendererConfig).then(result => {
     results += result + '\n\n'
-    m.success('renderer')
+    spinner.success('renderer')
   }).catch(err => {
-    m.error('renderer')
+    spinner.error('renderer')
     console.log(`\n  ${errorLog}failed to build renderer process`)
     console.error(`\n${err}\n`)
     process.exit(1)
