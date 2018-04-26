@@ -1,6 +1,19 @@
 {
   "comments": false,
   "env": {
+    "psg": {
+      "presets": [
+        [
+          "env",
+          {
+            "targets": {
+              "node": 7
+            }
+          }
+        ],
+        "stage-0"
+      ]
+    },
     "main": {
       "presets": [
         [
