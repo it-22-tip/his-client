@@ -1,0 +1,16 @@
+productName: HIS Desktop Client
+appId: id.co.phcc.his-client
+directories:
+  buildResources: build
+  output: build
+compression: store
+copyright: Copyright © 2018 idnesdotlink
+files:
+  - 'dist/electron/**/*'
+mac:
+  icon: icons/icon.icns
+win:
+  icon: icons/icon.ico
+linux:
+  category: Utility
+  target: AppImage
