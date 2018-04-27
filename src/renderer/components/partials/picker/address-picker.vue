@@ -11,14 +11,18 @@
       <village-picker
         v-model="VillageCode"
         :district-code="DistrictCode"/>
-      <md-field md-clearable>
+      <md-field
+        class="rt-rw"
+        md-clearable>
         <label>RT</label>
         <md-input
           type="number"
           min="1"
           max="20"/>
       </md-field>
-      <md-field md-clearable>
+      <md-field
+        class="rt-rw"
+        md-clearable>
         <label>RW</label>
         <md-input
           type="number"
@@ -28,6 +32,15 @@
     </md-content>
   </md-content>
 </template>
+
+<style lang="scss">
+.rt-rw .md-input-action.md-clear {
+  right: -32px;
+}
+.rt-rw input {
+  padding-right: 0 !important;
+}
+</style>
 
 <script>
 import Orm from '@mixins/orm'

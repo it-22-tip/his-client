@@ -21,7 +21,7 @@
     "release": "node --max_old_space_size=2048 node_modules/.bin/electron-builder",
     "build:debug": "node .compiler/build.es6 && cross-env DEBUG=electron-builder electron-builder",
     "build:dir": "node .compiler/build.es6 && electron-builder --dir",
-    "build:clean": "cross-env BUILD_TARGET=clean node .compiler/build.es6",
+    "build:clean": "cross-env BABEL_ENV=buildscript BUILD_TARGET=clean node -r babel-register .compiler/build.es6",
     "build:web": "cross-env BUILD_TARGET=web node .compiler/build.js",
     "lint": "node_modules/.bin/eslint --ext .js,.vue -f node_modules/eslint-friendly-formatter src",
     "lint:fix": "node_modules/.bin/eslint --fix --ext .js,.vue -f node_modules/eslint-friendly-formatter src",
