@@ -660,9 +660,9 @@ babel-core@^6.0.0, babel-core@^6.26.0:
     slash "^1.0.0"
     source-map "^0.5.6"
 
-babel-core@^6.26.2:
-  version "6.26.2"
-  resolved "https://registry.yarnpkg.com/babel-core/-/babel-core-6.26.2.tgz#b67a120521dcd6baf1a2ecceeceb595e223da06c"
+babel-core@^6.26.3:
+  version "6.26.3"
+  resolved "https://registry.yarnpkg.com/babel-core/-/babel-core-6.26.3.tgz#b2e2f09e342d0f0c88e2f02e067794125e75c207"
   dependencies:
     babel-code-frame "^6.26.0"
     babel-generator "^6.26.0"
@@ -11034,9 +11034,9 @@ vue-html-loader@^1.2.4:
     loader-utils "^1.0.2"
     object-assign "^4.1.0"
 
-vue-loader@^15.0.3:
-  version "15.0.3"
-  resolved "https://registry.yarnpkg.com/vue-loader/-/vue-loader-15.0.3.tgz#3c14dfef550ed40547033690ba75abb6a8cd498d"
+vue-loader@^15.0.4:
+  version "15.0.4"
+  resolved "https://registry.yarnpkg.com/vue-loader/-/vue-loader-15.0.4.tgz#309cc1ee6a438cabbbc79f8639890ce6cd9ba14c"
   dependencies:
     "@vue/component-compiler-utils" "^1.2.1"
     hash-sum "^1.0.2"
@@ -11425,9 +11425,9 @@ xhr@^2.0.1:
     parse-headers "^2.0.0"
     xtend "^4.0.0"
 
-xlsx@^0.12.10:
-  version "0.12.10"
-  resolved "https://registry.yarnpkg.com/xlsx/-/xlsx-0.12.10.tgz#c2e71be364d90ece2e08f0bae91563483c4897f8"
+xlsx@^0.12.11:
+  version "0.12.11"
+  resolved "https://registry.yarnpkg.com/xlsx/-/xlsx-0.12.11.tgz#54806d78a7bb02998aba3d59c49995a6f0be001e"
   dependencies:
     adler-32 "~1.2.0"
     cfb "~1.0.6"
