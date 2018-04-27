@@ -19,19 +19,19 @@
     "build": "cross-env BABEL_ENV=buildscript NODE_ENV=production node --max_old_space_size=2048 -r babel-register .compiler/build.es6 && electron-builder --config electron-builder.yml",
     "config:lint": "node_modules/.bin/eslint --ext .es6,.js -f node_modules/eslint-friendly-formatter .compiler",
     "release": "node --max_old_space_size=2048 node_modules/.bin/electron-builder",
-    "build:debug": "node .compiler/build.js && cross-env DEBUG=electron-builder electron-builder",
-    "build:dir": "node .compiler/build.js && electron-builder --dir",
-    "build:clean": "cross-env BUILD_TARGET=clean node .compiler/build.js",
+    "build:debug": "node .compiler/build.es6 && cross-env DEBUG=electron-builder electron-builder",
+    "build:dir": "node .compiler/build.es6 && electron-builder --dir",
+    "build:clean": "cross-env BUILD_TARGET=clean node .compiler/build.es6",
     "build:web": "cross-env BUILD_TARGET=web node .compiler/build.js",
     "lint": "node_modules/.bin/eslint --ext .js,.vue -f node_modules/eslint-friendly-formatter src",
     "lint:fix": "node_modules/.bin/eslint --fix --ext .js,.vue -f node_modules/eslint-friendly-formatter src",
     "pack": "npm run pack:main && npm run pack:renderer",
-    "pack:main": "cross-env NODE_ENV=production webpack --progress --colors --config .compiler/webpack.main.config.js",
-    "pack:renderer": "cross-env NODE_ENV=production webpack --progress --colors --config .compiler/webpack.renderer.config.js",
+    "pack:main": "cross-env NODE_ENV=production webpack --progress --colors --config .compiler/webpack.main.config.es6",
+    "pack:renderer": "cross-env NODE_ENV=production webpack --progress --colors --config .compiler/webpack.renderer.config.es6",
     "postinstall": "electron-builder  install-app-deps"
   },
   "browserslist": [
-    "last 1 Electron version"
+    "last 1 chrome version"
   ],
   "dependencies": {
     "@casl/ability": "^2.1.0",
@@ -43,7 +43,6 @@
     "@fortawesome/fontawesome-free-webfonts": "^1.0.6",
     "@fortawesome/vue-fontawesome": "^0.0.22",
     "ajv": "^6.4.0",
-    "autoprefixer": "^8.3.0",
     "axios": "^0.18.0",
     "bcrypt": "^2.0.1",
     "bluebird": "^3.5.1",
@@ -56,7 +55,6 @@
     "electron-store": "^1.3.0",
     "electron-unhandled": "^1.1.0",
     "emailjs-imap-client": "^3.0.5",
-    "fast-xml-parser": "^3.9.10",
     "gsap": "^1.20.4",
     "hammerjs": "^2.0.8",
     "image-compressor": "^1.2.0",
@@ -110,6 +108,7 @@
     "xlsx": "^0.12.10"
   },
   "devDependencies": {
+    "autoprefixer": "^8.3.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.3",
     "babel-loader": "^7.1.3",
