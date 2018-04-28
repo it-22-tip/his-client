@@ -6,6 +6,7 @@
           class="md-dense md-primary"
           md-elevation="0">
           <div class="md-toolbar-section-start">
+            <img :src="`static/png/32x32.png`">
             <h1 class="md-title">Hospital Information System</h1>
           </div>
           <div class="md-toolbar-section-end">
