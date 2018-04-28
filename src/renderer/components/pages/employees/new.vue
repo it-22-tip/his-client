@@ -103,6 +103,18 @@ export default {
       ]
     }
   },
+  watch: {
+    'birthDatePlace.BirthDate': {
+      handler: function (val) {
+        console.log(val)
+      }
+    },
+    'birthDatePlace.BirthPlaceRegency': {
+      handler: function (val) {
+        console.log(val)
+      }
+    }
+  },
   methods: {
     save () {
       this.saving()

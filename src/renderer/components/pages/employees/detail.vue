@@ -13,9 +13,11 @@
       <md-content class="fc">
         <md-content class="scr md-scrollbar">
           <div class="hi">
-            <h1>{{ detail.Name }}</h1>
-            <!-- <h2>{{ detail.JobTitle }}</h2> -->
-            <!-- <p>{{ detail.BirthDate.age }} Tahun</p> -->
+            <h1>{{ Person.Name }}</h1>
+            <h2>{{ JobTitle }}</h2>
+            <p>{{ Person.Age }} Tahun</p>
+            <p>{{ Person.Faith }}</p>
+            <p>{{ OfficialAddress }}</p>
             <!-- <p class="mo" @click="modalProvince = true">{{ detail.Address }}</p> -->
             <!-- <calendar v-model="detail.BirthDate.dateObj" :attributes='attrs'>
               <div slot-scope="props">
@@ -44,7 +46,6 @@ import {setupCalendar, DatePicker as dp} from 'v-calendar'
 import 'v-calendar/lib/v-calendar.min.css'
 import moment from 'moment'
 import ModalProvince from '@partials/modal-province'
-console.log(ModalProvince)
 Vue.component('modal-province', ModalProvince)
 setupCalendar({
   locale: 'id-ID'
@@ -61,8 +62,8 @@ export default {
   ],
   props: {
     employeeId: {
-      type: String,
-      default: ''
+      type: Number,
+      default: null
     }
   },
   data () {
@@ -78,7 +79,10 @@ export default {
       attrs: [{}],
       selectedDate: new Date(2018, 0, 9),
       showedDate: null,
-      modalProvince: false
+      modalProvince: false,
+      Person: {},
+      OfficialAddress: '',
+      JobTitle: ''
     }
   },
   watch: {
@@ -159,7 +163,7 @@ export default {
         include: [
           {
             model: Persons,
-            attributes: ['Id', 'Name', 'Gender', 'BirthDate'],
+            attributes: ['Id', 'Name', 'Gender', 'BirthDate', 'Faith'],
             include: [
               {
                 model: Almamaters,
@@ -226,7 +230,19 @@ export default {
       }).connect()
       try {
         let data = await this.connection.transaction(this.transaction)
+        let { JobTitle, Person } = data
+        this.Person = Person
+        let { AddressHistories } = Person
+        AddressHistories = AddressHistories[0].toJSON()
         console.log(data)
+        let Village = AddressHistories['AddressVillage']['Name']
+        let District = AddressHistories['AddressVillage']['District']['Name']
+        let Regency = AddressHistories['AddressVillage']['District']['Regency']['Name']
+        let Province = AddressHistories['AddressVillage']['District']['Regency']['Province']['Name']
+        let disp = `${Village}, ${District}, ${Regency}, ${Province}`
+        disp = startCase(toLower(disp))
+        this.OfficialAddress = disp
+        this.JobTitle = JobTitle.Name
         // const { JobTitles, Persons } = data
         // console.log(data)
         // this.detail = data

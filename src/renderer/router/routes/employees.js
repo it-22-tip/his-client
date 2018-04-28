@@ -28,7 +28,7 @@ const Employees = [
   {
     path: '/employee/:employeeId',
     name: 'employee.detail',
-    component: () => import('@pages/employees/employee-detail-personal'),
+    component: () => import('@pages/employees/detail'),
     props: true,
     meta: {
       title: 'Employees Details Personal',
@@ -38,7 +38,7 @@ const Employees = [
   {
     path: '/employee/new',
     name: 'employee.new',
-    component: () => import('@pages/employees/employee-new'),
+    component: () => import('@pages/employees/new'),
     meta: {
       title: 'Employees New',
       login: true

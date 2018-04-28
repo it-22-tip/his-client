@@ -9,11 +9,36 @@
             <h1 class="md-title">Hospital Information System</h1>
           </div>
           <div class="md-toolbar-section-end">
-            <md-button :to="{ name: 'base.dashboard' }">Dasbor</md-button>
-            <md-button :to="{ name: 'employees.employee.list', params: { page: '1', sort: 'Ein', order: 'desc' } }">HRD</md-button>
-            <md-button :to="{ name: 'masterdata.provinces', params: { page: '1', sort: 'Name', order: 'desc' } }">Data Induk</md-button>
-            <md-button :to="{ name: 'base.settings' }">Settings</md-button>
-            <md-button :to="{ name: 'base.login' }">Logout</md-button>
+            <md-button
+              :to="{ name: 'base.dashboard' }"
+              class="md-icon-button">
+              <md-icon>dashboard</md-icon>
+              <md-tooltip md-direction="bottom">Dasbor</md-tooltip>
+            </md-button>
+            <md-button
+              :to="{ name: 'employees.employee.list', params: { page: '1', sort: 'Ein', order: 'desc' } }"
+              class="md-icon-button">
+              <md-icon>face</md-icon>
+              <md-tooltip md-direction="bottom">Human Resource</md-tooltip>
+            </md-button>
+            <md-button
+              :to="{ name: 'masterdata.provinces', params: { page: '1', sort: 'Name', order: 'desc' } }"
+              class="md-icon-button">
+              <md-icon>layers</md-icon>
+              <md-tooltip md-direction="bottom">Master Date</md-tooltip>
+            </md-button>
+            <md-button
+              :to="{ name: 'base.settings' }"
+              class="md-icon-button">
+              <md-icon>settings</md-icon>
+              <md-tooltip md-direction="bottom">Settings</md-tooltip>
+            </md-button>
+            <md-button
+              :to="{ name: 'base.login' }"
+              class="md-icon-button">
+              <md-icon>close</md-icon>
+              <md-tooltip md-direction="bottom">Keluar</md-tooltip>
+            </md-button>
           </div>
         </md-toolbar>
       </md-content>

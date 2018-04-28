@@ -19,6 +19,11 @@ const routes = new Router({
   routes: [].concat(Base, Employees, Persons, Documents, MasterData, error404)
 })
 
+/* routes.beforeEach((to, from, next) => {
+  console.log(to)
+  next()
+}) */
+
 routes.beforeEach((to, from, next) => {
   if (to.meta !== undefined && to.meta.login !== undefined) {
     const { isLoggedIn } = Store.state.Users

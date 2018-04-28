@@ -190,7 +190,7 @@ export default {
       this.$router.push(options)
     },
     setDefault () {
-      this.activePage = (this.page !== null) ? '1' : null
+      this.activePage = (this.page !== null) ? this.page : '1'
       this.activeSort = (this.sort !== null) ? this.sort : null
       this.activeOrder = (this.order !== null) ? 'asc' : null
     },

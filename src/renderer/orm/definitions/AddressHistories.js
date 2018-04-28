@@ -27,4 +27,7 @@ const attributes = {
     defaultValue: AddressTypes.defaultValue
   }
 }
-export default { tableName, attributes }
+const options = {
+  timestamps: true
+}
+export default { tableName, attributes, options }

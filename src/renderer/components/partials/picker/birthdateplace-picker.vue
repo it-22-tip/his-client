@@ -31,6 +31,18 @@ export default {
       BirthPlaceRegencyCode: ''
     }
   },
+  watch: {
+    BirthDate: {
+      handler: function (value) {
+        console.log(value)
+      }
+    },
+    BirthPlaceRegencyCode: {
+      handler: function (value) {
+        console.log(value)
+      }
+    }
+  },
   mounted () {
   }
 }
