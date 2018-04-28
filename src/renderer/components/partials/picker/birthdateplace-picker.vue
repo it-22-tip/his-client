@@ -2,7 +2,7 @@
   <md-content class="birthdateplace-picker md-layout">
     <md-content class="md-layout-item md-size-85">
       <date-picker v-model="BirthDate"/>
-      <birthplace-picker v-model="BirthPlaceRegencyCode"/>
+      <birthplace-picker v-model="BirthPlaceRegency"/>
     </md-content>
   </md-content>
 </template>
@@ -19,8 +19,8 @@ export default {
       type: Object,
       default: () => {
         return {
-          birthDate: '',
-          birthPlaceRegencyCode: ''
+          BirthDate: '',
+          BirthPlaceRegency: ''
         }
       }
     }
@@ -28,7 +28,7 @@ export default {
   data () {
     return {
       BirthDate: '',
-      BirthPlaceRegencyCode: ''
+      BirthPlaceRegency: ''
     }
   },
   watch: {
@@ -37,9 +37,12 @@ export default {
         console.log(value)
       }
     },
-    BirthPlaceRegencyCode: {
+    BirthPlaceRegency: {
       handler: function (value) {
-        console.log(value)
+        this.$emit('input', {
+          BirthDate: this.BirthDate,
+          BirthPlaceRegency: value
+        })
       }
     }
   },

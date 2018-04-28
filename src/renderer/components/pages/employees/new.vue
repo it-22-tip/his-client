@@ -91,7 +91,7 @@ export default {
           Name: '',
           Gender: 'P',
           BirthDate: moment().format('YYYY-MM-DD'),
-          BirthPlaceRegency: ''
+          BirthPlaceRegencyCode: ''
         },
         JobTitleId: null
       },
@@ -111,7 +111,7 @@ export default {
     },
     'birthDatePlace.BirthPlaceRegency': {
       handler: function (val) {
-        console.log(val)
+        this.saved.Person.BirthPlaceRegencyCode = val
       }
     }
   },

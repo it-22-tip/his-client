@@ -15,6 +15,7 @@
           <div class="hi">
             <h1>{{ Person.Name }}</h1>
             <h2>{{ JobTitle }}</h2>
+            <p>{{ BirthPlaceRegency }}</p>
             <p>{{ Person.Age }} Tahun</p>
             <p>{{ Person.Faith }}</p>
             <p>{{ OfficialAddress }}</p>
@@ -82,7 +83,8 @@ export default {
       modalProvince: false,
       Person: {},
       OfficialAddress: '',
-      JobTitle: ''
+      JobTitle: '',
+      BirthPlaceRegency: ''
     }
   },
   watch: {
@@ -163,7 +165,7 @@ export default {
         include: [
           {
             model: Persons,
-            attributes: ['Id', 'Name', 'Gender', 'BirthDate', 'Faith'],
+            attributes: ['Id', 'Name', 'Gender', 'BirthDate', 'Faith', 'BirthPlaceRegencyCode'],
             include: [
               {
                 model: Almamaters,
@@ -177,6 +179,7 @@ export default {
               },
               {
                 model: Regencies,
+                attributes: ['Name'],
                 as: 'BirthPlaceRegency'
               },
               {
@@ -232,7 +235,7 @@ export default {
         let data = await this.connection.transaction(this.transaction)
         let { JobTitle, Person } = data
         this.Person = Person
-        let { AddressHistories } = Person
+        let { AddressHistories, BirthPlaceRegency } = Person
         AddressHistories = AddressHistories[0].toJSON()
         console.log(data)
         let Village = AddressHistories['AddressVillage']['Name']
@@ -243,6 +246,7 @@ export default {
         disp = startCase(toLower(disp))
         this.OfficialAddress = disp
         this.JobTitle = JobTitle.Name
+        this.BirthPlaceRegency = startCase(toLower(BirthPlaceRegency.Name))
         // const { JobTitles, Persons } = data
         // console.log(data)
         // this.detail = data
