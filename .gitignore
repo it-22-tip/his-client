@@ -9,5 +9,6 @@ npm-debug.log.*
 yarn-error.log
 thumbs.db
 .vscode
+.nyc_output
 *code-workspace
 !.gitkeep
