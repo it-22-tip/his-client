@@ -19,7 +19,6 @@
     "build": "cross-env BABEL_ENV=buildscript NODE_ENV=production node -r babel-register .compiler/build.es6 && electron-builder --config electron-builder.yml",
     "config:lint": "node_modules/.bin/eslint --ext .es6,.js -f node_modules/eslint-friendly-formatter .compiler",
     "build:debug": "node .compiler/build.es6 && cross-env DEBUG=electron-builder electron-builder",
-    "build:dir": "node .compiler/build.es6 && electron-builder --dir",
     "build:clean": "cross-env BABEL_ENV=buildscript BUILD_TARGET=clean node -r babel-register .compiler/build.es6",
     "build:web": "cross-env BUILD_TARGET=web node .compiler/build.js",
     "test": "cross-env BABEL_ENV=test nyc mocha --require babel-core/register \"src/**/test.es6\"",
@@ -110,7 +109,7 @@
     "xml2json": "^0.11.2"
   },
   "devDependencies": {
-    "autoprefixer": "^8.4.0",
+    "autoprefixer": "^8.4.1",
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.3",
     "babel-loader": "^7.1.3",

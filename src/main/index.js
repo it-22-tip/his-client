@@ -1,5 +1,4 @@
 'use strict'
-
 import { app, BrowserWindow, globalShortcut, Menu } from 'electron'
 import createMenu from './createMenu'
 import windowDefinitions from './windowDefinitions'
