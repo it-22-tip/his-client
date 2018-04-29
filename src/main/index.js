@@ -3,9 +3,10 @@ import { app, BrowserWindow, globalShortcut, Menu } from 'electron'
 import createMenu from './createMenu'
 import windowDefinitions from './windowDefinitions'
 import windowUrls from './windowUrls'
+import path from 'path'
 
 if (process.env.NODE_ENV !== 'development') {
-  global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
+  global.__static = path.join(__dirname, '/static').replace(/\\/g, '\\\\')
 }
 
 let mainWindow
