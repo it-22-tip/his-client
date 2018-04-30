@@ -30,7 +30,7 @@ export default {
         :disabled="disabled"
         v-model="selected"
         md-dense
-        @md-opened="getData"
+        @md-opened="getDate"
         @md-selected="$emit('input', selected)">
         <md-option
           v-for="item in items"
