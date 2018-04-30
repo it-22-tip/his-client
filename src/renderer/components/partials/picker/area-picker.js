@@ -30,7 +30,7 @@ export default {
         :disabled="disabled"
         v-model="selected"
         md-dense
-        @md-opened="openSelect"
+        @md-opened="getData"
         @md-selected="$emit('input', selected)">
         <md-option
           v-for="item in items"
@@ -61,7 +61,10 @@ export default {
           raw: true,
           attributes: ['Name', 'Code']
         }
-        if (this.where) opt.where = {this.where}
+        if (this.where) {
+          let where = this.where
+          opt.where = {where}
+        }
         let data = await Model.findAll(opt)
         return data
       }
