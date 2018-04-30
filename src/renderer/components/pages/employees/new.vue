@@ -139,11 +139,12 @@ export default {
     },
     async transaction (transaction) {
       const { Persons, Employees, JobTitles } = this.connection.models
+      console.log(Persons)
       let data
       try {
         data = await Employees.create(this.saved, {
           transaction: transaction,
-          logging: console.log(),
+          logging: console.log,
           include: [
             {
               model: Persons
