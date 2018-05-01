@@ -112,41 +112,37 @@
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/@casl/vue/-/vue-0.2.0.tgz#a5efba2bdc91a39cd853c2ba0de6377d95833002"
 
-"@fortawesome/fontawesome-common-types@^0.1.3":
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-0.1.3.tgz#8475e0f2d1ad1f858c4ec2e76ed9a2456a09ad83"
+"@fortawesome/fontawesome-common-types@^0.1.5":
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-0.1.5.tgz#d44485071f94ffac7f66ff6117b290eb7c908d58"
 
-"@fortawesome/fontawesome-common-types@^0.1.4":
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-0.1.4.tgz#1fbc66f0223646f23c5550c2c12e341078e2c262"
-
-"@fortawesome/fontawesome-free-brands@^5.0.10":
-  version "5.0.10"
-  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free-brands/-/fontawesome-free-brands-5.0.10.tgz#37f007a2f548682c8bfb7086b7e03dc65758580a"
+"@fortawesome/fontawesome-free-brands@^5.0.11":
+  version "5.0.11"
+  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free-brands/-/fontawesome-free-brands-5.0.11.tgz#1e2eda34f2c6208facabe44a90a49972b37307e9"
   dependencies:
-    "@fortawesome/fontawesome-common-types" "^0.1.4"
+    "@fortawesome/fontawesome-common-types" "^0.1.5"
 
-"@fortawesome/fontawesome-free-regular@^5.0.10":
-  version "5.0.10"
-  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free-regular/-/fontawesome-free-regular-5.0.10.tgz#f81dfeaa24896bfac8fb50c58c6c02f87a2a0c80"
+"@fortawesome/fontawesome-free-regular@^5.0.11":
+  version "5.0.11"
+  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free-regular/-/fontawesome-free-regular-5.0.11.tgz#6dc3899c5d29d09ae3f59010d17c72fa1292a997"
   dependencies:
-    "@fortawesome/fontawesome-common-types" "^0.1.4"
+    "@fortawesome/fontawesome-common-types" "^0.1.5"
 
-"@fortawesome/fontawesome-free-solid@^5.0.10":
-  version "5.0.10"
-  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free-solid/-/fontawesome-free-solid-5.0.10.tgz#b54c87d3ce4ffd0546b60d12e898e87b59776c30"
+"@fortawesome/fontawesome-free-solid@^5.0.11":
+  version "5.0.11"
+  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free-solid/-/fontawesome-free-solid-5.0.11.tgz#e6959def67f073b32c6ff419da0c99795f130248"
   dependencies:
-    "@fortawesome/fontawesome-common-types" "^0.1.4"
+    "@fortawesome/fontawesome-common-types" "^0.1.5"
 
-"@fortawesome/fontawesome-free-webfonts@^1.0.6":
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free-webfonts/-/fontawesome-free-webfonts-1.0.6.tgz#3dd13aa1a7466bff8fb0a401e1771c011ef2ca14"
+"@fortawesome/fontawesome-free-webfonts@^1.0.7":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free-webfonts/-/fontawesome-free-webfonts-1.0.7.tgz#f78f2a844b9f275fe171148d0b2d22b6e9624842"
 
-"@fortawesome/fontawesome@^1.1.5":
-  version "1.1.5"
-  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome/-/fontawesome-1.1.5.tgz#c7cfafdd3364245626293cc670357f9fb8487170"
+"@fortawesome/fontawesome@^1.1.6":
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome/-/fontawesome-1.1.6.tgz#edee6108aa3485c6f0fb3a16e6a222086b2abb42"
   dependencies:
-    "@fortawesome/fontawesome-common-types" "^0.1.3"
+    "@fortawesome/fontawesome-common-types" "^0.1.5"
 
 "@fortawesome/vue-fontawesome@^0.0.22":
   version "0.0.22"
@@ -3932,9 +3928,9 @@ electron-unhandled@^1.1.0:
     ensure-error "^1.0.0"
     lodash.debounce "^4.0.8"
 
-electron@^1.8.6:
-  version "1.8.6"
-  resolved "https://registry.yarnpkg.com/electron/-/electron-1.8.6.tgz#6d45e377b321a35b78a794b64e40b2cf8face6ae"
+electron@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-2.0.0.tgz#e95dc7f3a089a52b8c2a52c7c9e1024db0c8d46e"
   dependencies:
     "@types/node" "^8.0.24"
     electron-download "^3.0.1"
@@ -8197,9 +8193,9 @@ optimist@0.6.1, optimist@^0.6.1:
     minimist "~0.0.1"
     wordwrap "~0.0.2"
 
-optimize-css-assets-webpack-plugin@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/optimize-css-assets-webpack-plugin/-/optimize-css-assets-webpack-plugin-4.0.0.tgz#d5f80041fb1391b358a1f35273c3b53de814e8fe"
+optimize-css-assets-webpack-plugin@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/optimize-css-assets-webpack-plugin/-/optimize-css-assets-webpack-plugin-4.0.1.tgz#48f016766752c7648b92cc1e795b999732bd87a2"
   dependencies:
     cssnano "^3.4.0"
     last-call-webpack-plugin "^3.0.0"

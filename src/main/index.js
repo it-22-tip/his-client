@@ -45,7 +45,7 @@ function createMainWindow () {
     const devtron = require('devtron')
     const { default: installExtension, VUEJS_DEVTOOLS } = devtools
     devtron.install()
-    installExtension(VUEJS_DEVTOOLS)
+    installExtension(VUEJS_DEVTOOLS.id)
       .then((name) => console.log(`Added Extension:  ${name}`))
       .catch((err) => console.log('An error occurred: ', err))
   }
