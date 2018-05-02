@@ -4,9 +4,11 @@ import createMenu from './createMenu'
 import windowDefinitions from './windowDefinitions'
 import windowUrls from './windowUrls'
 import path from 'path'
+let isDevelopment = true
 
 if (process.env.NODE_ENV !== 'development') {
   global.__static = path.join(__dirname, '/static').replace(/\\/g, '\\\\')
+  isDevelopment = false
 }
 
 let mainWindow
@@ -15,7 +17,6 @@ let introWindow
 const { introUrl, mainUrl } = windowUrls
 
 function createMainWindow () {
-  const dev = process.env.NODE_ENV === 'development'
   const { mainDefinition, introDefinition } = windowDefinitions
   mainWindow = new BrowserWindow(mainDefinition)
   introWindow = new BrowserWindow(introDefinition)
@@ -40,17 +41,20 @@ function createMainWindow () {
     }, 6000)
   }
 
-  if (dev) {
-    const devtools = require('electron-devtools-installer')
-    const devtron = require('devtron')
-    const { default: installExtension, VUEJS_DEVTOOLS } = devtools
-    devtron.install()
-    installExtension(VUEJS_DEVTOOLS.id)
-      .then((name) => console.log(`Added Extension:  ${name}`))
-      .catch((err) => console.log('An error occurred: ', err))
+  if (isDevelopment) {
+    const devtools = async function () {
+      const ElectronDevtoolsInstaller = await import('electron-devtools-installer')
+      const devtron = await import('devtron')
+      const { default: installExtension, VUEJS_DEVTOOLS } = ElectronDevtoolsInstaller
+      devtron.install()
+      installExtension(VUEJS_DEVTOOLS.id)
+        .then((name) => console.log(`Added Extension:  ${name}`))
+        .catch((err) => console.log('An error occurred: ', err))
+    }
+    devtools()
   }
 
-  if (!dev) introWindow.loadURL(introUrl)
+  if (!isDevelopment) introWindow.loadURL(introUrl)
   mainWindow.loadURL(mainUrl)
 
   mainWindow.on('closed', () => {
@@ -65,7 +69,7 @@ function createMainWindow () {
   })
 
   introWindow.webContents.on('did-finish-load', () => {
-    if (dev) {
+    if (isDevelopment) {
       mainWindow.setContentProtection(true)
       mainWindow.show()
       return
