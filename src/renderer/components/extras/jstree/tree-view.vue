@@ -1,15 +1,62 @@
-import TreeItem from './tree-item.vue'
+<template>
+  <div
+    :class="classes"
+    role="tree"
+    onselectstart="return false">
+    <ul
+      :class="containerClasses"
+      role="group">
+      <tree-view-item
+        v-for="(child, index) in data"
+        :key="index"
+        :data="child"
+        :text-field-name="textFieldName"
+        :value-field-name="valueFieldName"
+        :children-field-name="childrenFieldName"
+        :item-events="itemEvents"
+        :whole-row="wholeRow"
+        :show-checkbox="showCheckbox"
+        :allow-transition="allowTransition"
+        :height="sizeHeight"
+        :parent-item="data"
+        :draggable="draggable"
+        :drag-over-background-color="dragOverBackgroundColor"
+        :on-item-click="onItemClick"
+        :on-item-toggle="onItemToggle"
+        :on-item-drag-start="onItemDragStart"
+        :on-item-drag-end="onItemDragEnd"
+        :on-item-drop="onItemDrop"
+        :item-class="index === data.length-1 ? 'tree-last' : ''">
+        <template slot-scope="_">
+          <slot
+            :vm="_.vm"
+            :model="_.model">
+            <i
+              v-if="!_.model.loading"
+              :class="_.vm.themeIconClasses"
+              role="presentation"/>
+            <span v-html="_.model[textFieldName]"/>
+          </slot>
+        </template>
+      </tree-view-item>
+    </ul>
+  </div>
+</template>
 
+<script>
 let ITEM_ID = 0
 let ITEM_HEIGHT_SMALL = 18
 let ITEM_HEIGHT_DEFAULT = 24
 let ITEM_HEIGHT_LARGE = 32
 
 export default {
-  name: 'VJstree',
+  name: 'TreeView',
+  components: {
+    'tree-view-item': () => import('./tree-view-item')
+  },
   props: {
-    data: {type: Array},
-    size: {type: String, validator: value => ['large', 'small'].indexOf(value) > -1},
+    data: {type: Array, default: () => ([])},
+    size: {type: String, default: '', validator: value => ['large', 'small'].indexOf(value) > -1},
     showCheckbox: {type: Boolean, default: false},
     wholeRow: {type: Boolean, default: false},
     noDots: {type: Boolean, default: false},
@@ -20,17 +67,12 @@ export default {
     textFieldName: {type: String, default: 'text'},
     valueFieldName: {type: String, default: 'value'},
     childrenFieldName: {type: String, default: 'children'},
-    itemEvents: {
-      type: Object,
-      default: function () {
-        return {}
-      }
-    },
-    async: {type: Function},
+    itemEvents: {type: Object, default: () => ({})},
+    async: {type: Function, default: () => ({})},
     loadingText: {type: String, default: 'Loading...'},
     draggable: {type: Boolean, default: false},
     dragOverBackgroundColor: {type: String, default: '#C9FDC9'},
-    klass: String
+    itemClass: {type: String, default: ''}
   },
   data () {
     return {
@@ -45,7 +87,7 @@ export default {
         {'tree-default': !this.size},
         {[`tree-default-${this.size}`]: !!this.size},
         {'tree-checkbox-selection': !!this.showCheckbox},
-        {[this.klass]: !!this.klass}
+        {[this.itemClass]: !!this.itemClass}
       ]
     },
     containerClasses () {
@@ -65,6 +107,15 @@ export default {
         default:
           return ITEM_HEIGHT_DEFAULT
       }
+    }
+  },
+  created () {
+    this.initializeData(this.data)
+  },
+  mounted () {
+    if (this.async) {
+      this.$set(this.data, 0, this.initializeLoading())
+      this.handleAsyncLoad(this.data, this)
     }
   },
   methods: {
@@ -246,17 +297,6 @@ export default {
         this.$emit('item-drop', oriNode, oriItem, draggedItem.item, e)
       }
     }
-  },
-  created () {
-    this.initializeData(this.data)
-  },
-  mounted () {
-    if (this.async) {
-      this.$set(this.data, 0, this.initializeLoading())
-      this.handleAsyncLoad(this.data, this)
-    }
-  },
-  components: {
-    TreeItem
   }
 }
+</script>

@@ -7,13 +7,13 @@ import { MdButton } from 'vue-material/dist/components/MdButton'
 Vue.use(MdButton)
 export default {
   name: 'BaseButton',
+  created () {
+
+  },
   template: `
     <div>
       <md-button>1</md-button>
     </div>
-  `,
-  created () {
-
-  }
+  `
 }
 </script>

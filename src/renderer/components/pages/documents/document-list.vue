@@ -94,7 +94,7 @@ export default {
     }
   },
   mounted () {
-    this.populate()
+    // this.populate()
     this.populateTree()
   },
   async beforeDestroy () {

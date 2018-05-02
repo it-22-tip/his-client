@@ -1,7 +1,7 @@
 const Documents = [
   {
     path: '/documents/document',
-    name: 'documents.document.list',
+    name: 'documents.list',
     component: () => import('@pages/documents/document-list'),
     meta: {
       title: 'Documents',

@@ -11,34 +11,12 @@
           </div>
           <div class="md-toolbar-section-end">
             <md-button
-              :to="{ name: 'base.dashboard' }"
+              v-for="item in link"
+              :key="item.title"
+              :to="item.to"
               class="md-icon-button">
-              <md-icon>dashboard</md-icon>
-              <md-tooltip md-direction="bottom">Dasbor</md-tooltip>
-            </md-button>
-            <md-button
-              :to="{ name: 'employees.employee.list', params: { page: '1', sort: 'Ein', order: 'desc' } }"
-              class="md-icon-button">
-              <md-icon>face</md-icon>
-              <md-tooltip md-direction="bottom">Human Resource</md-tooltip>
-            </md-button>
-            <md-button
-              :to="{ name: 'masterdata.provinces', params: { page: '1', sort: 'Name', order: 'desc' } }"
-              class="md-icon-button">
-              <md-icon>layers</md-icon>
-              <md-tooltip md-direction="bottom">Master Date</md-tooltip>
-            </md-button>
-            <md-button
-              :to="{ name: 'base.settings' }"
-              class="md-icon-button">
-              <md-icon>settings</md-icon>
-              <md-tooltip md-direction="bottom">Settings</md-tooltip>
-            </md-button>
-            <md-button
-              :to="{ name: 'base.login' }"
-              class="md-icon-button">
-              <md-icon>close</md-icon>
-              <md-tooltip md-direction="bottom">Keluar</md-tooltip>
+              <md-icon>{{ item.icon }}</md-icon>
+              <md-tooltip md-direction="bottom">{{ item.title }}</md-tooltip>
             </md-button>
           </div>
         </md-toolbar>
@@ -112,6 +90,42 @@
 export default {
   components: {
     'left-menu': () => import('@partials/left-menu')
+  },
+  data () {
+    return {
+      link: [
+        {
+          to: { name: 'base.dashboard' },
+          icon: 'dashboard',
+          title: 'Dasbor'
+        },
+        {
+          to: { name: 'employees.employee.list', params: { page: '1', sort: 'Ein', order: 'desc' } },
+          icon: 'face',
+          title: 'Human Resources'
+        },
+        {
+          to: { name: 'masterdata.provinces', params: { page: '1', sort: 'Name', order: 'desc' } },
+          icon: 'layers',
+          title: 'Master Data'
+        },
+        {
+          to: { name: 'documents.list' },
+          icon: 'settings',
+          title: 'Documents'
+        },
+        {
+          to: { name: 'base.settings' },
+          icon: 'settings',
+          title: 'Settings'
+        },
+        {
+          to: { name: 'base.login' },
+          icon: 'close',
+          title: 'Out'
+        }
+      ]
+    }
   }
 }
 </script>
