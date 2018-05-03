@@ -1,6 +1,6 @@
 'use strict'
 import path from 'path'
-import { MainEntry, StaticPath } from './constant'
+import { MainEntry, StaticPath, OutputPath } from '../constant'
 import { dependencies } from '../../package.json'
 import webpack from 'webpack'
 import BabelMinifyWebpackPlugin from 'babel-minify-webpack-plugin'
@@ -49,7 +49,7 @@ let mainConfig = {
   output: {
     filename: '[name].js',
     libraryTarget: 'commonjs2',
-    path: path.join(__dirname, '../../dist/electron')
+    path: OutputPath
   },
   plugins: [
     new webpack.NoEmitOnErrorsPlugin()

@@ -1,6 +1,6 @@
 'use strict'
 import path from 'path'
-import { RendererEntry, StaticPath, RendererPath } from './constant'
+import { RendererEntry, StaticPath, RendererPath, OutputPath } from '../constant'
 import { dependencies } from '../../package.json'
 import webpack from 'webpack'
 import BabelMinifyWebpackPlugin from 'babel-minify-webpack-plugin'
@@ -160,7 +160,7 @@ let rendererConfig = {
   output: {
     filename: '[name].js',
     libraryTarget: 'commonjs2',
-    path: path.join(__dirname, '../../dist/electron')
+    path: OutputPath
   },
   resolve: {
     alias: {
@@ -205,7 +205,7 @@ if (process.env.NODE_ENV === 'production') {
     new CopyWebpackPlugin([
       {
         from: StaticPath,
-        to: path.join(__dirname, '../../dist/electron/static'),
+        to: path.join(OutputPath, 'static'),
         ignore: ['.*']
       }
     ]),

@@ -5,10 +5,7 @@ import chalk from 'chalk'
 import del from 'del'
 import webpack from 'webpack'
 import Multispinner from 'multispinner'
-
-import mainConfig from './webpack/mainConfig.es6'
-import rendererConfig from './webpack/rendererConfig.es6'
-import webConfig from './webpack/webConfig.es6'
+import { mainConfig, rendererConfig, webConfig } from './webpack'
 
 const doneLog = chalk.bgGreen.white(' DONE ') + ' '
 const errorLog = chalk.bgRed.white(' ERROR ') + ' '

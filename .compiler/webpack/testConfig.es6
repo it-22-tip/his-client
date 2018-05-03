@@ -1,7 +1,7 @@
 'use strict'
 import path from 'path'
 import webpack from 'webpack'
-import whiteListedModules from './whiteListedModules'
+import whiteListedModules from '../whiteListedModules'
 import { VueLoaderPlugin } from 'vue-loader'
 import nodeExternals from 'webpack-node-externals'
 process.env.BABEL_ENV = 'renderer'

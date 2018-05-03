@@ -11,6 +11,8 @@ if (process.env.NODE_ENV !== 'development') {
   isDevelopment = false
 }
 
+// console.log(process.env)
+
 let mainWindow
 let introWindow
 

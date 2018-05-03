@@ -8,9 +8,7 @@ import { spawn } from 'child_process'
 import webpack from 'webpack'
 import WebpackDevServer from 'webpack-dev-server'
 import webpackHotMiddleware from 'webpack-hot-middleware'
-
-import mainConfig from './webpack/mainConfig.es6'
-import rendererConfig from './webpack/rendererConfig.es6'
+import { mainConfig, rendererConfig } from './webpack'
 
 let electronProcess = null
 let manualRestart = false
@@ -135,6 +133,7 @@ function startMain () {
 function startElectron () {
   let env = Object.create( process.env );
   env.ELECTRON_DISABLE_SECURITY_WARNINGS = true
+  env.IS_DEVELOPMENT = true
   electronProcess = spawn(electron, ['--inspect=5858', path.join(__dirname, '../dist/electron/main.js')], { env: env })
 
   electronProcess.stdout.on('data', data => {
