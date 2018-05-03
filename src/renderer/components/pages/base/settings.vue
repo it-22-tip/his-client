@@ -58,9 +58,9 @@ export default {
     open () {
       // console.log('open')
       // console.log(dialog)
-      const window = remote.getCurrentWindow()
+      // const window = remote.getCurrentWindow()
       dialog.showOpenDialog(
-        window,
+        remote,
         {
           properties: ['openDirectory']
         },
