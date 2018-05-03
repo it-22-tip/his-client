@@ -1,25 +1,19 @@
 'use strict'
 import path from 'path'
-import { dependencies } from '../package.json'
 import webpack from 'webpack'
 import BabelMinifyWebpackPlugin from 'babel-minify-webpack-plugin'
 import CopyWebpackPlugin from 'copy-webpack-plugin'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
-import eslintFriendlyFormatter from 'eslint-friendly-formatter'
-import whiteListedModules from './whiteListedModules'
 import { VueLoaderPlugin } from 'vue-loader'
-process.env.BABEL_ENV = 'renderer'
-let rendererConfig = {
+import EslintFriendlyFormater from 'eslint-friendly-formatter'
+process.env.BABEL_ENV = 'web'
+let webConfig = {
   devtool: '#cheap-module-eval-source-map',
   entry: {
-    renderer: path.join(__dirname, '../src/renderer/main.js')
+    web: path.join(__dirname, '../src/renderer/main.js')
   },
-  externals: [
-    ...Object.keys(dependencies || {}).filter(d => !whiteListedModules.includes(d))
-  ],
   module: {
-    noParse: [path.join(__dirname, '../node_modules/handsontable-pro/dist/handsontable.full.js')],
     rules: [
       {
         test: /\.worker\.js$/,
@@ -33,7 +27,7 @@ let rendererConfig = {
         use: {
           loader: 'eslint-loader',
           options: {
-            formatter: eslintFriendlyFormatter
+            formatter: EslintFriendlyFormater
           }
         }
       },
@@ -91,11 +85,8 @@ let rendererConfig = {
       {
         test: /\.js$/,
         use: 'babel-loader',
+        include: [ path.resolve(__dirname, '../src/renderer') ],
         exclude: /node_modules/
-      },
-      {
-        test: /\.node$/,
-        use: 'node-loader'
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
@@ -103,16 +94,8 @@ let rendererConfig = {
           loader: 'url-loader',
           query: {
             limit: 10000,
-            name: 'imgs/[name]--[folder].[ext]'
+            name: 'imgs/[name].[ext]'
           }
-        }
-      },
-      {
-        test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
-        loader: 'url-loader',
-        options: {
-          limit: 10000,
-          name: 'media/[name]--[folder].[ext]'
         }
       },
       {
@@ -121,26 +104,16 @@ let rendererConfig = {
           loader: 'url-loader',
           query: {
             limit: 10000,
-            name: 'fonts/[name]--[folder].[ext]'
+            name: 'fonts/[name].[ext]'
           }
-        }
-      },
-      {
-        test: /\.(md|txt)(\?.*)?$/,
-        use: {
-          loader: 'raw-loader'
         }
       }
     ]
   },
-  node: {
-    __dirname: process.env.NODE_ENV !== 'production',
-    __filename: process.env.NODE_ENV !== 'production'
-  },
   plugins: [
     new VueLoaderPlugin(),
     new MiniCssExtractPlugin({
-      filename: 'minify.css'
+      filename: 'styles.css'
     }),
     new HtmlWebpackPlugin({
       filename: 'index.html',
@@ -150,62 +123,51 @@ let rendererConfig = {
         removeAttributeQuotes: true,
         removeComments: true
       },
-      nodeModules: process.env.NODE_ENV !== 'production'
-        ? path.resolve(__dirname, '../node_modules')
-        : false
+      nodeModules: false
+    }),
+    new webpack.DefinePlugin({
+      'process.env.IS_WEB': 'true'
     }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin()
   ],
   output: {
     filename: '[name].js',
-    libraryTarget: 'commonjs2',
-    path: path.join(__dirname, '../dist/electron')
+    path: path.join(__dirname, '../dist/web')
   },
   resolve: {
     alias: {
       '@pages': path.join(__dirname, '../src/renderer/components/pages'),
       '@partials': path.join(__dirname, '../src/renderer/components/partials'),
       '@extras': path.join(__dirname, '../src/renderer/components/extras'),
-      '@helpers': path.join(__dirname, '../src/renderer/helpers'),
-      '@mixins': path.join(__dirname, '../src/renderer/mixins'),
+      '@helpers': path.join(__dirname, '../src/renderer/components/helpers'),
+      '@mixins': path.join(__dirname, '../src/renderer/components/mixins'),
       '@': path.join(__dirname, '../src/renderer'),
       'vue$': 'vue/dist/vue.esm.js'
     },
-    extensions: ['.js', '.vue', '.json', '.css', '.node', '.scss', 'less']
+    extensions: ['.js', '.vue', '.json', '.css', '.scss', 'less']
   },
-  target: 'electron-renderer'
-}
-
-/**
- * Adjust rendererConfig for development settings
- */
-if (process.env.NODE_ENV !== 'production') {
-  rendererConfig.plugins.push(
-    new webpack.DefinePlugin({
-      '__static': `"${path.join(__dirname, '../static').replace(/\\/g, '\\\\')}"`
-    })
-  )
+  target: 'web'
 }
 
 if (process.env.NODE_ENV !== 'production') {
-  rendererConfig.mode = 'development'
+  webConfig.mode = 'development'
 } else {
-  rendererConfig.mode = 'production'
+  webConfig.mode = 'production'
 }
 
 /**
- * Adjust rendererConfig for production settings
+ * Adjust webConfig for production settings
  */
 if (process.env.NODE_ENV === 'production') {
-  rendererConfig.devtool = ''
+  webConfig.devtool = ''
 
-  rendererConfig.plugins.push(
+  webConfig.plugins.push(
     new BabelMinifyWebpackPlugin(),
     new CopyWebpackPlugin([
       {
         from: path.join(__dirname, '../static'),
-        to: path.join(__dirname, '../dist/electron/static'),
+        to: path.join(__dirname, '../dist/web/static'),
         ignore: ['.*']
       }
     ]),
@@ -218,4 +180,4 @@ if (process.env.NODE_ENV === 'production') {
   )
 }
 
-export default rendererConfig
+export default webConfig

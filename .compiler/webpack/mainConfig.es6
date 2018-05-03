@@ -1,12 +1,14 @@
 'use strict'
 import path from 'path'
-import { dependencies } from '../package.json'
+import { MainEntry, StaticPath } from './constant'
+import { dependencies } from '../../package.json'
 import webpack from 'webpack'
 import BabelMinifyWebpackPlugin from 'babel-minify-webpack-plugin'
+import EslintFriendlyFormatter from 'eslint-friendly-formatter'
 process.env.BABEL_ENV = 'main'
 let mainConfig = {
   entry: {
-    main: path.join(__dirname, '../src/main/index.js')
+    main: MainEntry
   },
   externals: [
     ...Object.keys(dependencies || {})
@@ -25,7 +27,7 @@ let mainConfig = {
         use: {
           loader: 'eslint-loader',
           options: {
-            formatter: require('eslint-friendly-formatter')
+            formatter: EslintFriendlyFormatter
           }
         }
       },
@@ -47,7 +49,7 @@ let mainConfig = {
   output: {
     filename: '[name].js',
     libraryTarget: 'commonjs2',
-    path: path.join(__dirname, '../dist/electron')
+    path: path.join(__dirname, '../../dist/electron')
   },
   plugins: [
     new webpack.NoEmitOnErrorsPlugin()
@@ -64,7 +66,7 @@ let mainConfig = {
 if (process.env.NODE_ENV !== 'production') {
   mainConfig.plugins.push(
     new webpack.DefinePlugin({
-      '__static': `"${path.join(__dirname, '../static').replace(/\\/g, '\\\\')}"`
+      '__static': `"${StaticPath.replace(/\\/g, '\\\\')}"`
     })
   )
 }
