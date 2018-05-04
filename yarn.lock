@@ -11420,9 +11420,9 @@ vue-html-loader@^1.2.4:
     loader-utils "^1.0.2"
     object-assign "^4.1.0"
 
-vue-loader@^15.0.7:
-  version "15.0.7"
-  resolved "https://registry.yarnpkg.com/vue-loader/-/vue-loader-15.0.7.tgz#7ee279e7c760e1910e1e7bb0d7ad364c9e9b2954"
+vue-loader@^15.0.8:
+  version "15.0.8"
+  resolved "https://registry.yarnpkg.com/vue-loader/-/vue-loader-15.0.8.tgz#083674e9ce0604c256cbe55902be15d5dc3a9c60"
   dependencies:
     "@vue/component-compiler-utils" "^1.2.1"
     hash-sum "^1.0.2"
