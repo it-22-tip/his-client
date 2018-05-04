@@ -164,6 +164,12 @@ let rendererConfig = {
   },
   resolve: {
     alias: {
+      // vue-material start
+      'components': path.join(RendererPath, 'vue-material', 'src', 'components'),
+      'vue-material/material': path.join(RendererPath, 'vue-material', 'src', 'material.js'),
+      'core': path.join(RendererPath, 'vue-material', 'src', 'core'),
+      'theme': path.join(RendererPath, 'vue-material', 'src', 'theme'),
+      // vue-material end
       '@pages': path.join(RendererPath, 'components', 'pages'),
       '@partials': path.join(RendererPath, 'components', 'partials'),
       '@extras': path.join(RendererPath, 'components', 'extras'),
