@@ -12,5 +12,12 @@ const mainUrl = toUrl('/')
 const introUrl = toUrl('#intro')
 const installUrl = toUrl('#install')
 const printerUrl = toUrl('#printer')
+const directoryUrl = toUrl('#directory')
 
-export default { introUrl, mainUrl, installUrl, printerUrl }
+export default {
+  introUrl,
+  mainUrl,
+  installUrl,
+  printerUrl,
+  directoryUrl
+}

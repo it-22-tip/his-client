@@ -65,7 +65,7 @@ export default {
             frame: false
           }
         )
-        mw.loadURL(`http://localhost:9080#directory`)
+        mw.loadURL(`http://localhost:9080#printer`)
         mw.webContents.on('did-finish-load', () => {
           mw.show()
         })

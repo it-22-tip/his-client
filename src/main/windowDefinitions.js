@@ -51,4 +51,24 @@ const printerDefinition = {
   skipTaskbar: true
 }
 
-export default { mainDefinition, introDefinition, installDefinition, printerDefinition }
+const directoryDefinition = {
+  height: 600,
+  minHeight: 600,
+  useContentSize: false,
+  minWidth: 800,
+  width: 800,
+  show: false,
+  defaultEncoding: 'UTF-8',
+  frame: false,
+  transparent: true,
+  resizable: false,
+  skipTaskbar: true
+}
+
+export default {
+  mainDefinition,
+  introDefinition,
+  installDefinition,
+  printerDefinition,
+  directoryDefinition
+}
