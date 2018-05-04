@@ -1,15 +1,13 @@
 <template>
   <layout-one>
-    <div class="md-layout md-gutter">
-      [directory]
-    </div>
+    [dir]
   </layout-one>
 </template>
 
 <script>
 export default {
-  name: 'Directory',
   components: {
+    'base-button': () => import('@partials/base-button'),
     'layout-one': () => import('@partials/layout-one')
   },
   methods: {

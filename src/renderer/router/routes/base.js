@@ -56,8 +56,7 @@ const Base = [
     name: 'base.directory',
     component: () => import('@pages/base/directory'),
     meta: {
-      title: 'Directory',
-      login: true
+      title: 'Directory'
     }
   }
 ]

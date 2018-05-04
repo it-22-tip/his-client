@@ -4,6 +4,7 @@ import windowUrls from './windowUrls'
 
 let introWindow
 let printerWindow
+let directoryWindow
 let installWindow
 let flashing = false
 
@@ -102,6 +103,23 @@ export default function createMenu (targetWindow) {
             } else {
               installWindow.close()
               installWindow = null
+            }
+          }
+        },
+        {
+          label: 'Directory',
+          click: () => {
+            if (directoryWindow === null || directoryWindow === undefined) {
+              const { directoryDefinition } = windowDefinitions
+              const { directoryUrl } = windowUrls
+              directoryWindow = new BrowserWindow(directoryDefinition)
+              directoryWindow.loadURL(directoryUrl)
+              directoryWindow.webContents.on('did-finish-load', () => {
+                directoryWindow.show()
+              })
+            } else {
+              directoryWindow.close()
+              directoryWindow = null
             }
           }
         }

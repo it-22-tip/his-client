@@ -60,6 +60,7 @@ function createMainWindow () {
   mainWindow.loadURL(mainUrl)
 
   mainWindow.on('closed', () => {
+    app.quit()
     mainWindow = null
   })
 

@@ -10,20 +10,18 @@
           webkitdirectory
           @md-change="onChange"/>
       </md-field>
-      <md-button @click="open">Open</md-button>
+      <md-button
+        class="md-raised"
+        @click="open">Open</md-button>
     </div>
   </layout-one>
 </template>
 
 <script>
 import { readDir } from '@helpers/files'
-// import { homePath } from '@helpers/constants'
 import { remote } from 'electron'
 import { appData, homePath } from '@helpers/constants'
 const { BrowserWindow } = remote
-console.log(appData)
-console.log(remote)
-// const webContent = remote.getCurrentWebContents()// console.log(webContent)
 
 export default {
   components: {
@@ -57,6 +55,7 @@ export default {
     },
     open () {
       try {
+        console.log('test')
         const mw = new BrowserWindow(
           {
             width: 800,
@@ -65,12 +64,12 @@ export default {
             frame: false
           }
         )
-        mw.loadURL(`#directory`)
+        mw.loadURL(`http://localhost:9080#directory`)
         mw.webContents.on('did-finish-load', () => {
           mw.show()
         })
       } catch (error) {
-
+        console.log(error)
       }
 
       // console.log('open')
