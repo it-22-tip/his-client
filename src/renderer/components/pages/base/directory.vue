@@ -9,6 +9,9 @@
 <script>
 export default {
   name: 'Directory',
+  components: {
+    'layout-one': () => import('@partials/layout-one')
+  },
   methods: {
   }
 }
