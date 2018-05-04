@@ -20,7 +20,7 @@ import { readDir } from '@helpers/files'
 // import { homePath } from '@helpers/constants'
 import { remote } from 'electron'
 import { appData, homePath } from '@helpers/constants'
-const { dialog } = remote
+const { BrowserWindow } = remote
 console.log(appData)
 console.log(remote)
 // const webContent = remote.getCurrentWebContents()// console.log(webContent)
@@ -56,10 +56,27 @@ export default {
       this.value = $event[0].path
     },
     open () {
+      try {
+        const mw = new BrowserWindow(
+          {
+            width: 800,
+            height: 600,
+            show: false,
+            frame: false
+          }
+        )
+        mw.loadURL(`http://localhost:9080#directory`)
+        mw.webContents.on('did-finish-load', () => {
+          mw.show()
+        })
+      } catch (error) {
+
+      }
+
       // console.log('open')
       // console.log(dialog)
       // const window = remote.getCurrentWindow()
-      dialog.showOpenDialog(
+      /* dialog.showOpenDialog(
         remote,
         {
           properties: ['openDirectory']
@@ -67,7 +84,7 @@ export default {
         path => {
           console.log(path)
         }
-      )
+      ) */
       // dialog.showOpenDialog([browserWindow)
       // console.log(remote.getCurrentWindow())
       /* dialog.showOpenDialog(mainWindow, {

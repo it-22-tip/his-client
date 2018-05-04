@@ -7,13 +7,15 @@
     <button @click="print">Print</button>
     <button @click="electronPrinter">Electron Printer</button>
     <button @click="electronPrint">Electron Print</button>
+    <button @click="closeWindow">Close</button>
   </div>
 </template>
 
 <script>
 import printer from 'printer'
 import { readFile } from '@helpers/files'
-const ele = require('electron')
+import { remote } from 'electron'
+// const ele = require('electron')
 export default {
   name: 'Intro',
   data () {
@@ -35,13 +37,17 @@ export default {
     )
   },
   methods: {
+    closeWindow () {
+      let currentWindow = remote.getCurrentWindow()
+      currentWindow.close()
+    },
     electronPrinter () {
-      let webContents = ele.remote.getCurrentWebContents()
+      let webContents = remote.getCurrentWebContents()
       let printers = webContents.getPrinters()
       console.log(printers)
     },
     electronPrint () {
-      let webContents = ele.remote.getCurrentWebContents()
+      let webContents = remote.getCurrentWebContents()
       // webContents.print({silent: false, printBackground: false, deviceName: 'EPSON-L360-Series'})
       webContents.print()
     },

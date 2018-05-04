@@ -50,6 +50,15 @@ const Base = [
       title: 'Dashboard',
       login: true
     }
+  },
+  {
+    path: '/directory',
+    name: 'base.directory',
+    component: () => import('@pages/base/directory'),
+    meta: {
+      title: 'Directory',
+      login: true
+    }
   }
 ]
 export default Base
