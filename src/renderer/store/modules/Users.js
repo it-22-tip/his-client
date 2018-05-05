@@ -2,8 +2,8 @@
 // import bcrypt from 'bcryptjs'
 const state = {
   isAuthenticating: false,
-  isLoggedIn: !!localStorage.getItem('jwt'),
-  user: JSON.parse(localStorage.getItem('usr')),
+  /* isLoggedIn: !!localStorage.getItem('jwt'),
+  user: JSON.parse(localStorage.getItem('usr')), */
   errorMessage: null
 }
 

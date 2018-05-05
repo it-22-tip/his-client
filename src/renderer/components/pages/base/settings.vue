@@ -13,6 +13,7 @@
       <md-button
         class="md-raised"
         @click="open">Open</md-button>
+      <p>{{ sel }}</p>
     </div>
   </layout-one>
 </template>
@@ -21,7 +22,11 @@
 import { readDir } from '@helpers/files'
 import { remote } from 'electron'
 import { appData, homePath } from '@helpers/constants'
-const { BrowserWindow } = remote
+import windowDefinitions from '@windowDefinitions'
+import windowUrls from '@windowUrls'
+const { BrowserWindow, getCurrentWindow } = remote
+const { directoryDefinition } = windowDefinitions
+const { directoryUrl } = windowUrls
 
 export default {
   components: {
@@ -32,6 +37,12 @@ export default {
       appData: appData,
       placeholder: homePath,
       value: homePath
+    }
+  },
+  computed: {
+    sel () {
+      // return 0
+      return this.$store.state.Directory.selection
     }
   },
   watch: {
@@ -55,40 +66,16 @@ export default {
     },
     open () {
       try {
-        console.log('test')
-        const mw = new BrowserWindow(
-          {
-            width: 800,
-            height: 600,
-            show: false,
-            frame: false
-          }
-        )
-        mw.loadURL(`http://localhost:9080#directory`)
+        const cw = getCurrentWindow()
+        directoryDefinition.parent = cw
+        const mw = new BrowserWindow(directoryDefinition)
+        mw.loadURL(directoryUrl)
         mw.webContents.on('did-finish-load', () => {
           mw.show()
         })
       } catch (error) {
         console.log(error)
       }
-
-      // console.log('open')
-      // console.log(dialog)
-      // const window = remote.getCurrentWindow()
-      /* dialog.showOpenDialog(
-        remote,
-        {
-          properties: ['openDirectory']
-        },
-        path => {
-          console.log(path)
-        }
-      ) */
-      // dialog.showOpenDialog([browserWindow)
-      // console.log(remote.getCurrentWindow())
-      /* dialog.showOpenDialog(mainWindow, {
-        properties: ['openDirectory']
-      }) */
     }
   }
 }

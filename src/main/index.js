@@ -1,5 +1,7 @@
 'use strict'
-import { app, BrowserWindow, globalShortcut, Menu } from 'electron'
+import { app, BrowserWindow, globalShortcut, Menu, ipcMain } from 'electron'
+// import { forwardToRenderer, triggerAlias, replayActionMain } from 'electron-redux'
+import { state, commit } from './store'
 import createMenu from './createMenu'
 import windowDefinitions from './windowDefinitions'
 import windowUrls from './windowUrls'
@@ -10,6 +12,9 @@ if (process.env.NODE_ENV !== 'development') {
   global.__static = path.join(__dirname, '/static').replace(/\\/g, '\\\\')
   isDevelopment = false
 }
+
+console.log(state)
+console.log(commit)
 
 // console.log(process.env)
 
@@ -82,6 +87,12 @@ function createMainWindow () {
 
   mainWindow.webContents.on('did-finish-load', () => {
     closeintroWindow(mainWindow)
+    ipcMain.on('asynchronous-message', (event, arg) => {
+      // manage data
+      // console.log(arg)
+      event.sender.send('selection', arg)
+      mainWindow.webContents.send('selection', arg)
+    })
   })
 
   mainWindow.webContents.on('will-navigate', (event) => {

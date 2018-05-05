@@ -60,9 +60,10 @@ const directoryDefinition = {
   show: false,
   defaultEncoding: 'UTF-8',
   frame: false,
-  transparent: true,
+  transparent: false,
   resizable: false,
-  skipTaskbar: true
+  skipTaskbar: true,
+  modal: true
 }
 
 export default {

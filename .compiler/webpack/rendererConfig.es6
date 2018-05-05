@@ -1,6 +1,6 @@
 'use strict'
 import path from 'path'
-import { RendererEntry, StaticPath, RendererPath, OutputPath } from '../constant'
+import { RendererEntry, StaticPath, RendererPath, MainPath, OutputPath } from '../constant'
 import { dependencies } from '../../package.json'
 import webpack from 'webpack'
 import BabelMinifyWebpackPlugin from 'babel-minify-webpack-plugin'
@@ -175,6 +175,8 @@ let rendererConfig = {
       '@extras': path.join(RendererPath, 'components', 'extras'),
       '@helpers': path.join(RendererPath, 'helpers'),
       '@mixins': path.join(RendererPath, 'mixins'),
+      '@windowDefinitions': path.join(MainPath, 'windowDefinitions'),
+      '@windowUrls': path.join(MainPath, 'windowUrls'),
       '@': RendererPath,
       'vue$': 'vue/dist/vue.esm.js'
     },

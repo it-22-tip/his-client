@@ -1,6 +1,6 @@
 'use strict'
 import path from 'path'
-import { MainEntry, StaticPath, OutputPath } from '../constant'
+import { MainEntry, StaticPath, OutputPath, RendererPath } from '../constant'
 import { dependencies } from '../../package.json'
 import webpack from 'webpack'
 import BabelMinifyWebpackPlugin from 'babel-minify-webpack-plugin'
@@ -55,6 +55,9 @@ let mainConfig = {
     new webpack.NoEmitOnErrorsPlugin()
   ],
   resolve: {
+    alias: {
+      '@': RendererPath,
+    },
     extensions: ['.js', '.json', '.node']
   },
   target: 'electron-main'
