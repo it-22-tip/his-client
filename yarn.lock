@@ -2278,9 +2278,9 @@ cfb@~1.0.5:
     commander "^2.14.1"
     printj "~1.1.2"
 
-cfb@~1.0.6:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/cfb/-/cfb-1.0.6.tgz#d0107fa579a8d79c53a31074a755abcb898017f0"
+cfb@~1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/cfb/-/cfb-1.0.7.tgz#ccb615eb1bb0a039e7829ab0b2ad4ea564fbaa78"
   dependencies:
     commander "^2.14.1"
     printj "~1.1.2"
@@ -2582,6 +2582,13 @@ codepage@~1.12.1:
     commander "~2.14.1"
     exit-on-epipe "~1.0.1"
 
+codepage@~1.13.0:
+  version "1.13.0"
+  resolved "https://registry.yarnpkg.com/codepage/-/codepage-1.13.0.tgz#5a9a6583028e6243828c869f145740d7ed7b62c3"
+  dependencies:
+    commander "~2.14.1"
+    exit-on-epipe "~1.0.1"
+
 collection-visit@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/collection-visit/-/collection-visit-1.0.0.tgz#4bc0373c164bc3291b4d368c829cf1a80a59dca0"
@@ -2649,7 +2656,7 @@ combined-stream@1.0.6, combined-stream@^1.0.5, combined-stream@~1.0.5:
   dependencies:
     delayed-stream "~1.0.0"
 
-commander@2, commander@2.15.x, commander@^2.13.0, commander@^2.14.1, commander@^2.15.1, commander@^2.9.0, commander@~2.15.0:
+commander@2, commander@2.15.x, commander@^2.13.0, commander@^2.14.1, commander@^2.15.1, commander@^2.9.0, commander@~2.15.0, commander@~2.15.1:
   version "2.15.1"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.15.1.tgz#df46e867d0fc2aec66a34662b406a9ccafff5b0f"
 
@@ -10104,9 +10111,9 @@ single-line-log@^1.1.2:
   dependencies:
     string-width "^1.0.1"
 
-sinon@^5.0.3:
-  version "5.0.3"
-  resolved "https://registry.yarnpkg.com/sinon/-/sinon-5.0.3.tgz#9950f1616187ff0cd7d75a60d66bc27fed569945"
+sinon@^5.0.4:
+  version "5.0.4"
+  resolved "https://registry.yarnpkg.com/sinon/-/sinon-5.0.4.tgz#84aa4a95ef0fcc36dc63caf60e61f2cf89ba4c00"
   dependencies:
     "@sinonjs/formatio" "^2.0.0"
     diff "^3.1.0"
@@ -11842,14 +11849,14 @@ xhr@^2.0.1:
     parse-headers "^2.0.0"
     xtend "^4.0.0"
 
-xlsx@^0.12.11:
-  version "0.12.11"
-  resolved "https://registry.yarnpkg.com/xlsx/-/xlsx-0.12.11.tgz#54806d78a7bb02998aba3d59c49995a6f0be001e"
+xlsx@^0.12.12:
+  version "0.12.12"
+  resolved "https://registry.yarnpkg.com/xlsx/-/xlsx-0.12.12.tgz#2d17459f2cb1e4f1b564c170c565a18baa9239dc"
   dependencies:
     adler-32 "~1.2.0"
-    cfb "~1.0.6"
-    codepage "~1.12.1"
-    commander "~2.14.1"
+    cfb "~1.0.7"
+    codepage "~1.13.0"
+    commander "~2.15.1"
     crc-32 "~1.2.0"
     exit-on-epipe "~1.0.1"
     ssf "~0.10.2"
