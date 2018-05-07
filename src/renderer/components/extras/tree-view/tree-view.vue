@@ -33,7 +33,7 @@
   </div>
 </template>
 <script>
-let ITEM_ID = 0
+import Model from './model'
 let ITEM_HEIGHT_SMALL = 18
 let ITEM_HEIGHT_DEFAULT = 24
 let ITEM_HEIGHT_LARGE = 32
@@ -110,52 +110,14 @@ export default {
       if (items && items.length > 0) {
         for (let i in items) {
           let dataItem = this.initializeDataItem(items[i])
+          console.log(dataItem)
           items[i] = dataItem
           this.initializeData(items[i][this.childrenFieldName])
         }
       }
     },
     initializeDataItem (item) {
-      function Model (item, textFieldName, valueFieldName, collapse) {
-        this.id = item.id || ITEM_ID++
-        this[textFieldName] = item[textFieldName] || ''
-        this[valueFieldName] = item[valueFieldName] || item[textFieldName]
-        this.icon = item.icon || ''
-        this.opened = item.opened || collapse
-        this.selected = item.selected || false
-        this.disabled = item.disabled || false
-        this.loading = item.loading || false
-        this[this.childrenFieldName] = item[this.childrenFieldName] || []
-      }
-      let node = Object.assign(new Model(item, this.textFieldName, this.valueFieldName, this.collapse), item)
-      let self = this
-      node.addBefore = function (data, selectedNode) {
-        let newItem = self.initializeDataItem(data)
-        let index = selectedNode.parentItem.indexOf(node)
-        selectedNode.parentItem.splice(index, 0, newItem)
-      }
-      node.addAfter = function (data, selectedNode) {
-        let newItem = self.initializeDataItem(data)
-        let index = selectedNode.parentItem.indexOf(node) + 1
-        selectedNode.parentItem.splice(index, 0, newItem)
-      }
-      node.addChild = function (data) {
-        let newItem = self.initializeDataItem(data)
-        node[this.childrenFieldName].push(newItem)
-      }
-      node.openChildren = function () {
-        node.opened = true
-        self.handleRecursionNodeChildren(node, node => {
-          node.opened = true
-        })
-      }
-      node.closeChildren = function () {
-        node.opened = false
-        self.handleRecursionNodeChildren(node, node => {
-          node.opened = false
-        })
-      }
-      return node
+      return new Model(item, this.textFieldName, this.valueFieldName, this.childrenFieldName, this.collapse, this)
     },
     initializeLoading () {
       let item = {}
@@ -263,6 +225,7 @@ export default {
       }
     },
     initialize () {
+      console.log({on: 'initialize', model: this.itemData, ok: this.itemData instanceof Model})
       this.initializeData(this.itemData)
     }
   }

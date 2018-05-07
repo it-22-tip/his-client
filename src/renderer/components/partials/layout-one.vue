@@ -120,6 +120,11 @@ export default {
           title: 'Settings'
         },
         {
+          to: { name: 'base.tree' },
+          icon: 'settings',
+          title: 'Tree'
+        },
+        {
           to: { name: 'base.login' },
           icon: 'close',
           title: 'Out'

@@ -58,6 +58,7 @@
   </li>
 </template>
 <script>
+// import Model from './model'
 export default {
   name: 'TreeViewItem',
   props: {
@@ -104,6 +105,7 @@ export default {
       return this.model[this.childrenFieldName] && this.model[this.childrenFieldName].length
     },
     classes () {
+      console.log({on: 'computed classes', model: this.model})
       return [
         {'tree-node': true},
         {'tree-open': this.model.opened},
@@ -158,12 +160,21 @@ export default {
       }
     },
     itemData (newValue) {
+      // newValue instanceof()
+      console.log({on: 'watch itemData', model: newValue})
       this.model = newValue
     },
     'model.opened': {
       handler: function (val, oldVal) {
+        console.log({on: 'watch model.opened', model: this.model})
         this.onItemToggle(this, this.model)
         this.handleSetGroupMaxHeight()
+      },
+      deep: true
+    },
+    model: {
+      handler: function (val) {
+        console.log({on: 'watch model', model: this.model})
       },
       deep: true
     }
@@ -203,6 +214,7 @@ export default {
     },
     handleItemToggle () {
       if (this.isFolder) {
+        console.log({on: 'handleItemToggle', model: this.model})
         this.model.opened = !this.model.opened
         this.onItemToggle(this, this.model)
         this.handleSetGroupMaxHeight()

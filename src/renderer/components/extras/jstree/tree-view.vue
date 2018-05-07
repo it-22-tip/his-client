@@ -56,7 +56,7 @@ export default {
   },
   props: {
     data: {type: Array, default: () => ([])},
-    size: {type: String, default: '', validator: value => ['large', 'small'].indexOf(value) > -1},
+    size: {type: String, default: 'small', validator: value => ['large', 'small'].indexOf(value) > -1},
     showCheckbox: {type: Boolean, default: false},
     wholeRow: {type: Boolean, default: false},
     noDots: {type: Boolean, default: false},

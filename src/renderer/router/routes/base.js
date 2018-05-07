@@ -58,6 +58,14 @@ const Base = [
     meta: {
       title: 'Directory'
     }
+  },
+  {
+    path: '/tree',
+    name: 'base.tree',
+    component: () => import('@pages/base/tree'),
+    meta: {
+      title: 'Tree'
+    }
   }
 ]
 export default Base
