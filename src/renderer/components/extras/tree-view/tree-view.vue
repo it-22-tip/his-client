@@ -1,45 +1,49 @@
 <template>
-  <div
-    :class="classes"
-    role="tree"
-    onselectstart="return false">
-    <ul
-      :class="containerClasses"
-      role="group">
-      <tree-view-item
-        v-for="(child, index) in itemData"
-        :key="index"
-        :item-data="child"
-        :text-field-name="textFieldName"
-        :value-field-name="valueFieldName"
-        :children-field-name="childrenFieldName"
-        :item-events="itemEvents"
-        :whole-row="wholeRow"
-        :show-checkbox="showCheckbox"
-        :allow-transition="allowTransition"
-        :height="sizeHeight"
-        :parent-item="itemData"
-        :draggable="draggable"
-        :drag-over-background-color="dragOverBackgroundColor"
-        :on-item-click="onItemClick"
-        :on-item-toggle="onItemToggle"
-        :on-item-drag-start="onItemDragStart"
-        :on-item-drag-end="onItemDragEnd"
-        :on-item-drop="onItemDrop"
-        :item-class="index === itemData.length-1?'tree-last':''">
-        <template slot-scope="_">
-          <slot
-            :vm="_.vm"
-            :model="_.model">
-            <i
-              v-if="!_.model.loading"
-              :class="_.vm.themeIconClasses"
-              role="presentation"/>
-            <span v-html="_.model[textFieldName]"/>
-          </slot>
-        </template>
-      </tree-view-item>
-    </ul>
+  <div class="tree-outer">
+    <div class="tree-inner">
+      <div
+        :class="classes"
+        role="tree"
+        onselectstart="return false">
+        <ul
+          :class="containerClasses"
+          role="group">
+          <tree-view-item
+            v-for="(child, index) in itemData"
+            :key="index"
+            :item-data="child"
+            :text-field-name="textFieldName"
+            :value-field-name="valueFieldName"
+            :children-field-name="childrenFieldName"
+            :item-events="itemEvents"
+            :whole-row="wholeRow"
+            :show-checkbox="showCheckbox"
+            :allow-transition="allowTransition"
+            :height="sizeHeight"
+            :parent-item="itemData"
+            :draggable="draggable"
+            :drag-over-background-color="dragOverBackgroundColor"
+            :on-item-click="onItemClick"
+            :on-item-toggle="onItemToggle"
+            :on-item-drag-start="onItemDragStart"
+            :on-item-drag-end="onItemDragEnd"
+            :on-item-drop="onItemDrop"
+            :item-class="index === itemData.length-1?'tree-last':''">
+            <template slot-scope="_">
+              <slot
+                :vm="_.vm"
+                :model="_.model">
+                <i
+                  v-if="!_.model.loading"
+                  :class="_.vm.themeIconClasses"
+                  role="presentation"/>
+                <span v-html="_.model[textFieldName]"/>
+              </slot>
+            </template>
+          </tree-view-item>
+        </ul>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -294,6 +298,52 @@ export default {
   }
 }
 </script>
-<style lang="less">
-    @import "./less/style";
+
+<style lang="scss">
+.tree-outer {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  min-height: 0;
+  position: relative;
+}
+.tree-inner {
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  position: absolute;
+  height: 100%;
+  display: block;
+  width: 100%;
+  overflow: auto;
+}
+.tree-inner::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+/* Track */
+.tree-inner::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+.tree-inner::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Handle on hover */
+.tree-inner::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+.tree-node,
+.tree-children,
+.tree-container-ul {
+  display: block;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  list-style-image: none;
+}
 </style>

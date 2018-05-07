@@ -230,7 +230,7 @@ export default {
           }
         }
         this.maxHeight = length * this.height + childHeight
-        if (this.$parent.$options._componentTag === 'tree-item') {
+        if (this.$parent.$options._componentTag === 'tree-view-item') {
           this.$parent.handleGroupMaxHeight()
         }
       }
@@ -253,3 +253,7 @@ export default {
   }
 }
 </script>
+
+<style lang="less" scoped>
+    @import "./less/style";
+</style>

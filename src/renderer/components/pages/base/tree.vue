@@ -14,9 +14,7 @@
       value-field-name="id"
       class="hello"
       size="small"
-      multiple
-      allow-batch
-      whole-row/>
+      @item-click="onClick"/>
   </div>
 </template>
 
@@ -33,7 +31,9 @@ export default {
     return {
       arrayData: null,
       treeData: null,
-      dummy: []
+      dummy: [],
+      editingNode: null,
+      editingItem: null
     }
   },
   computed: {
@@ -59,13 +59,13 @@ export default {
   },
   watch: {
     TreeDataView: {
-      handler: function (value) {
+      handler: async function (value) {
         console.log('change')
         let nd = value.slice(0)
 
         let trees = this.$refs.tree
+        await this.$nextTick()
         this.dummy = nd
-        // trees.itemData = nd
         trees.initializeData(nd)
         // trees.handleAsyncLoad(nd, trees)
       }
@@ -89,6 +89,12 @@ export default {
     async saveData () {
 
     },
+    onClick (node) {
+      this.editingNode = node
+      this.editingItem = node.model
+      console.log()
+      console.log(node.model.text + ' clicked !')
+    },
     onClickSave () {
       this.saveData()
     }
@@ -97,12 +103,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.ok {
-  height: 300px;
-  width: 300px;
-}
 .hello {
   height: 300px;
   width: 300px;
+  background: #ffcc00;
 }
 </style>
