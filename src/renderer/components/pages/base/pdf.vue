@@ -27,7 +27,9 @@
 </template>
 
 <script>
-// import pdf from '@extras/pdf'
+import { readAsArrayBuffer } from '@helpers/files'
+import { appDataPath } from '@helpers/constants'
+import path from 'path'
 export default {
   components: {
     'extra-pdf': () => import('@extras/pdf')
@@ -118,14 +120,20 @@ export default {
       } */
     },
     clickGet () {
-      this.run('SELECT * FROM pdf WHERE id = ? LIMIT 1;', [1]).then(
+      /* this.run('SELECT * FROM pdf WHERE id = ? LIMIT 1;', [1]).then(
         val => {
           let u8 = val[0][0].data
           let base64 = this.base64ArrayBuffer(u8)
           base64 = atob(base64)
           this.src = { data: base64 }
         }
-      )
+      ) */
+      readAsArrayBuffer(path.join(appDataPath, 'test.pdf'))
+        .then(
+          data => {
+            console.log(data)
+          }
+        )
     },
     clickInsert () {
       /* let fs = require('fs')
