@@ -5,7 +5,7 @@
     role="treeitem"
     @dragstart.stop="onItemDragStart($event, _self, _self.model)"
     @dragend.stop.prevent="onItemDragEnd($event, _self, _self.model)"
-    @dragover.stop.prevent="isDragEnter = true"
+    @dragover.stop.prevent="() => false"
     @dragenter.stop.prevent="isDragEnter = true"
     @dragleave.stop.prevent="isDragEnter = false"
     @drop.stop.prevent="handleItemDrop($event, _self, _self.model)">
@@ -24,88 +24,80 @@
         v-if="showCheckbox && !model.loading"
         class="tree-icon tree-checkbox"
         role="presentation"/>
-      <slot
-        :vm="this"
-        :model="model">
-        <i
-          v-if="!model.loading"
-          :class="themeIconClasses"
-          role="presentation"/>
-        <span v-html="model[textFieldName]"/>
-      </slot>
+      <i
+        v-if="!model.loading"
+        :class="themeIconClasses"
+        role="presentation"/>
+      {{ model[textFieldName] }}
     </div>
     <ul
       v-if="isFolder"
       ref="group"
-      :style="groupStyle"
-      class="tree-children"
-      role="group">
+      role="group"
+      class="tree-children">
       <tree-view-item
         v-for="(child, index) in model[childrenFieldName]"
         :key="index"
-        :data="child"
+        :item-data="child"
         :text-field-name="textFieldName"
         :value-field-name="valueFieldName"
         :children-field-name="childrenFieldName"
         :item-events="itemEvents"
         :whole-row="wholeRow"
         :show-checkbox="showCheckbox"
-        :allow-transition="allowTransition"
         :height= "height"
         :parent-item="model[childrenFieldName]"
         :draggable="draggable"
-        :drag-over-background-color="dragOverBackgroundColor"
         :on-item-click="onItemClick"
         :on-item-toggle="onItemToggle"
         :on-item-drag-start="onItemDragStart"
         :on-item-drag-end="onItemDragEnd"
         :on-item-drop="onItemDrop"
-        :item-class="index === model[childrenFieldName].length-1?'tree-last':''">
-        <template slot-scope="_">
-          <slot
-            :vm="_.vm"
-            :model="_.model">
-            <i
-              v-if="!model.loading"
-              :class="_.vm.themeIconClasses"
-              role="presentation"/>
-            <span v-html="_.model[textFieldName]"/>
-          </slot>
-        </template>
-      </tree-view-item>
+        :item-class="index === model[childrenFieldName].length-1 ? 'tree-last' : ''"/>
     </ul>
   </li>
 </template>
-
 <script>
+// import Model from './model'
 export default {
   name: 'TreeViewItem',
   props: {
-    data: {type: Object, required: true},
-    textFieldName: {type: String, default: 'text'},
-    valueFieldName: {type: String, default: 'value'},
-    childrenFieldName: {type: String, default: 'children'},
-    itemEvents: {type: Object, default: () => ({})},
+    itemData: {type: Object, required: true, default: () => ({})},
+    textFieldName: {type: String, default: null},
+    valueFieldName: {type: String, default: null},
+    childrenFieldName: {type: String, default: null},
+    itemEvents: {type: Object, default: () => null},
     wholeRow: {type: Boolean, default: false},
     showCheckbox: {type: Boolean, default: false},
-    allowTransition: {type: Boolean, default: true},
     height: {type: Number, default: 24},
-    parentItem: {type: Array, default: () => ({})},
+    parentItem: {type: Array, default: () => ([])},
     draggable: {type: Boolean, default: false},
-    dragOverBackgroundColor: {type: String, default: ''},
-    onItemClick: {type: Function, default: () => false},
-    onItemToggle: {type: Function, default: () => false},
-    onItemDragStart: {type: Function, default: () => false},
-    onItemDragEnd: {type: Function, default: () => false},
-    onItemDrop: {type: Function, default: () => false},
-    itemClass: {type: String, default: ''}
+    onItemClick: {
+      type: Function, default: () => false
+    },
+    onItemToggle: {
+      type: Function, default: () => false
+    },
+    onItemDragStart: {
+      type: Function, default: () => false
+    },
+    onItemDragEnd: {
+      type: Function, default: () => false
+    },
+    onItemDrop: {
+      type: Function, default: () => false
+    },
+    itemClass: {
+      type: String,
+      default: null
+    }
   },
   data () {
+    console.log({on: 'data', model: this.itemData})
     return {
       isHover: false,
       isDragEnter: false,
-      model: this.data,
-      maxHeight: 0,
+      model: this.itemData,
       events: {}
     }
   },
@@ -114,6 +106,7 @@ export default {
       return this.model[this.childrenFieldName] && this.model[this.childrenFieldName].length
     },
     classes () {
+      console.log({on: 'computed classes', model: this.model})
       return [
         {'tree-node': true},
         {'tree-open': this.model.opened},
@@ -157,32 +150,32 @@ export default {
           return false
         }
       }
-    },
-    groupStyle () {
-      return {
-        'position': this.model.opened ? '' : 'relative',
-        'max-height': this.allowTransition ? this.maxHeight + 'px' : '',
-        'transition-duration': this.allowTransition ? Math.ceil(this.model[this.childrenFieldName].length / 100) * 300 + 'ms' : '',
-        'transition-property': this.allowTransition ? 'max-height' : '',
-        'display': this.allowTransition ? 'block' : (this.model.opened ? 'block' : 'none')
-      }
     }
   },
   watch: {
     isDragEnter (newValue) {
       if (newValue) {
-        this.$el.style.backgroundColor = this.dragOverBackgroundColor
+        this.$el.style.backgroundColor = '#C9FDC9'
       } else {
         this.$el.style.backgroundColor = 'inherit'
       }
     },
-    data (newValue) {
+    itemData (newValue) {
+      // newValue instanceof()
+      console.log({on: 'watch itemData', model: newValue})
       this.model = newValue
     },
     'model.opened': {
       handler: function (val, oldVal) {
+        console.log({on: 'watch model.opened', model: this.model})
         this.onItemToggle(this, this.model)
-        this.handleGroupMaxHeight()
+        this.handleSetGroupMaxHeight()
+      },
+      deep: true
+    },
+    model: {
+      handler: function (val) {
+        console.log({on: 'watch model', model: this.model})
       },
       deep: true
     }
@@ -211,35 +204,65 @@ export default {
     this.events = events
   },
   mounted () {
-    this.handleGroupMaxHeight()
+    this.handleSetGroupMaxHeight()
   },
   methods: {
-    handleItemToggle (e) {
+    handleRecursionNodeParents (node, func) {
+      if (node.$parent) {
+        func(node.$parent)
+        this.handleRecursionNodeParents(node.$parent, func)
+      }
+    },
+    handleItemToggle () {
       if (this.isFolder) {
+        console.log({on: 'handleItemToggle', model: this.model})
         this.model.opened = !this.model.opened
         this.onItemToggle(this, this.model)
+        this.handleSetGroupMaxHeight()
       }
     },
     handleGroupMaxHeight () {
-      if (this.allowTransition) {
-        let length = 0
-        let childHeight = 0
-        if (this.model.opened) {
-          length = this.$children.length
-          for (let children of this.$children) {
-            childHeight += children.maxHeight
-          }
-        }
-        this.maxHeight = length * this.height + childHeight
-        if (this.$parent.$options._componentTag === 'tree-item') {
-          this.$parent.handleGroupMaxHeight()
+      let length = 0
+      let childHeight = 0
+      if (this.model.opened) {
+        length = this.$children.length
+        for (let children of this.$children) {
+          childHeight += children.handleGroupMaxHeight()
         }
       }
+      return length * this.height + childHeight
     },
-    handleItemClick (e) {
+    handleSetGroupMaxHeight () {
+      if (this.$refs.group) {
+        let height = this.handleGroupMaxHeight()
+        this.$refs.group.style.maxHeight = height + 'px'
+        if (height === 0) {
+          this.$refs.group.style.display = 'none'
+        } else {
+          this.$refs.group.style.display = 'block'
+        }
+      }
+      let self = this
+      this.$nextTick().then(
+        () => {
+          this.handleRecursionNodeParents(self, node => {
+            if (node.$refs.group) {
+              let height = node.handleGroupMaxHeight()
+              node.$refs.group.style.maxHeight = height + 'px'
+              if (height === 0) {
+                node.$refs.group.style.display = 'none'
+              } else {
+                node.$refs.group.style.display = 'block'
+              }
+            }
+          })
+        }
+      )
+    },
+    handleItemClick () {
       if (this.model.disabled) return
       this.model.selected = !this.model.selected
-      this.onItemClick(this, this.model, e)
+      this.onItemClick(this, this.model)
     },
     handleItemMouseOver () {
       this.isHover = true
@@ -255,6 +278,6 @@ export default {
 }
 </script>
 
-<style lang="scss">
-@import './style.css';
+<style lang="scss" scoped>
+@import "./scss/style";
 </style>

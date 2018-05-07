@@ -6948,9 +6948,9 @@ less-loader@^4.1.0:
     loader-utils "^1.1.0"
     pify "^3.0.0"
 
-less@^3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/less/-/less-3.0.2.tgz#1bcb9813bb6090c884ac142f02c633bd42931844"
+less@^3.0.4:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/less/-/less-3.0.4.tgz#d27dcedbac96031c9e7b76f1da1e4b7d83760814"
   optionalDependencies:
     errno "^0.1.1"
     graceful-fs "^4.1.2"
@@ -6959,7 +6959,7 @@ less@^3.0.2:
     mkdirp "^0.5.0"
     promise "^7.1.1"
     request "^2.83.0"
-    source-map "^0.5.3"
+    source-map "~0.6.0"
 
 leven@^2.1.0:
   version "2.1.0"
@@ -10225,9 +10225,9 @@ sequelize-hierarchy@^1.3.2:
     lodash "^4.17.4"
     semver-select "^1.1.0"
 
-sequelize@^4.37.6:
-  version "4.37.6"
-  resolved "https://registry.yarnpkg.com/sequelize/-/sequelize-4.37.6.tgz#f37eec55a285cfdeab27f8a85c5db38034f87126"
+sequelize@^4.37.7:
+  version "4.37.7"
+  resolved "https://registry.yarnpkg.com/sequelize/-/sequelize-4.37.7.tgz#a66bfb486f438c0584c1ccc8107388311ba34780"
   dependencies:
     bluebird "^3.5.0"
     cls-bluebird "^2.1.0"
@@ -10575,7 +10575,7 @@ source-map@0.5.x, source-map@^0.5.0, source-map@^0.5.3, source-map@^0.5.6, sourc
   version "0.5.7"
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.5.7.tgz#8a039d2d1021d22d1ea14c80d8ea468ba2ef3fcc"
 
-source-map@^0.6.0, source-map@^0.6.1, source-map@~0.6.1:
+source-map@^0.6.0, source-map@^0.6.1, source-map@~0.6.0, source-map@~0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.6.1.tgz#74722af32e9614e9c287a8d0bbde48b5e2f1a263"
 

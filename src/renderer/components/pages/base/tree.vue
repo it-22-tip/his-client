@@ -10,9 +10,13 @@
     </md-field>
     <tree-view
       ref="tree"
-      :data="treeData"
+      :item-data="dummy"
       value-field-name="id"
-      class="hello"/>
+      class="hello"
+      size="small"
+      multiple
+      allow-batch
+      whole-row/>
   </div>
 </template>
 
@@ -23,12 +27,13 @@ import { readJSON } from '@helpers/files'
 import { treeify } from '@helpers/arraytotree'
 export default {
   components: {
-    'tree-view': () => import('@extras/jstree')
+    'tree-view': () => import('@extras/tree-view')
   },
   data () {
     return {
       arrayData: null,
-      treeData: []
+      treeData: null,
+      dummy: []
     }
   },
   computed: {
@@ -54,24 +59,22 @@ export default {
   },
   watch: {
     TreeDataView: {
-      handler: async function (value) {
-        // console.log(value)
-        this.treeData = value
-        await this.$nextTick()
-        // console.log(this.$refs)
+      handler: function (value) {
+        console.log('change')
+        let nd = value.slice(0)
+
         let trees = this.$refs.tree
-        let itemData = trees.itemData
-
-        trees.initializeData(itemData)
-
-        console.log(itemData)
-        // trees.initialize()
+        this.dummy = nd
+        // trees.itemData = nd
+        trees.initializeData(nd)
+        // trees.handleAsyncLoad(nd, trees)
       }
     }
   },
   mounted () {
     this.getData()
-    console.log(this.$refs)
+
+    // console.log(this.$refs)
   },
   methods: {
     async getData () {

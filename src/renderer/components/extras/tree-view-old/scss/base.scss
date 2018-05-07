@@ -10,7 +10,8 @@
 }
 
 .tree-children {
-    overflow: hidden;
+    // overflow: hidden;
+    transition: all .3s;
 }
 
 .tree-node {
@@ -116,6 +117,9 @@
         z-index: -1;
         position: absolute;
         left: 0;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
         user-select: none;
     }
 }
