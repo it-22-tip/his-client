@@ -160,7 +160,9 @@ let rendererConfig = {
   output: {
     filename: '[name].js',
     libraryTarget: 'commonjs2',
-    path: OutputPath
+    path: OutputPath,
+    // worker loader workaround
+    globalObject: 'this'
   },
   resolve: {
     alias: {

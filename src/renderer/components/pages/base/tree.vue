@@ -42,7 +42,7 @@ export default {
         this.arrayData = JSON.parse(val)
       },
       get () {
-        const arrayData = JSON.stringify(this.arrayData)
+        const arrayData = JSON.stringify(this.arrayData, null, 2)
         return arrayData
       }
     },

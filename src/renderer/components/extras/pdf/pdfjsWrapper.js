@@ -1,4 +1,5 @@
 import { CMapCompressionType } from 'pdfjs-dist/lib/shared/util'
+import { PDFLinkService } from 'pdfjs-dist/lib/web/pdf_link_service'
 import { default as Promise } from 'bluebird'
 
 export default function (PDFJS) {
@@ -214,6 +215,16 @@ export default function (PDFJS) {
       annotationLayerElt.style.visibility = 'hidden'
       clearAnnotations()
 
+      var viewer = {
+        scrollPageIntoView: ({ pageNumber }) => {
+          emitEvent('link-clicked', pageNumber)
+        }
+      }
+
+      let linkService = new PDFLinkService()
+      linkService.setDocument(pdfDoc)
+      linkService.setViewer(viewer)
+
       pdfPage.getAnnotations()
         .then(function (annotations) {
           PDFJS.AnnotationLayer.render({
@@ -221,7 +232,7 @@ export default function (PDFJS) {
             div: annotationLayerElt,
             annotations: annotations,
             page: pdfPage,
-            // linkService: new LinkServiceMock(),
+            linkService: linkService,
             renderInteractiveForms: false
           })
         })

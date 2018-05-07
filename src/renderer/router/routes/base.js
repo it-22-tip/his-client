@@ -62,7 +62,7 @@ const Base = [
   {
     path: '/tree',
     name: 'base.tree',
-    component: () => import('@pages/base/tree'),
+    component: () => import('@pages/base/pdf'),
     meta: {
       title: 'Tree'
     }
