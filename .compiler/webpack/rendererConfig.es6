@@ -9,6 +9,12 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import EslintFriendlyFormatter from 'eslint-friendly-formatter'
 import whiteListedModules from '../whiteListedModules'
+import cssLoader from './loaders/cssLoader'
+import sassLoader from './loaders/sassLoader'
+import lessLoader from './loaders/lessLoader'
+import fontLoader from './loaders/fontLoader'
+import imageLoader from './loaders/imageLoader'
+import mediaLoader from './loaders/mediaLoader'
 import { VueLoaderPlugin } from 'vue-loader'
 
 process.env.BABEL_ENV = 'renderer'
@@ -99,49 +105,9 @@ const baseRules = [
     test: /\.vue$/,
     loader: 'vue-loader'
   },
-  {
-    test: /\.css$/,
-    use: [
-      MiniCssExtractPlugin.loader,
-      {
-        loader: 'css-loader'
-      },
-      {
-        loader: 'postcss-loader',
-        options: {
-          sourceMap: true
-        }
-      }
-    ]
-  },
-  {
-    test: /\.(scss|sass)$/,
-    use: [
-      MiniCssExtractPlugin.loader,
-      'css-loader',
-      {
-        loader: 'postcss-loader',
-        options: {
-          sourceMap: true
-        }
-      },
-      'sass-loader'
-    ]
-  },
-  {
-    test: /\.less$/,
-    use: [
-      MiniCssExtractPlugin.loader,
-      'css-loader',
-      {
-        loader: 'postcss-loader',
-        options: {
-          sourceMap: true
-        }
-      },
-      'less-loader'
-    ]
-  },
+  cssLoader,
+  sassLoader,
+  lessLoader,
   {
     test: /\.html$/,
     use: 'vue-html-loader'
@@ -155,34 +121,9 @@ const baseRules = [
     test: /\.node$/,
     use: 'node-loader'
   },
-  {
-    test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-    use: {
-      loader: 'url-loader',
-      query: {
-        limit: 10000,
-        name: 'imgs/[name]--[folder].[ext]'
-      }
-    }
-  },
-  {
-    test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
-    loader: 'url-loader',
-    options: {
-      limit: 10000,
-      name: 'media/[name]--[folder].[ext]'
-    }
-  },
-  {
-    test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-    use: {
-      loader: 'url-loader',
-      query: {
-        limit: 10000,
-        name: 'fonts/[name]--[folder].[ext]'
-      }
-    }
-  },
+  mediaLoader,
+  imageLoader,
+  fontLoader,
   {
     test: /\.(md|txt)(\?.*)?$/,
     use: {

@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { ipcRenderer } from 'electron'
+// import { ipcRenderer } from 'electron'
 
 import modules from './modules'
 
 Vue.use(Vuex)
 
-const MyPlugin = function (ipcRenderer) {
+/* const MyPlugin = function (ipcRenderer) {
   return store => {
     ipcRenderer.on('selection', (event, arg) => {
       store.commit('Directory/INCREASE_COUNT')
@@ -19,11 +19,11 @@ const MyPlugin = function (ipcRenderer) {
   }
 }
 
-const plugin = MyPlugin(ipcRenderer)
+const plugin = MyPlugin(ipcRenderer) */
 
 const store = new Vuex.Store({
   modules,
-  plugins: [plugin],
+  // plugins: [plugin],
   strict: process.env.NODE_ENV !== 'production'
 })
 

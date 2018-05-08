@@ -7,6 +7,7 @@ const CompilerPath = path.join(RootPath, '.compiler')
 const NodeModulesPath = path.join(RootPath, 'node_modules')
 const StaticPath = path.join(RootPath, 'static')
 const RendererPath = path.join(SrcPath, 'renderer')
+const SharedPath = path.join(SrcPath, 'shared')
 const RendererEntry = path.join(RendererPath, 'main.js')
 const MainPath = path.join(SrcPath, 'main')
 const MainEntry = path.join(MainPath, 'index.js')
@@ -25,6 +26,7 @@ export {
   NodeModulesPath,
   StaticPath,
   RendererPath,
+  SharedPath,
   RendererEntry,
   MainPath,
   MainEntry,

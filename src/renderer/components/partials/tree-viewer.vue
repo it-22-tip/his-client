@@ -104,6 +104,6 @@ export default {
 .hello {
   height: 300px;
   width: 300px;
-  background: #ffcc00;
+  background: #eeeeee;
 }
 </style>
