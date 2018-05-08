@@ -46,6 +46,7 @@ import {setupCalendar, DatePicker as dp} from 'v-calendar'
 import 'v-calendar/lib/v-calendar.min.css'
 import moment from 'moment'
 import ModalProvince from '@partials/modal-province'
+import { filter, orderBy, first } from 'lodash'
 Vue.component('modal-province', ModalProvince)
 setupCalendar({
   locale: 'id-ID'
@@ -164,6 +165,7 @@ export default {
                 include: [
                   {
                     model: Regencies,
+                    as: 'RegencyAlmamater',
                     attributes: ['Name']
                   }
                 ]
@@ -224,6 +226,12 @@ export default {
         this.Person = Person
         let { AddressHistories, BirthPlaceRegency, BirthDate } = Person
         // console.log(AddressHistories[0].AddressVillage.Name)
+        let Official = filter(AddressHistories, { Type: 'Official' })
+        if (Official.length > 1) Official = orderBy(Official, ['createdAt'], ['asc'])
+        let Postal = filter(AddressHistories, { Type: 'Postal' })
+        if (Postal.length > 1) Postal = orderBy(Postal, ['createdAt'], ['asc'])
+        console.log(first(Postal))
+        console.log(first(Official))
         AddressHistories = AddressHistories[0]
         let Village = AddressHistories.AddressVillage.Name
         let District = AddressHistories.AddressVillage.District.Name

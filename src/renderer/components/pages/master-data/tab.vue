@@ -12,7 +12,7 @@
     <md-tabs>
       <md-tab
         :to="{ name: 'masterdata.provinces', params: { page: '1', sort: 'Name', order: 'asc' } }"
-        md-label="Provinsi"/>
+        md-label="Daerah"/>
       <md-tab
         :to="{ name: 'masterdata.regencies', params: { page: '1', sort: 'Name', order: 'asc' } }"
         md-label="Kota/Kabupaten"/>

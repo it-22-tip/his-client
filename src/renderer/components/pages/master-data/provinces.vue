@@ -11,8 +11,11 @@
           slot="md-table-row"
           slot-scope="{ item }">
           <md-table-cell
-            md-label="Nama"
+            md-label="Provinsi"
             md-sort-by="Name">{{ item.Name }}</md-table-cell>
+          <md-table-cell
+            md-label="Kab/Kota"
+            md-sort-by="Count">{{ item.Count }}</md-table-cell>
         </md-table-row>
       </md-table>
     </md-content>
@@ -173,6 +176,9 @@ export default {
         case 'Name':
           order = ['Name', this.activeOrder]
           break
+        case 'Count':
+          order = [sequelize.literal('Count'), this.activeOrder]
+          break
         default:
           order = ['Name', this.activeOrder]
       }
@@ -181,7 +187,7 @@ export default {
 
     async transaction (transaction) {
       let sequelize = this.connection
-      const { Provinces } = sequelize.models
+      const { Regencies, Provinces } = sequelize.models
 
       let page = this.activePage - 1
       let limit = 10
@@ -197,14 +203,23 @@ export default {
       let options = {
         transaction: transaction,
         attributes: [
-          'Name'
+          'Name',
+          'Code',
+          [sequelize.literal('(SELECT COUNT(Id) FROM Regencies WHERE Regencies.ProvinceCode = Provinces.Code)'), 'Count']
         ],
         order: order,
         limit: limit,
         offset: offset,
         raw: false,
         distinct: true,
-        col: 'Id'
+        col: 'Id',
+        include: [
+          {
+            model: Regencies,
+            attributes: ['ProvinceCode'],
+            required: true
+          }
+        ]
       }
       try {
         rows = await Provinces.findAll(options)
@@ -216,7 +231,8 @@ export default {
       }
       rows = map(rows, row => {
         return {
-          Name: row.Name
+          Name: row.Name,
+          Count: row.dataValues.Count
         }
       })
       console.log(count)
@@ -224,11 +240,7 @@ export default {
     },
     async populate () {
       let data
-      this.connection = (new this.$orm()).withOption({
-        username: 'his',
-        password: 'his',
-        database: 'his'
-      }).connect()
+      this.connection = (new this.$orm()).connect()
       try {
         data = await this.connection.transaction(this.transaction)
       } catch (error) {
