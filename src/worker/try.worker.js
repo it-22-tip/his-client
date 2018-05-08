@@ -1,5 +1,5 @@
 // Post data to parent thread
-let k = this.Buffer
+let k = window.Buffer
 try {
   self.postMessage({ foo: k })
 } catch (err) {

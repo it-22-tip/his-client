@@ -15,7 +15,7 @@
           <div class="hi">
             <h1>{{ Person.Name }}</h1>
             <h2>{{ JobTitle }}</h2>
-            <p>{{ BirthPlaceRegency }}</p>
+            <p>{{ BirthDate }}  {{ BirthPlaceRegency }}</p>
             <p>{{ Person.Age }} Tahun</p>
             <p>{{ Person.Faith }}</p>
             <p>{{ OfficialAddress }}</p>
@@ -84,7 +84,8 @@ export default {
       Person: {},
       OfficialAddress: '',
       JobTitle: '',
-      BirthPlaceRegency: ''
+      BirthPlaceRegency: '',
+      BirthDate: null
     }
   },
   watch: {
@@ -132,15 +133,6 @@ export default {
       }
     },
     dataMapper (item) {
-      let Provinces = item['Person.AddressHistories.AddressVillage.District.Regency.Province.Name'] ? startCase(toLower(item['Person.AddressHistories.AddressVillage.District.Regency.Province.Name'])) : ''
-      let Regencies = item['Person.AddressHistories.AddressVillage.District.Regency.Name'] ? startCase(toLower(item['Person.AddressHistories.AddressVillage.District.Regency.Name'])) : ''
-      let Districts = item['Person.AddressHistories.AddressVillage.District.Name'] ? startCase(toLower(item['Person.AddressHistories.AddressVillage.District.Name'])) : ''
-      let Villages = item['Person.AddressHistories.AddressVillage.Name'] ? startCase(toLower(item['Person.AddressHistories.AddressVillage.Name'])) : ''
-      let Address = item['Person.AddressHistories.Address']
-      let Rt = item['Person.AddressHistories.Rt'] ? item['Person.AddressHistories.Rt'] : ''
-      let Rw = item['Person.AddressHistories.Rw'] ? item['Person.AddressHistories.Rw'] : ''
-      item.Address = `${Address}, RT/W:${Rt}/${Rw}, ${Villages}, ${Districts}, ${Regencies}, ${Provinces}`
-      // item.BirthDate = ['Person.BirthDate']
       return item
     },
     async closeConnection () {
@@ -235,7 +227,7 @@ export default {
         let data = await this.connection.transaction(this.transaction)
         let { JobTitle, Person } = data
         this.Person = Person
-        let { AddressHistories, BirthPlaceRegency } = Person
+        let { AddressHistories, BirthPlaceRegency, BirthDate } = Person
         AddressHistories = AddressHistories[0].toJSON()
         console.log(data)
         let Village = AddressHistories['AddressVillage']['Name']
@@ -243,28 +235,11 @@ export default {
         let Regency = AddressHistories['AddressVillage']['District']['Regency']['Name']
         let Province = AddressHistories['AddressVillage']['District']['Regency']['Province']['Name']
         let disp = `${Village}, ${District}, ${Regency}, ${Province}`
-        disp = startCase(toLower(disp))
+        // disp = startCase(toLower(disp))
         this.OfficialAddress = disp
         this.JobTitle = JobTitle.Name
         this.BirthPlaceRegency = startCase(toLower(BirthPlaceRegency.Name))
-        // const { JobTitles, Persons } = data
-        // console.log(data)
-        // this.detail = data
-        /* let model
-          model = map(data, this.dataMapper)
-          let first = model.slice()
-          console.log(first)
-          first = first[0]
-          this.detail.Name = first['Person.Name']
-          this.detail.Address = first['Address']
-          this.detail.PersonId = first['Person.Id']
-          this.detail.JobTitle = first['JobTitle.Name']
-          this.detail.BirthDate = {
-            dateObj: moment(first['Person.BirthDate']).toDate(),
-            orig: first['Person.BirthDate'],
-            human: moment(first['Person.BirthDate']).format('DD MM YYYY'),
-            age: Math.abs(parseInt(moment(first['Person.BirthDate']).diff(moment(), 'years')))
-          } */
+        this.BirthDate = BirthDate
       } catch (error) {
         console.log(error)
       } finally {

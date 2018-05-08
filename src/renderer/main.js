@@ -3,8 +3,7 @@ import Vue from 'vue'
 import App from '@/App'
 import router from '@/router'
 import store from '@/store'
-import material from './vue-material/src/material'
-import { MdCheckbox, MdRadio, MdDrawer, MdSubheader, MdContent, MdButton, MdTable, MdTabs, MdTooltip, MdProgress, MdRipple, MdCard, MdField, MdToolbar } from './vue-material/src/components'
+import VueMaterial from './vue-material/src/index'
 import VueMarkdown from 'vue-markdown'
 import unhandled from 'electron-unhandled'
 import moment from 'moment'
@@ -23,29 +22,7 @@ if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.config.productionTip = false
 
 sync(store, router)
-
-material(Vue)
-const MdComponents = [
-  MdCheckbox,
-  MdRadio,
-  MdDrawer,
-  MdSubheader,
-  MdContent,
-  MdButton,
-  MdTable,
-  MdTabs,
-  MdTooltip,
-  MdProgress,
-  MdRipple,
-  MdCard,
-  MdField,
-  MdToolbar
-]
-MdComponents.forEach(
-  MdComponent => {
-    Vue.use(MdComponent)
-  }
-)
+Vue.use(VueMaterial)
 Vue.component('vue-markdown', VueMarkdown)
 
 moment.locale('ID-id')

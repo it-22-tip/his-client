@@ -45,13 +45,6 @@
                   </md-select>
                 </md-field>
               </div>
-
-              <div class="md-layout-item md-size-25">
-                <birthdateplace-picker v-model="birthDatePlace"/>
-              </div>
-              <div class="md-layout-item md-size-25">
-                <address-picker v-model="saved.Person.AddressVillageCode"/>
-              </div>
             </div>
           </md-step>
           <md-step
@@ -72,9 +65,7 @@ import orm from '@/mixins/orm'
 export default {
   components: {
     'layout-one': () => import('@partials/layout-one'),
-    'date-picker': () => import('@partials/picker/date-picker'),
-    'birthdateplace-picker': () => import('@partials/picker/birthdateplace-picker'),
-    'address-picker': () => import('@partials/picker/address-picker')
+    'date-picker': () => import('@partials/picker/date-picker')
   },
   mixins: [
     orm
@@ -120,11 +111,7 @@ export default {
       this.saving()
     },
     openPosition () {
-      this.connection = (new this.$orm()).withOption({
-        username: 'his',
-        password: 'his',
-        database: 'his'
-      }).connect()
+      this.connection = (new this.$orm()).connect()
       const { JobTitles } = this.connection.models
       JobTitles.findAll(
         {
