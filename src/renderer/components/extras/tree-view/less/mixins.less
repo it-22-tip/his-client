@@ -160,7 +160,10 @@
   } // ellipsis
   .tree-ellipsis {
     overflow: hidden;
-  } // base height + PADDINGS!
+  }
+  /*
+   *  base height + PADDINGS!
+  */
   .tree-ellipsis .tree-anchor {
     @value: @base-height+@padding;
     width:~"calc(100% - @{value})";

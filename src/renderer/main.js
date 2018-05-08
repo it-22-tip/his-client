@@ -3,7 +3,8 @@ import Vue from 'vue'
 import App from '@/App'
 import router from '@/router'
 import store from '@/store'
-import VueMaterial from './vue-material/src/index'
+import material from './vue-material/src/material'
+import { MdContent, MdButton, MdTable, MdTabs, MdTooltip, MdProgress, MdRipple, MdCard, MdField, MdToolbar } from './vue-material/src/components'
 import VueMarkdown from 'vue-markdown'
 import unhandled from 'electron-unhandled'
 import moment from 'moment'
@@ -15,8 +16,24 @@ Vue.config.productionTip = false
 
 sync(store, router)
 
-Vue.use(VueMaterial)
-
+material(Vue)
+const MdComponents = [
+  MdContent,
+  MdButton,
+  MdTable,
+  MdTabs,
+  MdTooltip,
+  MdProgress,
+  MdRipple,
+  MdCard,
+  MdField,
+  MdToolbar
+]
+MdComponents.forEach(
+  MdComponent => {
+    Vue.use(MdComponent)
+  }
+)
 Vue.component('vue-markdown', VueMarkdown)
 
 moment.locale('ID-id')

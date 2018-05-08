@@ -16,6 +16,7 @@ const DistPath = path.join(RootPath, 'dist')
 const OutputPath = path.join(DistPath, 'electron')
 
 export {
+  PackageJSON,
   dependencies,
   devDependencies,
   RootPath,

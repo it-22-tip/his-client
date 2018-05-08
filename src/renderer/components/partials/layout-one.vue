@@ -22,7 +22,7 @@
         </md-toolbar>
       </md-content>
       <md-content class="right-bottom">
-        <md-content class="padding-20">
+        <md-content class="padding-10">
           <slot/>
         </md-content>
       </md-content>
@@ -54,7 +54,7 @@
     position: relative;
   }
   .right-top {
-    height: 60px;
+    height: 48px;
     width: 100%;
     background-color: grey;
   }
@@ -65,8 +65,8 @@
     flex-direction: column;
     background-color: grey
   }
-  .padding-20 {
-    padding: 20px;
+  .padding-10 {
+    padding: 10px;
     flex: 1;
     display: flex;
     flex-direction: column;

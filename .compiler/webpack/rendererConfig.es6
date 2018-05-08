@@ -10,7 +10,9 @@ import HtmlWebpackPlugin from 'html-webpack-plugin'
 import EslintFriendlyFormatter from 'eslint-friendly-formatter'
 import whiteListedModules from '../whiteListedModules'
 import { VueLoaderPlugin } from 'vue-loader'
+
 process.env.BABEL_ENV = 'renderer'
+
 let rendererConfig = {
   devtool: '#cheap-module-eval-source-map',
   entry: {
@@ -20,118 +22,7 @@ let rendererConfig = {
     ...Object.keys(dependencies || {}).filter(d => !whiteListedModules.includes(d))
   ],
   module: {
-    rules: [
-      {
-        test: /\.worker\.js$/,
-        exclude: /node_modules/,
-        use: { loader: 'worker-loader' }
-      },
-      {
-        test: /\.(js|vue)$/,
-        enforce: 'pre',
-        exclude: /node_modules/,
-        use: {
-          loader: 'eslint-loader',
-          options: {
-            formatter: EslintFriendlyFormatter
-          }
-        }
-      },
-      {
-        test: /\.vue$/,
-        loader: 'vue-loader'
-      },
-      {
-        test: /\.css$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          {
-            loader: 'css-loader'
-          },
-          {
-            loader: 'postcss-loader',
-            options: {
-              sourceMap: true
-            }
-          }
-        ]
-      },
-      {
-        test: /\.(scss|sass)$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader',
-          {
-            loader: 'postcss-loader',
-            options: {
-              sourceMap: true
-            }
-          },
-          'sass-loader'
-        ]
-      },
-      {
-        test: /\.less$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader',
-          {
-            loader: 'postcss-loader',
-            options: {
-              sourceMap: true
-            }
-          },
-          'less-loader'
-        ]
-      },
-      {
-        test: /\.html$/,
-        use: 'vue-html-loader'
-      },
-      {
-        test: /\.js$/,
-        use: 'babel-loader',
-        exclude: /node_modules/
-      },
-      {
-        test: /\.node$/,
-        use: 'node-loader'
-      },
-      {
-        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-        use: {
-          loader: 'url-loader',
-          query: {
-            limit: 10000,
-            name: 'imgs/[name]--[folder].[ext]'
-          }
-        }
-      },
-      {
-        test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
-        loader: 'url-loader',
-        options: {
-          limit: 10000,
-          name: 'media/[name]--[folder].[ext]'
-        }
-      },
-      {
-        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-        use: {
-          loader: 'url-loader',
-          query: {
-            limit: 10000,
-            name: 'fonts/[name]--[folder].[ext]'
-          }
-        }
-      },
-      {
-        test: /\.(md|txt)(\?.*)?$/,
-        use: {
-          loader: 'raw-loader'
-        }
-      }
-    ]
+    rules: []
   },
   node: {
     __dirname: process.env.NODE_ENV !== 'production',
@@ -186,6 +77,121 @@ let rendererConfig = {
   },
   target: 'electron-renderer'
 }
+
+const baseRules = [
+  {
+    test: /\.worker\.js$/,
+    exclude: /node_modules/,
+    use: { loader: 'worker-loader' }
+  },
+  {
+    test: /\.(js|vue)$/,
+    enforce: 'pre',
+    exclude: /node_modules/,
+    use: {
+      loader: 'eslint-loader',
+      options: {
+        formatter: EslintFriendlyFormatter
+      }
+    }
+  },
+  {
+    test: /\.vue$/,
+    loader: 'vue-loader'
+  },
+  {
+    test: /\.css$/,
+    use: [
+      MiniCssExtractPlugin.loader,
+      {
+        loader: 'css-loader'
+      },
+      {
+        loader: 'postcss-loader',
+        options: {
+          sourceMap: true
+        }
+      }
+    ]
+  },
+  {
+    test: /\.(scss|sass)$/,
+    use: [
+      MiniCssExtractPlugin.loader,
+      'css-loader',
+      {
+        loader: 'postcss-loader',
+        options: {
+          sourceMap: true
+        }
+      },
+      'sass-loader'
+    ]
+  },
+  {
+    test: /\.less$/,
+    use: [
+      MiniCssExtractPlugin.loader,
+      'css-loader',
+      {
+        loader: 'postcss-loader',
+        options: {
+          sourceMap: true
+        }
+      },
+      'less-loader'
+    ]
+  },
+  {
+    test: /\.html$/,
+    use: 'vue-html-loader'
+  },
+  {
+    test: /\.js$/,
+    use: 'babel-loader',
+    exclude: /node_modules/
+  },
+  {
+    test: /\.node$/,
+    use: 'node-loader'
+  },
+  {
+    test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+    use: {
+      loader: 'url-loader',
+      query: {
+        limit: 10000,
+        name: 'imgs/[name]--[folder].[ext]'
+      }
+    }
+  },
+  {
+    test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
+    loader: 'url-loader',
+    options: {
+      limit: 10000,
+      name: 'media/[name]--[folder].[ext]'
+    }
+  },
+  {
+    test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+    use: {
+      loader: 'url-loader',
+      query: {
+        limit: 10000,
+        name: 'fonts/[name]--[folder].[ext]'
+      }
+    }
+  },
+  {
+    test: /\.(md|txt)(\?.*)?$/,
+    use: {
+      loader: 'raw-loader'
+    }
+  }
+]
+
+rendererConfig.module.rules = [].concat(baseRules)
 
 /**
  * Adjust rendererConfig for development settings
