@@ -40,6 +40,7 @@
 
 <script>
 import { readFile, readDir, readJSON } from '@helpers/files'
+import { userData } from '@helpers/constants'
 import { default as Promise } from 'bluebird'
 import path from 'path'
 import os from 'os'
@@ -89,6 +90,7 @@ export default {
     await this.closeConnection()
   },
   async mounted () {
+    console.log(userData)
     await this.closeConnection()
     this.dir = path.join(os.homedir() + `/.hisdata`)
     this.jsonDir = path.join(this.dir, '/json')
@@ -104,7 +106,7 @@ export default {
         try {
           await this.PreQueriesConnection.close()
         } finally {
-          console.log('c1')
+          console.log('close prequeries connection')
           this.PreQueriesConnection = null
         }
       }
@@ -112,7 +114,7 @@ export default {
         try {
           await this.ApplicationConnection.close()
         } finally {
-          console.log('c2')
+          console.log('close application connection')
           this.ApplicationConnection = null
         }
       }

@@ -4,7 +4,7 @@ import App from '@/App'
 import router from '@/router'
 import store from '@/store'
 import material from './vue-material/src/material'
-import { MdContent, MdButton, MdTable, MdTabs, MdTooltip, MdProgress, MdRipple, MdCard, MdField, MdToolbar } from './vue-material/src/components'
+import { MdCheckbox, MdRadio, MdDrawer, MdSubheader, MdContent, MdButton, MdTable, MdTabs, MdTooltip, MdProgress, MdRipple, MdCard, MdField, MdToolbar } from './vue-material/src/components'
 import VueMarkdown from 'vue-markdown'
 import unhandled from 'electron-unhandled'
 import moment from 'moment'
@@ -18,6 +18,10 @@ sync(store, router)
 
 material(Vue)
 const MdComponents = [
+  MdCheckbox,
+  MdRadio,
+  MdDrawer,
+  MdSubheader,
   MdContent,
   MdButton,
   MdTable,
