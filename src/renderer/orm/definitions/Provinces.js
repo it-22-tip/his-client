@@ -1,5 +1,5 @@
 import { DataTypes } from 'sequelize'
-import { startCase, toLower } from 'lodash'
+import { startCase, toLower, toUpper } from 'lodash'
 const tableName = 'Provinces'
 const attributes = {
   Id: {
@@ -12,15 +12,26 @@ const attributes = {
     unique: true
   },
   Name: {
-    type: DataTypes.STRING(),
+    type: DataTypes.STRING(32),
     set: function (Name) {
       Name = toLower(Name)
       Name.replace(/\s+/g, ' ')
+      if (Name.includes('jakarta')) {
+        Name = 'dki jakarta'
+      }
+      if (Name.includes('yogyakarta') || Name.includes('jogjakarta')) {
+        Name = 'di yogyakarta'
+      }
       this.setDataValue('Name', Name)
     },
     get: function () {
       let Name = this.dataValues.Name
-      Name = startCase(toLower(Name))
+      if (Name.includes('jakarta') || Name.includes('yogyakarta')) {
+        let splitName = Name.split(' ')
+        return toUpper(splitName[0]) + ' ' + startCase(splitName[1])
+      } else {
+        Name = startCase(toLower(Name))
+      }
       return Name
     }
   }

@@ -10,7 +10,7 @@ const attributes = {
     autoIncrement: true
   },
   Name: {
-    type: DataTypes.STRING(),
+    type: DataTypes.STRING(32),
     set: function (Name) {
       Name = toLower(Name)
       Name.replace(/\s+/g, ' ')

@@ -11,13 +11,13 @@ const attributes = {
     type: DataTypes.INTEGER()
   },
   Address: {
-    type: DataTypes.STRING()
+    type: DataTypes.STRING(128)
   },
   Rt: {
-    type: DataTypes.INTEGER()
+    type: DataTypes.INTEGER(3)
   },
   Rw: {
-    type: DataTypes.INTEGER()
+    type: DataTypes.INTEGER(3)
   },
   VillageCode: {
     type: DataTypes.CHAR(10)

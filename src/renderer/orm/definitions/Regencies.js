@@ -15,7 +15,7 @@ const attributes = {
     type: DataTypes.CHAR(2)
   },
   Name: {
-    type: DataTypes.STRING(255),
+    type: DataTypes.STRING(32),
     set: function (Name) {
       Name = toLower(Name)
       Name.replace(/\s+/g, ' ')

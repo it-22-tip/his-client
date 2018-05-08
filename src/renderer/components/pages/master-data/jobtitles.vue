@@ -239,11 +239,7 @@ export default {
     },
     async populate () {
       let data
-      this.connection = (new this.$orm()).withOption({
-        username: 'his',
-        password: 'his',
-        database: 'his'
-      }).connect()
+      this.connection = (new this.$orm()).connect()
       try {
         data = await this.connection.transaction(this.transaction)
       } catch (error) {

@@ -14,8 +14,11 @@
             md-label="Nama"
             md-sort-by="Name">{{ item.Name }}</md-table-cell>
           <md-table-cell
+            md-label="Kota/Kabupaten"
+            md-sort-by="RegencyAlmamater">{{ item.RegencyAlmamater }}</md-table-cell>
+          <md-table-cell
             md-label="Level"
-            md-sort-by="Level">{{ item.Level }}</md-table-cell>
+            md-sort-by="AlmamaterLevel">{{ item.AlmamaterLevel }}</md-table-cell>
           <md-table-cell
             md-label="Program Studi"
             md-sort-by="ProgramStudy">{{ item.ProgramStudy }}</md-table-cell>
@@ -179,11 +182,14 @@ export default {
         case 'Name':
           order = ['Name', this.activeOrder]
           break
-        case 'Level':
+        case 'AlmamaterLevel':
           order = ['AlmamaterLevel', this.activeOrder]
           break
         case 'ProgramStudy':
           order = ['ProgramStudy', this.activeOrder]
+          break
+        case 'RegencyAlmamater':
+          order = ['RegencyCode', this.activeOrder]
           break
         default:
           order = ['Name', this.activeOrder]
@@ -193,7 +199,7 @@ export default {
 
     async transaction (transaction) {
       let sequelize = this.connection
-      const { Almamaters } = sequelize.models
+      const { Almamaters, Regencies } = sequelize.models
 
       let page = this.activePage - 1
       let limit = 10
@@ -209,14 +215,22 @@ export default {
       let options = {
         transaction: transaction,
         attributes: [
-          'Name', ['AlmamaterLevel', 'Level'], 'ProgramStudy'
+          'Name',
+          'AlmamaterLevel',
+          'ProgramStudy'
         ],
         order: order,
         limit: limit,
         offset: offset,
         raw: false,
         distinct: true,
-        col: 'Id'
+        col: 'Id',
+        include: [
+          {
+            model: Regencies,
+            as: 'RegencyAlmamater'
+          }
+        ]
       }
       try {
         rows = await Almamaters.findAll(options)
@@ -227,11 +241,12 @@ export default {
         throw error
       }
       rows = map(rows, row => {
-        console.log(row.dataValues)
         return {
           Name: row.Name,
-          Level: row.dataValues.Level,
-          ProgramStudy: row.dataValues.ProgramStudy
+          AlmamaterLevel: row.AlmamaterLevel,
+          ProgramStudy: row.ProgramStudy,
+          RegencyAlmamater: row.RegencyAlmamater.Name,
+          Count: row.dataValues.Count
         }
       })
       console.log(count)
@@ -239,11 +254,7 @@ export default {
     },
     async populate () {
       let data
-      this.connection = (new this.$orm()).withOption({
-        username: 'his',
-        password: 'his',
-        database: 'his'
-      }).connect()
+      this.connection = (new this.$orm()).connect()
       try {
         data = await this.connection.transaction(this.transaction)
       } catch (error) {
