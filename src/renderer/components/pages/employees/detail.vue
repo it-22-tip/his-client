@@ -42,7 +42,6 @@
 import Vue from 'vue'
 import PdfTk from '@/extras/PdfTk'
 import orm from '@/mixins/orm'
-import { startCase, toLower } from 'lodash'
 import {setupCalendar, DatePicker as dp} from 'v-calendar'
 import 'v-calendar/lib/v-calendar.min.css'
 import moment from 'moment'
