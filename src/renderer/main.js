@@ -10,6 +10,14 @@ import unhandled from 'electron-unhandled'
 import moment from 'moment'
 import { sync } from 'vuex-router-sync'
 import '@/assets/global.scss'
+/* import Mworker from '../worker/try.worker'
+
+const mworker = new Mworker()
+
+mworker.postMessage({ a: 1 })
+mworker.onmessage = function (event) {}
+
+mworker.addEventListener('message', (event) => console.log(event)) */
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.config.productionTip = false
