@@ -218,27 +218,23 @@ export default {
       return data
     },
     async populate () {
-      this.connection = (new this.$orm()).withOption({
-        username: 'his',
-        password: 'his',
-        database: 'his'
-      }).connect()
+      this.connection = (new this.$orm()).connect()
       try {
         let data = await this.connection.transaction(this.transaction)
         let { JobTitle, Person } = data
         this.Person = Person
         let { AddressHistories, BirthPlaceRegency, BirthDate } = Person
-        AddressHistories = AddressHistories[0].toJSON()
-        console.log(data)
-        let Village = AddressHistories['AddressVillage']['Name']
-        let District = AddressHistories['AddressVillage']['District']['Name']
-        let Regency = AddressHistories['AddressVillage']['District']['Regency']['Name']
-        let Province = AddressHistories['AddressVillage']['District']['Regency']['Province']['Name']
+        // console.log(AddressHistories[0].AddressVillage.Name)
+        AddressHistories = AddressHistories[0]
+        let Village = AddressHistories.AddressVillage.Name
+        let District = AddressHistories.AddressVillage.District.Name
+        let Regency = AddressHistories.AddressVillage.District.Regency.Name
+        let Province = AddressHistories.AddressVillage.District.Regency.Province.Name
         let disp = `${Village}, ${District}, ${Regency}, ${Province}`
         // disp = startCase(toLower(disp))
         this.OfficialAddress = disp
         this.JobTitle = JobTitle.Name
-        this.BirthPlaceRegency = startCase(toLower(BirthPlaceRegency.Name))
+        this.BirthPlaceRegency = BirthPlaceRegency.Name
         this.BirthDate = BirthDate
       } catch (error) {
         console.log(error)

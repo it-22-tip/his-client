@@ -39,6 +39,7 @@
 </template>
 
 <script>
+import fs from 'fs'
 import { readFile, readDir, readJSON } from '@helpers/files'
 import { userData } from '@helpers/constants'
 import { default as Promise } from 'bluebird'
@@ -167,11 +168,11 @@ export default {
       this.options = options
     },
     async runAll () {
-      const { root, application } = this.options
+      // const { application } = this.options
       this.progress = true
       // this.reset()
-      this.PreQueriesConnection = (new this.$orm()).withOption(root).connect()
-      this.ApplicationConnection = (new this.$orm()).withOption(application).connect()
+      this.PreQueriesConnection = (new this.$orm()).connect()
+      this.ApplicationConnection = (new this.$orm()).connect()
       console.log(this.ApplicationConnection)
       await this.setTotal(this.ApplicationConnection)
       try {
@@ -192,7 +193,14 @@ export default {
             type: connection.QueryTypes.RAW,
             raw: true
           }
-          if (connection.connectionManager.dialectName === 'sqlite') return null
+          if (connection.connectionManager.dialectName === 'sqlite') {
+            try {
+              this.recreateSqlite(connection.options.storage)
+            } catch (error) {
+              console.log(error)
+            }
+            return null
+          }
           for (let query of this.queries) {
             try {
               this.message = 'Running Preinstall: ' + query.title
@@ -205,6 +213,11 @@ export default {
           return null
         }
       )
+    },
+    recreateSqlite (file) {
+      fs.writeFileSync(file, '', {
+        encoding: 'utf8'
+      })
     },
     async CreateTable (connection) {
       return connection.transaction(

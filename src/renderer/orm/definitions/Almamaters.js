@@ -1,4 +1,5 @@
 import { DataTypes } from 'sequelize'
+import { startCase, toLower } from 'lodash'
 import { AlmamaterLevels } from '../enums'
 const tableName = 'Almamaters'
 const attributes = {
@@ -8,7 +9,17 @@ const attributes = {
     autoIncrement: true
   },
   Name: {
-    type: DataTypes.STRING()
+    type: DataTypes.STRING(),
+    set: function (Name) {
+      Name = toLower(Name)
+      Name.replace(/\s+/g, ' ')
+      this.setDataValue('Name', Name)
+    },
+    get: function () {
+      let Name = this.dataValues.Name
+      Name = startCase(toLower(Name))
+      return Name
+    }
   },
   AlmamaterLevel: {
     type: DataTypes.ENUM(...AlmamaterLevels.enum),

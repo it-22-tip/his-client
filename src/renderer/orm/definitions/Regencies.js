@@ -1,4 +1,5 @@
 import { DataTypes } from 'sequelize'
+import { startCase, toLower } from 'lodash'
 const tableName = 'Regencies'
 const attributes = {
   Id: {
@@ -14,7 +15,17 @@ const attributes = {
     type: DataTypes.CHAR(2)
   },
   Name: {
-    type: DataTypes.STRING(255)
+    type: DataTypes.STRING(255),
+    set: function (Name) {
+      Name = toLower(Name)
+      Name.replace(/\s+/g, ' ')
+      this.setDataValue('Name', Name)
+    },
+    get: function () {
+      let Name = this.dataValues.Name
+      Name = startCase(toLower(Name))
+      return Name
+    }
   }
 }
 

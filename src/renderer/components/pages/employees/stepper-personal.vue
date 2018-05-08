@@ -1,46 +1,39 @@
 <template>
-  <layout-one>
-    <md-toolbar
-      class="md-dense md-toolbar md-primary"
-      md-elevation="0">
-      <md-button
-        class="md-icon-button md-dense"
-        @click="$router.go(-1)">
-        <md-icon>close</md-icon>
-      </md-button>
-      <md-button
-        class="md-icon-button md-dense"
-        @click="save">
-        <md-icon>save</md-icon>
-      </md-button>
-    </md-toolbar>
-    <md-content class="ctc">
-
-      <md-content class="padding-10">
-        <md-steppers class="mstepper">
-          <stepper-personal
-            id="1"
-            md-label="Personal"/>
-          <stepper-job
-            id="2"
-            md-label="Job"/>
-        </md-steppers>
-      </md-content>
-
-    </md-content>
-  </layout-one>
+  <md-step
+    id="first"
+    md-label="Data Personal">
+    <div class="md-layout md-gutter">
+      <div class="md-layout-item md-size-25">
+        <md-field>
+          <label>Nama</label>
+          <md-input v-model="saved.Person.Name"/>
+        </md-field>
+        <md-radio
+          v-model="saved.Person.Gender"
+          value="P">Perempuan</md-radio>
+        <md-radio
+          v-model="saved.Person.Gender"
+          value="L">Laki - Laki</md-radio>
+        <md-field>
+          <label for="movie">Posisi</label>
+          <md-select
+            v-model="saved.JobTitleId"
+            @md-opened="openPosition">
+            <md-option
+              v-for="posisi in dbPosisi"
+              :value="posisi.Id"
+              :key="posisi.id">{{ posisi.Name }}</md-option>
+          </md-select>
+        </md-field>
+      </div>
+    </div>
+  </md-step>
 </template>
 
 <script>
 import moment from 'moment'
 import orm from '@/mixins/orm'
 export default {
-  components: {
-    'layout-one': () => import('@partials/layout-one'),
-    'date-picker': () => import('@partials/picker/date-picker'),
-    'stepper-personal': () => import('./stepper-one'),
-    'stepper-job': () => import('./stepper-two')
-  },
   mixins: [
     orm
   ],
@@ -133,37 +126,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.ctc {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-.padding-10 {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
-
-</style>
-
-<style lang="scss">
-.mstepper {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-.mstepper>.md-steppers-wrapper {
-  flex: 1 !important;
-  display: flex;
-  flex-direction: column;
-}
-.mstepper.md-steppers-wrapper>.md-steppers-container {
-  flex: 1;
-}
-.md-stepper {
-  height: 100%;
-  padding: 0;
-}
-</style>
