@@ -17,14 +17,7 @@
     <md-content class="ctc">
 
       <md-content class="padding-10">
-        <md-steppers class="mstepper">
-          <stepper-personal
-            id="1"
-            md-label="Personal"/>
-          <stepper-job
-            id="2"
-            md-label="Job"/>
-        </md-steppers>
+        [sc]
       </md-content>
 
     </md-content>
@@ -37,9 +30,7 @@ import orm from '@/mixins/orm'
 export default {
   components: {
     'layout-one': () => import('@partials/layout-one'),
-    'date-picker': () => import('@partials/picker/date-picker'),
-    'stepper-personal': () => import('./stepper-one'),
-    'stepper-job': () => import('./stepper-two')
+    'date-picker': () => import('@partials/picker/date-picker')
   },
   mixins: [
     orm

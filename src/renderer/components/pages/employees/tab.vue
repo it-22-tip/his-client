@@ -14,6 +14,10 @@
         id="1"
         :to="{ name: 'employees.employee.list', params: { page: '1', sort: 'Ein', order: 'asc' } }"
         md-label="Karyawan"/>
+      <md-tab
+        id="2"
+        :to="{ name: 'employees.license.list', params: { page: '1', sort: 'Id', order: 'asc' } }"
+        md-label="Surat Izin Kerja"/>
     </md-tabs>
     <md-content class="ctc">
       <router-view/>

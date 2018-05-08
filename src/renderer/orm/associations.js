@@ -40,11 +40,8 @@ const associations = function (models) {
   Persons.hasMany(AddressHistories)
   AddressHistories.belongsTo(Persons)
 
-  /* Persons.hasMany(EducationHistories, {foreignKey: 'PersonId', sourceKey: 'Id'})
-  EducationHistories.belongsTo(Persons, {foreignKey: 'PersonId', targetKey: 'Id'})
-
-  Almamaters.hasMany(EducationHistories, {foreignKey: 'AlmamaterId', sourceKey: 'Id'})
-  EducationHistories.belongsTo(Almamaters, {foreignKey: 'AlmamaterId', targetKey: 'Id'}) */
+  /* Persons.belongsToMany(LicenseTypes, {through: Licenses, foreignKey: 'PersonId'})
+  LicenseTypes.belongsToMany(Persons, {through: Licenses, foreignKey: 'LicenseTypeId'}) */
 
   Persons.belongsToMany(Almamaters, {through: EducationHistories, foreignKey: 'PersonId'})
   Almamaters.belongsToMany(Persons, {through: EducationHistories, foreignKey: 'AlmamaterId'})

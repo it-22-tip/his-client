@@ -1,89 +1,205 @@
 <template>
-  <md-table
-    v-model="model"
-    :md-sort.sync="currentSort"
-    :md-sort-order.sync="currentSortOrder"
-    :md-sort-fn="customSort"
-    class="right-table"
-    md-fixed-header>
-    <md-table-row
-      slot="md-table-row"
-      slot-scope="{ item }">
-      <md-table-cell
-        md-label="Id"
-        md-sort-by="Id">{{ item.Id }}</md-table-cell>
-      <md-table-cell
-        md-label="Nama"
-        md-sort-by="Name">{{ item.Name }}</md-table-cell>
-      <md-table-cell
-        md-label="No Registrasi"
-        md-sort-by="LicenseType">{{ item.LicenseType }}<br>{{ item.Number }}</md-table-cell>
-      <md-table-cell
-        md-label="Berlaku Hingga"
-        md-sort-by="DueDateDiffToday">{{ item.DueDateFormated }}</md-table-cell>
-        <!-- <md-table-cell>
-        <md-button @click="clickEdit(item.Id)" class="md-icon-button">
-          <md-icon>edit</md-icon>
-          <md-tooltip md-direction="top">Edit</md-tooltip>
+  <md-content class="ctc">
+    <md-content class="psg">
+      <md-table
+        v-model="model"
+        :md-sort.sync="activeSort"
+        :md-sort-order.sync="activeOrder"
+        :md-sort-fn="customSort"
+        class="right-table"
+        md-fixed-header>
+        <md-table-row
+          slot="md-table-row"
+          slot-scope="{ item }"
+          @click.right="$refs.contextMenu.open($event, { Name: item.Name, Id:item.Ein })">
+          <md-table-cell
+            md-label="Type"
+            md-sort-by="Type">{{ item.Type }}</md-table-cell>
+          <md-table-cell
+            md-label="Nama"
+            md-sort-by="Name">{{ item.Name }}</md-table-cell>
+          <md-table-cell
+            md-label="Habis"
+            md-sort-by="DueDate">{{ item.TimeLeft }}</md-table-cell>
+        </md-table-row>
+      </md-table>
+
+      <md-drawer
+        :md-active.sync="showSearchPanel"
+        class="md-right">
+        <md-content style="padding: 20px;">
+          <md-field md-clearable>
+            <label>Nama</label>
+            <md-input/>
+          </md-field>
+          <md-checkbox v-model="boolean">L</md-checkbox>
+          <md-checkbox
+            v-model="boolean"
+            class="md-primary">P</md-checkbox>
+          <md-field md-clearable>
+            <label>Masa Kerja (Bulan)</label>
+            <md-input type="number"/>
+          </md-field>
+          <md-button>Cari</md-button>
+        </md-content>
+      </md-drawer>
+
+    </md-content>
+    <md-toolbar
+      class="md-primary md-dense"
+      md-elevation="0">
+      <div class="md-toolbar-section-start">
+        <md-button
+          class="md-icon-button"
+          @click="showSearchPanel = !showSearchPanel">
+          <md-icon>search</md-icon>
         </md-button>
-      </md-table-cell> -->
-    </md-table-row>
-  </md-table>
+        <md-button
+          class="md-icon-button"
+          @click="$router.push({ name: 'employee.new' })">
+          <md-icon>add</md-icon>
+        </md-button>
+      </div>
+
+      <div class="md-toolbar-section-end">
+        <md-field
+          class="page-md-field"
+          md-inline
+          md-dense>
+          <md-input
+            v-model="activePage"
+            :max="totalPage"
+            class="page-input"
+            type="number"
+            min="1"/>
+        </md-field>
+        <md-content class="transparent">
+          Dari {{ totalPage }} Halaman
+        </md-content>
+      </div>
+    </md-toolbar>
+    <context-menu
+      ref="contextMenu"
+      @ctx-open="onCtxOpen">
+      <div><h3>{{ menuData.Name }}</h3></div>
+      <div @click="clickEdit(menuData.Id)"><md-icon>edit</md-icon>Edit</div>
+      <div><md-icon>delete</md-icon>Delete</div>
+    </context-menu>
+  </md-content>
 </template>
 
 <script>
 import orm from '@/mixins/orm'
-import { map } from 'lodash'
-import moment from 'moment'
+import { map, extend } from 'lodash'
+import '@extras/contextmenu/ctx-menu.css'
 export default {
   components: {
-    'layout-one': () => import('@partials/layout-one')
+    'layout-one': () => import('@partials/layout-one'),
+    'context-menu': () => import('@extras/contextmenu')
   },
   mixins: [
     orm
   ],
+  props: {
+    page: {
+      type: String,
+      default: '1'
+    },
+    order: {
+      type: String,
+      default: 'ASC'
+    },
+    sort: {
+      type: String,
+      default: null
+    },
+    isSearch: {
+      type: String,
+      default: 'false'
+    }
+  },
   data () {
     return {
+      searched: [],
       model: [],
+      reset: [],
       connection: null,
-      currentSort: 'Name',
-      currentSortOrder: 'asc'
+      searchText: '',
+      searchBy: 'Name',
+      selectedEmployee: null,
+      boolean: false,
+      showSearchPanel: false,
+      menuData: {},
+      totalPage: null,
+      activePage: null,
+      activeSort: null,
+      activeOrder: null
+    }
+  },
+  watch: {
+    activeSort: {
+      handler: function (newSort, oldSort) {
+        if (newSort === oldSort) return
+        this.changePage({ sort: newSort })
+      }
+    },
+    activeOrder: {
+      handler: function (newOrder, oldOrder) {
+        if (newOrder === oldOrder) return
+        this.changePage({ order: newOrder })
+      }
+    },
+    activePage: {
+      handler: function (newPage, oldActivePage) {
+        if (newPage === oldActivePage) return
+        if (newPage > this.totalPage) return
+        this.changePage({ page: newPage })
+      }
+    },
+    '$route': {
+      handler: function (n, o) {
+        if (n === 0) return
+        this.activePage = n.params.page
+        this.activeSort = n.params.sort
+        this.activeOrder = n.params.order
+        this.populate()
+      }
     }
   },
   mounted () {
+    this.setDefault()
     this.populate()
   },
-  beforeDestroy () {
-    this.closeConnection()
+  async beforeDestroy () {
+    await this.closeConnection()
   },
   methods: {
+    changePage (change) {
+      let params = { page: this.activePage, sort: this.activeSort, order: this.activeOrder }
+      params = extend({}, params, change)
+      let options = {
+        name: 'employees.license.list',
+        params: params
+      }
+      this.$router.push(options)
+    },
+    setDefault () {
+      this.activePage = (this.page !== null) ? this.page : '1'
+      this.activeSort = (this.sort !== null) ? this.sort : null
+      this.activeOrder = (this.order !== null) ? 'asc' : null
+    },
+    onCtxOpen (locals) {
+      this.menuData = locals
+    },
     clickEdit ($event) {
-      console.log($event)
+      this.$router.push({ name: 'employee.detail', params: { employeeId: $event } })
     },
     customSort (value) {
-      return value.sort((left, right) => {
-        let sortBy = this.currentSort
-        const desc = this.currentSortOrder === 'desc'
-        let sorted
-        if (sortBy === 'Id') {
-          sorted = desc
-            ? left[sortBy] - right[sortBy]
-            : right[sortBy] - left[sortBy]
-        } else if (sortBy === 'DueDateDiffToday') {
-          sorted = desc
-            ? left[sortBy] - right[sortBy]
-            : right[sortBy] - left[sortBy]
-        } else {
-          console.log(sortBy)
-          sorted = desc
-            ? left[sortBy].localeCompare(right[sortBy])
-            : right[sortBy].localeCompare(left[sortBy])
-        }
-        return sorted
-      })
+      return value.sort((left, right) => { return -1 })
     },
     async closeConnection () {
       if (this.connection !== null && typeof this.connection.close === 'function') {
+        console.log('cleaning connection')
         try {
           await this.connection.close()
         } finally {
@@ -91,85 +207,125 @@ export default {
         }
       }
     },
+    getOrder (Model) {
+      let order = null
+      let cs = this.activeSort
+      switch (cs) {
+        case 'Id':
+          order = ['Id', this.activeOrder]
+          break
+        case 'Name':
+          order = [Model.associations.Person, 'Name', this.activeOrder]
+          break
+        default:
+          order = ['Id', this.activeOrder]
+      }
+      return [order]
+    },
     async transaction (transaction) {
-      const { Licenses, Persons, Employees, LicenseTypes } = this.connection.models
-      let data = await Licenses.findAll({
+      const { Licenses, Persons, LicenseTypes } = this.connection.models
+      let page = this.activePage - 1
+      let limit = 10
+      let offset = page * limit
+      let order = this.getOrder(Licenses)
+
+      let options = {
         transaction: transaction,
-        raw: true,
-        attributes: ['Id', 'Number', 'DueDate'],
+        raw: false,
+        attributes: ['Id', 'DueDate', 'TimeLeft'],
+        limit: limit,
+        offset: offset,
+        order: order,
+        distinct: true,
+        col: 'Id',
         include: [
           {
             model: Persons,
-            attributes: ['Name'],
-            include: [
-              {
-                attributes: ['Id'],
-                model: Employees
-              }
-            ]
+            required: true
           },
           {
-            attributes: ['Title'],
-            model: LicenseTypes
+            model: LicenseTypes,
+            required: true
           }
         ]
+      }
+      let count = null
+      let rows = []
+      try {
+        rows = await Licenses.findAll(options)
+        options.raw = true
+        options.attributes = undefined
+        count = await Licenses.count(options)
+      } catch (error) {
+        console.log(error)
+      }
+      console.log(rows)
+      rows = map(rows, row => {
+        return {
+          Name: row.Person.Name,
+          Type: row.LicenseType.Title,
+          TimeLeft: row.TimeLeft
+        }
       })
-      return data
-    },
-    reAssign (item, from, to, remove = true) {
-      item[to] = item[from]
-      if (remove) delete item[from]
-      return item
-    },
-
-    toDate (item, key) {
-      if (item[key] !== null) {
-        item[key] = item[key].format('D MMMM YYYY')
-      }
-      return item
-    },
-    toMoment (item, key) {
-      if (item[key] !== null) {
-        item[key] = moment(item[key])
-      } else {
-        item[key] = null
-      }
-      return item
-    },
-    toDateDiffToday (item, key, by = 'years') {
-      if (item[key] === null) {
-        item[key] = 0
-      } else {
-        item[key] = parseInt(item[key].diff(moment(), by))
-      }
-      return item
-    },
-    dataMapper (item) {
-      item = this.reAssign(item, 'Person.Name', 'Name')
-      item = this.toMoment(item, 'DueDate')
-      item = this.reAssign(item, 'DueDate', 'DueDateFormated', false)
-      item = this.reAssign(item, 'DueDate', 'DueDateDiffToday', false)
-      item = this.reAssign(item, 'LicenseType.Title', 'LicenseType')
-      item = this.toDate(item, 'DueDateFormated')
-      item = this.toDateDiffToday(item, 'DueDateDiffToday', 'days')
-      return item
+      return { rows, count }
     },
     async populate () {
-      this.connection = (new this.$orm()).withOption({
-        username: 'his',
-        password: 'his',
-        database: 'his'
-      }).connect()
+      let data
+      this.connection = (new this.$orm()).connect()
       try {
-        let data = await this.connection.transaction(this.transaction)
-        let model = data.slice()
-        this.model = map(model, this.dataMapper)
+        data = await this.connection.transaction(this.transaction)
       } catch (error) {
         console.log(error)
       } finally {
         await this.closeConnection()
       }
+      const { rows, count } = data
+      this.model = rows
+      this.total = count
+      this.totalPage = Math.ceil(count / 10)
     }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.transparent {
+  background-color: transparent;
+  padding: 0 10px;
+}
+.page-md-field.md-field {
+  width: 64px;
+  margin-top: 0px;
+  margin-bottom: 12px;
+  padding-top: 12px;
+  min-height: 44px;
+}
+.page-md-field.md-field::before,
+.page-md-field.md-field::after {
+  display: none;
+  width: 64px !important;
+}
+.page-input {
+  width: 64px !important;
+  padding: 5px;
+  background-color: white;
+  border-radius: 3px !important;
+}
+.ctc {
+  flex: 1;
+  display: flex;
+}
+.psg {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+.search {
+  width: 300px;
+}
+.search input {
+  background-color: #fff;
+}
+.right-table {
+}
+</style>

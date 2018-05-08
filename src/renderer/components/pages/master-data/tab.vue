@@ -14,9 +14,6 @@
         :to="{ name: 'masterdata.provinces', params: { page: '1', sort: 'Name', order: 'asc' } }"
         md-label="Daerah"/>
       <md-tab
-        :to="{ name: 'masterdata.regencies', params: { page: '1', sort: 'Name', order: 'asc' } }"
-        md-label="Kota/Kabupaten"/>
-      <md-tab
         :to="{ name: 'masterdata.jobtitles', params: { page: '1', sort: 'Name', order: 'asc' } }"
         md-label="Posisi"/>
       <md-tab
