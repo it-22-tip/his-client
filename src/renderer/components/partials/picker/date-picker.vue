@@ -41,8 +41,15 @@ export default {
     }
   },
   mounted () {
-    if (this.value !== null || this.value !== '')
-    // this.model = moment(this.value).toDate()
+    let model
+    try {
+      model = this.model
+      model = moment(model)
+      model = model.isValid() ? model : moment()
+    } catch (error) {
+      console.log(error)
+    }
+    this.model = model.toDate()
   },
   methods: {
     showValue () {
