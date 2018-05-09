@@ -8,3 +8,5 @@ ok bos`
   console.log(chalk.yellow(text))
 }
 
+console.log(Constant)
+

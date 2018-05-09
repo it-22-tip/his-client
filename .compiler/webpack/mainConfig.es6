@@ -1,45 +1,27 @@
 'use strict'
 import path from 'path'
-import { MainEntry, StaticPath, OutputPath, RendererPath } from '../constant'
-import { dependencies } from '../../package.json'
+import { MainEntry, StaticPath, OutputPath, RendererPath, dependencies } from '../constant'
 import webpack from 'webpack'
+import webpackDefinePlugin from './plugins/webpackDefinePlugin'
 import BabelMinifyWebpackPlugin from 'babel-minify-webpack-plugin'
 import EslintFriendlyFormatter from 'eslint-friendly-formatter'
+import eslintLoader from './loaders/eslintLoader'
+import nodeLoader from './loaders/nodeLoader';
+import babelLoader from './loaders/babelLoader';
 process.env.BABEL_ENV = 'main'
 let mainConfig = {
   entry: {
     main: MainEntry
   },
+  mode: process.env.NODE_ENV !== 'production' ? 'development' : 'production',
   externals: [
     ...Object.keys(dependencies || {})
   ],
   module: {
     rules: [
-      {
-        test: /\.worker\.js$/,
-        exclude: /node_modules/,
-        use: { loader: 'worker-loader' }
-      },
-      {
-        test: /\.(js)$/,
-        enforce: 'pre',
-        exclude: /node_modules/,
-        use: {
-          loader: 'eslint-loader',
-          options: {
-            formatter: EslintFriendlyFormatter
-          }
-        }
-      },
-      {
-        test: /\.js$/,
-        use: 'babel-loader',
-        exclude: /node_modules/
-      },
-      {
-        test: /\.node$/,
-        use: 'node-loader'
-      }
+      eslintLoader,
+      babelLoader,
+      nodeLoader
     ]
   },
   node: {
@@ -52,7 +34,8 @@ let mainConfig = {
     path: OutputPath
   },
   plugins: [
-    new webpack.NoEmitOnErrorsPlugin()
+    new webpack.NoEmitOnErrorsPlugin(),
+    webpackDefinePlugin
   ],
   resolve: {
     alias: {
@@ -63,33 +46,7 @@ let mainConfig = {
   target: 'electron-main'
 }
 
-/**
- * Adjust mainConfig for development settings
- */
-if (process.env.NODE_ENV !== 'production') {
-  mainConfig.plugins.push(
-    new webpack.DefinePlugin({
-      '__static': `"${StaticPath.replace(/\\/g, '\\\\')}"`
-    })
-  )
-}
-
-/**
- * Adjust mainConfig for production settings
- */
-if (process.env.NODE_ENV === 'production') {
-  mainConfig.plugins.push(
-    new BabelMinifyWebpackPlugin(),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production')
-    })
-  )
-}
-
-if (process.env.NODE_ENV !== 'production') {
-  mainConfig.mode = 'development'
-} else {
-  mainConfig.mode = 'production'
-}
+// minify on production
+if (process.env.NODE_ENV === 'production') mainConfig.plugins.push(new BabelMinifyWebpackPlugin())
 
 export default mainConfig
