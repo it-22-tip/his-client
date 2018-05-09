@@ -1,21 +1,16 @@
-<style>
-.district-picker.md-field .md-input-action.md-clear {
-  right: -32px;
-}
-</style>
-
 <script>
-import AreaPicker from './area-picker'
+import RegionPicker from './region-picker'
 export default {
   name: 'DistrictPicker',
   mixins: [
-    AreaPicker
+    RegionPicker
   ],
   data () {
     return {
       classes: 'district-picker',
       label: 'Kecamatan',
-      modelName: 'Districts'
+      modelName: 'Districts',
+      where: 'RegencyCode'
     }
   }
 }

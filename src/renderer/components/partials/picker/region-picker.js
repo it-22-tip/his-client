@@ -1,4 +1,5 @@
 import orm from '@mixins/orm'
+import './region-picker.css'
 export default {
   mixins: [
     orm
@@ -24,13 +25,14 @@ export default {
   template: `
     <md-field
       md-clearable
+      class="region-picker"
       :class="classes">
       <label>{{ label }}</label>
       <md-select
         :disabled="disabled"
         v-model="selected"
         md-dense
-        @md-opened="getDate"
+        @md-opened="getData"
         @md-selected="$emit('input', selected)">
         <md-option
           v-for="item in items"
@@ -40,8 +42,9 @@ export default {
     </md-field>
   `,
   watch: {
-    regencyCode: {
+    whereCode: {
       handler: function (val) {
+        console.log('where code')
         if (val === '') {
           this.selected = ''
           this.disabled = true
@@ -58,21 +61,18 @@ export default {
         const Model = this.connection.models[this.modelName]
         const opt = {
           transaction: transaction,
-          raw: true,
+          raw: false,
           attributes: ['Name', 'Code']
         }
         if (this.where) {
-          let where = this.where
-          opt.where = {where}
+          let key = this.where
+          opt.where = {}
+          opt.where[key] = this.whereCode
         }
         let data = await Model.findAll(opt)
         return data
       }
-      this.connection = (new this.$orm()).withOption({
-        username: 'his',
-        password: 'his',
-        database: 'his'
-      }).connect()
+      this.connection = (new this.$orm()).connect()
       try {
         this.items = await this.connection.transaction(transaction)
         this.disabled = false

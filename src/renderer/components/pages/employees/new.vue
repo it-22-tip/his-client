@@ -14,55 +14,33 @@
         <md-content class="scr md-scrollbar">
           <div class="hi">
             <div>
-              <div>
-                <md-subheader>Data Personal</md-subheader>
-                <md-field>
-                  <label>Nama</label>
-                  <md-input/>
-                </md-field>
-                <md-field>
-                  <label>Kota Lahir</label>
-                  <md-input/>
-                </md-field>
-                <md-field>
-                  <label>Tanggal Lahir</label>
-                  <md-input/>
-                </md-field>
-                <md-field>
-                  <label>Tempat Tinggal Lahir</label>
-                  <md-input/>
-                </md-field>
+              <div class="md-layout">
+                <div class="md-layout-item md-size-50">
+                  <md-subheader>Data Personal</md-subheader>
+                  <md-field>
+                    <label>Nama</label>
+                    <md-input/>
+                  </md-field>
+                  <md-field>
+                    <label>Kota Lahir</label>
+                    <md-input/>
+                  </md-field>
+                  <md-field>
+                    <label>Tanggal Lahir</label>
+                    <md-input/>
+                  </md-field>
+                  <md-field>
+                    <label>Tempat Tinggal Lahir</label>
+                    <md-input/>
+                  </md-field>
+                </div>
               </div>
-              <div>
-                <md-subheader>Alamat Resmi</md-subheader>
-                <md-field>
-                  <label>Provinsi</label>
-                  <md-input/>
-                </md-field>
-                <md-field>
-                  <label>Kota/Kabupaten</label>
-                  <md-input/>
-                </md-field>
-                <md-field>
-                  <label>Kecamatan</label>
-                  <md-input/>
-                </md-field>
-                <md-field>
-                  <label>Desa</label>
-                  <md-input/>
-                </md-field>
-                <md-field>
-                  <label>RT</label>
-                  <md-input/>
-                </md-field>
-                <md-field>
-                  <label>RW</label>
-                  <md-input/>
-                </md-field>
-                <md-field>
-                  <label>Nama Dusun/Perumahan/Jalan dan Nomor</label>
-                  <md-input/>
-                </md-field>
+              <div class="md-layout md-gutter">
+                <address-form
+                  v-model="officialAddress"
+                  type="official"
+                  class="md-layout-item md-size-50"
+                  title="Alamat Resmi"/>
               </div>
               <div>
                 <md-subheader>Data Pekerjaan</md-subheader>
@@ -76,12 +54,6 @@
         </md-content>
       </md-content>
     </md-content>
-    <md-dialog :md-active.sync="modalProvince">
-      <md-dialog-title>Provinsi</md-dialog-title>
-      <md-content>
-        Pilih Provinsi
-      </md-content>
-    </md-dialog>
   </layout-one>
 </template>
 
@@ -91,7 +63,8 @@ import orm from '@/mixins/orm'
 export default {
   components: {
     'layout-one': () => import('@partials/layout-one'),
-    'date-picker': () => import('@partials/picker/date-picker')
+    'date-picker': () => import('@partials/picker/date-picker'),
+    'address-form': () => import('@partials/form/address-form')
   },
   mixins: [
     orm
@@ -117,7 +90,9 @@ export default {
           Id: 0,
           Name: 'Tidak Ada'
         }
-      ]
+      ],
+      officialAddress: null,
+      postalAddress: null
     }
   },
   watch: {
