@@ -9,13 +9,13 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import htmlWebpackPlugin from './plugins/htmlWebpackPlugin'
 import webpackDefinePlugin from './plugins/webpackDefinePlugin'
 import whiteListedModules from '../whiteListedModules'
-import rules from './rules'
+import rendererRules from './rules/rendererRules'
 import { VueLoaderPlugin } from 'vue-loader'
 
 process.env.BABEL_ENV = 'renderer'
 
 let rendererConfig = {
-  devtool: '#cheap-module-eval-source-map',
+  devtool: process.env.NODE_ENV !== 'production' ? '#cheap-module-eval-source-map' : '',
   entry: {
     renderer: RendererEntry
   },
@@ -24,7 +24,7 @@ let rendererConfig = {
   ],
   mode: process.env.NODE_ENV !== 'production' ? 'development' : 'production',
   module: {
-    rules: rules
+    rules: rendererRules
   },
   node: {
     __dirname: process.env.NODE_ENV !== 'production',
@@ -55,7 +55,6 @@ let rendererConfig = {
 }
 
 if (process.env.NODE_ENV === 'production') {
-  rendererConfig.devtool = ''
   rendererConfig.plugins.push(
     new BabelMinifyWebpackPlugin(),
     new CopyWebpackPlugin([

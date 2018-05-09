@@ -131,7 +131,7 @@ function startMain () {
 }
 
 function startElectron () {
-  let env = Object.create( process.env );
+  let env = Object.create(process.env)
   env.ELECTRON_DISABLE_SECURITY_WARNINGS = true
   env.IS_DEVELOPMENT = true
   electronProcess = spawn(electron, ['--inspect=5858', path.join(__dirname, '../dist/electron/main.js')], { env: env })

@@ -1,13 +1,9 @@
 'use strict'
-import path from 'path'
-import { MainEntry, StaticPath, OutputPath, RendererPath, dependencies } from '../constant'
+import { MainEntry, OutputPath, RendererPath, dependencies } from '../constant'
 import webpack from 'webpack'
 import webpackDefinePlugin from './plugins/webpackDefinePlugin'
 import BabelMinifyWebpackPlugin from 'babel-minify-webpack-plugin'
-import EslintFriendlyFormatter from 'eslint-friendly-formatter'
-import eslintLoader from './loaders/eslintLoader'
-import nodeLoader from './loaders/nodeLoader';
-import babelLoader from './loaders/babelLoader';
+import mainRules from './rules/mainRules'
 process.env.BABEL_ENV = 'main'
 let mainConfig = {
   entry: {
@@ -18,11 +14,7 @@ let mainConfig = {
     ...Object.keys(dependencies || {})
   ],
   module: {
-    rules: [
-      eslintLoader,
-      babelLoader,
-      nodeLoader
-    ]
+    rules: mainRules
   },
   node: {
     __dirname: process.env.NODE_ENV !== 'production',
@@ -39,7 +31,7 @@ let mainConfig = {
   ],
   resolve: {
     alias: {
-      '@': RendererPath,
+      '@': RendererPath
     },
     extensions: ['.js', '.json', '.node']
   },

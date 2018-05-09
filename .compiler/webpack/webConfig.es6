@@ -4,127 +4,25 @@ import webpack from 'webpack'
 import BabelMinifyWebpackPlugin from 'babel-minify-webpack-plugin'
 import CopyWebpackPlugin from 'copy-webpack-plugin'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
-import HtmlWebpackPlugin from 'html-webpack-plugin'
+import htmlWebpackPlugin from './plugins/htmlWebpackPlugin'
 import { VueLoaderPlugin } from 'vue-loader'
-import EslintFriendlyFormater from 'eslint-friendly-formatter'
+import webRules from './rules/webRules'
+import alias from './alias'
 process.env.BABEL_ENV = 'web'
 let webConfig = {
-  devtool: '#cheap-module-eval-source-map',
+  devtool: process.env.NODE_ENV !== 'production' ? '#cheap-module-eval-source-map' : '',
   entry: {
     web: path.join(__dirname, '../src/renderer/main.js')
   },
   module: {
-    rules: [
-      {
-        test: /\.worker\.js$/,
-        exclude: /node_modules/,
-        use: { loader: 'worker-loader' }
-      },
-      {
-        test: /\.(js|vue)$/,
-        enforce: 'pre',
-        exclude: /node_modules/,
-        use: {
-          loader: 'eslint-loader',
-          options: {
-            formatter: EslintFriendlyFormater
-          }
-        }
-      },
-      {
-        test: /\.vue$/,
-        loader: 'vue-loader'
-      },
-      {
-        test: /\.css$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          {
-            loader: 'css-loader'
-          },
-          {
-            loader: 'postcss-loader',
-            options: {
-              sourceMap: true
-            }
-          }
-        ]
-      },
-      {
-        test: /\.(scss|sass)$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader',
-          {
-            loader: 'postcss-loader',
-            options: {
-              sourceMap: true
-            }
-          },
-          'sass-loader'
-        ]
-      },
-      {
-        test: /\.less$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader',
-          {
-            loader: 'postcss-loader',
-            options: {
-              sourceMap: true
-            }
-          },
-          'less-loader'
-        ]
-      },
-      {
-        test: /\.html$/,
-        use: 'vue-html-loader'
-      },
-      {
-        test: /\.js$/,
-        use: 'babel-loader',
-        include: [ path.resolve(__dirname, '../src/renderer') ],
-        exclude: /node_modules/
-      },
-      {
-        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-        use: {
-          loader: 'url-loader',
-          query: {
-            limit: 10000,
-            name: 'imgs/[name].[ext]'
-          }
-        }
-      },
-      {
-        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-        use: {
-          loader: 'url-loader',
-          query: {
-            limit: 10000,
-            name: 'fonts/[name].[ext]'
-          }
-        }
-      }
-    ]
+    rules: webRules
   },
   plugins: [
     new VueLoaderPlugin(),
     new MiniCssExtractPlugin({
       filename: 'styles.css'
     }),
-    new HtmlWebpackPlugin({
-      filename: 'index.html',
-      template: path.resolve(__dirname, '../src/index.ejs'),
-      minify: {
-        collapseWhitespace: true,
-        removeAttributeQuotes: true,
-        removeComments: true
-      },
-      nodeModules: false
-    }),
+    htmlWebpackPlugin,
     new webpack.DefinePlugin({
       'process.env.IS_WEB': 'true'
     }),
@@ -136,15 +34,7 @@ let webConfig = {
     path: path.join(__dirname, '../dist/web')
   },
   resolve: {
-    alias: {
-      '@pages': path.join(__dirname, '../src/renderer/components/pages'),
-      '@partials': path.join(__dirname, '../src/renderer/components/partials'),
-      '@extras': path.join(__dirname, '../src/renderer/components/extras'),
-      '@helpers': path.join(__dirname, '../src/renderer/components/helpers'),
-      '@mixins': path.join(__dirname, '../src/renderer/components/mixins'),
-      '@': path.join(__dirname, '../src/renderer'),
-      'vue$': 'vue/dist/vue.esm.js'
-    },
+    alias: alias,
     extensions: ['.js', '.vue', '.json', '.css', '.scss', 'less']
   },
   target: 'web'
@@ -160,8 +50,6 @@ if (process.env.NODE_ENV !== 'production') {
  * Adjust webConfig for production settings
  */
 if (process.env.NODE_ENV === 'production') {
-  webConfig.devtool = ''
-
   webConfig.plugins.push(
     new BabelMinifyWebpackPlugin(),
     new CopyWebpackPlugin([
