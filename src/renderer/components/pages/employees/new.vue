@@ -21,18 +21,9 @@
                     <label>Nama</label>
                     <md-input/>
                   </md-field>
-                  <md-field>
-                    <label>Kota Lahir</label>
-                    <md-input/>
-                  </md-field>
-                  <md-field>
-                    <label>Tanggal Lahir</label>
-                    <md-input/>
-                  </md-field>
-                  <md-field>
-                    <label>Tempat Tinggal Lahir</label>
-                    <md-input/>
-                  </md-field>
+                  <birthdateplace-form
+                    v-model="birthDatePlace"
+                    title="Alamat Resmi"/>
                 </div>
               </div>
               <div class="md-layout md-gutter">
@@ -63,8 +54,8 @@ import orm from '@/mixins/orm'
 export default {
   components: {
     'layout-one': () => import('@partials/layout-one'),
-    'date-picker': () => import('@partials/picker/date-picker'),
-    'address-form': () => import('@partials/form/address-form')
+    'address-form': () => import('@partials/form/address-form'),
+    'birthdateplace-form': () => import('@partials/form/birthdateplace-form')
   },
   mixins: [
     orm

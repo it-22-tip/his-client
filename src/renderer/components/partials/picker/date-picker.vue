@@ -4,6 +4,7 @@
     @input="onInput">
     <md-field
       slot-scope="props">
+      <label>Tanggal Lahir</label>
       <md-input
         :value="showValue()"/>
     </md-field>

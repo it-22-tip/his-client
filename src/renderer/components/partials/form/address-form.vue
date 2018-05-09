@@ -47,10 +47,10 @@
 <script>
 export default {
   components: {
-    'province-picker': () => import('../picker/province-picker'),
-    'regency-picker': () => import('../picker/regency-picker'),
-    'district-picker': () => import('../picker/district-picker'),
-    'village-picker': () => import('../picker/village-picker')
+    'province-picker': () => import('@partials/picker/province-picker'),
+    'regency-picker': () => import('@partials/picker/regency-picker'),
+    'district-picker': () => import('@partials/picker/district-picker'),
+    'village-picker': () => import('@partials/picker/village-picker')
   },
   props: {
     title: {
