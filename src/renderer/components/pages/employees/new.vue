@@ -1,26 +1,87 @@
 <template>
   <layout-one>
-    <md-toolbar
-      class="md-dense md-toolbar md-primary"
-      md-elevation="0">
-      <md-button
-        class="md-icon-button md-dense"
-        @click="$router.go(-1)">
-        <md-icon>close</md-icon>
-      </md-button>
-      <md-button
-        class="md-icon-button md-dense"
-        @click="save">
-        <md-icon>save</md-icon>
-      </md-button>
-    </md-toolbar>
-    <md-content class="ctc">
-
-      <md-content class="padding-10">
-        [sc]
+    <md-content class="dp">
+      <md-toolbar
+        class="md-dense md-primary"
+        md-elevation="0">
+        <md-button
+          class="md-icon-button"
+          @click="$router.go(-1)">
+          <md-icon>close</md-icon>
+        </md-button>
+      </md-toolbar>
+      <md-content class="fc">
+        <md-content class="scr md-scrollbar">
+          <div class="hi">
+            <div>
+              <div>
+                <md-subheader>Data Personal</md-subheader>
+                <md-field>
+                  <label>Nama</label>
+                  <md-input/>
+                </md-field>
+                <md-field>
+                  <label>Kota Lahir</label>
+                  <md-input/>
+                </md-field>
+                <md-field>
+                  <label>Tanggal Lahir</label>
+                  <md-input/>
+                </md-field>
+                <md-field>
+                  <label>Tempat Tinggal Lahir</label>
+                  <md-input/>
+                </md-field>
+              </div>
+              <div>
+                <md-subheader>Alamat Resmi</md-subheader>
+                <md-field>
+                  <label>Provinsi</label>
+                  <md-input/>
+                </md-field>
+                <md-field>
+                  <label>Kota/Kabupaten</label>
+                  <md-input/>
+                </md-field>
+                <md-field>
+                  <label>Kecamatan</label>
+                  <md-input/>
+                </md-field>
+                <md-field>
+                  <label>Desa</label>
+                  <md-input/>
+                </md-field>
+                <md-field>
+                  <label>RT</label>
+                  <md-input/>
+                </md-field>
+                <md-field>
+                  <label>RW</label>
+                  <md-input/>
+                </md-field>
+                <md-field>
+                  <label>Nama Dusun/Perumahan/Jalan dan Nomor</label>
+                  <md-input/>
+                </md-field>
+              </div>
+              <div>
+                <md-subheader>Data Pekerjaan</md-subheader>
+                <md-field>
+                  <label>Posisi</label>
+                  <md-input/>
+                </md-field>
+              </div>
+            </div>
+          </div>
+        </md-content>
       </md-content>
-
     </md-content>
+    <md-dialog :md-active.sync="modalProvince">
+      <md-dialog-title>Provinsi</md-dialog-title>
+      <md-content>
+        Pilih Provinsi
+      </md-content>
+    </md-dialog>
   </layout-one>
 </template>
 
@@ -126,35 +187,31 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.ctc {
+.dp {
   flex: 1;
   display: flex;
   flex-direction: column;
 }
-.padding-10 {
-  display: flex;
-  flex-direction: column;
+.fc {
   flex: 1;
+  position: relative;
 }
-
-</style>
-
-<style lang="scss">
-.mstepper {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
+.scr {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: auto;
 }
-.mstepper>.md-steppers-wrapper {
-  flex: 1 !important;
-  display: flex;
-  flex-direction: column;
+.hi {
+  padding: 20px;
 }
-.mstepper.md-steppers-wrapper>.md-steppers-container {
-  flex: 1;
+.big {
+  height: 1000px;
 }
-.md-stepper {
-  height: 100%;
-  padding: 0;
+.mo:hover {
+  text-decoration: underline;
 }
 </style>
