@@ -41,7 +41,8 @@ export default {
     }
   },
   mounted () {
-    this.model = moment(this.value).toDate()
+    if (this.value !== null || this.value !== '')
+    // this.model = moment(this.value).toDate()
   },
   methods: {
     showValue () {

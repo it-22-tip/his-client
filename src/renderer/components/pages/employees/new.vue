@@ -9,6 +9,11 @@
           @click="$router.go(-1)">
           <md-icon>close</md-icon>
         </md-button>
+        <md-button
+          class="md-icon-button"
+          @click="$router.go(-1)">
+          <md-icon>save</md-icon>
+        </md-button>
       </md-toolbar>
       <md-content class="fc">
         <md-content class="scr md-scrollbar">
