@@ -35,7 +35,7 @@
               <div class="md-layout md-gutter">
                 <address-form
                   v-model="officialAddress"
-                  type="official"
+                  type="Official"
                   class="md-layout-item md-size-50"
                   title="Alamat Resmi"/>
               </div>
@@ -53,6 +53,7 @@
 
 <script>
 import orm from '@/mixins/orm'
+import { map } from 'lodash'
 export default {
   components: {
     'layout-one': () => import('@partials/layout-one'),
@@ -76,11 +77,35 @@ export default {
           Gender: 'P',
           BirthDate: null,
           BirthPlaceRegencyCode: null,
-          AddressHistories: []
+          AddressHistories: [
+            {
+              Id: 1,
+              Type: 'Official',
+              Address: null,
+              Rt: null,
+              Rw: null,
+              VillageCode: null
+            },
+            {
+              Id: 2,
+              Type: 'Postal',
+              Address: null,
+              Rt: null,
+              Rw: null,
+              VillageCode: null
+            }
+          ]
         },
         JobTitleId: null
       },
-      officialAddress: null,
+      officialAddress: {
+        Id: null,
+        Type: 'Official',
+        Address: null,
+        Rt: null,
+        Rw: null,
+        VillageCode: null
+      },
       postalAddress: null
     }
   },
@@ -104,7 +129,12 @@ export default {
     },
     officialAddress: {
       handler: function (val) {
-        // this.saved.Person.AddressHistories
+        let AddressHistories = this.saved.Person.AddressHistories
+        this.saved.Person.AddressHistories = map(AddressHistories, Address => {
+          if (Address.type === 'Official') return val
+          return Address
+        })
+        console.log(AddressHistories)
       }
     }
   },

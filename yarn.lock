@@ -102,9 +102,9 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
-"@casl/ability@^2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@casl/ability/-/ability-2.2.0.tgz#8b7000200c57ac093d9a97bf67861f722ad9f1b8"
+"@casl/ability@^2.3.0":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@casl/ability/-/ability-2.3.0.tgz#9f4791b0f2db4b917aaa3d2d8dda5c7ead03b95f"
   dependencies:
     sift "^5.1.0"
 

@@ -35,7 +35,7 @@
     "last 1 chrome version"
   ],
   "dependencies": {
-    "@casl/ability": "^2.2.0",
+    "@casl/ability": "^2.3.0",
     "@casl/vue": "^0.2.0",
     "@fortawesome/fontawesome": "^1.1.7",
     "@fortawesome/fontawesome-free-brands": "^5.0.12",

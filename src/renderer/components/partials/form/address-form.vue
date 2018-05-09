@@ -38,7 +38,7 @@
       </div>
     </div>
     <md-field>
-      <label>Nama Dusun/Perumahan/Jalan dan Nomor</label>
+      <label>Dusun/Perumahan/Jalan</label>
       <md-input
         v-model="Address"/>
     </md-field>
@@ -89,14 +89,15 @@ export default {
           Rt: this.Rt,
           Rw: this.Rw,
           Address: this.Address,
-          VillageCode: this.VillageCode
+          VillageCode: this.VillageCode,
+          Type: this.type
         }
       }
     }
   },
   watch: {
     input: function (value) {
-      this.$emit('input', value)
+      if (value.VillageCode !== null) this.$emit('input', value)
     }
   }
 }
