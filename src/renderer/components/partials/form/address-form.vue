@@ -16,8 +16,10 @@
       </div>
     </div>
     <div class="md-layout md-gutter">
-      <div class="md-layout-item md-size-25">
-        <md-field>
+      <div class="md-layout-item md-size-50">
+        <md-field
+          md-clearable
+          class="region-picker">
           <label>RW</label>
           <md-input
             v-model="Rt"
@@ -26,8 +28,10 @@
             min="0"/>
         </md-field>
       </div>
-      <div class="md-layout-item md-size-25">
-        <md-field>
+      <div class="md-layout-item md-size-50">
+        <md-field
+          md-clearable
+          class="region-picker">
           <label>RW</label>
           <md-input
             v-model="Rw"

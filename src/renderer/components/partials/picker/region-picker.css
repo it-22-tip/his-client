@@ -1,3 +1,16 @@
-.region-picker.md-field .md-input-action.md-clear {
+/* .region-picker.md-field .md-input-action.md-clear {
   right: -32px;
+} */
+
+.region-picker.md-field:before, .region-picker.md-field:after {
+  margin-right: 32px;
+}
+.region-picker.md-field>.md-menu.md-select {
+  margin-right: 32px;
+}
+.region-picker.md-field>input[type=number] {
+  margin-right: 2px;
+}
+.region-picker.md-field>input[type=number]:hover {
+  margin-right: 2px;
 }

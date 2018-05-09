@@ -79,16 +79,8 @@ export default {
           BirthPlaceRegencyCode: null,
           AddressHistories: [
             {
-              Id: 1,
+              Id: null,
               Type: 'Official',
-              Address: null,
-              Rt: null,
-              Rw: null,
-              VillageCode: null
-            },
-            {
-              Id: 2,
-              Type: 'Postal',
               Address: null,
               Rt: null,
               Rw: null,
@@ -129,12 +121,13 @@ export default {
     },
     officialAddress: {
       handler: function (val) {
-        let AddressHistories = this.saved.Person.AddressHistories
-        this.saved.Person.AddressHistories = map(AddressHistories, Address => {
-          if (Address.type === 'Official') return val
-          return Address
+        this.saved.Person.AddressHistories = map(this.saved.Person.AddressHistories, item => {
+          if (item.Type === 'Official') {
+            return val
+          } else {
+            return item
+          }
         })
-        console.log(AddressHistories)
       }
     }
   },
@@ -148,6 +141,7 @@ export default {
       try {
         data = await Employees.create(this.saved, {
           transaction: transaction,
+          logging: console.log,
           include: [
             {
               model: Persons,
