@@ -41,16 +41,30 @@ export default {
       RegencyCode: null,
       BirthDate: null,
       input: {
-        RegencyCode: null,
+        BirthPlaceRegency: null,
         BirthDate: null
       }
     }
   },
   watch: {
-    VillageCode: {
+    value: {
+      handler: function (val) {
+        this.RegencyCode = val.BirthPlaceRegency
+        this.BirthDate = val.BirthDate
+      }
+    },
+    RegencyCode: {
       handler: function (val) {
         this.$emit('input', {
-          RegencyCode: this.RegencyCode,
+          BirthPlaceRegency: this.RegencyCode,
+          BirthDate: this.BirthDate
+        })
+      }
+    },
+    birthDate: {
+      handler: function (val) {
+        this.$emit('input', {
+          BirthPlaceRegency: this.RegencyCode,
           BirthDate: this.BirthDate
         })
       }

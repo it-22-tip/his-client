@@ -24,7 +24,7 @@
                   <md-subheader>Data Personal</md-subheader>
                   <md-field>
                     <label>Nama</label>
-                    <md-input/>
+                    <md-input v-model="saved.Person.Name"/>
                   </md-field>
                   <birthdateplace-form
                     v-model="birthDatePlace"
