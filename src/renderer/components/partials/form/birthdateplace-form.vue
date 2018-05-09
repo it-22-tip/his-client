@@ -61,8 +61,9 @@ export default {
         })
       }
     },
-    birthDate: {
+    BirthDate: {
       handler: function (val) {
+        console.log('pusing')
         this.$emit('input', {
           BirthPlaceRegency: this.RegencyCode,
           BirthDate: this.BirthDate

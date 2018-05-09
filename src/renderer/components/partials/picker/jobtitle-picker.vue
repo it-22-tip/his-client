@@ -1,54 +1,49 @@
+<template>
+  <md-field
+    md-clearable>
+    <label>Job Title</label>
+    <md-select
+      :disabled="disabled"
+      v-model="selected"
+      md-dense
+      @md-opened="getData"
+      @md-selected="$emit('input', selected)">
+      <md-option
+        v-for="item in items"
+        :value="item.Id"
+        :key="item.Id">{{ item.Name }}</md-option>
+    </md-select>
+  </md-field>
+</template>
+
+<script>
 import orm from '@mixins/orm'
-import './region-picker.css'
 export default {
   mixins: [
     orm
   ],
   props: {
     value: {
-      type: String,
-      default: null
-    },
-    whereCode: {
-      type: String,
+      type: Number,
       default: null
     }
   },
   data: () => ({
     emptyItems: [{ Code: 0, Name: 'Tidak Ada Data' }],
-    selected: '',
+    selected: null,
     items: [{ Code: 0, Name: 'Tidak Ada Data' }],
     connection: null,
-    disabled: true,
+    disabled: false,
     where: null
   }),
-  template: `
-    <md-field
-      md-clearable
-      class="region-picker"
-      :class="classes">
-      <label>{{ label }}</label>
-      <md-select
-        :disabled="disabled"
-        v-model="selected"
-        md-dense
-        @md-opened="getData"
-        @md-selected="$emit('input', selected)">
-        <md-option
-          v-for="item in items"
-          :value="item.Code"
-          :key="item.Code">{{ item.Name }}</md-option>
-      </md-select>
-    </md-field>
-  `,
   watch: {
     whereCode: {
       handler: function (val) {
-        if (val === '') {
-          this.selected = ''
-          this.disabled = true
+        if (val === null) {
+          this.selected = null
+          this.disabled = false
         } else {
-          this.selected = ''
+          this.selected = null
           this.getData()
         }
       }
@@ -56,19 +51,15 @@ export default {
   },
   methods: {
     async getData () {
+      console.log('getting data')
       const transaction = async transaction => {
-        const Model = this.connection.models[this.modelName]
+        const { JobTitles } = this.connection.models
         const opt = {
           transaction: transaction,
           raw: false,
-          attributes: ['Name', 'Code']
+          attributes: ['Id', 'Name']
         }
-        if (this.where) {
-          let key = this.where
-          opt.where = {}
-          opt.where[key] = this.whereCode
-        }
-        let data = await Model.findAll(opt)
+        let data = await JobTitles.findAll(opt)
         return data
       }
       this.connection = (new this.$orm()).connect()
@@ -88,3 +79,4 @@ export default {
     }
   }
 }
+</script>

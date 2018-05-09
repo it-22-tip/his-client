@@ -11,13 +11,14 @@
         </md-button>
         <md-button
           class="md-icon-button"
-          @click="$router.go(-1)">
+          @click="save()">
           <md-icon>save</md-icon>
         </md-button>
       </md-toolbar>
       <md-content class="fc">
         <md-content class="scr md-scrollbar">
           <div class="hi">
+            <textarea v-model="savedView"/>
             <div>
               <div class="md-layout">
                 <div class="md-layout-item md-size-50">
@@ -40,10 +41,7 @@
               </div>
               <div>
                 <md-subheader>Data Pekerjaan</md-subheader>
-                <md-field>
-                  <label>Posisi</label>
-                  <md-input/>
-                </md-field>
+                <jobtitle-picker v-model="saved.JobTitleId"/>
               </div>
             </div>
           </div>
@@ -54,13 +52,13 @@
 </template>
 
 <script>
-import moment from 'moment'
 import orm from '@/mixins/orm'
 export default {
   components: {
     'layout-one': () => import('@partials/layout-one'),
     'address-form': () => import('@partials/form/address-form'),
-    'birthdateplace-form': () => import('@partials/form/birthdateplace-form')
+    'birthdateplace-form': () => import('@partials/form/birthdateplace-form'),
+    'jobtitle-picker': () => import('@partials/picker/jobtitle-picker')
   },
   mixins: [
     orm
@@ -76,30 +74,37 @@ export default {
         Person: {
           Name: '',
           Gender: 'P',
-          BirthDate: moment().format('YYYY-MM-DD'),
-          BirthPlaceRegencyCode: ''
+          BirthDate: null,
+          BirthPlaceRegencyCode: null,
+          AddressHistories: []
         },
         JobTitleId: null
       },
-      dbPosisi: [
-        {
-          Id: 0,
-          Name: 'Tidak Ada'
-        }
-      ],
       officialAddress: null,
       postalAddress: null
+    }
+  },
+  computed: {
+    savedView: {
+      get () {
+        return JSON.stringify(this.saved, 4)
+      }
     }
   },
   watch: {
     'birthDatePlace.BirthDate': {
       handler: function (val) {
-        console.log(val)
+        this.saved.Person.BirthDate = val
       }
     },
     'birthDatePlace.BirthPlaceRegency': {
       handler: function (val) {
         this.saved.Person.BirthPlaceRegencyCode = val
+      }
+    },
+    officialAddress: {
+      handler: function (val) {
+        // this.saved.Person.AddressHistories
       }
     }
   },
@@ -107,31 +112,20 @@ export default {
     save () {
       this.saving()
     },
-    openPosition () {
-      this.connection = (new this.$orm()).connect()
-      const { JobTitles } = this.connection.models
-      JobTitles.findAll(
-        {
-          raw: true,
-          attributes: ['Id', 'Name']
-        }
-      ).then(
-        data => {
-          this.dbPosisi = data
-        }
-      )
-    },
     async transaction (transaction) {
-      const { Persons, Employees, JobTitles } = this.connection.models
-      console.log(Persons)
+      const { Persons, Employees, JobTitles, AddressHistories } = this.connection.models
       let data
       try {
         data = await Employees.create(this.saved, {
           transaction: transaction,
-          logging: console.log,
           include: [
             {
-              model: Persons
+              model: Persons,
+              include: [
+                {
+                  model: AddressHistories
+                }
+              ]
             },
             {
               model: JobTitles

@@ -63,9 +63,7 @@ export default {
     },
     value: {
       type: Object,
-      default: () => {
-        return this.input
-      }
+      default: () => ({})
     },
     preDefined: {
       type: String,
@@ -81,25 +79,24 @@ export default {
       VillageCode: null,
       Rw: null,
       Rt: null,
-      Address: null,
-      input: {
-        VillageCode: null,
-        Rw: null,
-        Rt: null,
-        Address: null
+      Address: null
+    }
+  },
+  computed: {
+    input: {
+      get: function () {
+        return {
+          Rt: this.Rt,
+          Rw: this.Rw,
+          Address: this.Address,
+          VillageCode: this.VillageCode
+        }
       }
     }
   },
   watch: {
-    VillageCode: {
-      handler: function (val) {
-        this.$emit('input', {
-          VillageCode: val,
-          Rw: this.Rw,
-          Rt: this.Rt,
-          Address: this.Address
-        })
-      }
+    input: function (value) {
+      this.$emit('input', value)
     }
   }
 }
