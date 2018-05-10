@@ -15,8 +15,9 @@ const Employees = [
         }
       },
       {
-        path: '/employees/license',
+        path: '/employees/license/:page/:order?/:sort?',
         name: 'employees.license.list',
+        props: true,
         component: () => import('@pages/employees/license-list'),
         meta: {
           title: 'Employee Licenses',

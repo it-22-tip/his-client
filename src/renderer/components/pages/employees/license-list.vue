@@ -13,11 +13,11 @@
           slot-scope="{ item }"
           @click.right="$refs.contextMenu.open($event, { Name: item.Name, Id:item.Ein })">
           <md-table-cell
-            md-label="Type"
-            md-sort-by="Type">{{ item.Type }}</md-table-cell>
-          <md-table-cell
             md-label="Nama"
             md-sort-by="Name">{{ item.Name }}</md-table-cell>
+          <md-table-cell
+            md-label="Type"
+            md-sort-by="Type">{{ item.Type }}</md-table-cell>
           <md-table-cell
             md-label="Habis"
             md-sort-by="DueDate">{{ item.TimeLeft }}</md-table-cell>
@@ -211,14 +211,17 @@ export default {
       let order = null
       let cs = this.activeSort
       switch (cs) {
-        case 'Id':
-          order = ['Id', this.activeOrder]
+        case 'Type':
+          order = ['LicenseTypeId', this.activeOrder]
           break
         case 'Name':
           order = [Model.associations.Person, 'Name', this.activeOrder]
           break
+        case 'DueDate':
+          order = ['DueDate', this.activeOrder]
+          break
         default:
-          order = ['Id', this.activeOrder]
+          order = [Model.associations.Person, 'Name', this.activeOrder]
       }
       return [order]
     },
@@ -232,19 +235,22 @@ export default {
       let options = {
         transaction: transaction,
         raw: false,
-        attributes: ['Id', 'DueDate', 'TimeLeft'],
+        attributes: ['Id', 'LicenseTypeId', 'DueDate', 'TimeLeft'],
         limit: limit,
         offset: offset,
         order: order,
+        logging: console.log,
         distinct: true,
         col: 'Id',
         include: [
           {
             model: Persons,
+            attributes: ['Name'],
             required: true
           },
           {
             model: LicenseTypes,
+            attributes: ['Title'],
             required: true
           }
         ]
@@ -264,7 +270,8 @@ export default {
         return {
           Name: row.Person.Name,
           Type: row.LicenseType.Title,
-          TimeLeft: row.TimeLeft
+          TimeLeft: row.TimeLeft,
+          DueDate: row.DueDate
         }
       })
       return { rows, count }
