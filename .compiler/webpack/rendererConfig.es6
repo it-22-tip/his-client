@@ -1,15 +1,16 @@
 'use strict'
 import path from 'path'
-import { RendererEntry, StaticPath, OutputPath, dependencies } from '../constant'
+import { assign } from 'lodash'
+import { RendererEntry, StaticPath, OutputPath } from '../constant'
 import webpack from 'webpack'
-import alias from './alias'
+import { VueMaterialAlias, BaseAlias } from './alias'
 import BabelMinifyWebpackPlugin from 'babel-minify-webpack-plugin'
 import CopyWebpackPlugin from 'copy-webpack-plugin'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import htmlWebpackPlugin from './plugins/htmlWebpackPlugin'
 import webpackDefinePlugin from './plugins/webpackDefinePlugin'
-import whiteListedModules from '../whiteListedModules'
 import rendererRules from './rules/rendererRules'
+import { whiteListed } from './externals'
 import { VueLoaderPlugin } from 'vue-loader'
 
 process.env.BABEL_ENV = 'renderer'
@@ -19,9 +20,7 @@ let rendererConfig = {
   entry: {
     renderer: RendererEntry
   },
-  externals: [
-    ...Object.keys(dependencies || {}).filter(d => !whiteListedModules.includes(d))
-  ],
+  externals: whiteListed,
   mode: process.env.NODE_ENV !== 'production' ? 'development' : 'production',
   module: {
     rules: rendererRules
@@ -48,7 +47,7 @@ let rendererConfig = {
     globalObject: 'this'
   },
   resolve: {
-    alias: alias,
+    alias: assign({}, VueMaterialAlias, BaseAlias),
     extensions: ['.js', '.es6', '.vue', '.json', '.node', '.css', '.scss', '.sass', 'less']
   },
   target: 'electron-renderer'

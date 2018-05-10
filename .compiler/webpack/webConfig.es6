@@ -8,6 +8,7 @@ import htmlWebpackPlugin from './plugins/htmlWebpackPlugin'
 import { VueLoaderPlugin } from 'vue-loader'
 import webRules from './rules/webRules'
 import alias from './alias'
+import { StaticPath } from '../constant'
 process.env.BABEL_ENV = 'web'
 let webConfig = {
   devtool: process.env.NODE_ENV !== 'production' ? '#cheap-module-eval-source-map' : '',
@@ -54,7 +55,7 @@ if (process.env.NODE_ENV === 'production') {
     new BabelMinifyWebpackPlugin(),
     new CopyWebpackPlugin([
       {
-        from: path.join(__dirname, '../static'),
+        from: StaticPath,
         to: path.join(__dirname, '../dist/web/static'),
         ignore: ['.*']
       }

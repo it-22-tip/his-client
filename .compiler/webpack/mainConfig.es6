@@ -1,18 +1,17 @@
 'use strict'
-import { MainEntry, OutputPath, RendererPath, dependencies } from '../constant'
+import { MainEntry, OutputPath, RendererPath } from '../constant'
 import webpack from 'webpack'
 import webpackDefinePlugin from './plugins/webpackDefinePlugin'
 import BabelMinifyWebpackPlugin from 'babel-minify-webpack-plugin'
 import mainRules from './rules/mainRules'
+import { externals } from './externals'
 process.env.BABEL_ENV = 'main'
 let mainConfig = {
   entry: {
     main: MainEntry
   },
   mode: process.env.NODE_ENV !== 'production' ? 'development' : 'production',
-  externals: [
-    ...Object.keys(dependencies || {})
-  ],
+  externals: externals,
   module: {
     rules: mainRules
   },

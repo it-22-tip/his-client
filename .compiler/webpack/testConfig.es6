@@ -2,7 +2,7 @@
 import { OutputPath } from '../constant'
 import webpack from 'webpack'
 import { VueLoaderPlugin } from 'vue-loader'
-import webpackNodeExternals from 'webpack-node-externals'
+import { webpackNodeExternals } from './externals'
 import testRules from './rules/testRules'
 process.env.BABEL_ENV = 'renderer'
 let testConfig = {

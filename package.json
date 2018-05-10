@@ -15,10 +15,11 @@
   },
   "scripts": {
     "code": "code -r *.code-workspace",
-    "dev": "cross-env NODE_ENV=development BABEL_ENV=buildscript node -r babel-register .compiler/dev-runner.es6",
+    "dev": "cross-env DEBUG=webpack NODE_ENV=development BABEL_ENV=buildscript node -r babel-register .compiler/dev-runner.es6",
     "checkscript": "cross-env BABEL_ENV=buildscript node -r babel-register .compiler/checkscript.es6",
     "build": "cross-env BABEL_ENV=buildscript NODE_ENV=production node -r babel-register .compiler/build.es6 && electron-builder --config electron-builder.yml",
     "config:lint": "node_modules/.bin/eslint --ext .es6,.js -f node_modules/eslint-friendly-formatter .compiler",
+    "config:lintfix": "node_modules/.bin/eslint --fix --ext .es6,.js -f node_modules/eslint-friendly-formatter .compiler",
     "build:debug": "node .compiler/build.es6 && cross-env DEBUG=electron-builder electron-builder",
     "build:clean": "cross-env BABEL_ENV=buildscript BUILD_TARGET=clean node -r babel-register .compiler/build.es6",
     "build:web": "cross-env BUILD_TARGET=web node .compiler/build.js",

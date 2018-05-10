@@ -1,12 +1,14 @@
 import { RendererPath, MainPath } from '../constant'
 import path from 'path'
-const alias = {
-  // vue-material start
+
+const VueMaterialAlias = {
   'components': path.join(RendererPath, 'vue-material', 'src', 'components'),
   'vue-material/material': path.join(RendererPath, 'vue-material', 'src', 'material.js'),
   'core': path.join(RendererPath, 'vue-material', 'src', 'core'),
-  'theme': path.join(RendererPath, 'vue-material', 'src', 'theme'),
-  // vue-material end
+  'theme': path.join(RendererPath, 'vue-material', 'src', 'theme')
+}
+
+const BaseAlias = {
   '@pages': path.join(RendererPath, 'components', 'pages'),
   '@partials': path.join(RendererPath, 'components', 'partials'),
   '@extras': path.join(RendererPath, 'components', 'extras'),
@@ -17,4 +19,5 @@ const alias = {
   '@': RendererPath,
   'vue$': 'vue/dist/vue.esm.js'
 }
-export default alias
+
+export { VueMaterialAlias, BaseAlias }
