@@ -17,7 +17,12 @@ const attributes = {
     type: DataTypes.STRING()
   },
   DueDate: {
-    type: DataTypes.DATE()
+    type: DataTypes.DATE(),
+    validate: {
+      notBeforeToday (BirthDate) {
+        if (parseInt(moment(BirthDate).diff(moment(), 'second')) < 0) throw new Error('')
+      }
+    }
   },
   TimeLeft: {
     type: new DataTypes.VIRTUAL(DataTypes.INTEGER(), ['DueDate']),

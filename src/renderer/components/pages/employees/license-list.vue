@@ -259,7 +259,7 @@ export default {
       } catch (error) {
         console.log(error)
       }
-      console.log(rows)
+      // console.log(rows)
       rows = map(rows, row => {
         return {
           Name: row.Person.Name,

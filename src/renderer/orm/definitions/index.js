@@ -25,6 +25,7 @@ import Tags from './Tags'
 import Versions from './Versions'
 import Documents from './Documents'
 import Infos from './Infos'
+import EmploymentHistories from './EmploymentHistories'
 
 const definitions = [
   Provinces,
@@ -41,6 +42,7 @@ const definitions = [
   AddressHistories,
   EducationHistories,
   Employees,
+  EmploymentHistories,
   ContractTypes,
   Contracts,
   LeaveTypes,

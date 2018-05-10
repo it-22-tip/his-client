@@ -4,6 +4,7 @@ import { default as defaultOptions } from './options'
 import { default as definitions } from './definitions'
 import { extend, isEmpty } from 'lodash'
 import associations from './associations'
+import scopes from './scopes'
 
 const Orm = function () {
   this.options = defaultOptions
@@ -31,6 +32,11 @@ Orm.prototype.withoutDatabase = function () {
 
 Orm.prototype.associate = function () {
   associations(this.sequelize.models)
+  return this
+}
+
+Orm.prototype.scope = function () {
+  scopes(this.sequelize.models, this.sequelize)
   return this
 }
 
@@ -65,6 +71,7 @@ Orm.prototype.connect = function () {
   this.sequelize = new Sequelize(this.options)
   this.defineModels()
   this.associate()
+  this.scope()
   this.sequelize.list = this.models
   return this.sequelize
 }

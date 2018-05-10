@@ -24,7 +24,8 @@ const associations = function (models) {
     Provinces,
     Regencies,
     Villages,
-    EducationHistories
+    EducationHistories,
+    EmploymentHistories
   } = models
 
   Provinces.hasMany(Regencies, {foreignKey: 'ProvinceCode', sourceKey: 'Code'})
@@ -42,6 +43,9 @@ const associations = function (models) {
 
   /* Persons.belongsToMany(LicenseTypes, {through: Licenses, foreignKey: 'PersonId'})
   LicenseTypes.belongsToMany(Persons, {through: Licenses, foreignKey: 'LicenseTypeId'}) */
+
+  Employees.hasMany(EmploymentHistories, {foreignKey: 'EmployeeId', sourceKey: 'Id'})
+  EmploymentHistories.belongsTo(Employees, {foreignKey: 'EmployeeId', targetKey: 'Id'})
 
   Persons.belongsToMany(Almamaters, {through: EducationHistories, foreignKey: 'PersonId'})
   Almamaters.belongsToMany(Persons, {through: EducationHistories, foreignKey: 'AlmamaterId'})
