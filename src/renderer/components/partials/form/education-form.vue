@@ -1,13 +1,19 @@
 <template>
-  <div class="md-layout">
-    <div class="md-layout-item md-size-25">
-      <md-checkbox v-model="sd">SD</md-checkbox>
-    </div>
-    <div class="md-layout-item md-size-50">
-      <md-field>
-        <label>SD</label>
-        <md-input/>
-      </md-field>
+  <div>
+    <div
+      v-for="item in form"
+      :key="item.title">
+      <div class="md-layout">
+        <div class="md-layout-item md-size-25">
+          <md-checkbox v-model="item.model">{{ item.title }}</md-checkbox>
+        </div>
+        <div class="md-layout-item md-size-50">
+          <md-field>
+            <label>{{ item.title }}</label>
+            <md-input/>
+          </md-field>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -16,7 +22,24 @@ export default {
   name: 'EducationForm',
   data () {
     return {
-      sd: false
+      form: [
+        {
+          title: 'SD',
+          model: false
+        },
+        {
+          title: 'SMP',
+          model: false
+        },
+        {
+          title: 'SMA',
+          model: false
+        },
+        {
+          title: 'S1',
+          model: false
+        }
+      ]
     }
   }
 }
