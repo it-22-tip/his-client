@@ -65,7 +65,22 @@
               <md-step
                 id="education"
                 md-label="Pendidikan">
-                ['ok']
+                <md-field>
+                  <label>SD</label>
+                  <md-input/>
+                </md-field>
+                <md-field>
+                  <label>SMP</label>
+                  <md-input/>
+                </md-field>
+                <md-field>
+                  <label>SMA</label>
+                  <md-input/>
+                </md-field>
+                <md-field>
+                  <label>S1</label>
+                  <md-input/>
+                </md-field>
               </md-step>
             </mstepper>
           </div>
