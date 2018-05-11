@@ -19,31 +19,55 @@
         <md-content class="scr md-scrollbar">
           <div class="hi">
             <textarea v-model="savedView"/>
-            <div>
-              <div class="md-layout">
-                <div class="md-layout-item md-size-50">
-                  <md-subheader>Data Personal</md-subheader>
-                  <md-field>
-                    <label>Nama</label>
-                    <md-input v-model="saved.Person.Name"/>
-                  </md-field>
-                  <birthdateplace-form
-                    v-model="birthDatePlace"
+            <md-steppers>
+              <md-step
+                id="first"
+                md-label="Data Personal">
+                <div>
+                  <div class="md-layout">
+                    <div class="md-layout-item md-size-50">
+                      <md-field>
+                        <label>Nama</label>
+                        <md-input v-model="saved.Person.Name"/>
+                      </md-field>
+                      <birthdateplace-form
+                        v-model="birthDatePlace"
+                        title="Alamat Resmi"/>
+                    </div>
+                  </div>
+                </div>
+              </md-step>
+              <md-step
+                id="second"
+                md-label="Alamat Resmi">
+                <div class="md-layout md-gutter">
+                  <address-form
+                    v-model="officialAddress"
+                    type="Official"
+                    class="md-layout-item md-size-50"
                     title="Alamat Resmi"/>
                 </div>
-              </div>
-              <div class="md-layout md-gutter">
-                <address-form
-                  v-model="officialAddress"
-                  type="Official"
-                  class="md-layout-item md-size-50"
-                  title="Alamat Resmi"/>
-              </div>
-              <div>
-                <md-subheader>Data Pekerjaan</md-subheader>
-                <jobtitle-picker v-model="saved.JobTitleId"/>
-              </div>
-            </div>
+              </md-step>
+              <md-step
+                id="postal_address"
+                md-label="Alamat Surat">
+                <div class="md-layout md-gutter">
+                  <address-form
+                    v-model="officialAddress"
+                    type="Postal"
+                    class="md-layout-item md-size-50"
+                    title="Alamat Resmi"/>
+                </div>
+              </md-step>
+              <md-step
+                id="third"
+                md-label="Pekerjaan">
+                <div>
+                  <md-subheader>Data Pekerjaan</md-subheader>
+                  <jobtitle-picker v-model="saved.JobTitleId"/>
+                </div>
+              </md-step>
+            </md-steppers>
           </div>
         </md-content>
       </md-content>
