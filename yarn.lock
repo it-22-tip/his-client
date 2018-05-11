@@ -112,37 +112,37 @@
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/@casl/vue/-/vue-0.2.0.tgz#a5efba2bdc91a39cd853c2ba0de6377d95833002"
 
-"@fortawesome/fontawesome-common-types@^0.1.6":
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-0.1.6.tgz#3cefd6cd88a2256e1daa69b6fc9a6ab5e3c33e4a"
+"@fortawesome/fontawesome-common-types@^0.1.7":
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-0.1.7.tgz#4336c4b06d0b5608ff1215464b66fcf9f4795284"
 
-"@fortawesome/fontawesome-free-brands@^5.0.12":
-  version "5.0.12"
-  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free-brands/-/fontawesome-free-brands-5.0.12.tgz#2e8dfc4d92d95a9ed7aa27f93bccec08317ddcaa"
+"@fortawesome/fontawesome-free-brands@^5.0.13":
+  version "5.0.13"
+  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free-brands/-/fontawesome-free-brands-5.0.13.tgz#4d15ff4e1e862d5e4a4df3654f8e8acbd47e9c09"
   dependencies:
-    "@fortawesome/fontawesome-common-types" "^0.1.6"
+    "@fortawesome/fontawesome-common-types" "^0.1.7"
 
-"@fortawesome/fontawesome-free-regular@^5.0.12":
-  version "5.0.12"
-  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free-regular/-/fontawesome-free-regular-5.0.12.tgz#d874d65470a0f9b28419d2ce355c67a96fd9d70a"
+"@fortawesome/fontawesome-free-regular@^5.0.13":
+  version "5.0.13"
+  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free-regular/-/fontawesome-free-regular-5.0.13.tgz#eb78c30184e3f456a423a1dcfa0f682f7b50de4a"
   dependencies:
-    "@fortawesome/fontawesome-common-types" "^0.1.6"
+    "@fortawesome/fontawesome-common-types" "^0.1.7"
 
-"@fortawesome/fontawesome-free-solid@^5.0.12":
-  version "5.0.12"
-  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free-solid/-/fontawesome-free-solid-5.0.12.tgz#5cfa458336554139d16a9bce8df7c60b9aee1dc3"
+"@fortawesome/fontawesome-free-solid@^5.0.13":
+  version "5.0.13"
+  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free-solid/-/fontawesome-free-solid-5.0.13.tgz#24b61aaf471a9d34a5364b052d64a516285ba894"
   dependencies:
-    "@fortawesome/fontawesome-common-types" "^0.1.6"
+    "@fortawesome/fontawesome-common-types" "^0.1.7"
 
-"@fortawesome/fontawesome-free-webfonts@^1.0.8":
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free-webfonts/-/fontawesome-free-webfonts-1.0.8.tgz#07d9497904dc036d81f697356932dfeb50e5921f"
+"@fortawesome/fontawesome-free-webfonts@^1.0.9":
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free-webfonts/-/fontawesome-free-webfonts-1.0.9.tgz#72f2c10453422aba0d338fa6a9cb761b50ba24d5"
 
-"@fortawesome/fontawesome@^1.1.7":
-  version "1.1.7"
-  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome/-/fontawesome-1.1.7.tgz#15a6508cd6ab465b6a5bd1fb83f4c962a8c7df7a"
+"@fortawesome/fontawesome@^1.1.8":
+  version "1.1.8"
+  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome/-/fontawesome-1.1.8.tgz#75fe66a60f95508160bb16bd781ad7d89b280f5b"
   dependencies:
-    "@fortawesome/fontawesome-common-types" "^0.1.6"
+    "@fortawesome/fontawesome-common-types" "^0.1.7"
 
 "@fortawesome/vue-fontawesome@^0.0.22":
   version "0.0.22"
@@ -1658,9 +1658,9 @@ babel-polyfill@^6.26.0:
     core-js "^2.5.0"
     regenerator-runtime "^0.10.5"
 
-babel-preset-env@^1.6.1:
-  version "1.6.1"
-  resolved "https://registry.yarnpkg.com/babel-preset-env/-/babel-preset-env-1.6.1.tgz#a18b564cc9b9afdf4aae57ae3c1b0d99188e6f48"
+babel-preset-env@^1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/babel-preset-env/-/babel-preset-env-1.7.0.tgz#dea79fa4ebeb883cd35dab07e260c1c9c04df77a"
   dependencies:
     babel-plugin-check-es2015-constants "^6.22.0"
     babel-plugin-syntax-trailing-function-commas "^6.22.0"
@@ -1689,7 +1689,7 @@ babel-preset-env@^1.6.1:
     babel-plugin-transform-es2015-unicode-regex "^6.22.0"
     babel-plugin-transform-exponentiation-operator "^6.22.0"
     babel-plugin-transform-regenerator "^6.22.0"
-    browserslist "^2.1.2"
+    browserslist "^3.2.6"
     invariant "^2.2.2"
     semver "^5.3.0"
 
@@ -2186,13 +2186,6 @@ browserslist@^1.3.6, browserslist@^1.5.2, browserslist@^1.7.6:
     caniuse-db "^1.0.30000639"
     electron-to-chromium "^1.2.7"
 
-browserslist@^2.1.2:
-  version "2.11.3"
-  resolved "https://registry.yarnpkg.com/browserslist/-/browserslist-2.11.3.tgz#fe36167aed1bbcde4827ebfe71347a2cc70b99b2"
-  dependencies:
-    caniuse-lite "^1.0.30000792"
-    electron-to-chromium "^1.3.30"
-
 browserslist@^3.2.6:
   version "3.2.6"
   resolved "https://registry.yarnpkg.com/browserslist/-/browserslist-3.2.6.tgz#138a44d04a9af64443679191d041f28ce5b965d5"
@@ -2393,10 +2386,6 @@ caniuse-api@^1.5.2:
 caniuse-db@^1.0.30000529, caniuse-db@^1.0.30000634, caniuse-db@^1.0.30000639:
   version "1.0.30000821"
   resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000821.tgz#3fcdc67c446a94a9cdd848248a4e3e54b2da7419"
-
-caniuse-lite@^1.0.30000792:
-  version "1.0.30000821"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000821.tgz#0f3223f1e048ed96451c56ca6cf197058c42cb93"
 
 caniuse-lite@^1.0.30000830:
   version "1.0.30000830"
@@ -3111,9 +3100,9 @@ create-hmac@^1.1.0, create-hmac@^1.1.2, create-hmac@^1.1.4:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
-cross-env@^5.1.4:
-  version "5.1.4"
-  resolved "https://registry.yarnpkg.com/cross-env/-/cross-env-5.1.4.tgz#f61c14291f7cc653bb86457002ea80a04699d022"
+cross-env@^5.1.5:
+  version "5.1.5"
+  resolved "https://registry.yarnpkg.com/cross-env/-/cross-env-5.1.5.tgz#31daf7f3a52ef337c8ddda585f08175cce5d1fa5"
   dependencies:
     cross-spawn "^5.1.0"
     is-windows "^1.0.0"
@@ -3475,9 +3464,9 @@ d3-zoom@1:
     d3-selection "1"
     d3-transition "1"
 
-d3@^5.2.0:
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/d3/-/d3-5.2.0.tgz#f1c6c7a239615f540dd68d93df4fcb17a50cffda"
+d3@^5.3.0:
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/d3/-/d3-5.3.0.tgz#60e047d7ea9349c1bdded9fd61a1dabfbf5e3179"
   dependencies:
     d3-array "1"
     d3-axis "1"
@@ -4118,7 +4107,7 @@ electron-store@^1.3.0:
   dependencies:
     conf "^1.3.0"
 
-electron-to-chromium@^1.2.7, electron-to-chromium@^1.3.30:
+electron-to-chromium@^1.2.7:
   version "1.3.41"
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.41.tgz#7e33643e00cd85edfd17e04194f6d00e73737235"
 
@@ -8410,9 +8399,9 @@ nwmatcher@^1.4.3:
   version "1.4.4"
   resolved "https://registry.yarnpkg.com/nwmatcher/-/nwmatcher-1.4.4.tgz#2285631f34a95f0d0395cd900c96ed39b58f346e"
 
-nyc@^11.7.2:
-  version "11.7.2"
-  resolved "https://registry.yarnpkg.com/nyc/-/nyc-11.7.2.tgz#15e554f937c216cc91aa08f9a260256ed6fe44b8"
+nyc@^11.7.3:
+  version "11.7.3"
+  resolved "https://registry.yarnpkg.com/nyc/-/nyc-11.7.3.tgz#164f4cfad84dee6d8f353824231d9dd683aa14ea"
   dependencies:
     archy "^1.0.0"
     arrify "^1.0.1"
@@ -10837,9 +10826,9 @@ ssh2@0.5.4:
   dependencies:
     ssh2-streams "~0.1.15"
 
-ssh2@^0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/ssh2/-/ssh2-0.6.0.tgz#e472f27dfeb1b5ad892d346135bdf7532734bb6a"
+ssh2@^0.6.1:
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/ssh2/-/ssh2-0.6.1.tgz#5dde1a7394bb978b1f9c2f014affee2f5493bd40"
   dependencies:
     ssh2-streams "~0.2.0"
 
@@ -12036,9 +12025,9 @@ webidl-conversions@^4.0.1, webidl-conversions@^4.0.2:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/webidl-conversions/-/webidl-conversions-4.0.2.tgz#a855980b1f0b6b359ba1d5d9fb39ae941faa63ad"
 
-webpack-bundle-analyzer@^2.11.1:
-  version "2.11.1"
-  resolved "https://registry.yarnpkg.com/webpack-bundle-analyzer/-/webpack-bundle-analyzer-2.11.1.tgz#b9fbfb6a32c0a8c1c3237223e90890796b950ab9"
+webpack-bundle-analyzer@^2.11.2:
+  version "2.11.2"
+  resolved "https://registry.yarnpkg.com/webpack-bundle-analyzer/-/webpack-bundle-analyzer-2.11.2.tgz#5ae05bfccffb16683977237bf319323653e44f9f"
   dependencies:
     acorn "^5.3.0"
     bfj-node4 "^5.2.0"
