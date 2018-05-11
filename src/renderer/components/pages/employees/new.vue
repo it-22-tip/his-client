@@ -20,33 +20,26 @@
           <div class="hi">
             <textarea v-model="savedView"/>
             <md-steppers>
-              <md-step
-                id="first"
-                md-label="Data Personal">
+              <md-step md-label="Data Personal">
                 <div>
-                  <div class="md-layout">
-                    <div class="md-layout-item md-size-50">
-                      <md-field>
-                        <label>Nama</label>
-                        <md-input v-model="saved.Person.Name"/>
-                      </md-field>
-                      <birthdateplace-form
-                        v-model="birthDatePlace"
-                        title="Alamat Resmi"/>
-                    </div>
-                  </div>
+                  <md-field>
+                    <label>Nama</label>
+                    <md-input v-model="saved.Person.Name"/>
+                  </md-field>
+                  <gender-picker v-model="saved.Person.Gender"/>
+                  <md-subheader>Tempat Tanggal Lahir</md-subheader>
+                  <birthdateplace-form
+                    v-model="birthDatePlace"
+                    title="Alamat Resmi"/>
                 </div>
               </md-step>
               <md-step
                 id="second"
                 md-label="Alamat Resmi">
-                <div class="md-layout md-gutter">
-                  <address-form
-                    v-model="officialAddress"
-                    type="Official"
-                    class="md-layout-item md-size-50"
-                    title="Alamat Resmi"/>
-                </div>
+                <address-form
+                  v-model="officialAddress"
+                  type="Official"
+                  title="Alamat Resmi"/>
               </md-step>
               <md-step
                 id="postal_address"
@@ -83,7 +76,8 @@ export default {
     'layout-one': () => import('@partials/layout-one'),
     'address-form': () => import('@partials/form/address-form'),
     'birthdateplace-form': () => import('@partials/form/birthdateplace-form'),
-    'jobtitle-picker': () => import('@partials/picker/jobtitle-picker')
+    'jobtitle-picker': () => import('@partials/picker/jobtitle-picker'),
+    'gender-picker': () => import('@partials/picker/gender-picker')
   },
   mixins: [
     orm
