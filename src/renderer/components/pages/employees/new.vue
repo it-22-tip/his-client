@@ -65,22 +65,7 @@
               <md-step
                 id="education"
                 md-label="Pendidikan">
-                <md-field>
-                  <label>SD</label>
-                  <md-input/>
-                </md-field>
-                <md-field>
-                  <label>SMP</label>
-                  <md-input/>
-                </md-field>
-                <md-field>
-                  <label>SMA</label>
-                  <md-input/>
-                </md-field>
-                <md-field>
-                  <label>S1</label>
-                  <md-input/>
-                </md-field>
+                <education-form/>
               </md-step>
             </mstepper>
           </div>
@@ -100,7 +85,8 @@ export default {
     'birthdateplace-form': () => import('@partials/form/birthdateplace-form'),
     'jobtitle-picker': () => import('@partials/picker/jobtitle-picker'),
     'gender-picker': () => import('@partials/picker/gender-picker'),
-    'mstepper': () => import('@partials/form/mstepper')
+    'mstepper': () => import('@partials/form/mstepper'),
+    'education-form': () => import('@partials/form/education-form')
   },
   mixins: [
     orm
