@@ -18,8 +18,10 @@
       <md-content class="fc">
         <md-content class="scr md-scrollbar">
           <div class="hi">
-            <textarea v-model="savedView"/>
-            <md-steppers>
+            <textarea
+              v-model="savedView"
+              :style="{ width: '100%', resize: 'none', height: '100px', border: '0 none' }"/>
+            <mstepper>
               <md-step md-label="Data Personal">
                 <div>
                   <md-field>
@@ -53,14 +55,19 @@
                 </div>
               </md-step>
               <md-step
-                id="third"
+                id="job"
                 md-label="Pekerjaan">
                 <div>
                   <md-subheader>Data Pekerjaan</md-subheader>
                   <jobtitle-picker v-model="saved.JobTitleId"/>
                 </div>
               </md-step>
-            </md-steppers>
+              <md-step
+                id="education"
+                md-label="Pendidikan">
+                ['ok']
+              </md-step>
+            </mstepper>
           </div>
         </md-content>
       </md-content>
@@ -77,7 +84,8 @@ export default {
     'address-form': () => import('@partials/form/address-form'),
     'birthdateplace-form': () => import('@partials/form/birthdateplace-form'),
     'jobtitle-picker': () => import('@partials/picker/jobtitle-picker'),
-    'gender-picker': () => import('@partials/picker/gender-picker')
+    'gender-picker': () => import('@partials/picker/gender-picker'),
+    'mstepper': () => import('@partials/form/mstepper')
   },
   mixins: [
     orm
@@ -193,7 +201,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .dp {
   flex: 1;
   display: flex;
@@ -213,7 +221,39 @@ export default {
   overflow: auto;
 }
 .hi {
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.hi>.md-steppers {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.hi>.md-steppers>.md-steppers-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.hi>.md-steppers>.md-steppers-wrapper>.md-steppers-container {
+  height: 100%;
+  flex: 1;
+}
+.hi>.md-steppers>.md-steppers-wrapper>.md-steppers-container .md-stepper {
+  padding: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.hi>.md-steppers>.md-steppers-wrapper>.md-steppers-container .md-stepper .md-stepper-content {
+  padding: 0;
+  flex: 1;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 .big {
   height: 1000px;
