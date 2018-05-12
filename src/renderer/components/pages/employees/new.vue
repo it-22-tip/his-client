@@ -60,24 +60,21 @@
                     title="Alamat Resmi"/>
                 </div>
               </md-step>
-              <md-step
+              <mstep
                 id="job"
                 md-label="Pekerjaan">
                 <div>
                   <md-subheader>Data Pekerjaan</md-subheader>
                   <jobtitle-picker v-model="saved.JobTitleId"/>
                 </div>
-              </md-step>
-              <md-step
+              </mstep>
+              <mstep
                 id="education"
                 md-label="Pendidikan">
                 <education-form/>
-              </md-step>
-              <mstep
-                id="end"
-                md-label="Selesai">
-                [selesai]
               </mstep>
+              <stepper-personal/>
+              <stepper-fin/>
             </mstepper>
           </div>
         </md-content>
@@ -100,7 +97,9 @@ export default {
     'mstepper': () => import('@partials/form/mstepper'),
     'mstep': () => import('@partials/form/mstep'),
     'education-form': () => import('@partials/form/education-form'),
-    'cm-js': () => import('@partials/editor/cm')
+    'stepper-education': () => import('@partials/stepper/stepper-education'),
+    'stepper-fin': () => import('@partials/stepper/stepper-fin'),
+    'stepper-personal': () => import('@partials/stepper/stepper-personal')
   },
   mixins: [
     orm

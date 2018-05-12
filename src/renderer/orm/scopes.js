@@ -1,4 +1,4 @@
-import { assign, map } from 'lodash'
+import { assign } from 'lodash'
 import moment from 'moment'
 const scopes = function (models, sequelize) {
   const { Op } = sequelize
@@ -87,7 +87,7 @@ const scopes = function (models, sequelize) {
       ]
     }
   })
-  const test = async function () {
+  /* const test = async function () {
     let data
     try {
       data = await Employees.scope('Person_SMA').findAll()
@@ -99,7 +99,7 @@ const scopes = function (models, sequelize) {
     })
     console.log(data)
   }
-  test()
+  test() */
   return models
 }
 

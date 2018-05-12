@@ -239,7 +239,7 @@ export default {
         limit: limit,
         offset: offset,
         order: order,
-        logging: console.log,
+        // logging: console.log,
         distinct: true,
         col: 'Id',
         include: [
