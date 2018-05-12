@@ -22,7 +22,9 @@
               v-model="savedView"
               :style="{ width: '100%', resize: 'none', height: '100px', border: '0 none' }"/>
             <mstepper>
-              <md-step md-label="Data Personal">
+              <md-step
+                :md-done="false"
+                md-label="Data Personal">
                 <div>
                   <md-field>
                     <label>Nama</label>
@@ -37,6 +39,7 @@
               </md-step>
               <md-step
                 id="second"
+                :md-done="false"
                 md-label="Alamat Resmi">
                 <address-form
                   v-model="officialAddress"
@@ -67,6 +70,11 @@
                 md-label="Pendidikan">
                 <education-form/>
               </md-step>
+              <mstep
+                id="end"
+                md-label="Selesai">
+                [selesai]
+              </mstep>
             </mstepper>
           </div>
         </md-content>
@@ -86,6 +94,7 @@ export default {
     'jobtitle-picker': () => import('@partials/picker/jobtitle-picker'),
     'gender-picker': () => import('@partials/picker/gender-picker'),
     'mstepper': () => import('@partials/form/mstepper'),
+    'mstep': () => import('@partials/form/mstep'),
     'education-form': () => import('@partials/form/education-form')
   },
   mixins: [
@@ -256,6 +265,19 @@ export default {
   overflow-x: hidden;
   overflow-y: auto;
 }
+
+.hi>.md-steppers>.md-steppers-wrapper>.md-steppers-container .md-stepper .md-stepper-content::-webkit-scrollbar {
+  border-radius: 0;
+  height: 8px;
+  width: 8px;
+}
+.hi>.md-steppers>.md-steppers-wrapper>.md-steppers-container .md-stepper .md-stepper-content::-webkit-scrollbar-thumb {
+  border-radius: 0;
+}
+.hi>.md-steppers>.md-steppers-wrapper>.md-steppers-container .md-stepper .md-stepper-content::-webkit-scrollbar-thumb {
+  background: rgba(#757575, .5) !important;
+}
+
 .big {
   height: 1000px;
 }

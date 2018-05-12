@@ -34,8 +34,8 @@ const attributes = {
     defaultValue: Faiths.defaultValue
   },
   BirthDate: {
-    type: DataTypes.DATEONLY,
-    validate: {
+    type: DataTypes.DATEONLY
+    /* validate: {
       isDate: true,
       isOlder (BirthDate) {
         if (Math.abs(parseInt(moment(BirthDate).diff(moment(), 'years'))) > 18) throw new Error('')
@@ -43,7 +43,7 @@ const attributes = {
       isYounger (BirthDate) {
         if (Math.abs(parseInt(moment(BirthDate).diff(moment(), 'years'))) < 50) throw new Error('')
       }
-    }
+    } */
   },
   BirthPlaceRegencyCode: {
     type: DataTypes.CHAR(4)

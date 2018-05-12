@@ -1,8 +1,8 @@
-import { assign } from 'lodash'
+import { assign, map } from 'lodash'
 import moment from 'moment'
 const scopes = function (models, sequelize) {
   const { Op } = sequelize
-  const { Employees, Persons, Licenses } = models
+  const { Employees, Persons, Licenses, Almamaters } = models
   Employees.options.scopes = assign({}, {
     Person_L: {
       include: [
@@ -56,15 +56,47 @@ const scopes = function (models, sequelize) {
           ]
         }
       ]
+    },
+    Person_SMA: {
+      logging: console.log,
+      attributes: [
+        // [sequelize.fn('rank', sequelize.col('Person->Almamaters->EducationHistories.GraduationDate')), 'Highest_Education'],
+        // sequelize.literal('`Person->Almamaters->EducationHistories`.`GraduationDate` AS `Highest_Education`'),
+        'Id'
+      ],
+      include: [
+        {
+          model: Persons,
+          attributes: ['Name'],
+          required: true,
+          include: [
+            {
+              model: Almamaters,
+              required: true,
+              attributes: ['Name'],
+              through: {
+                required: true,
+                attributes: ['GraduationDate'],
+                where: {
+                  GraduationDate: null
+                }
+              }
+            }
+          ]
+        }
+      ]
     }
   })
   const test = async function () {
     let data
     try {
-      data = await Employees.scope('License_D').findAll()
+      data = await Employees.scope('Person_SMA').findAll()
     } catch (e) {
-      console.log(e)
+      console.log({error: e})
     }
+    data = map(data, i => {
+      return i.dataValues
+    })
     console.log(data)
   }
   test()

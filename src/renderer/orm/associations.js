@@ -47,8 +47,13 @@ const associations = function (models) {
   Employees.hasMany(EmploymentHistories, {foreignKey: 'EmployeeId', sourceKey: 'Id'})
   EmploymentHistories.belongsTo(Employees, {foreignKey: 'EmployeeId', targetKey: 'Id'})
 
-  Persons.belongsToMany(Almamaters, {through: EducationHistories, foreignKey: 'PersonId'})
-  Almamaters.belongsToMany(Persons, {through: EducationHistories, foreignKey: 'AlmamaterId'})
+  // Persons.belongsToMany(Almamaters, {through: EducationHistories, foreignKey: 'PersonId'})
+  // Almamaters.belongsToMany(Persons, {through: EducationHistories, foreignKey: 'AlmamaterId'})
+  Persons.hasMany(EducationHistories, {foreignKey: 'PersonId', sourceKey: 'Id'})
+  EducationHistories.belongsTo(Persons, {foreignKey: 'PersonId', targetKey: 'Id'})
+
+  EducationHistories.hasOne(Almamaters, {foreignKey: 'AlmamatersId', sourceKey: 'Id'})
+  Almamaters.belongsTo(EducationHistories, {foreignKey: 'AlmamatersId', targetKey: 'Id'})
 
   Villages.hasMany(AddressHistories, {foreignKey: 'VillageCode', sourceKey: 'Code', as: 'VillageAddress'})
   AddressHistories.belongsTo(Villages, {foreignKey: 'VillageCode', targetKey: 'Code', as: 'AddressVillage'})

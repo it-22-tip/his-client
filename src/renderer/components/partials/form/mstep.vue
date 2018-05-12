@@ -2,7 +2,7 @@
 export default {
   render: function (createElement) {
     return createElement(
-      'MdSteppers', // tag name
+      'MdStep', // tag name
       {
         attrs: {
           ...this.$attrs
