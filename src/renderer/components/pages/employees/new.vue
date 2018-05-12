@@ -18,9 +18,11 @@
       <md-content class="fc">
         <md-content class="scr md-scrollbar">
           <div class="hi">
-            <textarea
-              v-model="savedView"
-              :style="{ width: '100%', resize: 'none', height: '100px', border: '0 none' }"/>
+            <div :style="{ padding: '10px' }">
+              <textarea
+                v-model="savedView"
+                :style="{ padding: '10px', lineHeight: '20px', width: '100%', resize: 'none', height: '100px', border: '0 none' }"/>
+            </div>
             <mstepper>
               <md-step
                 :md-done="false"
@@ -31,6 +33,7 @@
                     <md-input v-model="saved.Person.Name"/>
                   </md-field>
                   <gender-picker v-model="saved.Person.Gender"/>
+                  <bloodtype-picker v-model="saved.Person.BloodType"/>
                   <md-subheader>Tempat Tanggal Lahir</md-subheader>
                   <birthdateplace-form
                     v-model="birthDatePlace"
@@ -93,9 +96,11 @@ export default {
     'birthdateplace-form': () => import('@partials/form/birthdateplace-form'),
     'jobtitle-picker': () => import('@partials/picker/jobtitle-picker'),
     'gender-picker': () => import('@partials/picker/gender-picker'),
+    'bloodtype-picker': () => import('@partials/picker/bloodtype-picker'),
     'mstepper': () => import('@partials/form/mstepper'),
     'mstep': () => import('@partials/form/mstep'),
-    'education-form': () => import('@partials/form/education-form')
+    'education-form': () => import('@partials/form/education-form'),
+    'cm-js': () => import('@partials/editor/cm')
   },
   mixins: [
     orm
@@ -113,6 +118,7 @@ export default {
           Gender: 'P',
           BirthDate: null,
           BirthPlaceRegencyCode: null,
+          BloodType: 'N/A',
           AddressHistories: [
             {
               Id: null,

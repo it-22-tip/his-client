@@ -4,23 +4,26 @@
       <div class="md-subhead">
         <span>02 Example (theme bubble)</span>
       </div>
-      <md-button target="_blank"
-                 class="md-icon-button"
-                 href="https://github.com/surmon-china/vue-quill-editor/tree/master/examples/02-example.vue">
+      <md-button
+        target="_blank"
+        class="md-icon-button"
+        href="https://github.com/surmon-china/vue-quill-editor/tree/master/examples/02-example.vue">
         <md-icon>code</md-icon>
       </md-button>
     </md-card-actions>
     <md-card-media>
       <div class="quill-editor-example">
         <!-- quill-editor -->
-        <quill-editor class="editor-example bubble"
-                      ref="myTextEditor"
-                      :content="content"
-                      :options="editorOption"
-                      @change="onEditorChange($event)">
-        </quill-editor>
+        <quill-editor
+          ref="myTextEditor"
+          :content="content"
+          :options="editorOption"
+          class="editor-example bubble"
+          @change="onEditorChange($event)"/>
         <div class="quill-code">
-          <code class="hljs xml" v-html="contentCode"></code>
+          <code
+            class="hljs xml"
+            v-html="contentCode"/>
         </div>
       </div>
     </md-card-media>
@@ -28,12 +31,12 @@
 </template>
 
 <script>
-  import hljs from 'highlight.js'
-  export default {
-    data() {
-      return {
-        name: '02-example',
-        content: `<h1 class="ql-align-center">
+import hljs from 'highlight.js'
+export default {
+  data () {
+    return {
+      name: '02-example',
+      content: `<h1 class="ql-align-center">
                     <span class="ql-font-serif"><span class="ql-cursor">﻿</span>I am Example 2!</span></span>
                   </h1>
                   <p><br></p>
@@ -55,42 +58,42 @@
                   <p><br></p>
                   <p><span class="ql-font-serif">When the snows fall and the white winds blow, the lone wolf dies, but the pack survives.</p>
                   `,
-        editorOption: {
-          theme: 'bubble',
-          placeholder: "输入任何内容，支持html",
-          modules: {
-            toolbar: [
-              ['bold', 'italic', 'underline', 'strike'],
-              [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-              [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-              [{ 'color': [] }, { 'background': [] }],
-              [{ 'font': [] }],
-              [{ 'align': [] }],
-              ['link', 'image'],
-              ['clean']
-            ]
-          }
+      editorOption: {
+        theme: 'bubble',
+        placeholder: '输入任何内容，支持html',
+        modules: {
+          toolbar: [
+            ['bold', 'italic', 'underline', 'strike'],
+            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+            [{ 'color': [] }, { 'background': [] }],
+            [{ 'font': [] }],
+            [{ 'align': [] }],
+            ['link', 'image'],
+            ['clean']
+          ]
         }
       }
+    }
+  },
+  computed: {
+    contentCode () {
+      return hljs.highlightAuto(this.content).value
     },
-    methods: {
-      onEditorChange({ editor, html, text }) {
-        // console.log('editor change!', editor, html, text)
-        this.content = html
-      }
-    },
-    computed: {
-      contentCode() {
-        return hljs.highlightAuto(this.content).value
-      },
-      editor() {
-        return this.$refs.myTextEditor.quill
-      }
-    },
-    mounted() {
-      console.log('this is my editor, example 2', this.editor)
+    editor () {
+      return this.$refs.myTextEditor.quill
+    }
+  },
+  mounted () {
+    console.log('this is my editor, example 2', this.editor)
+  },
+  methods: {
+    onEditorChange ({ editor, html, text }) {
+      // console.log('editor change!', editor, html, text)
+      this.content = html
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>

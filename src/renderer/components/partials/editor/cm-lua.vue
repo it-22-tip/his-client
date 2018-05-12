@@ -6,29 +6,32 @@
         <span>&nbsp;&nbsp;&nbsp;</span>
         <span>theme: {{ cmOption.theme }}</span>
       </div>
-      <md-button class="md-icon-button"
-                 target="_blank"
-                 href="https://github.com/surmon-china/vue-codemirror/tree/master/examples/10-text-x-lua.vue">
+      <md-button
+        class="md-icon-button"
+        target="_blank"
+        href="https://github.com/surmon-china/vue-codemirror/tree/master/examples/10-text-x-lua.vue">
         <md-icon>code</md-icon>
       </md-button>
     </md-card-actions>
     <md-card-media>
       <div class="codemirror">
         <!-- codemirror -->
-        <codemirror v-model="code" :options="cmOption"></codemirror>
+        <codemirror
+          v-model="code"
+          :options="cmOption"/>
       </div>
     </md-card-media>
   </md-card>
 </template>
 
 <script>
-  // language
-  import 'codemirror/mode/lua/lua.js'
-  // theme css
-  import 'codemirror/theme/hopscotch.css'
-  export default {
-    data() {
-const code =
+// language
+import 'codemirror/mode/lua/lua.js'
+// theme css
+import 'codemirror/theme/hopscotch.css'
+export default {
+  data () {
+    const code =
 `
 --[[
 example useless code to show lua syntax highlighting
@@ -62,17 +65,17 @@ function blablabla3()
   end
 end
 `
-      return {
-        code,
-        cmOption: {
-          tabSize: 4,
-          styleActiveLine: true,
-          lineNumbers: true,
-          line: true,
-          mode: 'text/x-lua',
-          theme: 'hopscotch'
-        }
+    return {
+      code,
+      cmOption: {
+        tabSize: 4,
+        styleActiveLine: true,
+        lineNumbers: true,
+        line: true,
+        mode: 'text/x-lua',
+        theme: 'hopscotch'
       }
     }
   }
+}
 </script>

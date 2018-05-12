@@ -4,24 +4,27 @@
       <div class="md-subhead">
         <span>04 Example (register modules)</span>
       </div>
-      <md-button target="_blank"
-                 class="md-icon-button"
-                 href="https://github.com/surmon-china/vue-quill-editor/tree/master/examples/04-example.vue">
+      <md-button
+        target="_blank"
+        class="md-icon-button"
+        href="https://github.com/surmon-china/vue-quill-editor/tree/master/examples/04-example.vue">
         <md-icon>code</md-icon>
       </md-button>
     </md-card-actions>
     <md-card-media>
       <div class="quill-editor-example">
         <!-- quill-editor -->
-        <quill-editor v-model="content"
-                      :options="editorOption"
-                      @blur="onEditorBlur($event)"
-                      @focus="onEditorFocus($event)"
-                      @ready="onEditorReady($event)">
-        </quill-editor>
+        <quill-editor
+          v-model="content"
+          :options="editorOption"
+          @blur="onEditorBlur($event)"
+          @focus="onEditorFocus($event)"
+          @ready="onEditorReady($event)"/>
         <div class="quill-code">
           <div class="title">Code</div>
-          <code class="hljs xml" v-html="contentCode"></code>
+          <code
+            class="hljs xml"
+            v-html="contentCode"/>
         </div>
       </div>
     </md-card-media>
@@ -29,66 +32,66 @@
 </template>
 
 <script>
-  import hljs from 'highlight.js'
-  import VueQuillEditor, { Quill } from 'vue-quill-editor'
-  import { ImageDrop } from 'quill-image-drop-module'
-  import ImageResize from 'quill-image-resize-module'
-  Quill.register('modules/imageDrop', ImageDrop)
-  Quill.register('modules/imageResize', ImageResize)
+import hljs from 'highlight.js'
+import VueQuillEditor, { Quill } from 'vue-quill-editor'
+import { ImageDrop } from 'quill-image-drop-module'
+import ImageResize from 'quill-image-resize-module'
+Quill.register('modules/imageDrop', ImageDrop)
+Quill.register('modules/imageResize', ImageResize)
 
-  export default {
-    data() {
-      return {
-        name: 'register-modules-example',
-        content: `<p><img src="/vue-quill-editor/static/images/surmon-6.jpg" width="500"></p>
+export default {
+  data () {
+    return {
+      name: 'register-modules-example',
+      content: `<p><img src="/vue-quill-editor/static/images/surmon-6.jpg" width="500"></p>
                   <br>
                   <p><strong><em>Or drag/paste an image here.</em></strong></p>`,
-        editorOption: {
-          modules: {
-            toolbar: [
-              [{ 'size': ['small', false, 'large'] }],
-              ['bold', 'italic'],
-              [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-              ['link', 'image']
-            ],
-            history: {
-              delay: 1000,
-              maxStack: 50,
-              userOnly: false
+      editorOption: {
+        modules: {
+          toolbar: [
+            [{ 'size': ['small', false, 'large'] }],
+            ['bold', 'italic'],
+            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+            ['link', 'image']
+          ],
+          history: {
+            delay: 1000,
+            maxStack: 50,
+            userOnly: false
+          },
+          imageDrop: true,
+          imageResize: {
+            displayStyles: {
+              backgroundColor: 'black',
+              border: 'none',
+              color: 'white'
             },
-            imageDrop: true,
-            imageResize: {
-              displayStyles: {
-                backgroundColor: 'black',
-                border: 'none',
-                color: 'white'
-              },
-              modules: [ 'Resize', 'DisplaySize', 'Toolbar' ]
-            }
+            modules: [ 'Resize', 'DisplaySize', 'Toolbar' ]
           }
         }
       }
+    }
+  },
+  computed: {
+    contentCode () {
+      return hljs.highlightAuto(this.content).value
+    }
+  },
+  mounted () {
+    this.content = `<p><strong><em>Click on the Image Below to resize!</em></strong></p><br>` + this.content
+  },
+  methods: {
+    onEditorBlur (editor) {
+      // console.log('editor blur!', editor)
     },
-    mounted() {
-      this.content = `<p><strong><em>Click on the Image Below to resize!</em></strong></p><br>` + this.content
+    onEditorFocus (editor) {
+      // console.log('editor focus!', editor)
     },
-    computed: {
-      contentCode() {
-        return hljs.highlightAuto(this.content).value
-      },
-    },
-    methods: {
-      onEditorBlur(editor) {
-        // console.log('editor blur!', editor)
-      },
-      onEditorFocus(editor) {
-        // console.log('editor focus!', editor)
-      },
-      onEditorReady(editor) {
-        // console.log('editor ready!', editor)
-      }
+    onEditorReady (editor) {
+      // console.log('editor ready!', editor)
     }
   }
+}
 </script>
 
 <style>

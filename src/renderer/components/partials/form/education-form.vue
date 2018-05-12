@@ -9,7 +9,7 @@
           <md-switch v-model="item.active">{{ item.title }}</md-switch>
         </div>
         <div class="md-layout-item md-size-25">
-          <birthplace-picker v-model="item.model.RegencyCode"/>
+          <almamater-picker v-model="item.model.RegencyCode"/>
         </div>
         <div class="md-layout-item md-size-50">
           <md-field>
@@ -25,7 +25,7 @@
 export default {
   name: 'EducationForm',
   components: {
-    'birthplace-picker': () => import('@partials/picker/birthplace-picker')
+    'almamater-picker': () => import('@partials/picker/almamater-picker')
   },
   data () {
     return {
@@ -36,7 +36,10 @@ export default {
           model: {
             Name: null,
             Level: 'SD',
-            RegencyCode: null
+            RegencyCode: {
+              BirthDate: '',
+              BirthPlaceRegency: ''
+            }
           }
         },
         {
