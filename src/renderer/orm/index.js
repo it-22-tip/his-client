@@ -5,6 +5,9 @@ import { default as definitions } from './definitions'
 import { extend, isEmpty } from 'lodash'
 import associations from './associations'
 import scopes from './scopes'
+import { CleanSpace } from './helpers'
+
+console.log(CleanSpace(`    Nur 'aini     t'est    ok     `))
 class Orm {
   constructor () {
     this.options = defaultOptions

@@ -25,6 +25,12 @@ const attributes = {
     type: DataTypes.ENUM(...EducationLevels.enum),
     defaultValue: EducationLevels.defaultValue
   },
+  AcademicTitle: {
+    type: DataTypes.STRING()
+  },
+  AcademicTitleAbbreviated: {
+    type: DataTypes.STRING()
+  },
   ProgramStudy: {
     type: DataTypes.STRING(32),
     set: function (ProgramStudy) {

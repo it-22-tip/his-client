@@ -2,42 +2,9 @@
 import Sequelize from 'sequelize'
 import { default as defaultOptions } from './options'
 import { default as definitions } from './definitions'
-import { extend, isEmpty, assign } from 'lodash'
+import { extend, isEmpty } from 'lodash'
 import associations from './associations'
 import scopes from './scopes'
-
-class Torm {
-  // property
-  sequelize = null
-  options = {}
-  models = []
-
-  constructor () {
-    this.options = assign(this.options, defaultOptions)
-    this.sequelize = new Sequelize(this.options)
-    return this
-  }
-
-  defineModels () {
-    let sequelize = this.sequelize
-    for (let definition of definitions) {
-      const {tableName, attributes, options} = definition
-      this.models.push(sequelize.define(tableName, attributes, options))
-    }
-    return this
-  }
-
-  associate () {
-    associations(this.sequelize.models)
-    return this
-  }
-}
-
-const torm = new Torm()
-torm.defineModels()
-torm.associate()
-
-console.log({log: torm.sequelize})
 
 const Orm = function () {
   this.options = defaultOptions
