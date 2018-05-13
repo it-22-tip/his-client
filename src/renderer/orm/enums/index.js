@@ -4,6 +4,6 @@ import MaritalStatuses from './MaritalStatuses'
 import Faiths from './Faiths'
 import Genders from './Genders'
 import AddressTypes from './AddressTypes'
-import AlmamaterLevels from './AlmamaterLevels'
+import EducationLevels from './EducationLevels'
 
-export { Faiths, BloodTypes, BloodRhTypes, MaritalStatuses, Genders, AddressTypes, AlmamaterLevels }
+export { Faiths, BloodTypes, BloodRhTypes, MaritalStatuses, Genders, AddressTypes, EducationLevels }

@@ -1,6 +1,6 @@
 import { DataTypes } from 'sequelize'
 import { startCase, toLower, toUpper } from 'lodash'
-import { AlmamaterLevels } from '../enums'
+import { EducationLevels } from '../enums'
 const tableName = 'Almamaters'
 const attributes = {
   Id: {
@@ -22,8 +22,8 @@ const attributes = {
     }
   },
   AlmamaterLevel: {
-    type: DataTypes.ENUM(...AlmamaterLevels.enum),
-    defaultValue: AlmamaterLevels.defaultValue
+    type: DataTypes.ENUM(...EducationLevels.enum),
+    defaultValue: EducationLevels.defaultValue
   },
   ProgramStudy: {
     type: DataTypes.STRING(32),
