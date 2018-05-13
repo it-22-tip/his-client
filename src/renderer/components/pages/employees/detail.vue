@@ -46,9 +46,7 @@ import orm from '@/mixins/orm'
 import {setupCalendar, DatePicker as dp} from 'v-calendar'
 import 'v-calendar/lib/v-calendar.min.css'
 import moment from 'moment'
-import ModalProvince from '@partials/modal-province'
 import { filter, orderBy, first } from 'lodash'
-Vue.component('modal-province', ModalProvince)
 setupCalendar({
   locale: 'id-ID'
   // firstDayOfWeek: 2 // Monday,
