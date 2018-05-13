@@ -1,14 +1,5 @@
 import moment from 'moment'
 
-const toMoment = function (item, key) {
-  if (item[key] !== null) {
-    item[key] = moment(item[key])
-  } else {
-    item[key] = null
-  }
-  return item
-}
-
 const toDateDiffToday = function (item, key, by = 'years') {
   if (item[key] === null) {
     item[key] = 0
@@ -28,4 +19,4 @@ const employeeId = function (item) {
   return item
 }
 
-export { toMoment, toDateDiffToday, employeeId }
+export { toDateDiffToday, employeeId }
