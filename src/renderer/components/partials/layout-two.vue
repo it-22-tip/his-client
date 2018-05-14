@@ -95,9 +95,6 @@ import { remote } from 'electron'
 const { getCurrentWindow } = remote
 console.log(getCurrentWindow)
 export default {
-  components: {
-    'left-menu': () => import('@partials/left-menu')
-  },
   data () {
     return {
       link: [

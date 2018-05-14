@@ -88,9 +88,6 @@
 
 <script>
 export default {
-  components: {
-    'left-menu': () => import('@partials/left-menu')
-  },
   data () {
     return {
       link: [
