@@ -5,10 +5,14 @@ import windowDefinitions from './windowDefinitions'
 import windowUrls from './windowUrls'
 import path from 'path'
 let isDevelopment = true
+let appName = 'his-client'
 
 if (process.env.NODE_ENV !== 'development') {
   global.__static = path.join(__dirname, '/static').replace(/\\/g, '\\\\')
   isDevelopment = false
+} else {
+  app.setName(appName)
+  app.setPath('userData', app.getPath('userData').replace(/Electron/i, appName))
 }
 
 // console.log(process.env)
