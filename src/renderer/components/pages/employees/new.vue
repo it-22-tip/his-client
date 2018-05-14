@@ -182,7 +182,7 @@ export default {
       try {
         data = await Employees.create(this.saved, {
           transaction: transaction,
-          logging: console.log,
+          // logging: console.log,
           include: [
             {
               model: Persons,

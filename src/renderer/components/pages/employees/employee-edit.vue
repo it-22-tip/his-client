@@ -105,11 +105,7 @@ export default {
       return data
     },
     async populate () {
-      this.connection = (new this.$orm()).withOption({
-        username: 'his',
-        password: 'his',
-        database: 'his'
-      }).connect()
+      this.connection = (new this.$orm()).connect()
       try {
         let data = await this.connection.transaction(this.transaction)
         // let model = data.slice()
