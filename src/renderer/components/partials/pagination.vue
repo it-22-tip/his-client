@@ -9,7 +9,8 @@
         :max="totalPage"
         min="1"
         class="page-input"
-        type="number"/>
+        type="number"
+        @keydown.69.stop.prevent/>
     </md-field>
     <span>
       Dari {{ totalPage }} Halaman
@@ -41,7 +42,13 @@ export default {
   },
   mounted () {
     console.log({pagination: this.$route})
+  },
+  methods: {
+    test ($event) {
+      console.log($event)
+    }
   }
+
 }
 </script>
 
