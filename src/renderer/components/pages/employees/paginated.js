@@ -4,7 +4,7 @@ export default {
   },
   props: {
     page: {
-      type: String,
+      type: Number,
       default: 1
     },
     order: {
@@ -14,10 +14,6 @@ export default {
     sort: {
       type: String,
       default: ''
-    },
-    limit: {
-      type: String,
-      default: 15
     }
   },
   methods: {

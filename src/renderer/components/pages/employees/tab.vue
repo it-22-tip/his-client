@@ -12,7 +12,7 @@
     <md-tabs @md-changed="onChange">
       <md-tab
         id="1"
-        :to="{ name: 'employees.employee.list', params: { page: '1', sort: 'Ein', order: 'asc' } }"
+        :to="{ name: 'employees.employee.list', params: { page: 1, sort: 'Ein', order: 'asc' } }"
         md-label="Karyawan"/>
       <md-tab
         id="2"

@@ -36,7 +36,7 @@ export default {
   },
   watch: {
     currentPage (value) {
-      this.$emit('input', value)
+      this.$emit('input', parseInt(value))
     }
   }
 }

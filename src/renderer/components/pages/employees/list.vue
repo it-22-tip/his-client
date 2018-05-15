@@ -42,8 +42,7 @@
       </div>
       <pagination
         :total-page="totalPage"
-        v-model="activePage"
-        @change="change"/>
+        v-model="activePage"/>
     </md-toolbar>
     <context-menu
       ref="contextMenu"
@@ -73,8 +72,8 @@ export default {
       model: [],
       connection: null,
       menuData: {},
-      totalPage: null,
-      activePage: null,
+      totalPage: 1,
+      activePage: 1,
       activeSort: null,
       activeOrder: null
     }
@@ -137,7 +136,7 @@ export default {
   },
   methods: {
     changePage (change) {
-      let params = { page: this.activePage, sort: this.activeSort, order: this.activeOrder }
+      let params = { page: this.currentPage, sort: this.currentSort, order: this.currentOrder }
       params = extend({}, params, change)
       let options = {
         name: 'employees.employee.list',
