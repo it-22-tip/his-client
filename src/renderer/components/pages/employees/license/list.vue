@@ -11,6 +11,7 @@
         <md-table-row
           slot="md-table-row"
           slot-scope="{ item }"
+          tabindex="0"
           @click.right="$refs.contextMenu.open($event, { Name: item.Name, Id:item.Ein })">
           <md-table-cell
             md-label="Nama"
