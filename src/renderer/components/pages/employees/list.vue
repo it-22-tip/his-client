@@ -72,7 +72,7 @@ export default {
       model: [],
       connection: null,
       menuData: {},
-      totalPage: 1,
+      totalPage: 10,
       activePage: 1,
       activeSort: null,
       activeOrder: null
@@ -125,6 +125,7 @@ export default {
     }
   },
   mounted () {
+    console.log('test')
     // console.log(this.$props)
     // console.log(this.page)
     console.log(this.$route.params)

@@ -1,7 +1,7 @@
 import { RendererPath, MainPath } from '../constant'
 import path from 'path'
 
-const Ver = '1.0.0-beta-10.1'
+const Ver = '1.0.0-beta-10.2'
 const VueMaterialPath = path.join(RendererPath, 'vue-material', Ver)
 
 const VueMaterialAlias = {

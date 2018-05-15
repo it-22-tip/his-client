@@ -31,13 +31,16 @@ export default {
   },
   data () {
     return {
-      currentPage: null
+      currentPage: 1
     }
   },
   watch: {
     currentPage (value) {
-      this.$emit('input', parseInt(value))
+      this.$emit('input', value)
     }
+  },
+  mounted () {
+    console.log({pagination: this})
   }
 }
 </script>
