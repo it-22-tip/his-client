@@ -97,12 +97,12 @@ export default {
           title: 'Dasbor'
         },
         {
-          to: { name: 'employees.employee.list', params: { page: '1', sort: 'Ein', order: 'desc' } },
+          to: { name: 'employees.employee.list', params: { page: 1, sort: 'Ein', order: 'desc' } },
           icon: 'face',
           title: 'Human Resources'
         },
         {
-          to: { name: 'masterdata.provinces', params: { page: '1', sort: 'Name', order: 'desc' } },
+          to: { name: 'masterdata.provinces', params: { page: 1, sort: 'Name', order: 'desc' } },
           icon: 'layers',
           title: 'Master Data'
         },
@@ -117,7 +117,7 @@ export default {
           title: 'Settings'
         },
         {
-          to: { name: 'base.tree' },
+          to: { name: 'base.tree', params: { num: 1 } },
           icon: 'settings',
           title: 'Tree'
         },

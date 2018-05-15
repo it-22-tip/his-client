@@ -60,9 +60,10 @@ const Base = [
     }
   },
   {
-    path: '/tree',
+    path: '/tree/:num',
     name: 'base.tree',
     component: () => import('@pages/data/process'),
+    props: true,
     meta: {
       title: 'Tree'
     }

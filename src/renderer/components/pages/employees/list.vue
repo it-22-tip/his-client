@@ -5,7 +5,7 @@
         v-model="model"
         :md-sort.sync="activeSort"
         :md-sort-order.sync="activeOrder"
-        :md-sort-fn="customSort"
+        :md-sort-fn="sortFunction"
         class="right-table"
         md-fixed-header>
         <md-table-row
@@ -29,27 +29,6 @@
             md-sort-by="Age">{{ item.Age }}</md-table-cell>
         </md-table-row>
       </md-table>
-
-      <md-drawer
-        :md-active.sync="showSearchPanel"
-        class="md-right">
-        <md-content style="padding: 20px;">
-          <md-field md-clearable>
-            <label>Nama</label>
-            <md-input/>
-          </md-field>
-          <md-checkbox v-model="boolean">L</md-checkbox>
-          <md-checkbox
-            v-model="boolean"
-            class="md-primary">P</md-checkbox>
-          <md-field md-clearable>
-            <label>Masa Kerja (Bulan)</label>
-            <md-input type="number"/>
-          </md-field>
-          <md-button>Cari</md-button>
-        </md-content>
-      </md-drawer>
-
     </md-content>
     <md-toolbar
       class="md-primary md-dense"
@@ -57,32 +36,14 @@
       <div class="md-toolbar-section-start">
         <md-button
           class="md-icon-button"
-          @click="showSearchPanel = !showSearchPanel">
-          <md-icon>search</md-icon>
-        </md-button>
-        <md-button
-          class="md-icon-button"
           @click="$router.push({ name: 'employee.new' })">
           <md-icon>add</md-icon>
         </md-button>
       </div>
-
-      <div class="md-toolbar-section-end">
-        <md-field
-          class="page-md-field"
-          md-inline
-          md-dense>
-          <md-input
-            v-model="activePage"
-            :max="totalPage"
-            class="page-input"
-            type="number"
-            min="1"/>
-        </md-field>
-        <md-content class="transparent">
-          Dari {{ totalPage }} Halaman
-        </md-content>
-      </div>
+      <pagination
+        :total-page="totalPage"
+        v-model="activePage"
+        @change="change"/>
     </md-toolbar>
     <context-menu
       ref="contextMenu"
@@ -97,6 +58,7 @@
 <script>
 import orm from '@/mixins/orm'
 import { map, extend } from 'lodash'
+import paginated from './paginated'
 import '@extras/contextmenu/ctx-menu.css'
 export default {
   components: {
@@ -104,37 +66,12 @@ export default {
     'context-menu': () => import('@extras/contextmenu')
   },
   mixins: [
-    orm
+    orm, paginated
   ],
-  props: {
-    page: {
-      type: String,
-      default: '1'
-    },
-    order: {
-      type: String,
-      default: 'ASC'
-    },
-    sort: {
-      type: String,
-      default: null
-    },
-    isSearch: {
-      type: String,
-      default: 'false'
-    }
-  },
   data () {
     return {
-      searched: [],
       model: [],
-      reset: [],
       connection: null,
-      searchText: '',
-      searchBy: 'Name',
-      selectedEmployee: null,
-      boolean: false,
-      showSearchPanel: false,
       menuData: {},
       totalPage: null,
       activePage: null,
@@ -142,7 +79,18 @@ export default {
       activeOrder: null
     }
   },
-  watch: {
+  computed: {
+    currentPage: function () {
+      return 1
+    },
+    currentSort: function () {
+      return this.sort
+    },
+    currentOrder: function () {
+      return this.order
+    }
+  },
+  /* watch: {
     activeSort: {
       handler: function (newSort, oldSort) {
         if (newSort === oldSort) return
@@ -171,10 +119,18 @@ export default {
         this.populate()
       }
     }
+  }, */
+  watch: {
+    '$route': function (val) {
+      console.log(val)
+    }
   },
   mounted () {
-    this.setDefault()
-    this.populate()
+    // console.log(this.$props)
+    // console.log(this.page)
+    console.log(this.$route.params)
+    // this.setDefault()
+    // this.populate()
   },
   async beforeDestroy () {
     await this.closeConnection()
@@ -189,19 +145,16 @@ export default {
       }
       this.$router.push(options)
     },
-    setDefault () {
-      this.activePage = (this.page !== null) ? this.page : '1'
+    /* setDefault () {
+      this.activePage = (this.page !== null) ? this.page : 1
       this.activeSort = (this.sort !== null) ? this.sort : null
       this.activeOrder = (this.order !== null) ? 'asc' : null
-    },
+    }, */
     onCtxOpen (locals) {
       this.menuData = locals
     },
     clickEdit ($event) {
       this.$router.push({ name: 'employee.detail', params: { employeeId: $event } })
-    },
-    customSort (value) {
-      return value.sort((left, right) => { return -1 })
     },
     async closeConnection () {
       if (this.connection !== null && typeof this.connection.close === 'function') {
@@ -276,15 +229,7 @@ export default {
       } catch (error) {
         console.log(error)
       }
-      rows = map(rows, row => {
-        return {
-          Ein: row.Id,
-          Name: row.Person.Name,
-          Age: row.Person.Age,
-          Gender: row.Person.Gender,
-          JobTitle: (row.JobTitle !== null) ? row.JobTitle.Name : null
-        }
-      })
+      rows = map(rows, this.mapper)
       return { rows, count }
     },
     async populate () {
@@ -307,28 +252,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.transparent {
-  background-color: transparent;
-  padding: 0 10px;
-}
-.page-md-field.md-field {
-  width: 64px;
-  margin-top: 0px;
-  margin-bottom: 12px;
-  padding-top: 12px;
-  min-height: 44px;
-}
-.page-md-field.md-field::before,
-.page-md-field.md-field::after {
-  display: none;
-  width: 64px !important;
-}
-.page-input {
-  width: 64px !important;
-  padding: 5px;
-  background-color: white;
-  border-radius: 3px !important;
-}
+
 .ctc {
   flex: 1;
   display: flex;
