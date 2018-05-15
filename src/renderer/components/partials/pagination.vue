@@ -40,7 +40,7 @@ export default {
     }
   },
   mounted () {
-    console.log({pagination: this})
+    console.log({pagination: this.$route})
   }
 }
 </script>

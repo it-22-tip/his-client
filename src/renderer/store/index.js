@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import pathify from 'vuex-pathify'
 // import { ipcRenderer } from 'electron'
 
 import modules from './modules'
@@ -22,6 +23,7 @@ Vue.use(Vuex)
 const plugin = MyPlugin(ipcRenderer) */
 
 const store = new Vuex.Store({
+  plugins: [pathify.plugin],
   modules,
   // plugins: [plugin],
   strict: process.env.NODE_ENV !== 'production'

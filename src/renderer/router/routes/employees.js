@@ -1,13 +1,19 @@
 const Employees = [
   {
     path: '/employees/employee/:page/:order?/:sort?',
-    props: true,
+    props: route => {
+      const { page, order, name } = route
+      return { page, order, name }
+    },
     component: () => import('@pages/employees/tab'),
     children: [
       {
         path: '',
         name: 'employees.employee.list',
-        props: true,
+        props: route => {
+          const { page, order, name } = route
+          return { page, order, name }
+        },
         component: () => import('@pages/employees/list'),
         meta: {
           title: 'Employees',
