@@ -3941,9 +3941,9 @@ ejs@^2.6.1:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/ejs/-/ejs-2.6.1.tgz#498ec0d495655abc6f23cd61868d926464071aa0"
 
-electron-builder-lib@20.13.3:
-  version "20.13.3"
-  resolved "https://registry.yarnpkg.com/electron-builder-lib/-/electron-builder-lib-20.13.3.tgz#1fc9b795fa913125c0708426a16159fb854b8e3b"
+electron-builder-lib@20.13.5:
+  version "20.13.5"
+  resolved "https://registry.yarnpkg.com/electron-builder-lib/-/electron-builder-lib-20.13.5.tgz#7c1d978c08b5ca6f668d5d825f7d3aae9cc9296e"
   dependencies:
     "7zip-bin" "~3.1.0"
     app-builder-bin "1.8.6"
@@ -3999,16 +3999,16 @@ electron-builder-lib@~20.13.2:
     semver "^5.5.0"
     temp-file "^3.1.2"
 
-electron-builder@^20.13.3:
-  version "20.13.3"
-  resolved "https://registry.yarnpkg.com/electron-builder/-/electron-builder-20.13.3.tgz#ef419c9a2a62faaf5d5e5e1968b18b2418befe36"
+electron-builder@^20.13.5:
+  version "20.13.5"
+  resolved "https://registry.yarnpkg.com/electron-builder/-/electron-builder-20.13.5.tgz#e91c9ad4500220add1edcfbc696eda356e825291"
   dependencies:
     bluebird-lst "^1.0.5"
     builder-util "5.8.1"
     builder-util-runtime "4.2.1"
     chalk "^2.4.1"
     dmg-builder "4.1.8"
-    electron-builder-lib "20.13.3"
+    electron-builder-lib "20.13.5"
     electron-download-tf "4.3.4"
     fs-extra-p "^4.6.0"
     is-ci "^1.1.0"
@@ -8431,9 +8431,9 @@ nwmatcher@^1.4.3:
   version "1.4.4"
   resolved "https://registry.yarnpkg.com/nwmatcher/-/nwmatcher-1.4.4.tgz#2285631f34a95f0d0395cd900c96ed39b58f346e"
 
-nyc@^11.7.3:
-  version "11.7.3"
-  resolved "https://registry.yarnpkg.com/nyc/-/nyc-11.7.3.tgz#164f4cfad84dee6d8f353824231d9dd683aa14ea"
+nyc@^11.8.0:
+  version "11.8.0"
+  resolved "https://registry.yarnpkg.com/nyc/-/nyc-11.8.0.tgz#1e8453b0644f8fea4d829b1a6636663157cd3b00"
   dependencies:
     archy "^1.0.0"
     arrify "^1.0.1"
@@ -11959,9 +11959,9 @@ vue-html-loader@^1.2.4:
     loader-utils "^1.0.2"
     object-assign "^4.1.0"
 
-vue-loader@^15.0.10:
-  version "15.0.10"
-  resolved "https://registry.yarnpkg.com/vue-loader/-/vue-loader-15.0.10.tgz#cbbb43d63492c24bfb1963fb7997d5349ef42e72"
+vue-loader@^15.0.11:
+  version "15.0.11"
+  resolved "https://registry.yarnpkg.com/vue-loader/-/vue-loader-15.0.11.tgz#b41dee864cdeb0012c8a2c02a66b13459e45e16e"
   dependencies:
     "@vue/component-compiler-utils" "^1.2.1"
     hash-sum "^1.0.2"
@@ -12125,9 +12125,9 @@ webidl-conversions@^4.0.1, webidl-conversions@^4.0.2:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/webidl-conversions/-/webidl-conversions-4.0.2.tgz#a855980b1f0b6b359ba1d5d9fb39ae941faa63ad"
 
-webpack-bundle-analyzer@^2.11.3:
-  version "2.11.3"
-  resolved "https://registry.yarnpkg.com/webpack-bundle-analyzer/-/webpack-bundle-analyzer-2.11.3.tgz#4b442c9bd23f1853af4c9af3a90e21646f16afc3"
+webpack-bundle-analyzer@^2.12.0:
+  version "2.12.0"
+  resolved "https://registry.yarnpkg.com/webpack-bundle-analyzer/-/webpack-bundle-analyzer-2.12.0.tgz#abb8ed9053123dabeb03a0463db52706f54730c7"
   dependencies:
     acorn "^5.3.0"
     bfj-node4 "^5.2.0"
