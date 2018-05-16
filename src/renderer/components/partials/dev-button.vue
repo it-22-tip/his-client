@@ -50,7 +50,6 @@
 <script>
 import { remote } from 'electron'
 const { getCurrentWindow, app } = remote
-const CurrentWindow = getCurrentWindow()
 export default {
   data () {
     return {
@@ -62,15 +61,15 @@ export default {
       return this.minimize ? 'add' : 'remove'
     },
     iconText () {
-      return this.minimize ? 'maximize' : 'minimize'
+      return this.minimize ? 'show' : 'hide'
     }
   },
   methods: {
     devToolsButton () {
-      CurrentWindow.webContents.toggleDevTools()
+      getCurrentWindow().webContents.toggleDevTools()
     },
     reloadButton () {
-      CurrentWindow.reload()
+      getCurrentWindow().reload()
     },
     clearConsoleButton () {
       console.clear()
@@ -97,7 +96,7 @@ export default {
 <style lang="scss" scoped>
 .dev-button {
   position: absolute;
-  top: 0;
+  bottom: 0;
   left: 0;
   z-index: 10000000;
   background-color: rgba(0, 0, 0, .5);

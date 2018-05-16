@@ -1,6 +1,8 @@
 <template>
   <div class="md-toolbar-section-end">
+    {{ number }}
     <md-field
+      :md-counter="false"
       class="page-md-field"
       md-inline
       md-dense>
@@ -8,14 +10,11 @@
         :value="number"
         :max="totalPage"
         :min="min"
+        :maxlength="3"
         class="page-input"
         type="number"
         @input="onInput"
-        @keydown.stop.prevent="onKeyDown($event.key, $event.code, $event.keyCode)"
-        @keydown.48.stop.prevent="onZero"
-        @keydown.69.stop.prevent
-        @keydown.189.stop.prevent
-        @keydown.8.stop.prevent="onBackspace"/>
+        @keydown.capture="onKeyDown($event)"/>
     </md-field>
     <span>
       Dari {{ totalPage }} Halaman
@@ -24,7 +23,7 @@
 </template>
 
 <script>
-import { find } from 'lodash'
+// import { find } from 'lodash'
 export default {
   props: {
     value: {
@@ -76,7 +75,7 @@ export default {
   },
   methods: {
     onInput (value) {
-      this.setInput(value)
+      this.number = value
     },
     onBackspace () {
 
@@ -84,10 +83,23 @@ export default {
     onZero () {
 
     },
-    onKeyDown (key, code, keyCode) {
-      const numeric = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'Backspace', 'delete']
-      if (find(numeric, key)) {
-        console.log('find')
+    onKeyDown (event) {
+      if (event.key === 'e') {
+        event.preventDefault()
+      }
+      if (event.key === '-') {
+        event.preventDefault()
+      }
+      let reg = /[\d]/
+      if (event.key.length === 1 && reg.test(event.key)) {
+        let n = parseInt(this.number)
+        n = isNaN(n) ? 0 : n
+        n = `${n}`
+        if (n.length >= 3) event.preventDefault()
+        // console.log('start')
+        // console.log({n: n})
+        // console.log({ln: n.length})
+        // event.preventDefault()
       }
     },
     setInput (value) {
@@ -96,14 +108,12 @@ export default {
       let valueLength = valueString.length
       let totalPageLength = `${totalPage}`.length
       let longerLength = valueLength > totalPageLength
-      let equalLength = valueLength === totalPageLength
       let bigger = parseInt(valueString) > parseInt(totalPage)
-      console.log(equalLength)
       if (longerLength) {
-        console.log(value)
+        return
       }
       if (bigger) {
-        console.log(value)
+        console.log('bigger')
       }
     }
   }
@@ -132,5 +142,8 @@ export default {
     padding: 5px;
     background-color: white;
     border-radius: 3px !important;
+  }
+  .page-md-field.md-field .md-count {
+    display: none;
   }
 </style>
