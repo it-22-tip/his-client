@@ -14,7 +14,9 @@
         class="page-input"
         type="number"
         @input="onInput"
-        @keydown.capture="onKeyDown($event)"/>
+        @select="onSelect"
+        @keydown.capture="onKeyDown($event)"
+        @mouseup.capture="onMouseUp"/>
     </md-field>
     <span>
       Dari {{ totalPage }} Halaman
@@ -42,7 +44,8 @@ export default {
   data () {
     return {
       model: null,
-      number: null
+      number: null,
+      selection: false
     }
   },
   watch: {
@@ -83,6 +86,12 @@ export default {
     onZero () {
 
     },
+    onMouseUp () {
+      this.selection = false
+    },
+    onSelect (event) {
+      this.selection = true
+    },
     onKeyDown (event) {
       if (event.key === 'e') {
         event.preventDefault()
@@ -95,11 +104,24 @@ export default {
         let n = parseInt(this.number)
         n = isNaN(n) ? 0 : n
         n = `${n}`
+        if (this.selection) {
+          /* let selection = window.getSelection()
+          let range = selection.getRangeAt(0)
+          let StartToEnd = range.START_TO_END
+          let EndToStart = range.END_TO_START
+          let StartToEnd = range.START_TO_END
+          let StartToStart = range.START_TO_START */
+          // console.log(selection.toString())
+          // let ae = document.activeElement
+          // console.log(ae.selectionStart)
+          try {
+            console.log(event)
+            console.log(document.createRange())
+          } catch (e) {
+            console.log(e)
+          }
+        }
         if (n.length >= 3) event.preventDefault()
-        // console.log('start')
-        // console.log({n: n})
-        // console.log({ln: n.length})
-        // event.preventDefault()
       }
     },
     setInput (value) {
