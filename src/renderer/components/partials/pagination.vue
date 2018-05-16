@@ -122,6 +122,8 @@ export default {
           end: end
       }
     },
+    // var el = document.getElementById("your_textarea")
+    // replaceSelectedText(el, "[NEW TEXT]")
     replaceSelectedText(el, text) {
       var sel = getInputSelection(el), val = el.value
       el.value = val.slice(0, sel.start) + text + val.slice(sel.end)
