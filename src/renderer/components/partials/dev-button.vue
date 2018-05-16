@@ -5,34 +5,64 @@
     <md-button
       class="md-icon-button"
       @click="devToolsButton">
-      <md-icon>loop</md-icon>
+      <md-icon>build</md-icon>
+      <md-tooltip md-direction="bottom">Dev Tools</md-tooltip>
     </md-button>
     <md-button
       class="md-icon-button"
       @click="reloadButton">
       <md-icon>loop</md-icon>
+      <md-tooltip md-direction="bottom">Reload</md-tooltip>
     </md-button>
     <md-button
       class="md-icon-button"
       @click="clearConsoleButton">
-      <md-icon>loop</md-icon>
+      <md-icon>delete</md-icon>
+      <md-tooltip md-direction="bottom">Clear Console</md-tooltip>
+    </md-button>
+    <md-button
+      class="md-icon-button"
+      @click="backButton">
+      <md-icon>navigate_before</md-icon>
+      <md-tooltip md-direction="bottom">Backward</md-tooltip>
+    </md-button>
+    <md-button
+      class="md-icon-button"
+      @click="forwardButton">
+      <md-icon>navigate_next</md-icon>
+      <md-tooltip md-direction="bottom">Forward</md-tooltip>
+    </md-button>
+    <md-button
+      class="md-icon-button"
+      @click="closeButton">
+      <md-icon>close</md-icon>
+      <md-tooltip md-direction="bottom">Close App</md-tooltip>
     </md-button>
     <md-button
       class="md-icon-button minimize-button"
       @click="minimizeButton">
-      <md-icon>add</md-icon>
+      <md-icon>{{ icon }}</md-icon>
+      <md-tooltip md-direction="bottom">{{ iconText }}</md-tooltip>
     </md-button>
   </div>
 </template>
 
 <script>
 import { remote } from 'electron'
-const { getCurrentWindow } = remote
+const { getCurrentWindow, app } = remote
 const CurrentWindow = getCurrentWindow()
 export default {
   data () {
     return {
       minimize: true
+    }
+  },
+  computed: {
+    icon () {
+      return this.minimize ? 'add' : 'remove'
+    },
+    iconText () {
+      return this.minimize ? 'maximize' : 'minimize'
     }
   },
   methods: {
@@ -45,10 +75,16 @@ export default {
     clearConsoleButton () {
       console.clear()
     },
+    closeButton () {
+      app.exit()
+    },
     backButton () {
-
+      this.$router.go(-1)
     },
     forwardButton () {
+      this.$router.go(1)
+    },
+    showIntro () {
 
     },
     minimizeButton () {
@@ -84,5 +120,15 @@ export default {
 }
 .dev-button .md-icon-font {
   color: rgba(255, 255, 255, .5);
+  width: 20px;
+  min-width: 20px !important;
+  height: 20px;
+}
+.dev-button .md-icon {
+  font-size: 16px !important;
+}
+.dev-button .md-button .md-ripple {
+  border-radius: 0;
+  padding: 0 !important;
 }
 </style>
