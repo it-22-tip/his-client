@@ -39,11 +39,6 @@
           @click="$router.push({ name: 'employee.new' })">
           <md-icon>add</md-icon>
         </md-button>
-        <md-button
-          class="md-icon-button"
-          @click="reload">
-          <md-icon>loop</md-icon>
-        </md-button>
       </div>
       <pagination
         :total-page="totalPage"
@@ -63,9 +58,7 @@
 import orm from '@/mixins/orm'
 import { map, extend } from 'lodash'
 import paginated from './paginated'
-import { remote } from 'electron'
 import '@extras/contextmenu/ctx-menu.css'
-const { getCurrentWindow } = remote
 export default {
   components: {
     'layout-one': () => import('@partials/layout-one'),
@@ -79,7 +72,7 @@ export default {
       model: [],
       connection: null,
       menuData: {},
-      totalPage: 10,
+      totalPage: 300,
       activePage: 1,
       activeSort: null,
       activeOrder: null
@@ -127,6 +120,9 @@ export default {
     }
   }, */
   watch: {
+    activePage: function (val) {
+      console.log({onList: val})
+    },
     '$route': function (val) {
       console.log(val)
     }
@@ -143,15 +139,6 @@ export default {
     await this.closeConnection()
   },
   methods: {
-    reload () {
-      console.log('reload')
-      let a = true
-      if (a) {
-        console.log(window.location.reload())
-      } else {
-        getCurrentWindow().reload()
-      }
-    },
     changePage (change) {
       let params = { page: this.currentPage, sort: this.currentSort, order: this.currentOrder }
       params = extend({}, params, change)
