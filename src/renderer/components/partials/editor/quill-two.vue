@@ -37,7 +37,7 @@ export default {
     return {
       name: '02-example',
       content: `<h1 class="ql-align-center">
-                    <span class="ql-font-serif"><span class="ql-cursor">﻿</span>I am Example 2!</span></span>
+                    <span class="ql-font-serif"><span class="ql-cursor">&nbsp;</span>I am Example 2!</span></span>
                   </h1>
                   <p><br></p>
                   <p><span class="ql-font-serif">Whenever you play the game of thrones, you either win or die. There is no middle ground.</span></p>
@@ -64,7 +64,7 @@ export default {
         modules: {
           toolbar: [
             ['bold', 'italic', 'underline', 'strike'],
-            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
             [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
             [{ 'color': [] }, { 'background': [] }],
             [{ 'font': [] }],

@@ -33,7 +33,7 @@
 
 <script>
 import hljs from 'highlight.js'
-import VueQuillEditor, { Quill } from 'vue-quill-editor'
+import { Quill } from 'vue-quill-editor'
 import { ImageDrop } from 'quill-image-drop-module'
 import ImageResize from 'quill-image-resize-module'
 Quill.register('modules/imageDrop', ImageDrop)
@@ -51,7 +51,7 @@ export default {
           toolbar: [
             [{ 'size': ['small', false, 'large'] }],
             ['bold', 'italic'],
-            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
             ['link', 'image']
           ],
           history: {
