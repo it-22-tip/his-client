@@ -7,6 +7,7 @@
       md-inline
       md-dense>
       <md-input
+        v-click-outside="onClickOutside"
         :value="number"
         :max="totalPage"
         :min="min"
@@ -26,7 +27,11 @@
 
 <script>
 // import { find } from 'lodash'
+import vClickOutside from 'v-click-outside'
 export default {
+  directives: {
+    clickOutside: vClickOutside.directive
+  },
   props: {
     value: {
       type: Number,
@@ -77,6 +82,9 @@ export default {
     console.log({pagination: this.$route})
   },
   methods: {
+    onClickOutside (event) {
+      console.log('Clicked outside. Event: ', event)
+    },
     getInputSelection (el) {
       var start = 0
       var end = 0

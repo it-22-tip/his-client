@@ -109,6 +109,7 @@
     "tunnel-ssh": "^4.1.4",
     "typeface-roboto": "^0.0.54",
     "v-calendar": "^0.9.7",
+    "v-click-outside": "^1.0.4",
     "vddl": "^0.7.1",
     "vue": "^2.5.16",
     "vue-awesome-swiper": "^3.1.3",

@@ -11863,6 +11863,10 @@ v-calendar@^0.9.7:
   dependencies:
     vue "^2.5.0"
 
+v-click-outside@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/v-click-outside/-/v-click-outside-1.0.4.tgz#4e21b8f09a434a208f59a1463997de150c414b9e"
+
 v8flags@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/v8flags/-/v8flags-3.0.2.tgz#ad6a78a20a6b23d03a8debc11211e3cc23149477"
