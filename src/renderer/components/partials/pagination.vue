@@ -1,6 +1,6 @@
 <template>
   <div class="md-toolbar-section-end">
-    {{ number }}
+    {{ number }} | {{ selection }}
     <md-field
       :md-counter="false"
       class="page-md-field"
@@ -83,7 +83,17 @@ export default {
   },
   methods: {
     onClickOutside (event) {
-      console.log('Clicked outside. Event: ', event)
+      this.removeSelection()
+    },
+    removeSelection () {
+      if (this.selection) {
+        if (window.getSelection) {
+          window.getSelection().removeAllRanges()
+        } else if (document.selection) {
+          document.selection.empty()
+        }
+        this.selection = false
+      }
     },
     getInputSelection (el) {
       var start = 0
@@ -147,6 +157,7 @@ export default {
       this.selection = false
     },
     onSelect (event) {
+      console.log('select')
       this.selection = true
     },
     onKeyDown (event) {
