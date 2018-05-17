@@ -12,7 +12,7 @@
         :min="min"
         :maxlength="3"
         class="page-input"
-        type="number"
+        type="text"
         @input="onInput"
         @select="onSelect"
         @keydown.capture="onKeyDown($event)"
@@ -69,7 +69,7 @@ export default {
     },
     number: {
       handler: function (value) {
-        console.log({nc: value})
+        // console.log({nc: value})
       }
     }
   },
@@ -77,65 +77,8 @@ export default {
     console.log({pagination: this.$route})
   },
   methods: {
-    getInputSelection(el) {
-      var start = 0, end = 0, normalizedValue, range,
-          textInputRange, len, endRange
-
-      if (typeof el.selectionStart == "number" && typeof el.selectionEnd == "number") {
-          start = el.selectionStart
-          end = el.selectionEnd
-      } else {
-          range = document.selection.createRange()
-
-          if (range && range.parentElement() == el) {
-              len = el.value.length
-              normalizedValue = el.value.replace(/\r\n/g, "\n")
-
-              // Create a working TextRange that lives only in the input
-              textInputRange = el.createTextRange()
-              textInputRange.moveToBookmark(range.getBookmark())
-
-              // Check if the start and end of the selection are at the very end
-              // of the input, since moveStart/moveEnd doesn't return what we want
-              // in those cases
-              endRange = el.createTextRange()
-              endRange.collapse(false)
-
-              if (textInputRange.compareEndPoints("StartToEnd", endRange) > -1) {
-                  start = end = len
-              } else {
-                  start = -textInputRange.moveStart("character", -len)
-                  start += normalizedValue.slice(0, start).split("\n").length - 1
-
-                  if (textInputRange.compareEndPoints("EndToEnd", endRange) > -1) {
-                      end = len
-                  } else {
-                      end = -textInputRange.moveEnd("character", -len)
-                      end += normalizedValue.slice(0, end).split("\n").length - 1
-                  }
-              }
-          }
-      }
-
-      return {
-          start: start,
-          end: end
-      }
-    },
-    // var el = document.getElementById("your_textarea")
-    // replaceSelectedText(el, "[NEW TEXT]")
-    replaceSelectedText(el, text) {
-      var sel = getInputSelection(el), val = el.value
-      el.value = val.slice(0, sel.start) + text + val.slice(sel.end)
-    },
     onInput (value) {
       this.number = value
-    },
-    onBackspace () {
-
-    },
-    onZero () {
-
     },
     onMouseUp () {
       this.selection = false
@@ -144,49 +87,58 @@ export default {
       this.selection = true
     },
     onKeyDown (event) {
-      if (event.key === 'e') {
-        event.preventDefault()
+      // only single key
+      if (event.key.length > 1) {
+        console.log('key')
+        this.selection = false
+        return true
       }
-      if (event.key === '-') {
+
+      if (/[^\d]/.test(event.key)) {
         event.preventDefault()
+        this.selection = false
+        return false
       }
-      let reg = /[\d]/
-      if (event.key.length === 1 && reg.test(event.key)) {
-        let n = parseInt(this.number)
-        n = isNaN(n) ? 0 : n
-        n = `${n}`
-        if (this.selection) {
-          /* let selection = window.getSelection()
-          let range = selection.getRangeAt(0)
-          let StartToEnd = range.START_TO_END
-          let EndToStart = range.END_TO_START
-          let StartToEnd = range.START_TO_END
-          let StartToStart = range.START_TO_START */
-          // console.log(selection.toString())
-          // let ae = document.activeElement
-          // console.log(ae.selectionStart)
-          try {
-            console.log(event)
-            console.log(document.createRange())
-          } catch (e) {
-            console.log(e)
+      let keyString = `${event.key}`
+      let number = parseInt(this.number)
+      let s = this.selection ? 'sel' : 'nosel'
+      number = isNaN(number) ? 0 : number
+      let numberString = number > 0 ? `${number}` : ''
+      if (numberString === '' && keyString === '0') {
+        event.preventDefault()
+        this.selection = false
+        return false
+      }
+      numberString = numberString + keyString
+      console.log({l: numberString.length, n: numberString, s: s})
+      if (numberString.length > 3) {
+        if (s === 'sel') {
+          let range = document.getSelection().getRangeAt(0)
+          console.log(range)
+          let lr = document.createRange()
+          lr.selectNodeContents(event.target)
+          console.log(lr)
+          event.preventDefault()
+          this.selection = false
+          return true
+        } else {
+          event.preventDefault()
+          this.selection = false
+          return false
+        }
+      } else {
+        if (numberString.length === 3 && (parseInt(numberString) > 300)) {
+          if (s === 'sel') {
+            this.selection = false
+            return true
+          } else {
+            event.preventDefault()
+            this.selection = false
+            return false
           }
         }
-        if (n.length >= 3) event.preventDefault()
-      }
-    },
-    setInput (value) {
-      let valueString = `${value}`
-      let totalPage = this.totalPage
-      let valueLength = valueString.length
-      let totalPageLength = `${totalPage}`.length
-      let longerLength = valueLength > totalPageLength
-      let bigger = parseInt(valueString) > parseInt(totalPage)
-      if (longerLength) {
-        return
-      }
-      if (bigger) {
-        console.log('bigger')
+        this.selection = false
+        return true
       }
     }
   }
@@ -195,28 +147,28 @@ export default {
 
 <style lang="scss" scoped>
   .transparent {
-    background-color: transparent
-    padding: 0 10px
+    background-color: transparent;
+    padding: 0 10px;
   }
   .page-md-field.md-field {
-    width: 64px
-    margin-top: 0px
-    margin-bottom: 12px
-    padding-top: 12px
-    min-height: 44px
+    width: 64px;
+    margin-top: 0px;
+    margin-bottom: 12px;
+    padding-top: 12px;
+    min-height: 44px;
   }
   .page-md-field.md-field::before,
   .page-md-field.md-field::after {
-    display: none
-    width: 64px !important
+    display: none;
+    width: 64px !important;
   }
   .page-input {
-    width: 64px !important
-    padding: 5px
-    background-color: white
-    border-radius: 3px !important
+    width: 64px !important;
+    padding: 5px;
+    background-color: white;
+    border-radius: 3px !important;
   }
   .page-md-field.md-field .md-count {
-    display: none
+    display: none;
   }
 </style>

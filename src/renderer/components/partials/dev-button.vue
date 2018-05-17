@@ -53,7 +53,7 @@ const { getCurrentWindow, app } = remote
 export default {
   data () {
     return {
-      minimize: true
+      minimize: false
     }
   },
   computed: {
