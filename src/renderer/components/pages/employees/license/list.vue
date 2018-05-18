@@ -8,24 +8,15 @@
         :order="order"/>
     </md-content>
     <toolbar/>
-    <context-menu
-      ref="contextMenu"
-      @ctx-open="onCtxOpen">
-      <div><h3>{{ menuData.Name }}</h3></div>
-      <div @click="clickEdit(menuData.Id)"><md-icon>edit</md-icon>Edit</div>
-      <div><md-icon>delete</md-icon>Delete</div>
-    </context-menu>
   </md-content>
 </template>
 
 <script>
 import orm from '@/mixins/orm'
 import { map, extend } from 'lodash'
-import '@extras/contextmenu/ctx-menu.css'
 export default {
   components: {
     'layout-one': () => import('@partials/layout-one'),
-    'context-menu': () => import('@extras/contextmenu'),
     'mtable': () => import('@partials/mtable'),
     'toolbar': () => import('./toolbar')
   },
@@ -61,7 +52,6 @@ export default {
       selectedEmployee: null,
       boolean: false,
       showSearchPanel: false,
-      menuData: {},
       totalPage: null,
       activePage: null,
       activeSort: null,

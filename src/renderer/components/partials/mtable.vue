@@ -9,7 +9,9 @@
     <md-table-row
       slot="md-table-row"
       slot-scope="{ item }"
-      tabindex="0">
+      class="trow"
+      tabindex="0"
+      @click.right="clickRight">
       <md-table-cell
         v-for="cell in tableCell"
         :key="cell.MdLabel"
@@ -18,11 +20,22 @@
         {{ item[cell.Data] }}
       </md-table-cell>
     </md-table-row>
+    <context-menu
+      ref="contextMenu"
+      @ctx-open="onCtxOpen">
+      <div><h3>{{ menuData.Name }}</h3></div>
+      <div @click="clickEdit(menuData.Id)"><md-icon>edit</md-icon>Edit</div>
+      <div><md-icon>delete</md-icon>Delete</div>
+    </context-menu>
   </md-table>
 </template>
 
 <script>
+import '@extras/contextmenu/ctx-menu.css'
 export default {
+  components: {
+    'context-menu': () => import('@extras/contextmenu')
+  },
   props: {
     value: {
       type: Array,
@@ -43,6 +56,7 @@ export default {
   },
   data () {
     return {
+      menuData: {}
       /* activeSort: null,
       activeOrder: null */
     }
@@ -71,7 +85,21 @@ export default {
   methods: {
     sortFunction (value) {
       return value.sort((left, right) => { return -1 })
+    },
+    onCtxOpen () {
+    },
+    clickEdit () {
+    },
+    clickRight () {
+      console.log('clr')
+      // $refs.contextMenu.open($event, { Name: item.Name, Id:item.Ein })
     }
   }
 }
 </script>
+
+<style lang="scss">
+.trow:focus {
+  outline: none;
+}
+</style>
