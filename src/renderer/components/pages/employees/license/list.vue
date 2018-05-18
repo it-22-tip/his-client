@@ -14,37 +14,14 @@
           tabindex="0"
           @click.right="$refs.contextMenu.open($event, { Name: item.Name, Id:item.Ein })">
           <md-table-cell
-            md-label="Nama"
-            md-sort-by="Name">{{ item.Name }}</md-table-cell>
-          <md-table-cell
-            md-label="Type"
-            md-sort-by="Type">{{ item.Type }}</md-table-cell>
-          <md-table-cell
-            md-label="Habis"
-            md-sort-by="DueDate">{{ item.TimeLeft }}</md-table-cell>
+            v-for="cell in tableCell"
+            :key="cell.MdLabel"
+            :md-label="cell.MdLabel"
+            :md-sort-by="cell.MdSortBy">
+            {{ item[cell.Data] }}
+          </md-table-cell>
         </md-table-row>
       </md-table>
-
-      <md-drawer
-        :md-active.sync="showSearchPanel"
-        class="md-right">
-        <md-content style="padding: 20px;">
-          <md-field md-clearable>
-            <label>Nama</label>
-            <md-input/>
-          </md-field>
-          <md-checkbox v-model="boolean">L</md-checkbox>
-          <md-checkbox
-            v-model="boolean"
-            class="md-primary">P</md-checkbox>
-          <md-field md-clearable>
-            <label>Masa Kerja (Bulan)</label>
-            <md-input type="number"/>
-          </md-field>
-          <md-button>Cari</md-button>
-        </md-content>
-      </md-drawer>
-
     </md-content>
     <md-toolbar
       class="md-primary md-dense"
@@ -134,7 +111,24 @@ export default {
       totalPage: null,
       activePage: null,
       activeSort: null,
-      activeOrder: null
+      activeOrder: null,
+      tableCell: [
+        {
+          MdLabel: 'Nama',
+          MdSortBy: 'Name',
+          Data: 'Name'
+        },
+        {
+          MdLabel: 'Jenis',
+          MdSortBy: 'Type',
+          Data: 'Type'
+        },
+        {
+          MdLabel: 'Habis',
+          MdSortBy: 'DueDate',
+          Data: 'TimeLeft'
+        }
+      ]
     }
   },
   watch: {

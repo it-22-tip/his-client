@@ -1,6 +1,6 @@
 <template>
   <div class="md-toolbar-section-end">
-    {{ number }} | {{ selection }}
+    <span>{{ number }} | {{ selection }}</span>
     <md-field
       :md-counter="false"
       class="page-md-field"
@@ -96,59 +96,21 @@ export default {
       }
     },
     getInputSelection (el) {
-      var start = 0
-      var end = 0
-      var normalizedValue
-      var range
-      var textInputRange
-      var len
-      var endRange
-
+      let start = 0
+      let end = 0
       if (typeof el.selectionStart === 'number' && typeof el.selectionEnd === 'number') {
         start = el.selectionStart
         end = el.selectionEnd
-      } else {
-        range = document.selection.createRange()
-
-        if (range && range.parentElement() === el) {
-          len = el.value.length
-          normalizedValue = el.value.replace(/\r\n/g, '\n')
-
-          // Create a working TextRange that lives only in the input
-          textInputRange = el.createTextRange()
-          textInputRange.moveToBookmark(range.getBookmark())
-
-          // Check if the start and end of the selection are at the very end
-          // of the input, since moveStart/moveEnd doesn't return what we want
-          // in those cases
-          endRange = el.createTextRange()
-          endRange.collapse(false)
-
-          if (textInputRange.compareEndPoints('StartToEnd', endRange) > -1) {
-            start = end = len
-          } else {
-            start = -textInputRange.moveStart('character', -len)
-            start += normalizedValue.slice(0, start).split('\n').length - 1
-
-            if (textInputRange.compareEndPoints('EndToEnd', endRange) > -1) {
-              end = len
-            } else {
-              end = -textInputRange.moveEnd('character', -len)
-              end += normalizedValue.slice(0, end).split('\n').length - 1
-            }
-          }
-        }
       }
-
       return {
         start: start,
         end: end
       }
     },
     replaceSelectedText (el, text) {
-      var sel = this.getInputSelection(el)
-      var val = el.value
-      el.value = val.slice(0, sel.start) + text + val.slice(sel.end)
+      let sel = this.getInputSelection(el)
+      let val = el.value
+      return val.slice(0, sel.start) + text + val.slice(sel.end)
     },
     onInput (value) {
       this.number = value
@@ -157,7 +119,6 @@ export default {
       this.selection = false
     },
     onSelect (event) {
-      console.log('select')
       this.selection = true
     },
     onKeyDown (event) {
@@ -184,15 +145,12 @@ export default {
         return false
       }
       numberString = numberString + keyString
-      console.log({l: numberString.length, n: numberString, s: s})
+      // console.log({l: numberString.length, n: numberString, s: s})
       if (numberString.length > 3) {
         if (s === 'sel') {
-          let range = document.getSelection().getRangeAt(0)
-          console.log(range)
-          let lr = document.createRange()
-          lr.selectNodeContents(event.target)
-          console.log(lr)
-          event.preventDefault()
+          // console.log('psg')
+          // console.log(this.replaceSelectedText(event.target, event.key))
+          // event.preventDefault()
           this.selection = false
           return true
         } else {
