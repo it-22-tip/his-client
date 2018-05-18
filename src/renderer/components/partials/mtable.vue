@@ -1,9 +1,9 @@
 <template>
   <md-table
-    v-model="model"
-    :md-sort.sync="sort"
-    :md-sort-order.sync="order"
-    :md-sort-fn="customSort"
+    v-model="value"
+    :md-sort.sync="activeSort"
+    :md-sort-order.sync="activeOrder"
+    :md-sort-fn="sortFunction"
     class="right-table"
     md-fixed-header>
     <md-table-row
@@ -24,36 +24,54 @@
 <script>
 export default {
   props: {
+    value: {
+      type: Array,
+      default: () => []
+    },
     tableCell: {
       type: Array,
       default: () => []
     },
-    activePage: {
-      type: Number,
-      default: 1
+    sort: {
+      type: String,
+      default: null
     },
+    order: {
+      type: String,
+      default: null
+    }
   },
   data () {
     return {
-      sort: null,
-      order: null,
-      page: null
+      /* activeSort: null,
+      activeOrder: null */
+    }
+  },
+  computed: {
+    model: function () {
+      return this.value
+    },
+    activeSort: {
+      get () {
+        return this.sort
+      },
+      set (v) {
+        console.log(v)
+      }
+    },
+    activeOrder: {
+      get () {
+        return this.order
+      },
+      set (v) {
+        console.log(v)
+      }
     }
   },
   methods: {
-    changePage (change) {
-      let params = { page: this.activePage, sort: this.activeSort, order: this.activeOrder }
-      params = extend({}, params, change)
-      let options = {
-        name: 'employees.license.list',
-        params: params
-      }
-      this.$router.push(options)
-    },
-    customSort (value) {
+    sortFunction (value) {
       return value.sort((left, right) => { return -1 })
     }
   }
 }
 </script>
-

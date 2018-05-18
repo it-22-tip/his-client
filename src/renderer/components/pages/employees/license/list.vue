@@ -1,61 +1,13 @@
 <template>
   <md-content class="ctc">
     <md-content class="psg">
-      <md-table
+      <mtable
         v-model="model"
-        :md-sort.sync="activeSort"
-        :md-sort-order.sync="activeOrder"
-        :md-sort-fn="customSort"
-        class="right-table"
-        md-fixed-header>
-        <md-table-row
-          slot="md-table-row"
-          slot-scope="{ item }"
-          tabindex="0"
-          @click.right="$refs.contextMenu.open($event, { Name: item.Name, Id:item.Ein })">
-          <md-table-cell
-            v-for="cell in tableCell"
-            :key="cell.MdLabel"
-            :md-label="cell.MdLabel"
-            :md-sort-by="cell.MdSortBy">
-            {{ item[cell.Data] }}
-          </md-table-cell>
-        </md-table-row>
-      </md-table>
+        :table-cell="tableCell"
+        :sort="sort"
+        :order="order"/>
     </md-content>
-    <md-toolbar
-      class="md-primary md-dense"
-      md-elevation="0">
-      <div class="md-toolbar-section-start">
-        <md-button
-          class="md-icon-button"
-          @click="showSearchPanel = !showSearchPanel">
-          <md-icon>search</md-icon>
-        </md-button>
-        <md-button
-          class="md-icon-button"
-          @click="$router.push({ name: 'employee.new' })">
-          <md-icon>add</md-icon>
-        </md-button>
-      </div>
-
-      <div class="md-toolbar-section-end">
-        <md-field
-          class="page-md-field"
-          md-inline
-          md-dense>
-          <md-input
-            v-model="activePage"
-            :max="totalPage"
-            class="page-input"
-            type="number"
-            min="1"/>
-        </md-field>
-        <md-content class="transparent">
-          Dari {{ totalPage }} Halaman
-        </md-content>
-      </div>
-    </md-toolbar>
+    <toolbar/>
     <context-menu
       ref="contextMenu"
       @ctx-open="onCtxOpen">
@@ -73,7 +25,9 @@ import '@extras/contextmenu/ctx-menu.css'
 export default {
   components: {
     'layout-one': () => import('@partials/layout-one'),
-    'context-menu': () => import('@extras/contextmenu')
+    'context-menu': () => import('@extras/contextmenu'),
+    'mtable': () => import('@partials/mtable'),
+    'toolbar': () => import('./toolbar')
   },
   mixins: [
     orm
@@ -291,28 +245,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.transparent {
-  background-color: transparent;
-  padding: 0 10px;
-}
-.page-md-field.md-field {
-  width: 64px;
-  margin-top: 0px;
-  margin-bottom: 12px;
-  padding-top: 12px;
-  min-height: 44px;
-}
-.page-md-field.md-field::before,
-.page-md-field.md-field::after {
-  display: none;
-  width: 64px !important;
-}
-.page-input {
-  width: 64px !important;
-  padding: 5px;
-  background-color: white;
-  border-radius: 3px !important;
-}
 .ctc {
   flex: 1;
   display: flex;
