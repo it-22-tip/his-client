@@ -18,7 +18,8 @@
 
 <script>
 import orm from '@/mixins/orm'
-import { map, extend } from 'lodash'
+import paginated from '@/mixins/paginated'
+import { map } from 'lodash'
 export default {
   components: {
     'layout-one': () => import('@partials/layout-one'),
@@ -26,31 +27,13 @@ export default {
     'toolbar': () => import('./toolbar')
   },
   mixins: [
-    orm
+    orm,
+    paginated
   ],
-  props: {
-    page: {
-      type: Number,
-      default: 1
-    },
-    order: {
-      type: String,
-      default: 'asc'
-    },
-    sort: {
-      type: String,
-      default: 'Name'
-    }
-  },
   data () {
     return {
       model: [],
       connection: null,
-      total: 0,
-      totalPage: 1,
-      activePage: 1,
-      activeSort: 'Name',
-      activeOrder: 'asc',
       tableCell: [
         {
           MdLabel: 'Nama',
@@ -70,21 +53,6 @@ export default {
       ]
     }
   },
-  /* watch: {
-    '$route.params': {
-      handler: function (newValue, oldValue) {
-        if (newValue === oldValue) return
-        let { page, sort, order } = newValue
-        page = parseInt(page)
-        page = isNaN(page) ? 1 : page
-        this.activePage = parseInt(page)
-        this.activeSort = sort
-        this.activeOrder = order
-        this.populate()
-      },
-      deep: true
-    }
-  }, */
   mounted () {
     this.populate()
   },
@@ -92,20 +60,6 @@ export default {
     await this.closeConnection()
   },
   methods: {
-    changePage (change) {
-      let { name, params } = this.$route
-      this.$router.push(
-        {
-          name: name,
-          params: extend({}, params, change)
-        }
-      )
-      let { page, sort, order } = params
-      this.activePage = parseInt(page)
-      this.activeSort = sort
-      this.activeOrder = order
-      this.populate()
-    },
     async closeConnection () {
       if (this.connection !== null && typeof this.connection.close === 'function') {
         console.log('cleaning connection')
