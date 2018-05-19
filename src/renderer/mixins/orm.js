@@ -17,5 +17,8 @@ export default {
         }
       }
     }
+  },
+  async beforeDestroy () {
+    await this.closeConnection()
   }
 }

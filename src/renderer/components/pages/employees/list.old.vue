@@ -4,8 +4,8 @@
       <mtable
         v-model="model"
         :table-cell="tableCell"
-        :sort="activeSort"
-        :order="activeOrder"
+        :sort="sort"
+        :order="order"
         @change-sort="changePage({ sort: $event })"
         @change-order="changePage({ order: $event })"/>
     </md-content>
@@ -18,28 +18,35 @@
 
 <script>
 import orm from '@/mixins/orm'
+import { map } from 'lodash'
 import paginated from '@/mixins/paginated'
 import populate from '@/mixins/populate'
-import { map } from 'lodash'
+import '@extras/contextmenu/ctx-menu.css'
 export default {
+  name: 'EmployeesList',
   components: {
     'layout-one': () => import('@partials/layout-one'),
+    'context-menu': () => import('@extras/contextmenu'),
     'mtable': () => import('@partials/mtable'),
     'toolbar': () => import('@partials/toolbar')
   },
   mixins: [
-    orm,
-    paginated,
-    populate
+    orm, paginated, populate
   ],
   data () {
     return {
       model: [],
+      connection: null,
+      menuData: {},
+      totalPage: 300,
+      activePage: 1,
+      activeSort: null,
+      activeOrder: null,
       tableCell: [
         {
           MdLabel: 'NIP',
-          MdSortBy: 'Ein',
-          Data: 'Ein'
+          MdSortBy: 'Id',
+          Data: 'Id'
         },
         {
           MdLabel: 'Nama',
@@ -73,7 +80,7 @@ export default {
       let order = null
       let cs = this.activeSort
       switch (cs) {
-        case 'Ein':
+        case 'Id':
           order = ['Id', this.activeOrder]
           break
         case 'Name':
@@ -93,6 +100,15 @@ export default {
       }
       return [order]
     },
+    mapper (row) {
+      return {
+        Ein: row.Id,
+        Name: row.Person.Name,
+        Age: row.Person.Age,
+        Gender: row.Person.Gender,
+        JobTitle: (row.JobTitle !== null) ? row.JobTitle.Name : null
+      }
+    },
     async transaction (transaction) {
       const { Persons, Employees, JobTitles } = this.$connection.models
       let page = this.activePage - 1
@@ -107,7 +123,6 @@ export default {
         limit: limit,
         offset: offset,
         order: order,
-        // logging: console.log,
         distinct: true,
         col: 'Id',
         include: [
@@ -133,15 +148,7 @@ export default {
       } catch (error) {
         console.log(error)
       }
-      rows = map(rows, row => {
-        return {
-          Ein: row.Id,
-          Name: row.Person.Name,
-          Age: row.Person.Age,
-          Gender: row.Person.Gender,
-          JobTitle: (row.JobTitle !== null) ? row.JobTitle.Name : null
-        }
-      })
+      rows = map(rows, this.mapper)
       return { rows, count }
     }
   }
@@ -149,6 +156,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 .ctc {
   flex: 1;
   display: flex;

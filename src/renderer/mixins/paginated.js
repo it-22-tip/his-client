@@ -11,7 +11,7 @@ const paginated = {
     },
     sort: {
       type: String,
-      default: 'Name'
+      default: null
     }
   },
   data () {
@@ -19,7 +19,7 @@ const paginated = {
       total: 0,
       totalPage: 1,
       activePage: 1,
-      activeSort: 'Name',
+      activeSort: null,
       activeOrder: 'asc'
     }
   },

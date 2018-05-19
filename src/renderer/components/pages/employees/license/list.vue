@@ -4,8 +4,8 @@
       <mtable
         v-model="model"
         :table-cell="tableCell"
-        :sort="sort"
-        :order="order"
+        :sort="activeSort"
+        :order="activeOrder"
         @change-sort="changePage({ sort: $event })"
         @change-order="changePage({ order: $event })"/>
     </md-content>
@@ -19,16 +19,18 @@
 <script>
 import orm from '@/mixins/orm'
 import paginated from '@/mixins/paginated'
+import populate from '@/mixins/populate'
 import { map } from 'lodash'
 export default {
   components: {
     'layout-one': () => import('@partials/layout-one'),
     'mtable': () => import('@partials/mtable'),
-    'toolbar': () => import('./toolbar')
+    'toolbar': () => import('@partials/toolbar')
   },
   mixins: [
     orm,
-    paginated
+    paginated,
+    populate
   ],
   data () {
     return {
@@ -53,10 +55,8 @@ export default {
     }
   },
   mounted () {
+    this.activeSort = 'Name'
     this.populate()
-  },
-  async beforeDestroy () {
-    await this.closeConnection()
   },
   methods: {
     getOrder (Model) {
@@ -126,21 +126,6 @@ export default {
         }
       })
       return { rows, count }
-    },
-    async populate () {
-      let data
-      this.$connection = (new this.$orm()).connect()
-      try {
-        data = await this.$connection.transaction(this.transaction)
-      } catch (error) {
-        console.log(error)
-      } finally {
-        await this.closeConnection()
-      }
-      const { rows, count } = data
-      this.model = rows
-      this.total = count
-      this.totalPage = Math.ceil(count / 10)
     }
   }
 }
