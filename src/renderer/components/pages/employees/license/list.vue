@@ -5,9 +5,14 @@
         v-model="model"
         :table-cell="tableCell"
         :sort="sort"
-        :order="order"/>
+        :order="order"
+        @change-sort="changePage({ sort: $event })"
+        @change-order="changePage({ order: $event })"/>
     </md-content>
-    <toolbar/>
+    <toolbar
+      :total="totalPage"
+      :page="activePage"
+      @change-page="changePage({ page: $event })"/>
   </md-content>
 </template>
 
@@ -25,37 +30,27 @@ export default {
   ],
   props: {
     page: {
-      type: String,
-      default: '1'
+      type: Number,
+      default: 1
     },
     order: {
       type: String,
-      default: 'ASC'
+      default: 'asc'
     },
     sort: {
       type: String,
-      default: null
-    },
-    isSearch: {
-      type: String,
-      default: 'false'
+      default: 'Name'
     }
   },
   data () {
     return {
-      searched: [],
       model: [],
-      reset: [],
       connection: null,
-      searchText: '',
-      searchBy: 'Name',
-      selectedEmployee: null,
-      boolean: false,
-      showSearchPanel: false,
-      totalPage: null,
-      activePage: null,
-      activeSort: null,
-      activeOrder: null,
+      total: 0,
+      totalPage: 1,
+      activePage: 1,
+      activeSort: 'Name',
+      activeOrder: 'asc',
       tableCell: [
         {
           MdLabel: 'Nama',
@@ -75,38 +70,22 @@ export default {
       ]
     }
   },
-  watch: {
-    activeSort: {
-      handler: function (newSort, oldSort) {
-        if (newSort === oldSort) return
-        this.changePage({ sort: newSort })
-      }
-    },
-    activeOrder: {
-      handler: function (newOrder, oldOrder) {
-        if (newOrder === oldOrder) return
-        this.changePage({ order: newOrder })
-      }
-    },
-    activePage: {
-      handler: function (newPage, oldActivePage) {
-        if (newPage === oldActivePage) return
-        if (newPage > this.totalPage) return
-        this.changePage({ page: newPage })
-      }
-    },
-    '$route': {
-      handler: function (n, o) {
-        if (n === 0) return
-        this.activePage = n.params.page
-        this.activeSort = n.params.sort
-        this.activeOrder = n.params.order
+  /* watch: {
+    '$route.params': {
+      handler: function (newValue, oldValue) {
+        if (newValue === oldValue) return
+        let { page, sort, order } = newValue
+        page = parseInt(page)
+        page = isNaN(page) ? 1 : page
+        this.activePage = parseInt(page)
+        this.activeSort = sort
+        this.activeOrder = order
         this.populate()
-      }
+      },
+      deep: true
     }
-  },
+  }, */
   mounted () {
-    this.setDefault()
     this.populate()
   },
   async beforeDestroy () {
@@ -114,27 +93,18 @@ export default {
   },
   methods: {
     changePage (change) {
-      let params = { page: this.activePage, sort: this.activeSort, order: this.activeOrder }
-      params = extend({}, params, change)
-      let options = {
-        name: 'employees.license.list',
-        params: params
-      }
-      this.$router.push(options)
-    },
-    setDefault () {
-      this.activePage = (this.page !== null) ? this.page : '1'
-      this.activeSort = (this.sort !== null) ? this.sort : null
-      this.activeOrder = (this.order !== null) ? 'asc' : null
-    },
-    onCtxOpen (locals) {
-      this.menuData = locals
-    },
-    clickEdit ($event) {
-      this.$router.push({ name: 'employee.detail', params: { employeeId: $event } })
-    },
-    customSort (value) {
-      return value.sort((left, right) => { return -1 })
+      let { name, params } = this.$route
+      this.$router.push(
+        {
+          name: name,
+          params: extend({}, params, change)
+        }
+      )
+      let { page, sort, order } = params
+      this.activePage = parseInt(page)
+      this.activeSort = sort
+      this.activeOrder = order
+      this.populate()
     },
     async closeConnection () {
       if (this.connection !== null && typeof this.connection.close === 'function') {
@@ -204,7 +174,6 @@ export default {
       } catch (error) {
         console.log(error)
       }
-      // console.log(rows)
       rows = map(rows, row => {
         return {
           Name: row.Person.Name,

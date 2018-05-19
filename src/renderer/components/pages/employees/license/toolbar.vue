@@ -5,11 +5,6 @@
     <div class="md-toolbar-section-start">
       <md-button
         class="md-icon-button"
-        @click="showSearchPanel = !showSearchPanel">
-        <md-icon>search</md-icon>
-      </md-button>
-      <md-button
-        class="md-icon-button"
         @click="$router.push({ name: 'employee.new' })">
         <md-icon>add</md-icon>
       </md-button>
@@ -22,13 +17,13 @@
         md-dense>
         <md-input
           v-model="activePage"
-          :max="totalPage"
+          :max="total"
+          :min="1"
           class="page-input"
-          type="number"
-          min="1"/>
+          type="number"/>
       </md-field>
       <md-content class="transparent">
-        Dari {{ totalPage }} Halaman
+        Dari {{ total }} Halaman
       </md-content>
     </div>
   </md-toolbar>
@@ -36,11 +31,24 @@
 
 <script>
 export default {
-  data () {
-    return {
-      totalPage: 10,
-      activePage: 1,
-      showSearchPanel: false
+  props: {
+    page: {
+      type: Number,
+      default: 1
+    },
+    total: {
+      type: Number,
+      default: 1
+    }
+  },
+  computed: {
+    activePage: {
+      get () {
+        return this.page
+      },
+      set (v) {
+        this.$emit('change-page', parseInt(v))
+      }
     }
   }
 }

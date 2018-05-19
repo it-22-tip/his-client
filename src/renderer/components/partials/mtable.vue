@@ -70,7 +70,7 @@ export default {
         return this.sort
       },
       set (v) {
-        console.log(v)
+        this.$emit('change-sort', v)
       }
     },
     activeOrder: {
@@ -78,7 +78,7 @@ export default {
         return this.order
       },
       set (v) {
-        console.log(v)
+        this.$emit('change-order', v)
       }
     }
   },

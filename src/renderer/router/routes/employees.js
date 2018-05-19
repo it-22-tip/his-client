@@ -23,7 +23,12 @@ const Employees = [
       {
         path: '/employees/license/:page/:order?/:sort?',
         name: 'employees.license.list',
-        props: true,
+        props: route => {
+          let { page, order, name } = route
+          page = parseInt(page)
+          page = isNaN(page) ? 1 : page
+          return { page: page, order, name }
+        },
         component: () => import('@pages/employees/license/list'),
         meta: {
           title: 'Employee Licenses',

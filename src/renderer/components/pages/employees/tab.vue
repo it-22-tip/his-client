@@ -16,7 +16,7 @@
         md-label="Karyawan"/>
       <md-tab
         id="2"
-        :to="{ name: 'employees.license.list', params: { page: '1', sort: 'Id', order: 'asc' } }"
+        :to="{ name: 'employees.license.list', params: { page: 1, sort: 'Name', order: 'asc' } }"
         md-label="Surat Izin Kerja"/>
     </md-tabs>
     <md-content class="ctc">

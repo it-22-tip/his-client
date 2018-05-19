@@ -48,7 +48,7 @@ routes.beforeEach((to, from, next) => {
   if (to.meta !== undefined && to.meta.title !== undefined) {
     // document.title = 'Hospital Information System' + ' | ' + to.meta.title
     document.title = to.fullPath
-    console.log(to)
+    // console.log(to)
   }
   next()
 })
