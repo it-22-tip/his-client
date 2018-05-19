@@ -271,6 +271,4 @@ export default {
 .search input {
   background-color: #fff;
 }
-.right-table {
-}
 </style>
