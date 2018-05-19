@@ -20,13 +20,6 @@
         {{ item[cell.Data] }}
       </md-table-cell>
     </md-table-row>
-    <context-menu
-      ref="contextMenu"
-      @ctx-open="onCtxOpen">
-      <div><h3>{{ menuData.Name }}</h3></div>
-      <div @click="clickEdit(menuData.Id)"><md-icon>edit</md-icon>Edit</div>
-      <div><md-icon>delete</md-icon>Delete</div>
-    </context-menu>
   </md-table>
 </template>
 
@@ -90,8 +83,8 @@ export default {
     },
     clickEdit () {
     },
-    clickRight () {
-      console.log('clr')
+    clickRight (e) {
+      this.$emit('context-menu', e)
       // $refs.contextMenu.open($event, { Name: item.Name, Id:item.Ein })
     }
   }

@@ -93,10 +93,19 @@ export default {
       }
       return [order]
     },
+    mapper (row) {
+      return {
+        Ein: row.Id,
+        Name: row.Person.Name,
+        Age: row.Person.Age,
+        Gender: row.Person.Gender,
+        JobTitle: (row.JobTitle !== null) ? row.JobTitle.Name : null
+      }
+    },
     async transaction (transaction) {
       const { Persons, Employees, JobTitles } = this.$connection.models
       let page = this.activePage - 1
-      let limit = 10
+      let limit = 15
       let offset = page * limit
       let order = this.getOrder(Employees)
 
@@ -107,7 +116,6 @@ export default {
         limit: limit,
         offset: offset,
         order: order,
-        // logging: console.log,
         distinct: true,
         col: 'Id',
         include: [
@@ -133,15 +141,7 @@ export default {
       } catch (error) {
         console.log(error)
       }
-      rows = map(rows, row => {
-        return {
-          Ein: row.Id,
-          Name: row.Person.Name,
-          Age: row.Person.Age,
-          Gender: row.Person.Gender,
-          JobTitle: (row.JobTitle !== null) ? row.JobTitle.Name : null
-        }
-      })
+      rows = map(rows, this.mapper)
       return { rows, count }
     }
   }
@@ -157,11 +157,5 @@ export default {
   flex: 1;
   position: relative;
   overflow: hidden;
-}
-.search {
-  width: 300px;
-}
-.search input {
-  background-color: #fff;
 }
 </style>

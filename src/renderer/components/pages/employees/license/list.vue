@@ -6,6 +6,7 @@
         :table-cell="tableCell"
         :sort="activeSort"
         :order="activeOrder"
+        @context-menu="contextMenu"
         @change-sort="changePage({ sort: $event })"
         @change-order="changePage({ order: $event })"/>
     </md-content>
@@ -59,6 +60,10 @@ export default {
     this.populate()
   },
   methods: {
+    contextMenu ($event) {
+      console.log('clr')
+      // $refs.contextMenu.open($event, { Name: item.Name, Id:item.Ein })
+    },
     getOrder (Model) {
       let order = null
       let cs = this.activeSort
@@ -77,10 +82,18 @@ export default {
       }
       return [order]
     },
+    mapper (row) {
+      return {
+        Name: row.Person.Name,
+        Type: row.LicenseType.Title,
+        TimeLeft: row.TimeLeft,
+        DueDate: row.DueDate
+      }
+    },
     async transaction (transaction) {
       const { Licenses, Persons, LicenseTypes } = this.$connection.models
       let page = this.activePage - 1
-      let limit = 10
+      let limit = 15
       let offset = page * limit
       let order = this.getOrder(Licenses)
 
@@ -91,7 +104,6 @@ export default {
         limit: limit,
         offset: offset,
         order: order,
-        // logging: console.log,
         distinct: true,
         col: 'Id',
         include: [
@@ -117,14 +129,7 @@ export default {
       } catch (error) {
         console.log(error)
       }
-      rows = map(rows, row => {
-        return {
-          Name: row.Person.Name,
-          Type: row.LicenseType.Title,
-          TimeLeft: row.TimeLeft,
-          DueDate: row.DueDate
-        }
-      })
+      rows = map(rows, this.mapper)
       return { rows, count }
     }
   }
@@ -140,11 +145,5 @@ export default {
   flex: 1;
   position: relative;
   overflow: hidden;
-}
-.search {
-  width: 300px;
-}
-.search input {
-  background-color: #fff;
 }
 </style>
