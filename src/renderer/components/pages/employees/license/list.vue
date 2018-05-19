@@ -33,7 +33,6 @@ export default {
   data () {
     return {
       model: [],
-      connection: null,
       tableCell: [
         {
           MdLabel: 'Nama',
@@ -60,16 +59,6 @@ export default {
     await this.closeConnection()
   },
   methods: {
-    async closeConnection () {
-      if (this.connection !== null && typeof this.connection.close === 'function') {
-        console.log('cleaning connection')
-        try {
-          await this.connection.close()
-        } finally {
-          this.connection = null
-        }
-      }
-    },
     getOrder (Model) {
       let order = null
       let cs = this.activeSort
@@ -89,7 +78,7 @@ export default {
       return [order]
     },
     async transaction (transaction) {
-      const { Licenses, Persons, LicenseTypes } = this.connection.models
+      const { Licenses, Persons, LicenseTypes } = this.$connection.models
       let page = this.activePage - 1
       let limit = 10
       let offset = page * limit
@@ -140,9 +129,9 @@ export default {
     },
     async populate () {
       let data
-      this.connection = (new this.$orm()).connect()
+      this.$connection = (new this.$orm()).connect()
       try {
-        data = await this.connection.transaction(this.transaction)
+        data = await this.$connection.transaction(this.transaction)
       } catch (error) {
         console.log(error)
       } finally {

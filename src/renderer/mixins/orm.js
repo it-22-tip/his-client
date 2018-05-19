@@ -7,13 +7,13 @@ export default {
     this.$connection = null
   },
   methods: {
-    async closeConnection (connection) {
-      if (connection !== undefined && connection !== null && typeof connection.close === 'function') {
+    async closeConnection () {
+      if (this.$connection !== null && typeof this.$connection.close === 'function') {
         console.log('cleaning connection')
         try {
-          await connection.close()
+          await this.$connection.close()
         } finally {
-          connection = null
+          this.$connection = null
         }
       }
     }
