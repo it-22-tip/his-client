@@ -11,7 +11,7 @@
     "url": "https://github.com/idnesdotlink/his-client.git"
   },
   "engines": {
-    "node": ">7.0.0"
+    "node": ">8.0.0"
   },
   "scripts": {
     "code": "code -r *.code-workspace",
@@ -30,7 +30,8 @@
     "pack": "npm run pack:main && npm run pack:renderer",
     "pack:main": "cross-env NODE_ENV=production webpack --progress --colors --config .compiler/webpack.main.config.es6",
     "pack:renderer": "cross-env NODE_ENV=production webpack --progress --colors --config .compiler/webpack.renderer.config.es6",
-    "install-app-deps": "electron-builder install-app-deps"
+    "postinstall": "electron-builder install-app-deps",
+    "install-app-deps": "cross-env DEBUG=electron-builder electron-builder install-app-deps"
   },
   "browserslist": [
     "last 1 chrome version"
@@ -126,7 +127,7 @@
     "vuedraggable": "^2.16.0",
     "vuelidate": "^0.6.2",
     "vuex": "^3.0.1",
-    "vuex-pathify": "^1.0.8",
+    "vuex-pathify": "^1.0.9",
     "vuex-router-sync": "^5.0.0",
     "xlsx": "^0.12.12",
     "xml2json": "^0.11.2"
@@ -158,8 +159,8 @@
     "css-mqpacker": "^6.0.2",
     "del": "^3.0.0",
     "devtron": "^1.4.0",
-    "electron": "^2.0.1",
-    "electron-builder": "^20.14.2",
+    "electron": "^2.0.0",
+    "electron-builder": "^20.13.3",
     "electron-debug": "^1.5.0",
     "electron-devtools-installer": "^2.2.4",
     "eslint": "^4.19.1",
@@ -174,13 +175,13 @@
     "eslint-plugin-vue": "^4.5.0",
     "file-loader": "^1.1.11",
     "html-webpack-plugin": "^3.2.0",
-    "jest": "^22.4.3",
+    "jest": "^22.4.4",
     "jsdom": "^11.10.0",
     "jsdom-global": "^3.0.2",
     "less": "^3.0.4",
     "less-loader": "^4.1.0",
     "mini-css-extract-plugin": "^0.4.0",
-    "mocha": "5.1.1",
+    "mocha": "^5.2.0",
     "mocha-webpack": "^2.0.0-beta.0",
     "multispinner": "^0.2.1",
     "nightwatch": "^0.9.21",
@@ -200,7 +201,7 @@
     "uglifyjs-webpack-plugin": "^1.2.5",
     "url-loader": "^1.0.1",
     "vue-html-loader": "^1.2.4",
-    "vue-loader": "^15.0.11",
+    "vue-loader": "^15.0.12",
     "vue-style-loader": "^4.1.0",
     "vue-template-compiler": "^2.5.16",
     "webpack": "^4.8.3",

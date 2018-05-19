@@ -1,6 +1,6 @@
 productName: HIS Desktop Client
 appId: id.co.phcc.his-client
-buildDependenciesFromSource: true
+# buildDependenciesFromSource: true
 directories:
   buildResources: build
   output: build
