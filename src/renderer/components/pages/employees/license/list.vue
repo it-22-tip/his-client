@@ -57,7 +57,6 @@ export default {
   },
   mounted () {
     this.activeSort = 'Name'
-    this.populate()
   },
   methods: {
     contextMenu ($event) {

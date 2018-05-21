@@ -42,10 +42,10 @@ only_commits:
   author: jack@company.com        # Start a new build for commit of user with email jack@company.com
 
 # Skipping commits affecting specific files (GitHub only). More details here: /docs/appveyor-yml
-#skip_commits:
-#  files:
-#    - docs/*
-#    - '**/*.html'
+skip_commits:
+  files:
+    - docs/*
+    - '**/*.html'
 
 # Including commits affecting specific files (GitHub only). More details here: /docs/appveyor-yml
 #only_commits:
@@ -80,9 +80,9 @@ shallow_clone: true                 # default is "false"
 clone_depth: 5                      # clone entire repository history if not defined
 
 # setting up etc\hosts file
-hosts:
-  queue-server: 127.0.0.1
-  db.server.com: 127.0.0.2
+#hosts:
+#  queue-server: 127.0.0.1
+#  db.server.com: 127.0.0.2
 
 # environment variables
 environment:

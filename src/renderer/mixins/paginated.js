@@ -23,17 +23,22 @@ const paginated = {
       activeOrder: 'asc'
     }
   },
+  mounted () {
+    this.changePage()
+  },
   methods: {
-    changePage (change) {
+    changePage (change, changeRoute = true) {
       let { name, params } = this.$route
       let newParams = extend({}, params, change)
       if (newParams === params) return
-      this.$router.push(
-        {
-          name: name,
-          params: newParams
-        }
-      )
+      if (changeRoute) {
+        this.$router.push(
+          {
+            name: name,
+            params: newParams
+          }
+        )
+      }
       let { page, sort, order } = newParams
       this.activePage = parseInt(page)
       this.activeSort = sort

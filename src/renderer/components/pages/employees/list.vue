@@ -66,7 +66,6 @@ export default {
   },
   mounted () {
     this.activeSort = 'Name'
-    this.populate()
   },
   methods: {
     getOrder (Model) {

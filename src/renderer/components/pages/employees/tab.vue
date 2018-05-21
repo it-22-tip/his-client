@@ -9,15 +9,13 @@
         <md-icon>close</md-icon>
       </md-button>
     </md-toolbar>
-    <md-tabs @md-changed="onChange">
+    <md-tabs :md-active-tab="activeTabs">
       <md-tab
-        id="1"
-        :to="{ name: 'employees.employee.list', params: { page: 1, sort: 'Ein', order: 'asc' } }"
-        md-label="Karyawan"/>
-      <md-tab
-        id="2"
-        :to="{ name: 'employees.license.list', params: { page: 1, sort: 'Name', order: 'asc' } }"
-        md-label="Surat Izin Kerja"/>
+        v-for="item in tabs"
+        :key="item.id"
+        :id="item.id"
+        :md-label="item.label"
+        :to="{ name: item.name, params: item.params }"/>
     </md-tabs>
     <md-content class="ctc">
       <router-view/>
@@ -26,19 +24,60 @@
 </template>
 
 <script>
+import { find } from 'lodash'
 export default {
   components: {
     'layout-one': () => import('@partials/layout-one')
   },
-  data () {
-    return {
-      pageTitle: null
+  props: {
+    page: {
+      type: Number,
+      default: 1
+    },
+    sort: {
+      type: String,
+      default: null
+    },
+    order: {
+      type: String,
+      default: 'asc'
     }
   },
-  methods: {
-    onChange ($event) {
-      console.log($event)
+  data () {
+    return {
+      pageTitle: null,
+      activeTab: null,
+      tabs: [
+        {
+          id: 'EmployeesTabs',
+          name: 'employees.employee.list',
+          params: { page: 1, sort: 'Ein', order: 'asc' },
+          label: 'Karyawan'
+        },
+        {
+          id: 'EmployeesLicenses',
+          name: 'employees.license.list',
+          params: { page: 1, sort: 'Name', order: 'asc' },
+          label: 'Surat Izin'
+        }
+      ]
     }
+  },
+  computed: {
+    activeTabs: {
+      get () {
+        return find(this.tabs, { name: this.$route.name }).id
+      },
+      set () {
+      }
+    }
+  },
+  mounted () {
+    console.log(this.$route)
+    console.log(JSON.stringify(this.$route.params))
+    console.log(JSON.stringify(this.$props))
+  },
+  methods: {
   }
 }
 </script>
