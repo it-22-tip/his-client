@@ -2,7 +2,6 @@ version: 0.1.{build}
 
 environment:
   nodejs_version: "8.11.1"
-  appveyor_repo_tag: true
   GH_TOKEN: 0aCw+pDuLP3EXE0KtocsofGmMtR0b1B6GnnT1jr+ydmeE86XlyQkcMKAnLfFweKc
 
 branches:
@@ -16,7 +15,6 @@ platform:
 
 cache:
   - node_modules
-  - '%APPDATA%\npm-cache'
   - '%USERPROFILE%\.electron'
   - '%USERPROFILE%\.electron-gyp'
   - '%USERPROFILE%\AppData\Local\Yarn\cache'
@@ -31,25 +29,24 @@ install:
   - yarn install
 
 build_script:
-  - npm config get cache
   - yarn build
 
 test: off
 
-artifacts:
-  - path: build\*.exe
-    name: his-client
+# artifacts:
+  # - path: build\*.exe
+  #   name: his-client
 
-deploy:
-  release: his-client-v$(appveyor_build_version)
-  description: 'Release description'
-  provider: GitHub
-  auth_token:
-    secure: $env:GH_TOKEN
-  artifact: build\*.exe
-  draft: true
-  prerelease: true
-  on:
-    branch: master
-    appveyor_repo_tag: $env:appveyor_repo_tag
-  force_update: true
+deploy: off
+  # release: his-client-v$(appveyor_build_version)
+  # description: 'Release description'
+  # provider: GitHub
+  # auth_token:
+    # secure: $env:GH_TOKEN
+  # artifact: build\*.exe
+  # draft: true
+  # prerelease: true
+  # on:
+    # branch: master
+    # appveyor_repo_tag: false
+  # force_update: true
