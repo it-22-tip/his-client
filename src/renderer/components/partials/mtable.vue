@@ -95,4 +95,8 @@ export default {
 .trow:focus {
   outline: none;
 }
+.md-table.md-theme-default .md-table-row.trow:focus:not(.md-header-row) .md-table-cell {
+    background-color: rgba(0, 0, 0, 0.05);
+    // background-color: var(--md-theme-default-highlight-on-background, rgba(0, 0, 0, 0.08));
+}
 </style>

@@ -1,7 +1,7 @@
 <template>
   <md-step
-    id="ext"
-    md-label="Pribadi">
+    id="personal-stepper"
+    md-label="Data Personal">
     <div>
       <md-field>
         <label>Nama</label>
@@ -20,15 +20,10 @@
 <script>
 export default {
   components: {
-    'layout-one': () => import('@partials/layout-one'),
-    'address-form': () => import('@partials/form/address-form'),
     'birthdateplace-form': () => import('@partials/form/birthdateplace-form'),
-    'jobtitle-picker': () => import('@partials/picker/jobtitle-picker'),
     'gender-picker': () => import('@partials/picker/gender-picker'),
     'bloodtype-picker': () => import('@partials/picker/bloodtype-picker'),
-    'mstepper': () => import('@partials/form/mstepper'),
-    'mstep': () => import('@partials/form/mstep'),
-    'education-form': () => import('@partials/form/education-form')
+    'mstep': () => import('@partials/form/mstep')
   },
   data () {
     return {

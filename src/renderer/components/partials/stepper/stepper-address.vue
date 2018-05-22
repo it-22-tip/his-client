@@ -1,9 +1,9 @@
 <template>
   <md-step
-    id="education-stepper"
-    md-label="Pendidikan">
+    id="address-stepper"
+    md-label="Alamat">
     <div>
-      [education]
+      [alamat]
     </div>
   </md-step>
 </template>

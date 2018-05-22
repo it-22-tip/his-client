@@ -25,9 +25,34 @@
             </div>
             <mstepper>
               <stepper-personal/>
-              <stepper-address/>
-              <stepper-education/>
-              <stepper-jobtitle/>
+              <md-step
+                id="second"
+                :md-done="false"
+                md-label="Alamat Resmi">
+                <address-form
+                  v-model="officialAddress"
+                  type="Official"
+                  title="Alamat Resmi"/>
+              </md-step>
+              <md-step
+                id="postal_address"
+                md-label="Alamat Surat">
+                <div class="md-layout md-gutter">
+                  <address-form
+                    v-model="officialAddress"
+                    type="Postal"
+                    class="md-layout-item md-size-50"
+                    title="Alamat Resmi"/>
+                </div>
+              </md-step>
+              <mstep
+                id="job"
+                md-label="Pekerjaan">
+                <div>
+                  <md-subheader>Data Pekerjaan</md-subheader>
+                  <jobtitle-picker v-model="saved.JobTitleId"/>
+                </div>
+              </mstep>
               <stepper-fin/>
             </mstepper>
           </div>
@@ -53,8 +78,6 @@ export default {
     'education-form': () => import('@partials/form/education-form'),
     'stepper-education': () => import('@partials/stepper/stepper-education'),
     'stepper-fin': () => import('@partials/stepper/stepper-fin'),
-    'stepper-address': () => import('@partials/stepper/stepper-address'),
-    'stepper-jobtitle': () => import('@partials/stepper/stepper-jobtitle'),
     'stepper-personal': () => import('@partials/stepper/stepper-personal')
   },
   mixins: [

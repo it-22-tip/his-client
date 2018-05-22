@@ -1,9 +1,9 @@
 <template>
   <md-step
-    id="education-stepper"
-    md-label="Pendidikan">
+    id="jobtitle-stepper"
+    md-label="Pekerjaan">
     <div>
-      [education]
+      [job title]
     </div>
   </md-step>
 </template>

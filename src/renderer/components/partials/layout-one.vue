@@ -3,7 +3,7 @@
     <md-content class="right">
       <md-content class="right-top">
         <md-toolbar
-          class="md-dense md-primary"
+          class="md-dense md-primary ccc"
           md-elevation="0">
           <div class="md-toolbar-section-start">
             <img :src="`static/png/32x32.png`">
@@ -83,6 +83,12 @@
     overflow-y: scroll !important;
     height: 100% !important;
     max-height: none !important;
+  }
+  .ccc {
+    background: rgb(235,111,165); /* Old browsers */
+    background: -moz-linear-gradient(-45deg, rgba(235,111,165,1) 0%, rgba(255,153,153,1) 50%, rgba(232,46,123,1) 100%);
+    background: -webkit-linear-gradient(-45deg, rgba(235,111,165,1) 0%,rgba(255,153,153,1) 50%,rgba(232,46,123,1) 100%);
+    background: linear-gradient(135deg, rgba(235,111,165,1) 0%,rgba(255,153,153,1) 50%,rgba(232,46,123,1) 100%);
   }
 </style>
 

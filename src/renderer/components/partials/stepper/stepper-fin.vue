@@ -8,8 +8,8 @@ export default {
       {
         attrs: {
           ...this.$attrs,
-          id: 'ok',
-          'md-label': 'find'
+          id: 'finish',
+          'md-label': 'Simpan Data'
         }
       },
       [createElement('div', {}, 'ok')]
