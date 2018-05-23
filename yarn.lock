@@ -2719,10 +2719,6 @@ code-point-at@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/code-point-at/-/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
 
-codemirror@^5.37.0:
-  version "5.37.0"
-  resolved "https://registry.yarnpkg.com/codemirror/-/codemirror-5.37.0.tgz#c349b584e158f590277f26d37c2469a6bc538036"
-
 codepage@~1.12.1:
   version "1.12.2"
   resolved "https://registry.yarnpkg.com/codepage/-/codepage-1.12.2.tgz#fd4424448c8bf1db5d7e01f9ecf9e8346582a195"
@@ -3947,7 +3943,7 @@ electron-builder-lib@20.14.7, electron-builder-lib@~20.14.6:
     stream-json "^0.6.1"
     temp-file "^3.1.2"
 
-electron-builder@20.14.7:
+electron-builder@^20.14.7:
   version "20.14.7"
   resolved "https://registry.yarnpkg.com/electron-builder/-/electron-builder-20.14.7.tgz#41a7c4cb4384690c936eb4fc396270effac53bd7"
   dependencies:
@@ -4095,7 +4091,7 @@ electron-unhandled@^1.1.0:
     ensure-error "^1.0.0"
     lodash.debounce "^4.0.8"
 
-electron@2.0.2:
+electron@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/electron/-/electron-2.0.2.tgz#b77e05f83419cc5ec921a2d21f35b55e4bfc3d68"
   dependencies:

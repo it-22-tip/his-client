@@ -52,7 +52,6 @@
     "bluebird": "^3.5.1",
     "browser-image-compression": "^0.0.3",
     "chart.js": "^2.7.2",
-    "codemirror": "^5.37.0",
     "color": "^3.0.0",
     "d3": "^5.4.0",
     "date-fns": "^1.29.0",
