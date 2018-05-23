@@ -2,7 +2,7 @@
   <md-step
     id="personal-stepper"
     md-label="Data Personal">
-    <div>
+    <div class="padding-10">
       <md-field>
         <label>Nama</label>
         <md-input v-model="saved.Person.Name"/>
@@ -19,6 +19,7 @@
 
 <script>
 export default {
+  name: 'StepperPersonal',
   components: {
     'birthdateplace-form': () => import('@partials/form/birthdateplace-form'),
     'gender-picker': () => import('@partials/picker/gender-picker'),
@@ -65,3 +66,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+  .padding-10 {
+    padding: 30px;
+  }
+</style>

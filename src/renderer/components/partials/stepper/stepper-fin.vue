@@ -1,5 +1,6 @@
 <script>
 export default {
+  name: 'StepperFin',
   mounted () {
   },
   render: function (createElement) {

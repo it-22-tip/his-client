@@ -40,6 +40,11 @@
 <script>
 import orm from '@/mixins/orm'
 import { map } from 'lodash'
+import stepperEducation from '@partials/stepper/stepper-education'
+import stepperFin from '@partials/stepper/stepper-fin'
+import stepperAddress from '@partials/stepper/stepper-address'
+import stepperJobtitle from '@partials/stepper/stepper-jobtitle'
+import stepperPersonal from '@partials/stepper/stepper-personal'
 export default {
   components: {
     'layout-one': () => import('@partials/layout-one'),
@@ -50,12 +55,11 @@ export default {
     'bloodtype-picker': () => import('@partials/picker/bloodtype-picker'),
     'mstepper': () => import('@partials/form/mstepper'),
     'mstep': () => import('@partials/form/mstep'),
-    'education-form': () => import('@partials/form/education-form'),
-    'stepper-education': () => import('@partials/stepper/stepper-education'),
-    'stepper-fin': () => import('@partials/stepper/stepper-fin'),
-    'stepper-address': () => import('@partials/stepper/stepper-address'),
-    'stepper-jobtitle': () => import('@partials/stepper/stepper-jobtitle'),
-    'stepper-personal': () => import('@partials/stepper/stepper-personal')
+    stepperPersonal,
+    stepperAddress,
+    stepperEducation,
+    stepperJobtitle,
+    stepperFin
   },
   mixins: [
     orm
