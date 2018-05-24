@@ -1,24 +1,29 @@
 <template>
   <div class="education-form">
-    <div
-      v-for="item in form"
-      :key="item.title"
-      :style="{ background: item.active ? 'transparent' : '#cccccc' }">
-      <div class="md-layout">
-        <div class="md-layout-item md-size-25">
-          <md-switch v-model="item.active">{{ item.title }}</md-switch>
+    <md-list>
+      <md-list-item
+        v-for="item in form"
+        :key="item.title"
+        :style="{ background: item.active ? 'transparent' : '#cccccc' }">
+        <md-switch v-model="item.active">{{ item.title }}</md-switch>
+        <div class="md-layout cdc">
+          <div class="md-layout-item md-size-25">
+            <md-radio
+              v-model="notification"
+              :value="item.title"/>
+          </div>
+          <div class="md-layout-item md-size-25">
+            <almamater-picker v-model="item.model.RegencyCode"/>
+          </div>
+          <div class="md-layout-item md-size-50">
+            <md-field>
+              <label>Almamater</label>
+              <md-input :disabled="!item.active"/>
+            </md-field>
+          </div>
         </div>
-        <div class="md-layout-item md-size-25">
-          <almamater-picker v-model="item.model.RegencyCode"/>
-        </div>
-        <div class="md-layout-item md-size-50">
-          <md-field>
-            <label>Almamater</label>
-            <md-input :disabled="!item.active"/>
-          </md-field>
-        </div>
-      </div>
-    </div>
+      </md-list-item>
+    </md-list>
   </div>
 </template>
 <script>
@@ -29,6 +34,7 @@ export default {
   },
   data () {
     return {
+      notification: null,
       form: [
         {
           title: 'SD',
@@ -74,3 +80,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.cdc {
+  flex: 1;
+}
+</style>

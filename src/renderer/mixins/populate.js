@@ -13,7 +13,8 @@ const populate = {
       const { rows, count } = data
       this.model = rows
       this.total = count
-      this.totalPage = Math.ceil(count / 10)
+      console.log(this.total)
+      this.totalPage = Math.ceil(count / 15)
     }
   }
 }
