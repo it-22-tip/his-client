@@ -1,11 +1,11 @@
 <template>
-  <md-step
+  <mstep
     id="education-stepper"
     md-label="Pendidikan">
     <div class="padding-10">
       <education-form/>
     </div>
-  </md-step>
+  </mstep>
 </template>
 
 <script>

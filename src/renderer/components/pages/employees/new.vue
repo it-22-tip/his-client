@@ -15,24 +15,7 @@
           <md-icon>save</md-icon>
         </md-button>
       </md-toolbar>
-      <md-content class="fc">
-        <md-content class="scr md-scrollbar">
-          <div class="hi">
-            <div :style="{ padding: '10px' }">
-              <textarea
-                v-model="savedView"
-                :style="{ padding: '10px', lineHeight: '20px', width: '100%', resize: 'none', height: '100px', border: '0 none' }"/>
-            </div>
-            <mstepper>
-              <stepper-personal/>
-              <stepper-address/>
-              <stepper-education/>
-              <stepper-jobtitle/>
-              <stepper-fin/>
-            </mstepper>
-          </div>
-        </md-content>
-      </md-content>
+      <psgsteps/>
     </md-content>
   </layout-one>
 </template>
@@ -40,26 +23,10 @@
 <script>
 import orm from '@/mixins/orm'
 import { map } from 'lodash'
-import stepperEducation from '@partials/stepper/stepper-education'
-import stepperFin from '@partials/stepper/stepper-fin'
-import stepperAddress from '@partials/stepper/stepper-address'
-import stepperJobtitle from '@partials/stepper/stepper-jobtitle'
-import stepperPersonal from '@partials/stepper/stepper-personal'
 export default {
   components: {
     'layout-one': () => import('@partials/layout-one'),
-    'address-form': () => import('@partials/form/address-form'),
-    'birthdateplace-form': () => import('@partials/form/birthdateplace-form'),
-    'jobtitle-picker': () => import('@partials/picker/jobtitle-picker'),
-    'gender-picker': () => import('@partials/picker/gender-picker'),
-    'bloodtype-picker': () => import('@partials/picker/bloodtype-picker'),
-    'mstepper': () => import('@partials/form/mstepper'),
-    'mstep': () => import('@partials/form/mstep'),
-    stepperPersonal,
-    stepperAddress,
-    stepperEducation,
-    stepperJobtitle,
-    stepperFin
+    'psgsteps': () => import('@partials/psgsteps')
   },
   mixins: [
     orm

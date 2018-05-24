@@ -1,12 +1,12 @@
 <template>
-  <md-step
+  <mstep
     id="jobtitle-stepper"
     md-label="Pekerjaan">
     <div class="padding-10">
       <md-subheader>Data Pekerjaan</md-subheader>
       <jobtitle-picker v-model="JobTitleId"/>
     </div>
-  </md-step>
+  </mstep>
 </template>
 
 <script>

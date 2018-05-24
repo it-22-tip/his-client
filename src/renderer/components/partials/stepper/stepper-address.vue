@@ -1,5 +1,5 @@
 <template>
-  <md-step
+  <mstep
     id="address-stepper"
     md-label="Alamat">
     <div class="padding-10">
@@ -17,7 +17,7 @@
           title="Alamat Surat"/>
       </div>
     </div>
-  </md-step>
+  </mstep>
 </template>
 
 <script>

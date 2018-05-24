@@ -1,20 +1,26 @@
 <template>
-  <md-step
+  <mstep
     id="personal-stepper"
     md-label="Data Personal">
     <div class="padding-10">
-      <md-field>
-        <label>Nama</label>
-        <md-input v-model="saved.Person.Name"/>
-      </md-field>
-      <gender-picker v-model="saved.Person.Gender"/>
-      <bloodtype-picker v-model="saved.Person.BloodType"/>
-      <md-subheader>Tempat Tanggal Lahir</md-subheader>
-      <birthdateplace-form
-        v-model="birthDatePlace"
-        title="Alamat Resmi"/>
+      <div class="md-layout">
+        <div class="md-layout-item md-size-50">
+          <md-field>
+            <label>Nama</label>
+            <md-input v-model="saved.Person.Name"/>
+          </md-field>
+          <md-subheader>Jenis Kelamin</md-subheader>
+          <gender-picker v-model="saved.Person.Gender"/>
+          <md-subheader>Golongan Darah</md-subheader>
+          <bloodtype-picker v-model="saved.Person.BloodType"/>
+          <md-subheader>Tempat Tanggal Lahir</md-subheader>
+          <birthdateplace-form
+            v-model="birthDatePlace"
+            title="Alamat Resmi"/>
+        </div>
+      </div>
     </div>
-  </md-step>
+  </mstep>
 </template>
 
 <script>
