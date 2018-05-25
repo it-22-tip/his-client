@@ -85,12 +85,12 @@ export default {
 }
 .ptb.md-toolbar {
   padding: 0;
-  border-bottom: 1px solid #cccccc;
+  // border-bottom: 1px solid #cccccc;
+  min-height: 48px;
+  height: 48px;
 }
 .ptb.md-toolbar .md-tabs {
   margin: 0;
-}
-.md-tabs-navigation .md-button {
-  height: 40px !important;
+  padding: 0;
 }
 </style>
