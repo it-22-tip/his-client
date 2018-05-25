@@ -1,20 +1,21 @@
+<template>
+  <md-step
+    id="finish"
+    md-label="Simpan Data">
+    <div class="padding-10">
+      [FIN]
+    </div>
+  </md-step>
+</template>
+
 <script>
 export default {
-  name: 'StepperFin',
-  mounted () {
-  },
-  render: function (createElement) {
-    return createElement(
-      'MdStep', // tag name
-      {
-        attrs: {
-          ...this.$attrs,
-          id: 'finish',
-          'md-label': 'Simpan Data'
-        }
-      },
-      [createElement('div', {}, 'ok')]
-    )
-  }
+  name: 'StepperFin'
 }
 </script>
+
+<style lang="scss" scoped>
+  .padding-10 {
+    padding: 30px;
+  }
+</style>

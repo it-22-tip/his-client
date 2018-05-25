@@ -1,5 +1,5 @@
 <template>
-  <mstep
+  <md-step
     id="address-stepper"
     md-label="Alamat">
     <div class="padding-10">
@@ -17,14 +17,13 @@
           title="Alamat Surat"/>
       </div>
     </div>
-  </mstep>
+  </md-step>
 </template>
 
 <script>
 export default {
   name: 'StepperAddress',
   components: {
-    'mstep': () => import('@partials/form/mstep'),
     'address-form': () => import('@partials/form/address-form')
   },
   data () {

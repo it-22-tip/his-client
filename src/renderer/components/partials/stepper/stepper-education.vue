@@ -1,18 +1,17 @@
 <template>
-  <mstep
+  <md-step
     id="education-stepper"
     md-label="Pendidikan">
     <div class="padding-10">
       <education-form/>
     </div>
-  </mstep>
+  </md-step>
 </template>
 
 <script>
 export default {
   name: 'StepperEducation',
   components: {
-    'mstep': () => import('@partials/form/mstep'),
     'education-form': () => import('@partials/form/education-form')
   }
 }

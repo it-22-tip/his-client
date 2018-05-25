@@ -1,5 +1,5 @@
 <template>
-  <mstep
+  <md-step
     id="personal-stepper"
     md-label="Data Personal">
     <div class="padding-10">
@@ -20,7 +20,7 @@
         </div>
       </div>
     </div>
-  </mstep>
+  </md-step>
 </template>
 
 <script>
@@ -29,8 +29,7 @@ export default {
   components: {
     'birthdateplace-form': () => import('@partials/form/birthdateplace-form'),
     'gender-picker': () => import('@partials/picker/gender-picker'),
-    'bloodtype-picker': () => import('@partials/picker/bloodtype-picker'),
-    'mstep': () => import('@partials/form/mstep')
+    'bloodtype-picker': () => import('@partials/picker/bloodtype-picker')
   },
   data () {
     return {
