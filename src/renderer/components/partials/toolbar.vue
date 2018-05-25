@@ -1,6 +1,6 @@
 <template>
   <md-toolbar
-    class="md-primary md-dense"
+    class="md-primary md-dense bottom-toolbar"
     md-elevation="0">
     <div class="md-toolbar-section-start">
       <md-button
@@ -55,6 +55,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.md-toolbar.md-theme-default.md-primary.bottom-toolbar {
+  background: rgb(235,111,165); /* Old browsers */
+  background: -moz-linear-gradient(-45deg, rgba(235,111,165,1) 0%, rgba(255,153,153,1) 50%, rgba(232,46,123,1) 100%);
+  background: -webkit-linear-gradient(-45deg, rgba(235,111,165,1) 0%,rgba(255,153,153,1) 50%,rgba(232,46,123,1) 100%);
+  background: linear-gradient(135deg, rgba(235,111,165,1) 0%,rgba(255,153,153,1) 50%,rgba(232,46,123,1) 100%);
+}
 .transparent {
   background-color: transparent;
   padding: 0 10px;
@@ -62,9 +68,9 @@ export default {
 .page-md-field.md-field {
   width: 64px;
   margin-top: 0px;
-  margin-bottom: 12px;
-  padding-top: 12px;
-  min-height: 44px;
+  margin-bottom: 6px;
+  padding-top: 6px;
+  min-height: 36px;
 }
 .page-md-field.md-field::before,
 .page-md-field.md-field::after {

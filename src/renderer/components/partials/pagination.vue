@@ -185,9 +185,9 @@ export default {
   .page-md-field.md-field {
     width: 64px;
     margin-top: 0px;
-    margin-bottom: 12px;
-    padding-top: 12px;
-    min-height: 44px;
+    margin-bottom: 10px;
+    padding-top: 10px;
+    min-height: 40px;
   }
   .page-md-field.md-field::before,
   .page-md-field.md-field::after {

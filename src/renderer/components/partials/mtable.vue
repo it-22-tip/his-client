@@ -99,4 +99,7 @@ export default {
     background-color: rgba(0, 0, 0, 0.05);
     // background-color: var(--md-theme-default-highlight-on-background, rgba(0, 0, 0, 0.08));
 }
+.trow .md-table-cell {
+  height: 40px;
+}
 </style>
