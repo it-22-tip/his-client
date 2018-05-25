@@ -96,8 +96,8 @@ export default {
 <style lang="scss" scoped>
 .dev-button {
   position: absolute;
-  bottom: 0;
-  left: 0;
+  top: 0;
+  left: calc(50% - 99px);
   z-index: 10000000;
   background-color: rgba(0, 0, 0, .5);
   display: flex;

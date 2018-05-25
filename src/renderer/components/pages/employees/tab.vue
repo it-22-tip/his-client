@@ -1,22 +1,17 @@
 <template>
   <layout-one>
     <md-toolbar
-      class="md-dense md-primary"
+      class="ptb"
       md-elevation="0">
-      <md-button
-        class="md-icon-button"
-        @click="$router.push({ name: 'base.dashboard' })">
-        <md-icon>close</md-icon>
-      </md-button>
+      <md-tabs :md-active-tab="activeTabs">
+        <md-tab
+          v-for="item in tabs"
+          :key="item.id"
+          :id="item.id"
+          :md-label="item.label"
+          :to="{ name: item.name, params: item.params }"/>
+      </md-tabs>
     </md-toolbar>
-    <md-tabs :md-active-tab="activeTabs">
-      <md-tab
-        v-for="item in tabs"
-        :key="item.id"
-        :id="item.id"
-        :md-label="item.label"
-        :to="{ name: item.name, params: item.params }"/>
-    </md-tabs>
     <md-content class="ctc">
       <router-view/>
     </md-content>
@@ -27,7 +22,7 @@
 import { find } from 'lodash'
 export default {
   components: {
-    'layout-one': () => import('@partials/layout-one')
+    'layout-one': () => import('@partials/layout-tab')
   },
   props: {
     page: {
@@ -87,5 +82,15 @@ export default {
   flex: 1;
   display: flex;
   flex-direction: column;
+}
+.ptb.md-toolbar {
+  padding: 0;
+  border-bottom: 1px solid #cccccc;
+}
+.ptb.md-toolbar .md-tabs {
+  margin: 0;
+}
+.md-tabs-navigation .md-button {
+  height: 40px !important;
 }
 </style>
