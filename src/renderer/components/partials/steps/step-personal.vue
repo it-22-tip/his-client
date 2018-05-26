@@ -1,6 +1,7 @@
 <template>
   <md-step
     id="personal-stepper"
+    :md-done="mdDone"
     md-label="Data Personal">
     <div class="padding-10">
       <div class="md-layout">
@@ -25,11 +26,17 @@
 
 <script>
 export default {
-  name: 'StepperPersonal',
+  name: 'StepPersonal',
   components: {
     'birthdateplace-form': () => import('@partials/form/birthdateplace-form'),
     'gender-picker': () => import('@partials/picker/gender-picker'),
     'bloodtype-picker': () => import('@partials/picker/bloodtype-picker')
+  },
+  props: {
+    mdDone: {
+      type: Boolean,
+      default: false
+    }
   },
   data () {
     return {

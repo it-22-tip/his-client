@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  name: 'StepperJobtitle',
+  name: 'StepJobtitle',
   components: {
     'jobtitle-picker': () => import('@partials/picker/jobtitle-picker')
   },

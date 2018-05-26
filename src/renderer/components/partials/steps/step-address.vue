@@ -22,7 +22,7 @@
 
 <script>
 export default {
-  name: 'StepperAddress',
+  name: 'StepAddress',
   components: {
     'address-form': () => import('@partials/form/address-form')
   },

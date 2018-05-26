@@ -2,17 +2,12 @@
   <md-content class="fc">
     <md-content class="scr md-scrollbar">
       <div class="hi">
-        <div :style="{ padding: '10px' }">
-          <textarea
-            v-model="savedView"
-            :style="{ padding: '10px', lineHeight: '20px', width: '100%', resize: 'none', height: '100px', border: '0 none' }"/>
-        </div>
         <mstepper>
-          <stepper-personal/>
-          <stepper-address/>
-          <stepper-education/>
-          <stepper-jobtitle/>
-          <stepper-fin/>
+          <step-personal/>
+          <step-address/>
+          <step-education/>
+          <step-jobtitle/>
+          <step-fin/>
         </mstepper>
       </div>
     </md-content>
@@ -20,19 +15,19 @@
 </template>
 
 <script>
-import stepperEducation from '@partials/stepper/stepper-education'
-import stepperFin from '@partials/stepper/stepper-fin'
-import stepperAddress from '@partials/stepper/stepper-address'
-import stepperJobtitle from '@partials/stepper/stepper-jobtitle'
-import stepperPersonal from '@partials/stepper/stepper-personal'
+import StepEducation from '@partials/steps/step-education'
+import StepFin from '@partials/steps/step-fin'
+import StepAddress from '@partials/steps/step-address'
+import StepJobtitle from '@partials/steps/step-jobtitle'
+import StepPersonal from '@partials/steps/step-personal'
 export default {
   components: {
     'mstepper': () => import('@partials/form/mstepper'),
-    stepperPersonal,
-    stepperAddress,
-    stepperEducation,
-    stepperJobtitle,
-    stepperFin
+    StepPersonal,
+    StepAddress,
+    StepEducation,
+    StepJobtitle,
+    StepFin
   },
   data () {
     return {

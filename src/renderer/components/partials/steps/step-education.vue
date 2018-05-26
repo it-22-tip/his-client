@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: 'StepperEducation',
+  name: 'StepEducation',
   components: {
     'education-form': () => import('@partials/form/education-form')
   }

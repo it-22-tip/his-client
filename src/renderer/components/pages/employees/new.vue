@@ -15,7 +15,7 @@
           <md-icon>save</md-icon>
         </md-button>
       </md-toolbar>
-      <psgsteps/>
+      <steps/>
     </md-content>
   </layout-one>
 </template>
@@ -26,7 +26,7 @@ import { map } from 'lodash'
 export default {
   components: {
     'layout-one': () => import('@partials/layout-one'),
-    'psgsteps': () => import('@partials/psgsteps')
+    'steps': () => import('@partials/steppers/new-employees')
   },
   mixins: [
     orm
