@@ -74,7 +74,10 @@
             "regenerator": true
           }
         ],
-        ["syntax-dynamic-import"]
+        ["syntax-dynamic-import"],
+        ["babel-plugin-transform-class-properties"],
+        ["babel-plugin-syntax-flow"],
+        ["babel-plugin-transform-flow-strip-types"]
       ],
       "presets": [
         ["env", {
