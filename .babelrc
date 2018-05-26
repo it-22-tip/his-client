@@ -65,6 +65,9 @@
     },
     "renderer": {
       "plugins": [
+        ["babel-plugin-transform-class-properties"],
+        ["babel-plugin-syntax-flow"],
+        ["babel-plugin-transform-flow-strip-types"],
         ["transform-promise-to-bluebird"],
         [
           "transform-runtime",
@@ -74,10 +77,7 @@
             "regenerator": true
           }
         ],
-        ["syntax-dynamic-import"],
-        ["babel-plugin-transform-class-properties"],
-        ["babel-plugin-syntax-flow"],
-        ["babel-plugin-transform-flow-strip-types"]
+        ["syntax-dynamic-import"]
       ],
       "presets": [
         ["env", {

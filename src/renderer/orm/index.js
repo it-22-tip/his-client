@@ -7,12 +7,18 @@ import associations from './associations'
 import scopes from './scopes'
 
 class Orm {
+  options = null
+  sequelize = null
+  models = []
+  list = {}
+
   constructor () {
     this.options = defaultOptions
     this.sequelize = null
     this.models = []
   }
 
+  // @flow
   withOption (options) {
     this.options = extend({}, defaultOptions, this.options, options)
     return this
