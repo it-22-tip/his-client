@@ -33,9 +33,9 @@ build_script:
 
 test: off
 
-# artifacts:
-  # - path: build\*.exe
-  #   name: his-client
+artifacts:
+  - path: build\*.exe
+    name: his-client
 
 deploy: off
   # release: his-client-v$(appveyor_build_version)
