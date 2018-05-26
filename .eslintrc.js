@@ -17,8 +17,7 @@ module.exports = {
     __static: true
   },
   plugins: [
-    'promise',
-    'flowtype-errors'
+    'promise'
   ],
   'rules': {
     // allow paren-less arrow functions
@@ -26,8 +25,6 @@ module.exports = {
     // allow async-await
     'generator-star-spacing': 0,
     // allow debugger during development
-    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
-    // flow
-    'flowtype-errors/show-errors': 2
+    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0
   }
 }
