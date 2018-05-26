@@ -1,5 +1,6 @@
 {
   "comments": false,
+  "retainLines": true,
   "env": {
     "test": {
       "plugins": [

@@ -29,6 +29,26 @@ const MasterData = [
         }
       },
       {
+        path: '/master-data/districts/:page/:order/:sort',
+        name: 'masterdata.districts',
+        component: () => import('@pages/master-data/districts'),
+        props: true,
+        meta: {
+          title: 'Master Kecamatan',
+          login: true
+        }
+      },
+      {
+        path: '/master-data/villages/:page/:order/:sort',
+        name: 'masterdata.villages',
+        component: () => import('@pages/master-data/villages'),
+        props: true,
+        meta: {
+          title: 'Master Desa',
+          login: true
+        }
+      },
+      {
         path: '/master-data/jobtitles/:page/:order/:sort',
         name: 'masterdata.jobtitles',
         component: () => import('@pages/master-data/jobtitles'),

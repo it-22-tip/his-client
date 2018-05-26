@@ -40,7 +40,7 @@ export default {
           icon: 'layers',
           title: 'Master Data'
         },
-        {
+        /* {
           to: { name: 'documents.list' },
           icon: 'settings',
           title: 'Documents'
@@ -54,7 +54,7 @@ export default {
           to: { name: 'base.tree', params: { num: 1 } },
           icon: 'settings',
           title: 'Tree'
-        },
+        }, */
         {
           to: { name: 'base.login' },
           icon: 'close',
