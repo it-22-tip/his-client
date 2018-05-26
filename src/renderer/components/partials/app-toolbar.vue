@@ -56,6 +56,11 @@ export default {
           title: 'Tree'
         }, */
         {
+          to: { name: 'base.ocr' },
+          icon: 'settings',
+          title: 'OCR'
+        },
+        {
           to: { name: 'base.login' },
           icon: 'close',
           title: 'Out'

@@ -52,6 +52,15 @@ const Base = [
     }
   },
   {
+    path: '/ocr',
+    name: 'base.ocr',
+    component: () => import('@pages/base/ocr'),
+    meta: {
+      title: 'OCR',
+      login: true
+    }
+  },
+  {
     path: '/directory',
     name: 'base.directory',
     component: () => import('@pages/base/directory'),
