@@ -13,10 +13,10 @@ export default {
       datasets: [
         {
           backgroundColor: [
-            '#41B883',
-            '#E46651'
+            'pink',
+            'purple'
           ],
-          data: [40, 20]
+          data: [20, 20]
         }
       ]
     }, {responsive: true, maintainAspectRatio: false})

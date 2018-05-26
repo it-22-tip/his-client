@@ -68,9 +68,9 @@ export default {
     }
   },
   mounted () {
-    console.log(this.$route)
-    console.log(JSON.stringify(this.$route.params))
-    console.log(JSON.stringify(this.$props))
+    // console.log(this.$route)
+    // console.log(JSON.stringify(this.$route.params))
+    // console.log(JSON.stringify(this.$props))
   },
   methods: {
   }
