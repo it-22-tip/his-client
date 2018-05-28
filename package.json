@@ -163,7 +163,6 @@
     "electron-devtools-installer": "^2.2.4",
     "eslint": "^4.19.1",
     "eslint-config-standard": "^11.0.0",
-    "eslint-config-vue": "^2.0.2",
     "eslint-friendly-formatter": "^4.0.1",
     "eslint-loader": "^2.0.0",
     "eslint-plugin-flowtype-errors": "^3.5.1",
@@ -211,7 +210,7 @@
     "webpack-hot-middleware": "^2.22.2",
     "webpack-merge": "^4.1.2",
     "webpack-node-externals": "^1.7.2",
-    "worker-loader": "1.1.1",
+    "worker-loader": "^2.0.0",
     "yargs": "^11.0.0"
   }
 }
