@@ -1,6 +1,7 @@
 <template>
   <md-step
     id="education-stepper"
+    :md-editable="false"
     md-label="Pendidikan">
     <div class="padding-10">
       <education-form/>

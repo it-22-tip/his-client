@@ -1,6 +1,7 @@
 <template>
   <md-step
     id="address-stepper"
+    :md-editable="false"
     md-label="Alamat">
     <div class="padding-10">
       <md-switch v-model="itemActive">Alamat Surat</md-switch>

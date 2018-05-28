@@ -2,7 +2,7 @@
   <md-content class="fc">
     <md-content class="scr md-scrollbar">
       <div class="hi">
-        <mstepper>
+        <mstepper md-linear>
           <step-personal/>
           <step-address/>
           <step-education/>

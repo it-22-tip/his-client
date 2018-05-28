@@ -1,6 +1,7 @@
 <template>
   <md-step
     id="jobtitle-stepper"
+    :md-editable="false"
     md-label="Pekerjaan">
     <div class="padding-10">
       <md-subheader>Data Pekerjaan</md-subheader>

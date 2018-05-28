@@ -1,6 +1,7 @@
 <template>
   <md-step
     id="personal-stepper"
+    :md-editable="false"
     :md-done="mdDone"
     md-label="Data Personal">
     <div class="padding-10">
