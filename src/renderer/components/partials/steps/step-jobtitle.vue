@@ -1,11 +1,18 @@
 <template>
   <md-step
     id="jobtitle-stepper"
+    :md-done="active"
     :md-editable="false"
     md-label="Pekerjaan">
     <div class="padding-10">
       <md-subheader>Data Pekerjaan</md-subheader>
       <jobtitle-picker v-model="JobTitleId"/>
+      <md-button
+        class="md-raised"
+        @click="backButton">Back</md-button>
+      <md-button
+        class="md-raised"
+        @click="nextButton">Next</md-button>
     </div>
   </md-step>
 </template>
@@ -16,9 +23,27 @@ export default {
   components: {
     'jobtitle-picker': () => import('@partials/picker/jobtitle-picker')
   },
+  props: {
+    active: {
+      type: Boolean,
+      default: false
+    },
+    id: {
+      type: String,
+      default: null
+    }
+  },
   data () {
     return {
       JobTitleId: null
+    }
+  },
+  methods: {
+    nextButton () {
+      this.$emit('forth')
+    },
+    backButton () {
+      this.$emit('back')
     }
   }
 }

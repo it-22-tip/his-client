@@ -2,12 +2,34 @@
   <md-content class="fc">
     <md-content class="scr md-scrollbar">
       <div class="hi">
-        <mstepper md-linear>
-          <step-personal/>
-          <step-address/>
-          <step-education/>
-          <step-jobtitle/>
-          <step-fin/>
+        <mstepper
+          :md-active-step.sync="active"
+          md-linear>
+          <step-personal
+            id="personal-stepper"
+            :active="active !== 'personal-stepper'"
+            v-model="personal"
+            @forth="active = 'address-stepper'"/>
+          <step-address
+            id="address-stepper"
+            :active="active !== 'address-stepper'"
+            @forth="active = 'education-stepper'"
+            @back="active = 'personal-stepper'"/>
+          <step-education
+            id="education-stepper"
+            :active="active !== 'education-stepper'"
+            @forth="active = 'jobtitle-stepper'"
+            @back="active = 'address-stepper'"/>
+          <step-jobtitle
+            id="jobtitle-stepper"
+            :active="active !== 'jobtitle-stepper'"
+            @forth="active = 'fin-stepper'"
+            @back="active = 'address-stepper'"/>
+          <step-fin
+            id="fin-stepper"
+            :active="active !== 'fin-stepper'"
+            @save="saving"
+            @back="active = 'jobtitle-stepper'"/>
         </mstepper>
       </div>
     </md-content>
@@ -31,7 +53,21 @@ export default {
   },
   data () {
     return {
-      savedView: {}
+      personal: null,
+      savedView: {},
+      active: 'personal-stepper'
+    }
+  },
+  watch: {
+    personal: {
+      handler: function (val) {
+        return val
+      }
+    }
+  },
+  methods: {
+    saving () {
+      console.log('saving')
     }
   }
 }
