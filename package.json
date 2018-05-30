@@ -130,7 +130,7 @@
   },
   "devDependencies": {
     "@vue/test-utils": "^1.0.0-beta.16",
-    "autoprefixer": "^8.5.0",
+    "autoprefixer": "^8.5.2",
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.3",
     "babel-jest": "^23.0.1",
@@ -207,7 +207,7 @@
     "vue-loader": "^15.2.2",
     "vue-style-loader": "^4.1.0",
     "vue-template-compiler": "^2.5.16",
-    "webpack": "^4.10.1",
+    "webpack": "^4.10.2",
     "webpack-bundle-analyzer": "^2.13.0",
     "webpack-dev-server": "^3.1.4",
     "webpack-hot-middleware": "^2.22.2",
