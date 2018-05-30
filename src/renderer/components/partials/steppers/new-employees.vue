@@ -37,20 +37,41 @@
 </template>
 
 <script>
+import { forEach } from 'lodash'
 import StepEducation from '@partials/steps/step-education'
 import StepFin from '@partials/steps/step-fin'
 import StepAddress from '@partials/steps/step-address'
 import StepJobtitle from '@partials/steps/step-jobtitle'
 import StepPersonal from '@partials/steps/step-personal'
+import mstepper from '@partials/form/mstepper'
+
+let components = [
+  'step-personal',
+  'step-address',
+  'step-education',
+  'step-jobtitle',
+  'step-fin'
+]
+let com = {}
+forEach(components, async component => {
+  let imported = await import('@partials/steps/' + component)
+  let def = imported.default
+  com[def.name] = imported.default
+})
+console.log(StepEducation)
+com['mstepper'] = mstepper
+console.log(com)
+const comp = {
+  StepPersonal,
+  StepAddress,
+  StepEducation,
+  StepJobtitle,
+  StepFin,
+  mstepper
+}
+
 export default {
-  components: {
-    'mstepper': () => import('@partials/form/mstepper'),
-    StepPersonal,
-    StepAddress,
-    StepEducation,
-    StepJobtitle,
-    StepFin
-  },
+  components: comp,
   data () {
     return {
       personal: null,
