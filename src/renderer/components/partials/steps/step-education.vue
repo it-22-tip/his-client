@@ -1,6 +1,7 @@
 <template>
   <md-step
     :id="id"
+    :md-done="active"
     :md-editable="false"
     md-label="Pendidikan">
     <div class="padding-10">
@@ -25,6 +26,10 @@ export default {
     id: {
       type: String,
       default: null
+    },
+    active: {
+      type: Boolean,
+      default: false
     }
   },
   mounted () {

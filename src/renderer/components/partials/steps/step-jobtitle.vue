@@ -1,6 +1,6 @@
 <template>
   <md-step
-    id="jobtitle-stepper"
+    :id="id"
     :md-done="active"
     :md-editable="false"
     md-label="Pekerjaan">

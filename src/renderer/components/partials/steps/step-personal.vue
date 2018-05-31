@@ -1,8 +1,8 @@
 <template>
   <md-step
-    id="personal-stepper"
+    :id="id"
+    :md-done="active"
     :md-editable="false"
-    :md-done="done"
     md-label="Data Personal">
     <div class="padding-10">
       <div class="md-layout">
@@ -48,6 +48,10 @@ export default {
       default: null
     },
     mdDone: {
+      type: Boolean,
+      default: false
+    },
+    active: {
       type: Boolean,
       default: false
     }

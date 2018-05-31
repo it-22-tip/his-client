@@ -1,6 +1,7 @@
 <template>
   <md-step
-    id="fin-stepper"
+    :id="id"
+    :md-done="active"
     :md-editable="false"
     md-label="Simpan Data">
     <div class="padding-10">

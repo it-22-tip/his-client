@@ -7,12 +7,12 @@
           md-linear>
           <step-personal
             id="personal-stepper"
-            :active="active !== 'personal-stepper'"
+            :active="active === 'address-stepper'"
             v-model="personal"
             @forth="active = 'address-stepper'"/>
           <step-address
             id="address-stepper"
-            :active="active !== 'address-stepper'"
+            :active="active === 'education-stepper'"
             @forth="active = 'education-stepper'"
             @back="active = 'personal-stepper'"/>
           <step-education
@@ -37,7 +37,6 @@
 </template>
 
 <script>
-import { forEach } from 'lodash'
 import StepEducation from '@partials/steps/step-education'
 import StepFin from '@partials/steps/step-fin'
 import StepAddress from '@partials/steps/step-address'
@@ -45,22 +44,16 @@ import StepJobtitle from '@partials/steps/step-jobtitle'
 import StepPersonal from '@partials/steps/step-personal'
 import mstepper from '@partials/form/mstepper'
 
-let components = [
-  'step-personal',
-  'step-address',
-  'step-education',
-  'step-jobtitle',
-  'step-fin'
-]
-let com = {}
-forEach(components, async component => {
-  let imported = await import('@partials/steps/' + component)
-  let def = imported.default
-  com[def.name] = imported.default
-})
-console.log(StepEducation)
-com['mstepper'] = mstepper
-console.log(com)
+let components = {
+  'step-personal': StepPersonal,
+  'step-address': StepAddress,
+  'step-education': StepEducation,
+  'step-jobtitle': StepJobtitle,
+  'step-fin': StepFin
+}
+
+console.log(components)
+
 const comp = {
   StepPersonal,
   StepAddress,
@@ -76,7 +69,8 @@ export default {
     return {
       personal: null,
       savedView: {},
-      active: 'personal-stepper'
+      active: 'personal-stepper',
+      comps: components
     }
   },
   watch: {

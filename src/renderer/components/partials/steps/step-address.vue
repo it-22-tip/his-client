@@ -1,8 +1,8 @@
 <template>
   <md-step
-    id="address-stepper"
-    :md-editable="false"
+    :id="id"
     :md-done="active"
+    :md-editable="false"
     md-label="Alamat">
     <div class="padding-10">
       <md-switch v-model="itemActive">Alamat Surat</md-switch>
@@ -40,6 +40,10 @@ export default {
       default () {
         return this.address
       }
+    },
+    id: {
+      type: String,
+      default: null
     },
     active: {
       type: Boolean,
