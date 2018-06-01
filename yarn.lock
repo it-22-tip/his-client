@@ -4649,9 +4649,9 @@ evp_bytestokey@^1.0.0, evp_bytestokey@^1.0.3:
     md5.js "^1.3.4"
     safe-buffer "^5.1.1"
 
-exceljs@^1.4.6:
-  version "1.4.6"
-  resolved "https://registry.yarnpkg.com/exceljs/-/exceljs-1.4.6.tgz#239fd775cfb6005252241ca9b90c4b78d658dbb9"
+exceljs@^1.4.7:
+  version "1.4.7"
+  resolved "https://registry.yarnpkg.com/exceljs/-/exceljs-1.4.7.tgz#9f5d76c187b724ab3990e0d53c3882f2a5f55ab8"
   dependencies:
     archiver "^1.3.0"
     fast-csv "^2.4.0"
@@ -8713,9 +8713,9 @@ object.pick@^1.2.0, object.pick@^1.3.0:
   dependencies:
     isobject "^3.0.1"
 
-objection@^1.1.8:
-  version "1.1.8"
-  resolved "https://registry.yarnpkg.com/objection/-/objection-1.1.8.tgz#2a4c57c0e228430a8845623be931bb90d96fde38"
+objection@^1.1.10:
+  version "1.1.10"
+  resolved "https://registry.yarnpkg.com/objection/-/objection-1.1.10.tgz#337af7f8677dee31b86a3ef39b2257bbf1a9d04c"
   dependencies:
     ajv "^6.1.1"
     bluebird "^3.5.1"
