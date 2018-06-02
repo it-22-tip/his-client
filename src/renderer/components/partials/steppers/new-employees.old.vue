@@ -5,14 +5,31 @@
         <mstepper
           :md-active-step.sync="active"
           md-linear>
-          <component
-            v-for="item in comps"
-            :id="'step-' + item.key"
-            :is="item.name"
-            :key="item.key"
-            :done="item.done"
-            @forth="forth(item.key)"
-            @back="back(item.key)"/>
+          <step-personal
+            id="personal-stepper"
+            :active="active === 'address-stepper'"
+            v-model="personal"
+            @forth="active = 'address-stepper'"/>
+          <step-address
+            id="address-stepper"
+            :active="active === 'education-stepper'"
+            @forth="active = 'education-stepper'"
+            @back="active = 'personal-stepper'"/>
+          <step-education
+            id="education-stepper"
+            :active="active !== 'education-stepper'"
+            @forth="active = 'jobtitle-stepper'"
+            @back="active = 'address-stepper'"/>
+          <step-jobtitle
+            id="jobtitle-stepper"
+            :active="active !== 'jobtitle-stepper'"
+            @forth="active = 'fin-stepper'"
+            @back="active = 'address-stepper'"/>
+          <step-fin
+            id="fin-stepper"
+            :active="active !== 'fin-stepper'"
+            @save="saving"
+            @back="active = 'jobtitle-stepper'"/>
         </mstepper>
       </div>
     </md-content>
@@ -20,7 +37,6 @@
 </template>
 
 <script>
-import { map } from 'lodash'
 import StepEducation from '@partials/steps/step-education'
 import StepFin from '@partials/steps/step-fin'
 import StepAddress from '@partials/steps/step-address'
@@ -28,13 +44,13 @@ import StepJobtitle from '@partials/steps/step-jobtitle'
 import StepPersonal from '@partials/steps/step-personal'
 import mstepper from '@partials/form/mstepper'
 
-let components = [
-  { key: 1, name: 'step-personal', done: false },
-  { key: 2, name: 'step-address', done: false },
-  { key: 3, name: 'step-education', done: false },
-  { key: 4, name: 'step-jobtitle', done: false },
-  { key: 5, name: 'step-fin', done: false }
-]
+let components = {
+  'step-personal': StepPersonal,
+  'step-address': StepAddress,
+  'step-education': StepEducation,
+  'step-jobtitle': StepJobtitle,
+  'step-fin': StepFin
+}
 
 console.log(components)
 
@@ -53,13 +69,8 @@ export default {
     return {
       personal: null,
       savedView: {},
-      comps: components,
-      activeComp: 1
-    }
-  },
-  computed: {
-    active () {
-      return 'step-' + this.activeComp
+      active: 'personal-stepper',
+      comps: components
     }
   },
   watch: {
@@ -70,32 +81,6 @@ export default {
     }
   },
   methods: {
-    cd (v) {
-      this.comps = map(this.comps, val => {
-        console.log(val.key)
-        console.log(v)
-        if (val.key - 1 < v) {
-          val.done = true
-        } else {
-          val.done = false
-        }
-        return val
-      })
-      console.log(this.comps)
-    },
-    forth (v) {
-      if (v === this.comps.length) {
-        this.saving()
-        return
-      }
-      this.cd(v)
-      this.activeComp = v + 1
-    },
-    back (v) {
-      if (v === 1) return
-      this.cd(v)
-      this.activeComp = v - 1
-    },
     saving () {
       console.log('saving')
     }

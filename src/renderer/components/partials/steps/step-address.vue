@@ -1,7 +1,7 @@
 <template>
   <md-step
     :id="id"
-    :md-done="active"
+    :md-done="done"
     :md-editable="false"
     md-label="Alamat">
     <div class="padding-10">
@@ -45,7 +45,7 @@ export default {
       type: String,
       default: null
     },
-    active: {
+    done: {
       type: Boolean,
       default: false
     }

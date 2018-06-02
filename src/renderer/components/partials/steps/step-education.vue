@@ -1,7 +1,7 @@
 <template>
   <md-step
     :id="id"
-    :md-done="active"
+    :md-done="done"
     :md-editable="false"
     md-label="Pendidikan">
     <div class="padding-10">
@@ -23,13 +23,24 @@ export default {
     'education-form': () => import('@partials/form/education-form')
   },
   props: {
+    value: {
+      type: Object,
+      default () {
+        return this.default
+      }
+    },
     id: {
       type: String,
       default: null
     },
-    active: {
+    done: {
       type: Boolean,
       default: false
+    }
+  },
+  data () {
+    return {
+      default: {}
     }
   },
   mounted () {

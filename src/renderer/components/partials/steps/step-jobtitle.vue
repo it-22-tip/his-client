@@ -1,7 +1,7 @@
 <template>
   <md-step
     :id="id"
-    :md-done="active"
+    :md-done="done"
     :md-editable="false"
     md-label="Pekerjaan">
     <div class="padding-10">
@@ -24,18 +24,25 @@ export default {
     'jobtitle-picker': () => import('@partials/picker/jobtitle-picker')
   },
   props: {
-    active: {
-      type: Boolean,
-      default: false
+    value: {
+      type: Object,
+      default () {
+        return this.default
+      }
     },
     id: {
       type: String,
       default: null
+    },
+    done: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
     return {
-      JobTitleId: null
+      JobTitleId: null,
+      default: {}
     }
   },
   methods: {

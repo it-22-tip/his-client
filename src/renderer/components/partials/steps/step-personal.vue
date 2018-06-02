@@ -1,7 +1,7 @@
 <template>
   <md-step
     :id="id"
-    :md-done="active"
+    :md-done="done"
     :md-editable="false"
     md-label="Data Personal">
     <div class="padding-10">
@@ -47,11 +47,7 @@ export default {
       type: String,
       default: null
     },
-    mdDone: {
-      type: Boolean,
-      default: false
-    },
-    active: {
+    done: {
       type: Boolean,
       default: false
     }
@@ -62,7 +58,6 @@ export default {
         BirthDate: '',
         BirthPlaceRegency: ''
       }, */
-      done: false,
       default: {
         Name: '',
         Gender: 'P',
@@ -135,8 +130,10 @@ export default {
   },
   methods: {
     nextButton () {
-      this.done = true
       this.$emit('forth')
+    },
+    backButton () {
+      this.$emit('back')
     }
   }
 }

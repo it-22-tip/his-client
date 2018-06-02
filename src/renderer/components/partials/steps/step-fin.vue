@@ -1,7 +1,7 @@
 <template>
   <md-step
     :id="id"
-    :md-done="active"
+    :md-done="done"
     :md-editable="false"
     md-label="Simpan Data">
     <div class="padding-10">
@@ -19,9 +19,30 @@
 <script>
 export default {
   name: 'StepFin',
+  props: {
+    value: {
+      type: Object,
+      default () {
+        return this.default
+      }
+    },
+    id: {
+      type: String,
+      default: null
+    },
+    done: {
+      type: Boolean,
+      default: false
+    }
+  },
+  data () {
+    return {
+      default: {}
+    }
+  },
   methods: {
     saveButton () {
-      this.$emit('save')
+      this.$emit('forth')
     },
     backButton () {
       this.$emit('back')
