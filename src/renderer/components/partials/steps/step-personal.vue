@@ -125,11 +125,9 @@ export default {
       }
     }
   },
-  mounted () {
-    console.log('mounted')
-  },
   methods: {
     nextButton () {
+      console.log(this.sv)
       this.$emit('forth')
     },
     backButton () {

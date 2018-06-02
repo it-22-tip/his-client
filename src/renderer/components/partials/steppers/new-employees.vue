@@ -70,30 +70,28 @@ export default {
     }
   },
   methods: {
-    cd (v) {
+    cd (v, bf) {
       this.comps = map(this.comps, val => {
-        console.log(val.key)
-        console.log(v)
-        if (val.key - 1 < v) {
+        if (bf === 'forth' && val.key === v) {
           val.done = true
-        } else {
+        }
+        if ((bf === 'back' && val.key === v) || (bf === 'back' && val.key === 1 && v === 2)) {
           val.done = false
         }
         return val
       })
-      console.log(this.comps)
     },
     forth (v) {
       if (v === this.comps.length) {
         this.saving()
         return
       }
-      this.cd(v)
+      this.cd(v, 'forth')
       this.activeComp = v + 1
     },
     back (v) {
       if (v === 1) return
-      this.cd(v)
+      this.cd(v, 'back')
       this.activeComp = v - 1
     },
     saving () {
