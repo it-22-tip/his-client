@@ -11,7 +11,7 @@
             :is="item.name"
             :key="item.key"
             :done="item.done"
-            @forth="forth(item.key)"
+            @forth="forth($event, item.key)"
             @back="back(item.key)"/>
         </mstepper>
       </div>
@@ -51,7 +51,6 @@ export default {
   components: comp,
   data () {
     return {
-      personal: null,
       savedView: {},
       comps: components,
       activeComp: 1
@@ -60,13 +59,6 @@ export default {
   computed: {
     active () {
       return 'step-' + this.activeComp
-    }
-  },
-  watch: {
-    personal: {
-      handler: function (val) {
-        return val
-      }
     }
   },
   methods: {
@@ -81,13 +73,15 @@ export default {
         return val
       })
     },
-    forth (v) {
+    forth (data, v) {
       if (v === this.comps.length) {
         this.saving()
         return
       }
       this.cd(v, 'forth')
       this.activeComp = v + 1
+      console.log('test')
+      console.log(data)
     },
     back (v) {
       if (v === 1) return

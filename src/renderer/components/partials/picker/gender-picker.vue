@@ -1,12 +1,17 @@
 <template>
-  <div>
-    <md-radio
-      v-model="gender"
-      value="L">L</md-radio>
-    <md-radio
-      v-model="gender"
-      value="P">P</md-radio>
-  </div>
+  <md-list>
+    <md-subheader>Jenis Kelamin</md-subheader>
+    <md-list-item>
+      <md-radio
+        v-model="gender"
+        value="L">Laki - Laki</md-radio>
+    </md-list-item>
+    <md-list-item>
+      <md-radio
+        v-model="gender"
+        value="P">Perempuan</md-radio>
+    </md-list-item>
+  </md-list>
 </template>
 <script>
 export default {

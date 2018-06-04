@@ -1,28 +1,28 @@
 <template>
   <div>
     <md-subheader>{{ formTitle }}</md-subheader>
-    <div class="md-layout">
-      <div class="md-layout-item md-size-50">
+    <div>
+      <div>
         <province-picker v-model="ProvinceCode"/>
       </div>
-      <div class="md-layout-item md-size-50">
+      <div>
         <regency-picker
           v-model="RegencyCode"
           :where-code="ProvinceCode"/>
       </div>
-      <div class="md-layout-item md-size-50">
+      <div>
         <district-picker
           v-model="DistrictCode"
           :where-code="RegencyCode"/>
       </div>
-      <div class="md-layout-item md-size-50">
+      <div>
         <village-picker
           v-model="VillageCode"
           :where-code="DistrictCode"/>
       </div>
     </div>
-    <div class="md-layout md-gutter">
-      <div class="md-layout-item md-size-50">
+    <div>
+      <div>
         <md-field
           md-clearable
           class="region-picker">
@@ -34,7 +34,7 @@
             min="0"/>
         </md-field>
       </div>
-      <div class="md-layout-item md-size-50">
+      <div>
         <md-field
           md-clearable
           class="region-picker">

@@ -1,17 +1,11 @@
 <template>
   <div>
-    <div class="md-layout md-gutter">
-      <div class="md-layout-item md-size-33">
-        <province-picker v-model="ProvinceCode"/>
-      </div>
-      <div class="md-layout-item md-size-33">
-        <regency-picker
-          v-model="RegencyCode"
-          :where-code="ProvinceCode"/>
-      </div>
-      <div class="md-layout-item md-size-33">
-        <date-picker v-model="BirthDate"/>
-      </div>
+    <div>
+      <province-picker v-model="ProvinceCode"/>
+      <regency-picker
+        v-model="RegencyCode"
+        :where-code="ProvinceCode"/>
+      <date-picker v-model="BirthDate"/>
     </div>
   </div>
 </template>
@@ -28,10 +22,6 @@ export default {
       default: () => {
         return this.input
       }
-    },
-    preDefined: {
-      type: String,
-      default: null
     }
   },
   data () {
@@ -41,7 +31,11 @@ export default {
       RegencyCode: null,
       BirthDate: null,
       input: {
-        BirthPlaceRegency: null,
+        BirthPlaceRegencyCode: null,
+        BirthDate: null
+      },
+      iv: {
+        BirthPlaceRegencyCode: null,
         BirthDate: null
       }
     }
@@ -49,23 +43,22 @@ export default {
   watch: {
     value: {
       handler: function (val) {
-        this.RegencyCode = val.BirthPlaceRegency
+        this.RegencyCode = val.BirthPlaceRegencyCode
         this.BirthDate = val.BirthDate
       }
     },
     RegencyCode: {
       handler: function (val) {
         this.$emit('input', {
-          BirthPlaceRegency: this.RegencyCode,
+          BirthPlaceRegencyCode: this.RegencyCode,
           BirthDate: this.BirthDate
         })
       }
     },
     BirthDate: {
       handler: function (val) {
-        console.log('pusing')
         this.$emit('input', {
-          BirthPlaceRegency: this.RegencyCode,
+          BirthPlaceRegencyCode: this.RegencyCode,
           BirthDate: this.BirthDate
         })
       }

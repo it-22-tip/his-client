@@ -5,19 +5,17 @@
     :md-editable="false"
     md-label="Alamat">
     <div class="padding-10">
+
+      <address-form
+        v-model="address.officialAddress"
+        type="Official"
+        title="Alamat Resmi"/>
       <md-switch v-model="itemActive">Alamat Surat</md-switch>
-      <div class="md-layout md-gutter">
-        <address-form
-          v-model="officialAddress"
-          type="Official"
-          class="md-layout-item md-size-50"
-          title="Alamat Resmi"/>
-        <address-form
-          v-model="postalAddress"
-          type="Postal"
-          class="md-layout-item md-size-50"
-          title="Alamat Surat"/>
-      </div>
+      <address-form
+        v-model="address.postalAddress"
+        type="Postal"
+        title="Alamat Surat"/>
+
       <md-button
         class="md-raised"
         @click="backButton">Back</md-button>
@@ -69,7 +67,7 @@ export default {
   },
   methods: {
     nextButton () {
-      this.$emit('forth')
+      this.$emit('forth', this.address)
     },
     backButton () {
       this.$emit('back')

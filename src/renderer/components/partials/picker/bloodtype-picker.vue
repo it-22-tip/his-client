@@ -1,21 +1,32 @@
 <template>
-  <div>
-    <md-radio
-      v-model="bloodType"
-      value="A">A</md-radio>
-    <md-radio
-      v-model="bloodType"
-      value="B">B</md-radio>
-    <md-radio
-      v-model="bloodType"
-      value="AB">AB</md-radio>
-    <md-radio
-      v-model="bloodType"
-      value="O">O</md-radio>
-    <md-radio
-      v-model="bloodType"
-      value="N/A">N/A</md-radio>
-  </div>
+  <md-list>
+    <md-subheader>Golongan Darah</md-subheader>
+    <md-list-item>
+      <md-radio
+        v-model="bloodType"
+        value="A">A</md-radio>
+    </md-list-item>
+    <md-list-item>
+      <md-radio
+        v-model="bloodType"
+        value="B">B</md-radio>
+    </md-list-item>
+    <md-list-item>
+      <md-radio
+        v-model="bloodType"
+        value="AB">AB</md-radio>
+    </md-list-item>
+    <md-list-item>
+      <md-radio
+        v-model="bloodType"
+        value="O">O</md-radio>
+    </md-list-item>
+    <md-list-item>
+      <md-radio
+        v-model="bloodType"
+        value="N/A">N/A</md-radio>
+    </md-list-item>
+  </md-list>
 </template>
 <script>
 export default {

@@ -11,9 +11,7 @@
             <label>Nama</label>
             <md-input v-model="sv.Name"/>
           </md-field>
-          <md-subheader>Jenis Kelamin</md-subheader>
           <gender-picker v-model="sv.Gender"/>
-          <md-subheader>Golongan Darah</md-subheader>
           <bloodtype-picker v-model="sv.BloodType"/>
           <md-subheader>Tempat Tanggal Lahir</md-subheader>
           <birthdateplace-form
@@ -22,6 +20,7 @@
         </div>
       </div>
       <md-button
+        :disabled="$v.$invalid"
         class="md-raised"
         @click="nextButton">Next</md-button>
     </div>
@@ -29,6 +28,8 @@
 </template>
 
 <script>
+import { validationMixin } from 'vuelidate'
+import { required, minLength } from 'vuelidate/lib/validators'
 export default {
   name: 'StepPersonal',
   components: {
@@ -36,6 +37,7 @@ export default {
     'gender-picker': () => import('@partials/picker/gender-picker'),
     'bloodtype-picker': () => import('@partials/picker/bloodtype-picker')
   },
+  mixins: [validationMixin],
   props: {
     value: {
       type: Object,
@@ -54,53 +56,24 @@ export default {
   },
   data () {
     return {
-      /* birthDatePlace: {
-        BirthDate: '',
-        BirthPlaceRegency: ''
-      }, */
-      default: {
-        Name: '',
-        Gender: 'P',
-        BirthDate: null,
-        BirthPlaceRegencyCode: null,
-        BloodType: 'N/A'
-      },
       sv: {
         Name: '',
         Gender: 'P',
         BirthDate: null,
         BirthPlaceRegencyCode: null,
         BloodType: 'N/A'
+      }
+    }
+  },
+  validations: {
+    sv: {
+      Name: {
+        required,
+        minLength: minLength(4)
       },
-      saved: {
-        Person: {
-          Name: '',
-          Gender: 'P',
-          BirthDate: null,
-          BirthPlaceRegencyCode: null,
-          BloodType: 'N/A',
-          AddressHistories: [
-            {
-              Id: null,
-              Type: 'Official',
-              Address: null,
-              Rt: null,
-              Rw: null,
-              VillageCode: null
-            }
-          ]
-        },
-        JobTitleId: null
-      },
-      officialAddress: {
-        Id: null,
-        Type: 'Official',
-        Address: null,
-        Rt: null,
-        Rw: null,
-        VillageCode: null
-      },
-      postalAddress: null
+      BirthPlaceRegencyCode: {
+        required
+      }
     }
   },
   computed: {
@@ -113,22 +86,14 @@ export default {
       },
       set (v) {
         console.log(v)
-        this.sv.BirthPlaceRegencyCode = v.BirthPlaceRegency
+        this.sv.BirthPlaceRegencyCode = v.BirthPlaceRegencyCode
         this.sv.BirthDate = v.BirthDate
-      }
-    }
-  },
-  watch: {
-    'sv.Name': {
-      handler: function (v) {
-        console.log(v)
       }
     }
   },
   methods: {
     nextButton () {
-      console.log(this.sv)
-      this.$emit('forth')
+      this.$emit('forth', this.sv)
     },
     backButton () {
       this.$emit('back')

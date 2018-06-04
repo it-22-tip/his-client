@@ -1,9 +1,8 @@
 <template>
-  <md-content class="birthdateplace-picker md-layout">
-    <md-content class="md-layout-item md-size-85">
-      <date-picker v-model="BirthDate"/>
-      <birthplace-picker v-model="BirthPlaceRegency"/>
-    </md-content>
+  <md-content class="birthdateplace-picker">
+    [hellow]
+    <date-picker v-model="BirthDate"/>
+    <birthplace-picker v-model="BirthPlaceRegency"/>
   </md-content>
 </template>
 
