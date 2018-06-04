@@ -84,10 +84,10 @@ export default {
           BirthPlaceRegency: ''
         }
       },
-      set (v) {
-        console.log(v)
-        this.sv.BirthPlaceRegencyCode = v.BirthPlaceRegencyCode
-        this.sv.BirthDate = v.BirthDate
+      set (value) {
+        // this.$set()
+        this.sv.BirthPlaceRegencyCode = value.BirthPlaceRegencyCode
+        this.sv.BirthDate = value.BirthDate
       }
     }
   },

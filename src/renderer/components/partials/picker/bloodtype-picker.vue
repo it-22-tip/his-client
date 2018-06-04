@@ -1,30 +1,12 @@
 <template>
   <md-list>
     <md-subheader>Golongan Darah</md-subheader>
-    <md-list-item>
+    <md-list-item
+      v-for="item in bloodTypes"
+      :key="item">
       <md-radio
         v-model="bloodType"
-        value="A">A</md-radio>
-    </md-list-item>
-    <md-list-item>
-      <md-radio
-        v-model="bloodType"
-        value="B">B</md-radio>
-    </md-list-item>
-    <md-list-item>
-      <md-radio
-        v-model="bloodType"
-        value="AB">AB</md-radio>
-    </md-list-item>
-    <md-list-item>
-      <md-radio
-        v-model="bloodType"
-        value="O">O</md-radio>
-    </md-list-item>
-    <md-list-item>
-      <md-radio
-        v-model="bloodType"
-        value="N/A">N/A</md-radio>
+        :value="item">{{ item }}</md-radio>
     </md-list-item>
   </md-list>
 </template>
@@ -38,7 +20,10 @@ export default {
   },
   data () {
     return {
-      bloodType: 'N/A'
+      bloodType: 'N/A',
+      bloodTypes: [
+        'A', 'B', 'AB', 'O', 'N/A'
+      ]
     }
   },
   watch: {
