@@ -841,12 +841,12 @@ autoprefixer@^6.3.1:
     postcss "^5.2.16"
     postcss-value-parser "^3.2.3"
 
-autoprefixer@^8.5.2:
-  version "8.5.2"
-  resolved "https://registry.yarnpkg.com/autoprefixer/-/autoprefixer-8.5.2.tgz#52d86a5ea51a6191024d843f88f2748ce3ab39e5"
+autoprefixer@^8.6.0:
+  version "8.6.0"
+  resolved "https://registry.yarnpkg.com/autoprefixer/-/autoprefixer-8.6.0.tgz#6da6b0791e15cb0ebf33c3f299414afd340672c0"
   dependencies:
     browserslist "^3.2.8"
-    caniuse-lite "^1.0.30000846"
+    caniuse-lite "^1.0.30000847"
     normalize-range "^0.1.2"
     num2fraction "^1.2.2"
     postcss "^6.0.22"
@@ -2523,9 +2523,13 @@ caniuse-lite@^1.0.30000830:
   version "1.0.30000830"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000830.tgz#cb96b8a2dd3cbfe04acea2af3c4e894249095328"
 
-caniuse-lite@^1.0.30000844, caniuse-lite@^1.0.30000846:
+caniuse-lite@^1.0.30000844:
   version "1.0.30000846"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000846.tgz#2092911eecad71a89dae1faa62bcc202fde7f959"
+
+caniuse-lite@^1.0.30000847:
+  version "1.0.30000847"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000847.tgz#be77f439be29bbc57ae08004b1e470b653b1ec1d"
 
 capture-stack-trace@^1.0.0:
   version "1.0.0"
@@ -8702,9 +8706,9 @@ nwsapi@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/nwsapi/-/nwsapi-2.0.0.tgz#7c8faf4ad501e1d17a651ebc5547f966b547c5c7"
 
-nyc@^12.0.1:
-  version "12.0.1"
-  resolved "https://registry.yarnpkg.com/nyc/-/nyc-12.0.1.tgz#909cdd932eb0630e7ff94ab45cb3826c72c08320"
+nyc@^12.0.2:
+  version "12.0.2"
+  resolved "https://registry.yarnpkg.com/nyc/-/nyc-12.0.2.tgz#8a4a4ed690966c11ec587ff87eea0c12c974ba99"
   dependencies:
     archy "^1.0.0"
     arrify "^1.0.1"
