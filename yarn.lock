@@ -172,9 +172,9 @@
   dependencies:
     sift "^5.1.0"
 
-"@casl/vue@^0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@casl/vue/-/vue-0.4.0.tgz#46924e5c1582bc5ab683aa9b62795152606e5ebc"
+"@casl/vue@^0.4.1":
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/@casl/vue/-/vue-0.4.1.tgz#4236d045d14bb75c174bb8232f7021dbec142a46"
 
 "@fortawesome/fontawesome-common-types@^0.1.7":
   version "0.1.7"
@@ -208,9 +208,9 @@
   dependencies:
     "@fortawesome/fontawesome-common-types" "^0.1.7"
 
-"@fortawesome/vue-fontawesome@^0.0.22":
-  version "0.0.22"
-  resolved "https://registry.yarnpkg.com/@fortawesome/vue-fontawesome/-/vue-fontawesome-0.0.22.tgz#720457bda0e5866265e5e0f8fe4fbd857fa5653f"
+"@fortawesome/vue-fontawesome@^0.0.23":
+  version "0.0.23"
+  resolved "https://registry.yarnpkg.com/@fortawesome/vue-fontawesome/-/vue-fontawesome-0.0.23.tgz#e70e3a9c30840e7ef437f99879254245c27c1b76"
 
 "@sinonjs/formatio@^2.0.0":
   version "2.0.0"
@@ -4733,9 +4733,9 @@ evp_bytestokey@^1.0.0, evp_bytestokey@^1.0.3:
     md5.js "^1.3.4"
     safe-buffer "^5.1.1"
 
-exceljs@^1.4.8:
-  version "1.4.8"
-  resolved "https://registry.yarnpkg.com/exceljs/-/exceljs-1.4.8.tgz#d02d80cd72769f5e7861ee9b52605a1df56a2818"
+exceljs@^1.4.9:
+  version "1.4.9"
+  resolved "https://registry.yarnpkg.com/exceljs/-/exceljs-1.4.9.tgz#38b818d8e279942cbee3ccf76f795215f7f514f0"
   dependencies:
     archiver "^1.3.0"
     fast-csv "^2.4.0"
