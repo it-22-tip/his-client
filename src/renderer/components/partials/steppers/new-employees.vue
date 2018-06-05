@@ -128,6 +128,9 @@ export default {
   display: flex;
   flex-direction: column;
 }
+.hi .md-steppers .md-steppers-navigation {
+  z-index: 1;
+}
 .hi>.md-steppers>.md-steppers-wrapper {
   flex: 1;
   display: flex;
