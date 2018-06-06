@@ -14,12 +14,12 @@ platform:
   - x86
 
 cache:
-  - node_modules
-  - '%USERPROFILE%\.electron'
-  - '%USERPROFILE%\.electron-gyp'
-  - '%USERPROFILE%\AppData\Local\Yarn\cache'
-  - '%USERPROFILE%\AppData\Local\electron\Cache'
-  - '%USERPROFILE%\AppData\Local\electron-builder\cache'
+  # - node_modules
+  # - '%USERPROFILE%\.electron'
+  # - '%USERPROFILE%\.electron-gyp'
+  # - '%USERPROFILE%\AppData\Local\Yarn\cache'
+  # - '%USERPROFILE%\AppData\Local\electron\Cache'
+  # - '%USERPROFILE%\AppData\Local\electron-builder\cache'
 
 init:
   - git config --global core.autocrlf input
