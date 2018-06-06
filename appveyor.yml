@@ -2,7 +2,7 @@ version: 0.1.{build}
 
 environment:
   nodejs_version: "8.11.2"
-  GH_TOKEN: 0aCw+pDuLP3EXE0KtocsofGmMtR0b1B6GnnT1jr+ydmeE86XlyQkcMKAnLfFweKc
+  GH_TOKEN: 1FMwnJoqZUKuGuCgElp4LdpmflJIUaODB5elKK8mtkgUPzYApozF4iQ2X7a9vbKt
 
 branches:
   only:
@@ -14,12 +14,12 @@ platform:
   - x86
 
 cache:
-  # - node_modules
-  # - '%USERPROFILE%\.electron'
-  # - '%USERPROFILE%\.electron-gyp'
-  # - '%USERPROFILE%\AppData\Local\Yarn\cache'
-  # - '%USERPROFILE%\AppData\Local\electron\Cache'
-  # - '%USERPROFILE%\AppData\Local\electron-builder\cache'
+  - node_modules
+  - '%USERPROFILE%\.electron'
+  - '%USERPROFILE%\.electron-gyp'
+  - '%USERPROFILE%\AppData\Local\Yarn\cache'
+  - '%USERPROFILE%\AppData\Local\electron\Cache'
+  - '%USERPROFILE%\AppData\Local\electron-builder\cache'
 
 init:
   - git config --global core.autocrlf input
@@ -37,16 +37,17 @@ artifacts:
   - path: build\*.exe
     name: his-client
 
-deploy: off
-  # release: his-client-v$(appveyor_build_version)
-  # description: 'Release description'
-  # provider: GitHub
+deploy: # off
+  release: his-client #v$(appveyor_build_version)
+  description: 'Release description'
+  provider: github
+  owner: idnesdotlink
   # auth_token:
     # secure: $env:GH_TOKEN
-  # artifact: build\*.exe
-  # draft: true
-  # prerelease: true
-  # on:
-    # branch: master
-    # appveyor_repo_tag: false
-  # force_update: true
+  artifact: build\*.exe
+  draft: true
+  prerelease: true
+  on:
+    branch: master
+    appveyor_repo_tag: false
+  force_update: true
