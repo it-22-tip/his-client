@@ -1,7 +1,7 @@
 version: 0.1.{build}
 
 environment:
-  nodejs_version: "8.11.1"
+  nodejs_version: "8.11.2"
   GH_TOKEN: 0aCw+pDuLP3EXE0KtocsofGmMtR0b1B6GnnT1jr+ydmeE86XlyQkcMKAnLfFweKc
 
 branches:
@@ -14,12 +14,12 @@ platform:
   - x86
 
 cache:
-  - node_modules
-  - '%USERPROFILE%\.electron'
-  - '%USERPROFILE%\.electron-gyp'
-  - '%USERPROFILE%\AppData\Local\Yarn\cache'
-  - '%USERPROFILE%\AppData\Local\electron\Cache'
-  - '%USERPROFILE%\AppData\Local\electron-builder\cache'
+  # - node_modules
+  # - '%USERPROFILE%\.electron'
+  # - '%USERPROFILE%\.electron-gyp'
+  # - '%USERPROFILE%\AppData\Local\Yarn\cache'
+  # - '%USERPROFILE%\AppData\Local\electron\Cache'
+  # - '%USERPROFILE%\AppData\Local\electron-builder\cache'
 
 init:
   - git config --global core.autocrlf input
