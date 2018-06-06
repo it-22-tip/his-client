@@ -40,7 +40,7 @@ artifacts:
 deploy: # off
   release: his-client # v$(appveyor_build_version)
   description: 'Release description'
-  provider: github
+  provider: GitHub
   owner: idnesdotlink
   # auth_token:
     # secure: $env:GH_TOKEN
