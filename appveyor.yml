@@ -38,7 +38,7 @@ artifacts:
     name: his-client
 
 deploy: # off
-  release: his-client #v$(appveyor_build_version)
+  release: his-client # v$(appveyor_build_version)
   description: 'Release description'
   provider: github
   owner: idnesdotlink
