@@ -29,7 +29,7 @@ install:
   - yarn install
 
 build_script:
-  - yarn release
+  - yarn build
 
 test: off
 
