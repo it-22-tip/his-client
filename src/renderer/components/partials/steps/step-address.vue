@@ -5,7 +5,6 @@
     :md-editable="false"
     md-label="Alamat">
     <div class="padding-10">
-
       <address-form
         v-model="address.officialAddress"
         type="Official"
@@ -15,7 +14,6 @@
         v-model="address.postalAddress"
         type="Postal"
         title="Alamat Surat"/>
-
       <md-button
         class="md-raised"
         @click="backButton">Back</md-button>
@@ -62,6 +60,14 @@ export default {
       },
       set (value) {
         console.log(value)
+      }
+    },
+    hasPostalAddress: {
+      get () {
+        return false
+      },
+      set () {
+
       }
     }
   },

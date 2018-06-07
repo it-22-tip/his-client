@@ -32,6 +32,7 @@
     "pack:renderer": "cross-env NODE_ENV=production webpack --progress --colors --config .compiler/webpack.renderer.config.es6",
     "postinstall": "electron-builder install-app-deps",
     "test:jest": "jest",
+    "release": "build",
     "install-app-deps": "cross-env DEBUG=electron-builder electron-builder install-app-deps"
   },
   "browserslist": [
