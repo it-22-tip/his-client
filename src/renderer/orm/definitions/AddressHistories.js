@@ -1,5 +1,4 @@
 import { DataTypes } from 'sequelize'
-import { AddressTypes } from '../enums'
 const tableName = 'AddressHistories'
 const attributes = {
   Id: {
@@ -10,21 +9,11 @@ const attributes = {
   PersonId: {
     type: DataTypes.INTEGER()
   },
-  Address: {
-    type: DataTypes.STRING(128)
+  OfficialAddressId: {
+    type: DataTypes.INTEGER()
   },
-  Rt: {
-    type: DataTypes.INTEGER(3)
-  },
-  Rw: {
-    type: DataTypes.INTEGER(3)
-  },
-  VillageCode: {
-    type: DataTypes.CHAR(10)
-  },
-  Type: {
-    type: DataTypes.ENUM(...AddressTypes.enum),
-    defaultValue: AddressTypes.defaultValue
+  PostalAddressId: {
+    type: DataTypes.INTEGER()
   }
 }
 const options = {
