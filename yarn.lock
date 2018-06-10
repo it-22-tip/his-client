@@ -262,9 +262,9 @@
     source-map "^0.5.6"
     vue-template-es2015-compiler "^1.6.0"
 
-"@vue/test-utils@^1.0.0-beta.17":
-  version "1.0.0-beta.17"
-  resolved "https://registry.yarnpkg.com/@vue/test-utils/-/test-utils-1.0.0-beta.17.tgz#cdf4213d6f0aded2416465fd4829c162a48b876d"
+"@vue/test-utils@^1.0.0-beta.18":
+  version "1.0.0-beta.18"
+  resolved "https://registry.yarnpkg.com/@vue/test-utils/-/test-utils-1.0.0-beta.18.tgz#53c22c4b90211a98dbf2708c0b717c18adaa993c"
   dependencies:
     lodash "^4.17.4"
 
@@ -853,12 +853,12 @@ autoprefixer@^6.3.1:
     postcss "^5.2.16"
     postcss-value-parser "^3.2.3"
 
-autoprefixer@^8.6.1:
-  version "8.6.1"
-  resolved "https://registry.yarnpkg.com/autoprefixer/-/autoprefixer-8.6.1.tgz#cb186e6c904cd54a4af7bda078fd27a1fddc7be5"
+autoprefixer@^8.6.2:
+  version "8.6.2"
+  resolved "https://registry.yarnpkg.com/autoprefixer/-/autoprefixer-8.6.2.tgz#51d42ff13243820a582a53ecca20dedaeb7f2efd"
   dependencies:
     browserslist "^3.2.8"
-    caniuse-lite "^1.0.30000850"
+    caniuse-lite "^1.0.30000851"
     normalize-range "^0.1.2"
     num2fraction "^1.2.2"
     postcss "^6.0.22"
@@ -2539,9 +2539,9 @@ caniuse-lite@^1.0.30000844:
   version "1.0.30000846"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000846.tgz#2092911eecad71a89dae1faa62bcc202fde7f959"
 
-caniuse-lite@^1.0.30000850:
-  version "1.0.30000850"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000850.tgz#e68a88db4ea598b4c33b8419f7385473e4802495"
+caniuse-lite@^1.0.30000851:
+  version "1.0.30000851"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000851.tgz#3b498aebf9f92cf6cff4ab54d13b557c0b590533"
 
 capture-stack-trace@^1.0.0:
   version "1.0.0"
@@ -12175,9 +12175,9 @@ v-calendar@^0.9.7:
   dependencies:
     vue "^2.5.0"
 
-v-click-outside@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/v-click-outside/-/v-click-outside-1.0.4.tgz#4e21b8f09a434a208f59a1463997de150c414b9e"
+v-click-outside@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/v-click-outside/-/v-click-outside-1.0.5.tgz#3eb590394e062fa9a4256cbe678600557f7c87d4"
 
 v8flags@^3.0.2:
   version "3.0.2"
@@ -12377,9 +12377,9 @@ vuelidate@0.7.4:
   version "0.7.4"
   resolved "https://registry.yarnpkg.com/vuelidate/-/vuelidate-0.7.4.tgz#5a0e54be09ac0192f1aa3387d74b92e0945bf8aa"
 
-vuex-pathify@^1.0.10:
-  version "1.0.10"
-  resolved "https://registry.yarnpkg.com/vuex-pathify/-/vuex-pathify-1.0.10.tgz#beed8b7b65c16e8832797f765d34d1cff67a4382"
+vuex-pathify@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/vuex-pathify/-/vuex-pathify-1.1.0.tgz#a908d5c9cd85ac42212332182f5ba9f060948fec"
   dependencies:
     lodash.clonedeep "^4.5.0"
 
