@@ -15,8 +15,7 @@
           <bloodtype-picker v-model="sv.BloodType"/>
           <md-subheader>Tempat Tanggal Lahir</md-subheader>
           <birthdateplace-form
-            v-model="birthDatePlace"
-            title="Alamat Resmi"/>
+            v-model="birthDatePlace"/>
         </div>
       </div>
       <md-button

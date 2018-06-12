@@ -10,6 +10,7 @@ import RoleAbilities from './RoleAbilities'
 import Users from './Users'
 // employee
 import Persons from './Persons'
+import Address from './Address'
 import AddressHistories from './AddressHistories'
 import ContractTypes from './ContractTypes'
 import Contracts from './Contracts'
@@ -39,6 +40,7 @@ const definitions = [
   JobTitles,
   Almamaters,
   Persons,
+  Address,
   AddressHistories,
   EducationHistories,
   Employees,
