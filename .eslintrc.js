@@ -11,13 +11,16 @@ module.exports = {
   },
   extends: [
     'standard',
-    'plugin:vue/recommended'
+    'plugin:vue/recommended',
+    'plugin:jest/recommended'
   ],
   globals: {
-    __static: true
+    __static: true,
+    'jest/globals': true
   },
   plugins: [
-    'promise'
+    'promise',
+    'jest'
   ],
   'rules': {
     // allow paren-less arrow functions

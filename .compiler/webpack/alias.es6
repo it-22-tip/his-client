@@ -1,8 +1,8 @@
-import { RendererPath, MainPath } from '../constant'
+import { SrcPath, RendererPath, MainPath } from '../constant'
 import path from 'path'
 
 const Ver = 'dev'
-const VueMaterialPath = path.join(RendererPath, 'vue-material', Ver)
+const VueMaterialPath = path.join(SrcPath, 'vue-material', Ver)
 
 const VueMaterialAlias = {
   'components': path.join(VueMaterialPath, 'components'),

@@ -31,7 +31,7 @@
     "pack:main": "cross-env NODE_ENV=production webpack --progress --colors --config .compiler/webpack.main.config.es6",
     "pack:renderer": "cross-env NODE_ENV=production webpack --progress --colors --config .compiler/webpack.renderer.config.es6",
     "postinstall": "electron-builder install-app-deps",
-    "test:jest": "jest",
+    "test:jest": "cross-env BABEL_ENV=test jest",
     "install-app-deps": "cross-env DEBUG=electron-builder electron-builder install-app-deps"
   },
   "browserslist": [
@@ -63,7 +63,8 @@
     "electron-store": "^2.0.0",
     "electron-unhandled": "^1.1.0",
     "emailjs-imap-client": "^3.0.5",
-    "exceljs": "^1.4.12",
+    "eslint-plugin-jest": "^21.17.0",
+    "exceljs": "^1.4.13",
     "fuzzysearch": "^1.0.3",
     "gsap": "^2.0.1",
     "hammerjs": "^2.0.8",
@@ -199,7 +200,7 @@
     "raw-loader": "^0.5.1",
     "sass-loader": "^7.0.3",
     "shelljs": "^0.8.2",
-    "sinon": "^5.1.1",
+    "sinon": "^6.0.0",
     "style-loader": "^0.21.0",
     "uglifyjs-webpack-plugin": "^1.2.5",
     "url-loader": "^1.0.1",
