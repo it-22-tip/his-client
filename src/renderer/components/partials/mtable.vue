@@ -85,6 +85,7 @@ export default {
     },
     clickRight (e) {
       this.$emit('context-menu', e)
+      console.log('clr')
       // $refs.contextMenu.open($event, { Name: item.Name, Id:item.Ein })
     }
   }

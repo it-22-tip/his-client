@@ -7,8 +7,7 @@
     <div class="padding-10">
       <address-form
         v-model="address.officialAddress"
-        type="Official"
-        title="Alamat Resmi"/>
+        type="Official"/>
       <md-switch v-model="itemActive">Alamat Surat</md-switch>
       <address-form
         v-model="address.postalAddress"
