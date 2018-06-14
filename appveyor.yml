@@ -11,16 +11,16 @@ branches:
 
 image:
   - Visual Studio 2015
-  - Ubuntu
+  # - Ubuntu
 
 platform:
   - x86
-  - x64
+  # - x64
 
 matrix:
   exclude:
-  - image: Visual Studio 2015
-    platform: x64
+  # - image: Visual Studio 2015
+  #   platform: x64
   - image: Ubuntu
     platform: x86
 
