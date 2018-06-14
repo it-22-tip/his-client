@@ -52,5 +52,4 @@ test: off
 #   - path: build\*.exe
 #     name: his-client
 
-build: off
 deploy: off
