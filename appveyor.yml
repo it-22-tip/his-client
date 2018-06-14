@@ -35,7 +35,11 @@ cache:
 init:
   - cmd: git config --global core.autocrlf input
 
-stack: node 8
+stack: node 8, python 2.7.14
+
+before_install:
+  - sh: sudo apt-get update
+  - sh: sudo apt-get install libcups2-dev
 
 install:
   - ps: Install-Product node $env:nodejs_version
