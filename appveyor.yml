@@ -34,7 +34,7 @@ cache:
 
 init:
   - sh: sudo apt-get update
-  - sh: sudo apt-get install libcups2-dev
+  - sh: sudo apt-get install -y libcups2-dev
   - cmd: git config --global core.autocrlf input
 
 stack: node 8, python 2.7.14
