@@ -3,6 +3,7 @@ version: 0.1.{build}
 environment:
   nodejs_version: "8.11.2"
   GH_TOKEN: 1FMwnJoqZUKuGuCgElp4LdpmflJIUaODB5elKK8mtkgUPzYApozF4iQ2X7a9vbKt
+  APPVEYOR_YML_DISABLE_PS_LINUX: true
 
 branches:
   only:
@@ -32,7 +33,9 @@ cache:
   # - '%USERPROFILE%\AppData\Local\electron-builder\cache'
 
 init:
-  - git config --global core.autocrlf input
+  - cmd: git config --global core.autocrlf input
+
+stack: node 8
 
 install:
   - ps: Install-Product node $env:nodejs_version
