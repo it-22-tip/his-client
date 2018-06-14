@@ -154,7 +154,7 @@
     "chai": "^4.1.2",
     "chalk": "^2.4.1",
     "copy-webpack-plugin": "^4.5.1",
-    "cross-env": "^5.1.5",
+    "cross-env": "^5.2.0",
     "css-loader": "^0.28.11",
     "css-mqpacker": "^6.0.2",
     "del": "^3.0.0",
