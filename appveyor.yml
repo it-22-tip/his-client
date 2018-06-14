@@ -10,19 +10,19 @@ branches:
     - master
 
 image:
-  # - Visual Studio 2015
+  - Visual Studio 2015
   - Ubuntu
 
 platform:
-  # - x86
+  - x86
   - x64
 
-# matrix:
-#   exclude:
-#   - image: Visual Studio 2015
-#     platform: x64
-#   - image: Ubuntu
-#     platform: x86
+matrix:
+  exclude:
+  - image: Visual Studio 2015
+    platform: x64
+  - image: Ubuntu
+    platform: x86
 
 cache:
   # - node_modules
