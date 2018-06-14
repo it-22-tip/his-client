@@ -8,10 +8,19 @@ branches:
   only:
     - master
 
-image: Visual Studio 2015
+image:
+  - Visual Studio 2015
+  - Ubuntu
 
 platform:
   - x86
+  - x64
+
+matrix:
+  - image: Visual Studio 2015
+    platform: x86
+  - image: Ubuntu
+    platform: x64
 
 cache:
   # - node_modules
@@ -38,16 +47,3 @@ artifacts:
     name: his-client
 
 deploy: off
-  # release: his-client # v$(appveyor_build_version)
-  # description: 'Release description'
-  # provider: GitHub
-  # owner: idnesdotlink
-  # auth_token:
-  #   secure: $env:GH_TOKEN
-  # artifact: build\*.exe
-  # draft: true
-  # prerelease: true
-  # on:
-  #  branch: master
-  #  appveyor_repo_tag: false
-  # force_update: true
