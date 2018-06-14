@@ -17,12 +17,12 @@ platform:
   - x86
   - x64
 
-# matrix:
-  # - fast_finish: true
-  # - image: Visual Studio 2015
-  #   platform: x86
-  # - image: Ubuntu
-  #   platform: x64
+matrix:
+  exclude:
+  - image: Visual Studio 2015
+    platform: x64
+  - image: Ubuntu
+    platform: x86
 
 cache:
   # - node_modules
