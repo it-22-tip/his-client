@@ -1,6 +1,25 @@
 import path from 'path'
 import os from 'os'
 const storage = path.join(os.homedir(), '/.hisdata/db.sqlite')
+const pool = {
+  max: 5,
+  min: 0,
+  acquire: 30000,
+  idle: 10000,
+  handleDisconnects: true
+}
+const retry = {
+  match: [
+    'SequelizeConnectionError',
+    'SequelizeConnectionRefusedError',
+    'SequelizeHostNotFoundError',
+    'SequelizeHostNotReachableError',
+    'SequelizeInvalidConnectionError',
+    'SequelizeConnectionTimedOutError'
+  ]
+}
+const logging = function () {}
+
 const defaultOptions = {
   dialect: 'sqlite',
   operatorsAliases: false,
@@ -13,24 +32,9 @@ const defaultOptions = {
     timestamps: false,
     underscored: false
   },
-  pool: {
-    max: 5,
-    min: 0,
-    acquire: 30000,
-    idle: 10000,
-    handleDisconnects: true
-  },
-  retry: {
-    match: [
-      'SequelizeConnectionError',
-      'SequelizeConnectionRefusedError',
-      'SequelizeHostNotFoundError',
-      'SequelizeHostNotReachableError',
-      'SequelizeInvalidConnectionError',
-      'SequelizeConnectionTimedOutError'
-    ]
-  },
-  logging: () => {}
+  pool: pool,
+  retry: retry,
+  logging: logging
 }
 
 export default defaultOptions
