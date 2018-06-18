@@ -6,80 +6,78 @@ import fs from 'fs'
 import path from 'path'
 import crypto from 'crypto'
 
-const TMPDIR = `/home/it1/.hisdata/tmp`// `./node-pdftk-tmp/`
-// const spawn = require('child_process').spawn
 /**
  * PdfTk Class
  * @class
  */
 class PdfTk {
   /**
-   * PdfTk constructor.
-   * @param {Array} src - Input source file(s).
-   * @param {Array} [tmpFiles] - Array of temp files that have been created while initializing the constructor.
-   * @returns {Object} PdfTk class instance.
-   */
+     * PdfTk constructor.
+     * @param {Array} src - Input source file(s).
+     * @param {Array} [tmpFiles] - Array of temp files that have been created while initializing the constructor.
+     * @returns {Object} PdfTk class instance.
+     */
   constructor (src, tmpFiles) {
     /**
-     * @member
-     * @type {Array}
-     */
+         * @member
+         * @type {Array}
+         */
     this.src = src
 
     /**
-     * @member
-     * @type {Array}
-     */
+         * @member
+         * @type {Array}
+         */
     this.tmpFiles = tmpFiles || []
 
     /**
-     * @member
-     * @type {String}
-     */
+         * @member
+         * @type {String}
+         */
     this.command = 'pdftk'
 
     /**
-     * @member
-     * @type {Array}
-     */
+         * @member
+         * @type {Array}
+         */
     this.args = [].concat(this.src)
 
     /**
-     * @member
-     * @type {Array}
-     */
+         * @member
+         * @type {Array}
+         */
     this.postArgs = []
 
     /**
-     * @member
-     * @private
-     * @type {Boolean}
-     */
+         * @member
+         * @private
+         * @type {Boolean}
+         */
     this._ignoreWarnings = false
 
     return this
   }
 
   /**
-   * Input files and initialize plugin.
-   * @static
-   * @public
-   * @param {String|Array} src - Source files to input.
-   * @returns {Object} PdfTk class instance.
-   */
+     * Input files and initialize plugin.
+     * @static
+     * @public
+     * @param {String|Array} src - Source files to input.
+     * @returns {Object} PdfTk class instance.
+     */
   static input (src) {
     const input = []
     const tmpFiles = []
 
     /**
-     * Write a temp file and save the path for deletion later.
-     * @private
-     * @function
-     * @param {Object} srcFile - Buffer to be written as a temp file.
-     * @returns {String} Path of the newly created temp file.
-     */
+         * Write a temp file and save the path for deletion later.
+         * @private
+         * @function
+         * @param {Object} srcFile - Buffer to be written as a temp file.
+         * @returns {String} Path of the newly created temp file.
+         */
     function writeTempFile (srcFile) {
-      const tmpPath = path.join(__dirname, TMPDIR)
+      const tmpPath = path.join(__dirname, './node-pdftk-tmp/')
       const uniqueId = crypto.randomBytes(16).toString('hex')
       const tmpFile = `${tmpPath}${uniqueId}.pdf`
       fs.writeFileSync(tmpFile, srcFile)
@@ -116,56 +114,56 @@ class PdfTk {
   }
 
   /**
-   * Simple object check. Arrays not included.
-   * @static
-   * @public
-   * @param item - Item to check.
-   * @returns {Boolean} Is object.
-   */
+     * Simple object check. Arrays not included.
+     * @static
+     * @public
+     * @param item - Item to check.
+     * @returns {Boolean} Is object.
+     */
   static isObject (item) {
     return typeof item === 'object' && !Array.isArray(item) && item !== null
   }
 
   /**
-   * Simple string check.
-   * @static
-   * @public
-   * @param item - Item to check.
-   * @returns {Boolean} Is string.
-   */
+     * Simple string check.
+     * @static
+     * @public
+     * @param item - Item to check.
+     * @returns {Boolean} Is string.
+     */
   static isString (item) {
     return typeof item === 'string' || item instanceof String
   }
 
   /**
-   * Returns a buffer from a file.
-   * @static
-   * @public
-   * @param {String|Buffer} file - File to buffer.
-   * @returns {Buffer} Buffered file.
-   */
+     * Returns a buffer from a file.
+     * @static
+     * @public
+     * @param {String|Buffer} file - File to buffer.
+     * @returns {Buffer} Buffered file.
+     */
   static toBuffer (file) {
     file = PdfTk.isString(file) ? fs.readFileSync(file) : file
     return file
   }
 
   /**
-   * Creates fdf file from JSON input.
-   * Converts input values to binary buffer, which seems to allow PdfTk to render utf-8 characters.
-   * @static
-   * @public
-   * @param {Object} data - JSON data to transform to fdf.
-   * @returns {Buffer} Fdf data as a buffer.
-   */
+     * Creates fdf file from JSON input.
+     * Converts input values to binary buffer, which seems to allow PdfTk to render utf-8 characters.
+     * @static
+     * @public
+     * @param {Object} data - JSON data to transform to fdf.
+     * @returns {Buffer} Fdf data as a buffer.
+     */
   static generateFdfFromJSON (data) {
     const header = Buffer.from(
       `%FDF-1.2\n
-      ${String.fromCharCode(226) + String.fromCharCode(227) + String.fromCharCode(207) + String.fromCharCode(211)}\n
-      1 0 obj\n
-      <<\n
-      /FDF\n
-      <<\n
-      /Fields [\n`
+            ${String.fromCharCode(226) + String.fromCharCode(227) + String.fromCharCode(207) + String.fromCharCode(211)}\n
+            1 0 obj\n
+            <<\n
+            /FDF\n
+            <<\n
+            /Fields [\n`
     )
 
     let body = Buffer.from('')
@@ -177,7 +175,7 @@ class PdfTk {
             body,
             Buffer.from(
               `<<\n
-              /T (`
+                            /T (`
             )
           ]
         )
@@ -189,7 +187,7 @@ class PdfTk {
           body,
           Buffer.from(
             `)\n
-            /V (`
+                        /V (`
           )
         ])
         body = Buffer.concat([
@@ -200,7 +198,7 @@ class PdfTk {
           body,
           Buffer.from(
             `)\n
-            >>\n`
+                        >>\n`
           )
         ])
       }
@@ -208,15 +206,15 @@ class PdfTk {
 
     const footer = Buffer.from(
       `]\n
-        >>\n
-        >>\n
-        endobj \n
-        trailer\n
-        \n
-        <<\n
-        /Root 1 0 R\n
-        >>\n
-        %%EOF\n`
+            >>\n
+            >>\n
+            endobj \n
+            trailer\n
+            \n
+            <<\n
+            /Root 1 0 R\n
+            >>\n
+            %%EOF\n`
     )
 
     return Buffer.concat([
@@ -227,12 +225,12 @@ class PdfTk {
   }
 
   /**
-   * Creates pdf info text file from JSON input.
-   * @static
-   * @public
-   * @param {Object} data - JSON data to transform to info file.
-   * @returns {Buffer} Info text file as a buffer.
-   */
+     * Creates pdf info text file from JSON input.
+     * @static
+     * @public
+     * @param {Object} data - JSON data to transform to info file.
+     * @returns {Buffer} Info text file as a buffer.
+     */
   static generateInfoFromJSON (data) {
     const info = []
     for (const prop in data) {
@@ -249,12 +247,12 @@ class PdfTk {
   }
 
   /**
-   * Creates an input command that uses the stdin.
-   * @private
-   * @param {String} command - Command to create.
-   * @param {String|Buffer} file - Stdin file.
-   * @returns {Object} PdfTk class instance.
-   */
+     * Creates an input command that uses the stdin.
+     * @private
+     * @param {String} command - Command to create.
+     * @param {String|Buffer} file - Stdin file.
+     * @returns {Object} PdfTk class instance.
+     */
   _commandWithStdin (command, file) {
     this.stdin = PdfTk.toBuffer(file)
     this.args.push(
@@ -265,26 +263,27 @@ class PdfTk {
   }
 
   /**
-   * Clean up temp files, if created.
-   * @private
-   */
+     * Clean up temp files, if created.
+     * @private
+     */
   _cleanUpTempFiles () {
     if (this.tmpFiles.length) {
-      for (let i = 0; i < this.tmpFiles.length; i++) {
+      for (let i = this.tmpFiles.length - 1; i >= 0; i--) {
         const tmpFile = this.tmpFiles[i]
+        this.tmpFiles.splice(i, 1)
         fs.unlinkSync(tmpFile)
       }
     }
   }
 
   /**
-   * Run the command.
-   * @public
-   * @param {String} writeFile - Path to the output file to write from stdout. If used with the "outputDest" parameter, two files will be written.
-   * @param {String} [outputDest] - The output file to write without stdout. When present, the returning promise will not contain the output buffer. If used with the "writeFile" parameter, two files will be written.
-   * @param {Boolean} [needsOutput=true] - Optional boolean used to disclude the 'output' argument (only used for specific methods).
-   * @returns {Promise} Promise that resolves the output buffer, if "outputDest" is not given.
-   */
+     * Run the command.
+     * @public
+     * @param {String} writeFile - Path to the output file to write from stdout. If used with the "outputDest" parameter, two files will be written.
+     * @param {String} [outputDest] - The output file to write without stdout. When present, the returning promise will not contain the output buffer. If used with the "writeFile" parameter, two files will be written.
+     * @param {Boolean} [needsOutput=true] - Optional boolean used to disclude the 'output' argument (only used for specific methods).
+     * @returns {Promise} Promise that resolves the output buffer, if "outputDest" is not given.
+     */
   output (writeFile, outputDest, needsOutput = true) {
     return new Promise((resolve, reject) => {
       if (needsOutput) {
@@ -302,7 +301,18 @@ class PdfTk {
 
       child.stderr.on('data', data => {
         if (!(this._ignoreWarnings && data.toString().toLowerCase().includes('warning'))) {
-          return reject(data)
+          return reject(data.toString('utf8'))
+        }
+      })
+
+      child.on('error', e => {
+        if (e.code === 'ENOENT') {
+          throw new Error(`
+                    pdftk was called but is not installed on your system.
+                    Install it here: https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/
+                    `)
+        } else {
+          throw e
         }
       })
 
@@ -332,13 +342,13 @@ class PdfTk {
   }
 
   /**
-   * Assembles ("catenates") pages from input PDFs to create a new PDF.
-   * @public
-   * @chainable
-   * @param {String|Array} [catCommand] - Page ranges for cat method.
-   * @returns {Object} PdfTk class instance.
-   * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-op-cat}
-   */
+     * Assembles ("catenates") pages from input PDFs to create a new PDF.
+     * @public
+     * @chainable
+     * @param {String|Array} [catCommand] - Page ranges for cat method.
+     * @returns {Object} PdfTk class instance.
+     * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-op-cat}
+     */
   cat (catCommand) {
     this.args.push(
       'cat'
@@ -355,13 +365,13 @@ class PdfTk {
   }
 
   /**
-   * Collates pages from input PDF to create new PDF.
-   * @public
-   * @chainable
-   * @param {String|Array} [shuffleCommand] - Page ranges for shuffle method.
-   * @returns {Object} PdfTk class instance.
-   * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-op-shuffle}
-   */
+     * Collates pages from input PDF to create new PDF.
+     * @public
+     * @chainable
+     * @param {String|Array} [shuffleCommand] - Page ranges for shuffle method.
+     * @returns {Object} PdfTk class instance.
+     * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-op-shuffle}
+     */
   shuffle (shuffleCommand) {
     this.args.push(
       'shuffle'
@@ -378,12 +388,12 @@ class PdfTk {
   }
 
   /**
-   * Splits a single PDF into individual pages.
-   * @public
-   * @param {String} [outputOptions] - Burst output options for naming conventions.
-   * @returns {Object} PdfTk class instance.
-   * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-op-burst}
-   */
+     * Splits a single PDF into individual pages.
+     * @public
+     * @param {String} [outputOptions] - Burst output options for naming conventions.
+     * @returns {Object} PdfTk class instance.
+     * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-op-burst}
+     */
   burst (outputOptions) {
     this.args.push(
       'burst'
@@ -393,13 +403,13 @@ class PdfTk {
   }
 
   /**
-   * Takes a single input PDF and rotates just the specified pages.
-   * @public
-   * @chainable
-   * @param {String|Array} rotateCommand - Page ranges for rotate command.
-   * @returns {Object} PdfTk class instance.
-   * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-op-rotate}
-   */
+     * Takes a single input PDF and rotates just the specified pages.
+     * @public
+     * @chainable
+     * @param {String|Array} rotateCommand - Page ranges for rotate command.
+     * @returns {Object} PdfTk class instance.
+     * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-op-rotate}
+     */
   rotate (rotateCommand) {
     this.args.push(
       'rotate'
@@ -416,12 +426,12 @@ class PdfTk {
   }
 
   /**
-   * Generate fdf file from input PDF.
-   * @public
-   * @chainable
-   * @returns {Object} PdfTk class instance.
-   * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-op-generate-fdf}
-   */
+     * Generate fdf file from input PDF.
+     * @public
+     * @chainable
+     * @returns {Object} PdfTk class instance.
+     * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-op-generate-fdf}
+     */
   generateFdf () {
     this.args.push(
       'generate_fdf'
@@ -430,73 +440,73 @@ class PdfTk {
   }
 
   /**
-   * Fill a PDF form from JSON data.
-   * @public
-   * @chainable
-   * @param {Object} data - Form fill data.
-   * @returns {Object} PdfTk class instance.
-   * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-op-fill-form}
-   */
+     * Fill a PDF form from JSON data.
+     * @public
+     * @chainable
+     * @param {Object} data - Form fill data.
+     * @returns {Object} PdfTk class instance.
+     * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-op-fill-form}
+     */
   fillForm (data) {
     data = PdfTk.isString(data) ? data : PdfTk.generateFdfFromJSON(data)
     return this._commandWithStdin('fill_form', data)
   }
 
   /**
-   * Applies a PDF watermark to the background of a single PDF.
-   * @public
-   * @chainable
-   * @param {String|Buffer} file - PDF file that contains the background to be applied.
-   * @returns {Object} PdfTk class instance.
-   * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-op-background}
-   */
+     * Applies a PDF watermark to the background of a single PDF.
+     * @public
+     * @chainable
+     * @param {String|Buffer} file - PDF file that contains the background to be applied.
+     * @returns {Object} PdfTk class instance.
+     * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-op-background}
+     */
   background (file) {
     return this._commandWithStdin('background', file)
   }
 
   /**
-   * Same as the background operation, but applies each page of the background PDF to the corresponding page of the input PDF.
-   * @public
-   * @chainable
-   * @param {String|Buffer} file - PDF file that contains the background to be applied.
-   * @returns {Object} PdfTk class instance.
-   * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-op-multibackground}
-   */
+     * Same as the background operation, but applies each page of the background PDF to the corresponding page of the input PDF.
+     * @public
+     * @chainable
+     * @param {String|Buffer} file - PDF file that contains the background to be applied.
+     * @returns {Object} PdfTk class instance.
+     * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-op-multibackground}
+     */
   multiBackground (file) {
     return this._commandWithStdin('multibackground', file)
   }
 
   /**
-   * This behaves just like the background operation except it overlays the stamp PDF page on top of the input PDF document’s pages.
-   * @public
-   * @chainable
-   * @param {String|Buffer} file - PDF file that contains the content to be stamped.
-   * @returns {Object} PdfTk class instance.
-   * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-op-stamp}
-   */
+     * This behaves just like the background operation except it overlays the stamp PDF page on top of the input PDF document’s pages.
+     * @public
+     * @chainable
+     * @param {String|Buffer} file - PDF file that contains the content to be stamped.
+     * @returns {Object} PdfTk class instance.
+     * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-op-stamp}
+     */
   stamp (file) {
     return this._commandWithStdin('stamp', file)
   }
 
   /**
-   * Same as the stamp operation, but applies each page of the stamp PDF to the corresponding page of the input PDF.
-   * @public
-   * @chainable
-   * @param {String|Buffer} file - PDF file that contains the content to be stamped.
-   * @returns {Object} PdfTk class instance.
-   * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-op-multistamp}
-   */
+     * Same as the stamp operation, but applies each page of the stamp PDF to the corresponding page of the input PDF.
+     * @public
+     * @chainable
+     * @param {String|Buffer} file - PDF file that contains the content to be stamped.
+     * @returns {Object} PdfTk class instance.
+     * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-op-multistamp}
+     */
   multiStamp (file) {
     return this._commandWithStdin('multistamp', file)
   }
 
   /**
-   * Outputs PDF bookmarks and metadata.
-   * @public
-   * @chainable
-   * @returns {Object} PdfTk class instance.
-   * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-op-dump-data}
-   */
+     * Outputs PDF bookmarks and metadata.
+     * @public
+     * @chainable
+     * @returns {Object} PdfTk class instance.
+     * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-op-dump-data}
+     */
   dumpData () {
     this.args.push(
       'dump_data'
@@ -505,12 +515,12 @@ class PdfTk {
   }
 
   /**
-   * Outputs PDF bookmarks and metadata with utf-8 encoding.
-   * @public
-   * @chainable
-   * @returns {Object} PdfTk class instance.
-   * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-op-dump-data-utf8}
-   */
+     * Outputs PDF bookmarks and metadata with utf-8 encoding.
+     * @public
+     * @chainable
+     * @returns {Object} PdfTk class instance.
+     * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-op-dump-data-utf8}
+     */
   dumpDataUtf8 () {
     this.args.push(
       'dump_data_utf8'
@@ -519,12 +529,12 @@ class PdfTk {
   }
 
   /**
-   * Outputs form field statistics.
-   * @public
-   * @chainable
-   * @returns {Object} PdfTk class instance.
-   * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-op-dump-data-fields}
-   */
+     * Outputs form field statistics.
+     * @public
+     * @chainable
+     * @returns {Object} PdfTk class instance.
+     * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-op-dump-data-fields}
+     */
   dumpDataFields () {
     this.args.push(
       'dump_data_fields'
@@ -533,12 +543,12 @@ class PdfTk {
   }
 
   /**
-   * Outputs form field statistics with utf-8 encoding.
-   * @public
-   * @chainable
-   * @returns {Object} PdfTk class instance.
-   * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-op-dump-data-fields-utf8}
-   */
+     * Outputs form field statistics with utf-8 encoding.
+     * @public
+     * @chainable
+     * @returns {Object} PdfTk class instance.
+     * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-op-dump-data-fields-utf8}
+     */
   dumpDataFieldsUtf8 () {
     this.args.push(
       'dump_data_fields_utf8'
@@ -547,12 +557,12 @@ class PdfTk {
   }
 
   /**
-   * Outputs PDF annotation information.
-   * @public
-   * @chainable
-   * @returns {Object} PdfTk class instance.
-   * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-op-dump-data-annots}
-   */
+     * Outputs PDF annotation information.
+     * @public
+     * @chainable
+     * @returns {Object} PdfTk class instance.
+     * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-op-dump-data-annots}
+     */
   dumpDataAnnots () {
     this.args.push(
       'dump_data_annots'
@@ -561,39 +571,39 @@ class PdfTk {
   }
 
   /**
-   * Update the bookmarks and metadata of a PDF with utf-8 encoding.
-   * @public
-   * @chainable
-   * @param {Object} data - Update data.
-   * @returns {Object} PdfTk class instance.
-   * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-op-update-info}
-   */
+     * Update the bookmarks and metadata of a PDF with utf-8 encoding.
+     * @public
+     * @chainable
+     * @param {Object} data - Update data.
+     * @returns {Object} PdfTk class instance.
+     * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-op-update-info}
+     */
   updateInfo (data) {
     data = PdfTk.isString(data) ? data : PdfTk.generateInfoFromJSON(data)
     return this._commandWithStdin('update_info', data)
   }
 
   /**
-   * Update the bookmarks and metadata of a PDF.
-   * @public
-   * @chainable
-   * @param {Object} data - Update data.
-   * @returns {Object} PdfTk class instance.
-   * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-op-update-info-utf8}
-   */
+     * Update the bookmarks and metadata of a PDF.
+     * @public
+     * @chainable
+     * @param {Object} data - Update data.
+     * @returns {Object} PdfTk class instance.
+     * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-op-update-info-utf8}
+     */
   updateInfoUtf8 (data) {
     data = PdfTk.isString(data) ? data : PdfTk.generateInfoFromJSON(data)
     return this._commandWithStdin('update_info_utf8', data)
   }
 
   /**
-   * Attach files to PDF.
-   * @public
-   * @chainable
-   * @param {String|Array} files - Files to attach.
-   * @returns {Object} PdfTk class instance.
-   * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-op-attach} for more information.
-   */
+     * Attach files to PDF.
+     * @public
+     * @chainable
+     * @param {String|Array} files - Files to attach.
+     * @returns {Object} PdfTk class instance.
+     * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-op-attach} for more information.
+     */
   attachFiles (files) {
     if (!files || !files.length) throw new Error('The "attachFiles" method requires a file')
 
@@ -615,13 +625,13 @@ class PdfTk {
   }
 
   /**
-   * Unpack files into an output directory. This method is not chainable, and hereby does not require
-   * the output method afterwards.
-   * @public
-   * @param {String} outputDir - Output directory for files.
-   * @returns {Promise} Promise callback
-   * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-op-unpack} for more information.
-   */
+     * Unpack files into an output directory. This method is not chainable, and hereby does not require
+     * the output method afterwards.
+     * @public
+     * @param {String} outputDir - Output directory for files.
+     * @returns {Promise} Promise callback
+     * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-op-unpack} for more information.
+     */
   unpackFiles (outputDir) {
     this.args.push(
       'unpack_files'
@@ -630,13 +640,13 @@ class PdfTk {
   }
 
   /**
-   * Used with the {@link attachFiles} method to attach to a specific page.
-   * @public
-   * @chainable
-   * @param {Number} pageNo - Page number in which to attach.
-   * @returns {Object} PdfTk class instance.
-   * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-op-attach}
-   */
+     * Used with the {@link attachFiles} method to attach to a specific page.
+     * @public
+     * @chainable
+     * @param {Number} pageNo - Page number in which to attach.
+     * @returns {Object} PdfTk class instance.
+     * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-op-attach}
+     */
   toPage (pageNo) {
     this.args.push(
       'to_page',
@@ -646,135 +656,135 @@ class PdfTk {
   }
 
   /**
-   * Merge PDF form fields and their data.
-   * @public
-   * @chainable
-   * @returns {Object} PdfTk class instance.
-   * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-output-flatten}
-   */
+     * Merge PDF form fields and their data.
+     * @public
+     * @chainable
+     * @returns {Object} PdfTk class instance.
+     * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-output-flatten}
+     */
   flatten () {
     this.postArgs.push('flatten')
     return this
   }
 
   /**
-   * Set Adobe Reader to generate new field appearances.
-   * @public
-   * @chainable
-   * @returns {Object} PdfTk class instance.
-   * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-output-need-appearances}
-   */
+     * Set Adobe Reader to generate new field appearances.
+     * @public
+     * @chainable
+     * @returns {Object} PdfTk class instance.
+     * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-output-need-appearances}
+     */
   needAppearances () {
     this.postArgs.push('need_appearances')
     return this
   }
 
   /**
-   * Restore page sream compression.
-   * @public
-   * @chainable
-   * @returns {Object} PdfTk class instance.
-   * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-compress}
-   */
+     * Restore page sream compression.
+     * @public
+     * @chainable
+     * @returns {Object} PdfTk class instance.
+     * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-compress}
+     */
   compress () {
     this.postArgs.push('compress')
     return this
   }
 
   /**
-   * Remove page stream compression.
-   * @public
-   * @chainable
-   * @returns {Object} PdfTk class instance.
-   * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-compress}
-   */
+     * Remove page stream compression.
+     * @public
+     * @chainable
+     * @returns {Object} PdfTk class instance.
+     * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-compress}
+     */
   uncompress () {
     this.postArgs.push('uncompress')
     return this
   }
 
   /**
-   * Keep first ID when combining files.
-   * @public
-   * @chainable
-   * @returns {Object} PdfTk class instance.
-   * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-keep-id}
-   */
+     * Keep first ID when combining files.
+     * @public
+     * @chainable
+     * @returns {Object} PdfTk class instance.
+     * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-keep-id}
+     */
   keepFirstId () {
     this.postArgs.push('keep_first_id')
     return this
   }
 
   /**
-   * Keep final ID when combining pages.
-   * @public
-   * @chainable
-   * @returns {Object} PdfTk class instance.
-   * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-keep-id}
-   */
+     * Keep final ID when combining pages.
+     * @public
+     * @chainable
+     * @returns {Object} PdfTk class instance.
+     * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-keep-id}
+     */
   keepFinalId () {
     this.postArgs.push('keep_final_id')
     return this
   }
 
   /**
-   * Drop all XFA data.
-   * @public
-   * @chainable
-   * @returns {Object} PdfTk class instance.
-   * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-drop-xfa}
-   */
+     * Drop all XFA data.
+     * @public
+     * @chainable
+     * @returns {Object} PdfTk class instance.
+     * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-drop-xfa}
+     */
   dropXfa () {
     this.postArgs.push('drop_xfa')
     return this
   }
 
   /**
-   * Set the verbose option.
-   * @public
-   * @chainable
-   * @returns {Object} PdfTk class instance.
-   * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-verbose}
-   */
+     * Set the verbose option.
+     * @public
+     * @chainable
+     * @returns {Object} PdfTk class instance.
+     * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-verbose}
+     */
   verbose () {
     this.postArgs.push('verbose')
     return this
   }
 
   /**
-   * Never prompt when errors occur.
-   * @public
-   * @chainable
-   * @returns {Object} PdfTk class instance.
-   * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-ask}
-   */
+     * Never prompt when errors occur.
+     * @public
+     * @chainable
+     * @returns {Object} PdfTk class instance.
+     * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-ask}
+     */
   dontAsk () {
     this.postArgs.push('dont_ask')
     return this
   }
 
   /**
-   * Always prompt when errors occur.
-   * @public
-   * @chainable
-   * @returns {Object} PdfTk class instance.
-   * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-ask}
-   */
+     * Always prompt when errors occur.
+     * @public
+     * @chainable
+     * @returns {Object} PdfTk class instance.
+     * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-ask}
+     */
   doAsk () {
     this.postArgs.push('do_ask')
     return this
   }
 
   /**
-   * Set the input password.
-   * @public
-   * @chainable
-   * @param {String} password - Password to set.
-   * @returns {Object} PdfTk class instance.
-   * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-input-pw}
-   */
+     * Set the input password.
+     * @public
+     * @chainable
+     * @param {String} password - Password to set.
+     * @returns {Object} PdfTk class instance.
+     * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-input-pw}
+     */
   inputPw (password) {
-    this.postArgs.push(
+    this.args.push(
       'input_pw',
       password
     )
@@ -782,13 +792,13 @@ class PdfTk {
   }
 
   /**
-   * Set the user password.
-   * @public
-   * @chainable
-   * @param {String} password - Password to set.
-   * @returns {Object} PdfTk class instance.
-   * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-output-enc-user-pw}
-   */
+     * Set the user password.
+     * @public
+     * @chainable
+     * @param {String} password - Password to set.
+     * @returns {Object} PdfTk class instance.
+     * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-output-enc-user-pw}
+     */
   userPw (password) {
     this.postArgs.push(
       'user_pw',
@@ -798,13 +808,13 @@ class PdfTk {
   }
 
   /**
-   * Set the owner password.
-   * @public
-   * @chainable
-   * @param {String} password - Password to set.
-   * @returns {Object} PdfTk class instance.
-   * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-output-enc-owner-pw}
-   */
+     * Set the owner password.
+     * @public
+     * @chainable
+     * @param {String} password - Password to set.
+     * @returns {Object} PdfTk class instance.
+     * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-output-enc-owner-pw}
+     */
   ownerPw (password) {
     this.postArgs.push(
       'owner_pw',
@@ -814,14 +824,14 @@ class PdfTk {
   }
 
   /**
-   * Set permissions for a PDF. By not passing in the "perms" parameter, you are disabling all features.
-   * @public
-   * @chainable
-   * @param {Array|String} [perms] - Permissions to set. Choices are: Printing, DegradedPrinting, ModifyContents,
-   * Assembly, CopyContents, ScreenReaders, ModifyAnnotations, FillIn, AllFeatures. Passing no arguments will disable all.
-   * @returns {Object} PdfTk class instance.
-   * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-output-enc-perms}
-   */
+     * Set permissions for a PDF. By not passing in the "perms" parameter, you are disabling all features.
+     * @public
+     * @chainable
+     * @param {Array|String} [perms] - Permissions to set. Choices are: Printing, DegradedPrinting, ModifyContents,
+     * Assembly, CopyContents, ScreenReaders, ModifyAnnotations, FillIn, AllFeatures. Passing no arguments will disable all.
+     * @returns {Object} PdfTk class instance.
+     * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-output-enc-perms}
+     */
   allow (perms) {
     this.postArgs.push('allow')
     if (perms) {
@@ -833,12 +843,12 @@ class PdfTk {
   }
 
   /**
-   * Set 40 bit encryption.
-   * @public
-   * @chainable
-   * @returns {Object} PdfTk class instance.
-   * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-output-enc-strength}
-   */
+     * Set 40 bit encryption.
+     * @public
+     * @chainable
+     * @returns {Object} PdfTk class instance.
+     * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-output-enc-strength}
+     */
   encrypt40Bit () {
     this.postArgs.push(
       'encrypt_40bit'
@@ -847,12 +857,12 @@ class PdfTk {
   }
 
   /**
-   * Set 128 bit encryption.
-   * @public
-   * @chainable
-   * @returns {Object} PdfTk class instance.
-   * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-output-enc-strength}
-   */
+     * Set 128 bit encryption.
+     * @public
+     * @chainable
+     * @returns {Object} PdfTk class instance.
+     * @see {@link https://www.pdflabs.com/docs/pdftk-man-page/#dest-output-enc-strength}
+     */
   encrypt128Bit () {
     this.postArgs.push(
       'encrypt_128bit'
@@ -861,11 +871,11 @@ class PdfTk {
   }
 
   /**
-   * Allows the plugin to ignore the PDFTK warnings. Useful with huge PDF files.
-   * @public
-   * @chainable
-   * @returns {Object} PdfTk class instance.
-   */
+     * Allows the plugin to ignore the PDFTK warnings. Useful with huge PDF files.
+     * @public
+     * @chainable
+     * @returns {Object} PdfTk class instance.
+     */
   ignoreWarnings () {
     this._ignoreWarnings = true
     return this
