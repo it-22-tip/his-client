@@ -51,7 +51,9 @@ function dataHandler (newData, oldData) {
       }
       chart.update()
     } else {
-      chart.destroy()
+      if (chart) {
+        chart.destroy()
+      }
       this.renderChart(this.chartData, this.options)
     }
   } else {
@@ -77,9 +79,7 @@ export const reactiveData = {
 export const reactiveProp = {
   props: {
     chartData: {
-      type: Object,
-      required: true,
-      default: () => {}
+      required: true
     }
   },
   watch: {

@@ -1,10 +1,10 @@
 <template>
   <div>
-  <md-button
-    class="md-raised"
-    @click="$emit('back')">Back</md-button>
-  <md-button
-    class="md-raised"
-    @click="$emit('forth')">Next</md-button>
+    <md-button
+      class="md-raised"
+      @click="$emit('back')">Back</md-button>
+    <md-button
+      class="md-raised"
+      @click="$emit('forth')">Next</md-button>
   </div>
 </template>
