@@ -55,7 +55,7 @@
     "chart.js": "^2.7.2",
     "color": "^3.0.0",
     "d3": "^5.5.0",
-    "date-fns": "^1.29.0",
+    "date-fns": "^v2.0.0-alpha.10",
     "deepmerge": "^2.1.1",
     "diff": "^3.5.0",
     "diff-match-patch": "^1.0.1",
