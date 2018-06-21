@@ -42,11 +42,13 @@ const associations = function (models) {
   Persons.hasMany(AddressHistories)
   AddressHistories.belongsTo(Persons)
 
-  AddressHistories.hasOne(Addresses, {foreignKey: 'OfficialAddressId', sourceKey: 'Id', as: 'AddressHistoriesOfficialAddress'})
-  AddressHistories.hasOne(Addresses, {foreignKey: 'PostalAddressId', sourceKey: 'Id', as: 'AddressHistoriesPostalAddress'})
+  // AddressHistories.belongsTo(Addresses); // Will add AddressId to AddressHistories
 
-  Addresses.belongsTo(AddressHistories, {foreignKey: 'OfficialAddressId', targetKey: 'Id', as: 'OfficialAddressAddressHistories'})
-  Addresses.belongsTo(AddressHistories, {foreignKey: 'PostalAddressId', targetKey: 'Id', as: 'PostalAddressAddressHistories'})
+  Addresses.hasOne(AddressHistories, {foreignKey: 'OfficialAddressId', sourceKey: 'Id', as: 'AddressHistoriesOfficialAddress'})
+  Addresses.hasOne(AddressHistories, {foreignKey: 'PostalAddressId', sourceKey: 'Id', as: 'AddressHistoriesPostalAddress'})
+
+  // AddressHistories.belongsTo(Addresses, {foreignKey: 'OfficialAddressId', targetKey: 'Id', as: 'OfficialAddressAddressHistories'})
+  // AddressHistories.belongsTo(Addresses, {foreignKey: 'PostalAddressId', targetKey: 'Id', as: 'PostalAddressAddressHistories'})
 
   /* Persons.belongsToMany(LicenseTypes, {through: Licenses, foreignKey: 'PersonId'})
   LicenseTypes.belongsToMany(Persons, {through: Licenses, foreignKey: 'LicenseTypeId'}) */
@@ -62,8 +64,11 @@ const associations = function (models) {
   EducationHistories.hasOne(Almamaters, {foreignKey: 'AlmamatersId', sourceKey: 'Id'})
   Almamaters.belongsTo(EducationHistories, {foreignKey: 'AlmamatersId', targetKey: 'Id'})
 
-  Villages.hasMany(AddressHistories, {foreignKey: 'VillageCode', sourceKey: 'Code', as: 'VillageAddress'})
-  AddressHistories.belongsTo(Villages, {foreignKey: 'VillageCode', targetKey: 'Code', as: 'AddressVillage'})
+  // Villages.hasMany(AddressHistories, {foreignKey: 'VillageCode', sourceKey: 'Code', as: 'VillageAddress'})
+  // AddressHistories.belongsTo(Villages, {foreignKey: 'VillageCode', targetKey: 'Code', as: 'AddressVillage'})
+
+  // Person.hasMany
+
   JobTitles.hasMany(Employees, {foreignKey: 'JobTitleId', sourceKey: 'Id'})
   Employees.belongsTo(JobTitles, {foreignKey: 'JobTitleId', targetKey: 'Id'})
   Persons.hasOne(Employees, {foreignKey: 'PersonId', sourceKey: 'Id'})
