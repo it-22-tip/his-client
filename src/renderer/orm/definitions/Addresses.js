@@ -1,5 +1,5 @@
 import { DataTypes } from 'sequelize'
-const tableName = 'Address'
+const tableName = 'Addresses'
 const attributes = {
   Id: {
     type: DataTypes.INTEGER(),

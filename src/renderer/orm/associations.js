@@ -13,7 +13,7 @@
 
 const associations = function (models) {
   const {
-    Address,
+    Addresses,
     AddressHistories,
     Almamaters,
     Districts,
@@ -42,11 +42,11 @@ const associations = function (models) {
   Persons.hasMany(AddressHistories)
   AddressHistories.belongsTo(Persons)
 
-  AddressHistories.hasOne(Address, {foreignKey: 'OfficialAddressId', sourceKey: 'Id', as: 'AddressHistoriesOfficialAddress'})
-  AddressHistories.hasOne(Address, {foreignKey: 'PostalAddressId', sourceKey: 'Id', as: 'AddressHistoriesPostalAddress'})
+  AddressHistories.hasOne(Addresses, {foreignKey: 'OfficialAddressId', sourceKey: 'Id', as: 'AddressHistoriesOfficialAddress'})
+  AddressHistories.hasOne(Addresses, {foreignKey: 'PostalAddressId', sourceKey: 'Id', as: 'AddressHistoriesPostalAddress'})
 
-  Address.belongsTo(AddressHistories, {foreignKey: 'OfficialAddressId', targetKey: 'Id', as: 'OfficialAddressAddressHistories'})
-  Address.belongsTo(AddressHistories, {foreignKey: 'PostalAddressId', targetKey: 'Id', as: 'PostalAddressAddressHistories'})
+  Addresses.belongsTo(AddressHistories, {foreignKey: 'OfficialAddressId', targetKey: 'Id', as: 'OfficialAddressAddressHistories'})
+  Addresses.belongsTo(AddressHistories, {foreignKey: 'PostalAddressId', targetKey: 'Id', as: 'PostalAddressAddressHistories'})
 
   /* Persons.belongsToMany(LicenseTypes, {through: Licenses, foreignKey: 'PersonId'})
   LicenseTypes.belongsToMany(Persons, {through: Licenses, foreignKey: 'LicenseTypeId'}) */

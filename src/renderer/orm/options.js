@@ -22,7 +22,6 @@ const logging = function () {}
 
 const defaultOptions = {
   dialect: 'sqlite',
-  operatorsAliases: false,
   storage: storage,
   define: {
     charset: 'utf8mb4',

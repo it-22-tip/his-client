@@ -246,6 +246,7 @@ export default {
             try {
               await model.bulkCreate(seed, options)
               this.message = 'Seeding Table: ' + current
+              console.log(this.message)
               this.percentage++
             } catch (error) {
               throw error
