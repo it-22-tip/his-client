@@ -5,13 +5,16 @@
     :md-sort-order.sync="activeOrder"
     :md-sort-fn="sortFunction"
     class="right-table"
-    md-fixed-header>
+    md-fixed-header
+    @md-selected="onSelect">
     <md-table-row
       slot="md-table-row"
       slot-scope="{ item }"
       class="trow"
       tabindex="0"
-      @click.right="clickRight">
+      md-selectable="single"
+      @click.right="clickRight"
+      @click.left="clickLeft">
       <md-table-cell
         v-for="cell in tableCell"
         :key="cell.MdLabel"
@@ -85,8 +88,14 @@ export default {
     },
     clickRight (e) {
       this.$emit('context-menu', e)
-      console.log('clr')
+      console.log(e)
       // $refs.contextMenu.open($event, { Name: item.Name, Id:item.Ein })
+    },
+    clickLeft (e) {
+      console.log('click left')
+    },
+    onSelect (e) {
+      console.log('on select')
     }
   }
 }

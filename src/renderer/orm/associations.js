@@ -44,6 +44,26 @@ const associations = function (models) {
 
   // AddressHistories.belongsTo(Addresses); // Will add AddressId to AddressHistories
 
+  /* Persons.hasMany(Addresses, {
+    through: {
+      model: AddressHistories,
+      unique: false
+    },
+    as: 'PersonOfficialAddress',
+    foreignKey: 'OfficialAddressId',
+    constraints: false
+  })
+
+  Persons.hasMany(Addresses, {
+    through: {
+      model: AddressHistories,
+      unique: false
+    },
+    as: 'PersonPostalAddress',
+    foreignKey: 'PostalAddressId',
+    constraints: false
+  }) */
+
   Addresses.hasOne(AddressHistories, {foreignKey: 'OfficialAddressId', sourceKey: 'Id', as: 'AddressHistoriesOfficialAddress'})
   Addresses.hasOne(AddressHistories, {foreignKey: 'PostalAddressId', sourceKey: 'Id', as: 'AddressHistoriesPostalAddress'})
 
