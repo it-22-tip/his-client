@@ -1,29 +1,36 @@
 <template>
-  <md-table
-    v-model="value"
-    :md-sort.sync="activeSort"
-    :md-sort-order.sync="activeOrder"
-    :md-sort-fn="sortFunction"
-    class="right-table"
-    md-fixed-header
-    @md-selected="onSelect">
-    <md-table-row
-      slot="md-table-row"
-      slot-scope="{ item }"
-      class="trow"
-      tabindex="0"
-      md-selectable="single"
-      @click.right="clickRight"
-      @click.left="clickLeft">
-      <md-table-cell
-        v-for="cell in tableCell"
-        :key="cell.MdLabel"
-        :md-label="cell.MdLabel"
-        :md-sort-by="cell.MdSortBy">
-        {{ item[cell.Data] }}
-      </md-table-cell>
-    </md-table-row>
-  </md-table>
+  <div class="mmm">
+    <md-table
+      v-model="value"
+      :md-sort.sync="activeSort"
+      :md-sort-order.sync="activeOrder"
+      :md-sort-fn="sortFunction"
+      class="right-table"
+      md-fixed-header
+      @md-selected="onSelect">
+      <md-table-row
+        slot="md-table-row"
+        slot-scope="{ item }"
+        class="trow"
+        tabindex="0"
+        md-selectable="single"
+        @click.right="clickRight($event, item)"
+        @click.left="clickLeft">
+        <md-table-cell
+          v-for="cell in tableCell"
+          :key="cell.MdLabel"
+          :md-label="cell.MdLabel"
+          :md-sort-by="cell.MdSortBy">
+          {{ item[cell.Data] }}
+        </md-table-cell>
+      </md-table-row>
+    </md-table>
+    <context-menu
+      ref="contextMenu"
+      @ctx-open="onCtxOpen">
+      <h3>Context Menu</h3>
+    </context-menu>
+  </div>
 </template>
 
 <script>
@@ -82,14 +89,15 @@ export default {
     sortFunction (value) {
       return value.sort((left, right) => { return -1 })
     },
-    onCtxOpen () {
+    onCtxOpen (local) {
+      console.log(local)
     },
     clickEdit () {
     },
-    clickRight (e) {
-      this.$emit('context-menu', e)
-      console.log(e)
-      // $refs.contextMenu.open($event, { Name: item.Name, Id:item.Ein })
+    clickRight (e, item) {
+      console.log(this)
+      // this.$emit('context-menu', item)
+      this.$refs.contextMenu.open(e, 'opened')
     },
     clickLeft (e) {
       console.log('click left')
@@ -102,6 +110,10 @@ export default {
 </script>
 
 <style lang="scss">
+.mmm {
+  height: 100%;
+  position: relative;
+}
 .trow:focus {
   outline: none;
 }

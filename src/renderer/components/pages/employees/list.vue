@@ -7,7 +7,8 @@
         :sort="activeSort"
         :order="activeOrder"
         @change-sort="changePage({ sort: $event })"
-        @change-order="changePage({ order: $event })"/>
+        @change-order="changePage({ order: $event })"
+        @context-menu="test"/>
     </md-content>
     <toolbar
       :total="totalPage"
@@ -21,11 +22,13 @@ import orm from '@/mixins/orm'
 import paginated from '@/mixins/paginated'
 import populate from '@/mixins/populate'
 import { map } from 'lodash'
+import '@extras/contextmenu/ctx-menu.css'
 export default {
   components: {
     'layout-one': () => import('@partials/layout-one'),
     'mtable': () => import('@partials/mtable'),
     'toolbar': () => import('@partials/toolbar')
+    // 'context-menu': () => import('@extras/contextmenu')
   },
   mixins: [
     orm,
@@ -35,6 +38,7 @@ export default {
   data () {
     return {
       model: [],
+      contextMenuData: {},
       tableCell: [
         {
           MdLabel: 'NIP',
@@ -68,6 +72,12 @@ export default {
     this.activeSort = 'Name'
   },
   methods: {
+    onCtxOpen (locals) {
+      this.contextMenuData = locals
+    },
+    test (e) {
+      // this.$refs.contextMenu.open(e)
+    },
     getOrder (Model) {
       let order = null
       let cs = this.activeSort
