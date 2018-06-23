@@ -8,12 +8,17 @@
         :order="activeOrder"
         @change-sort="changePage({ sort: $event })"
         @change-order="changePage({ order: $event })"
-        @context-menu="test"/>
+        @click="click"/>
     </md-content>
     <toolbar
       :total="totalPage"
       :page="activePage"
       @change-page="changePage({ page: $event })"/>
+    <context-menu
+      ref="contextMenu"
+      @ctx-open="onCtxOpen">
+      <h3>{{ contextMenuData.Name }}</h3>
+    </context-menu>
   </md-content>
 </template>
 
@@ -27,8 +32,8 @@ export default {
   components: {
     'layout-one': () => import('@partials/layout-one'),
     'mtable': () => import('@partials/mtable'),
-    'toolbar': () => import('@partials/toolbar')
-    // 'context-menu': () => import('@extras/contextmenu')
+    'toolbar': () => import('@partials/toolbar'),
+    'context-menu': () => import('@extras/contextmenu')
   },
   mixins: [
     orm,
@@ -72,11 +77,12 @@ export default {
     this.activeSort = 'Name'
   },
   methods: {
-    onCtxOpen (locals) {
-      this.contextMenuData = locals
+    onCtxOpen (data) {
+      this.contextMenuData = data
     },
-    test (e) {
-      // this.$refs.contextMenu.open(e)
+    click (e) {
+      const { $event, item } = e
+      this.$refs.contextMenu.open($event, item)
     },
     getOrder (Model) {
       let order = null

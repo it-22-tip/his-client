@@ -6,16 +6,14 @@
       :md-sort-order.sync="activeOrder"
       :md-sort-fn="sortFunction"
       class="right-table"
-      md-fixed-header
-      @md-selected="onSelect">
+      md-fixed-header>
       <md-table-row
         slot="md-table-row"
         slot-scope="{ item }"
         class="trow"
         tabindex="0"
-        md-selectable="single"
-        @click.right="clickRight($event, item)"
-        @click.left="clickLeft">
+        @click.right="$emit('click',{ $event, item})"
+        @click.left="$emit('click',{ $event, item})">
         <md-table-cell
           v-for="cell in tableCell"
           :key="cell.MdLabel"
@@ -25,11 +23,6 @@
         </md-table-cell>
       </md-table-row>
     </md-table>
-    <context-menu
-      ref="contextMenu"
-      @ctx-open="onCtxOpen">
-      <h3>Context Menu</h3>
-    </context-menu>
   </div>
 </template>
 
@@ -90,14 +83,12 @@ export default {
       return value.sort((left, right) => { return -1 })
     },
     onCtxOpen (local) {
-      console.log(local)
-    },
-    clickEdit () {
+      // console.log(local)
     },
     clickRight (e, item) {
-      console.log(this)
+      // console.log(this)
       // this.$emit('context-menu', item)
-      this.$refs.contextMenu.open(e, 'opened')
+      // this.$refs.contextMenu.open(e, 'opened')
     },
     clickLeft (e) {
       console.log('click left')
