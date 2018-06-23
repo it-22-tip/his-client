@@ -17,7 +17,7 @@
     <context-menu
       ref="contextMenu"
       @ctx-open="onCtxOpen">
-      <h3>{{ contextMenuData.Name }}</h3>
+      <p>{{ contextMenuData.Name }}</p>
     </context-menu>
   </md-content>
 </template>

@@ -12,8 +12,7 @@
         slot-scope="{ item }"
         class="trow"
         tabindex="0"
-        @click.right="$emit('click',{ $event, item})"
-        @click.left="$emit('click',{ $event, item})">
+        @click.right="$emit('click',{ $event, item})">
         <md-table-cell
           v-for="cell in tableCell"
           :key="cell.MdLabel"

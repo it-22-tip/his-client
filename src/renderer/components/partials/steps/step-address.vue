@@ -6,11 +6,12 @@
     md-label="Alamat">
     <div class="padding-10">
       <address-form
-        v-model="address.officialAddress"
+        v-model="officialAddress"
         type="Official"/>
-      <md-switch v-model="itemActive">Alamat Surat</md-switch>
+      <md-switch v-model="hasPostalAddress">Alamat Surat</md-switch>
       <address-form
-        v-model="address.postalAddress"
+        v-model="postalAddress"
+        :disabled="!hasPostalAddress"
         type="Postal"
         title="Alamat Surat"/>
       <md-button
@@ -49,7 +50,7 @@ export default {
     return {
       officialAddress: {},
       postalAddress: {},
-      itemActive: false
+      hasPostalAddress: false
     }
   },
   computed: {
@@ -60,13 +61,21 @@ export default {
       set (value) {
         console.log(value)
       }
+    }
+  },
+  validations: {
+
+  },
+  watch: {
+    officialAddress: {
+      handler: function (value) {
+        console.log(value)
+      },
+      deep: true
     },
     hasPostalAddress: {
-      get () {
-        return false
-      },
-      set () {
-
+      handler: function (value) {
+        console.log(value)
       }
     }
   },

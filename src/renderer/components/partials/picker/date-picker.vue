@@ -37,8 +37,10 @@ export default {
   },
   methods: {
     onInput ($event) {
-      let ret = moment($event).format('YYYY-MM-DD')
-      this.$emit('input', ret)
+      console.log('input')
+      let ret = moment($event)
+      this.model = ret.toDate()
+      this.$emit('input', ret.format('YYYY-MM-DD'))
     },
     async setData () {
       await this.$nextTick()

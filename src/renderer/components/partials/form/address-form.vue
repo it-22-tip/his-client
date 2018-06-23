@@ -3,22 +3,27 @@
     <md-subheader>{{ formTitle }}</md-subheader>
     <div>
       <div>
-        <province-picker v-model="ProvinceCode"/>
+        <province-picker
+          v-model="ProvinceCode"
+          :disabled="disabled"/>
       </div>
       <div>
         <regency-picker
           v-model="RegencyCode"
-          :where-code="ProvinceCode"/>
+          :where-code="ProvinceCode"
+          :disabled="disabled"/>
       </div>
       <div>
         <district-picker
           v-model="DistrictCode"
-          :where-code="RegencyCode"/>
+          :where-code="RegencyCode"
+          :disabled="disabled"/>
       </div>
       <div>
         <village-picker
           v-model="VillageCode"
-          :where-code="DistrictCode"/>
+          :where-code="DistrictCode"
+          :disabled="disabled"/>
       </div>
     </div>
     <div>
