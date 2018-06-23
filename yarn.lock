@@ -12827,9 +12827,9 @@ xlsx@^0.12.4:
     exit-on-epipe "~1.0.1"
     ssf "~0.10.2"
 
-xlsx@^0.13.0:
-  version "0.13.0"
-  resolved "https://registry.yarnpkg.com/xlsx/-/xlsx-0.13.0.tgz#2b933690abf137e8ad9253764c73018b100cde43"
+xlsx@^0.13.1:
+  version "0.13.1"
+  resolved "https://registry.yarnpkg.com/xlsx/-/xlsx-0.13.1.tgz#65cfa245e1af858ece5ba22baa11d19a46e9b400"
   dependencies:
     adler-32 "~1.2.0"
     cfb "~1.0.7"
