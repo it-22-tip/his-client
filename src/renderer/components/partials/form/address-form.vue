@@ -34,6 +34,7 @@
           <label>RW</label>
           <md-input
             v-model="Rt"
+            :disabled="disabled"
             type="number"
             max="20"
             min="0"/>
@@ -46,6 +47,7 @@
           <label>RW</label>
           <md-input
             v-model="Rw"
+            :disabled="disabled"
             type="number"
             max="20"
             min="0"/>
@@ -55,7 +57,8 @@
     <md-field>
       <label>Dusun/Perumahan/Jalan</label>
       <md-input
-        v-model="Address"/>
+        v-model="Address"
+        :disabled="disabled"/>
     </md-field>
   </div>
 </template>

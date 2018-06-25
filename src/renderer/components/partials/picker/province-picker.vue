@@ -10,8 +10,7 @@ export default {
       classes: 'province-picker',
       label: 'Prov',
       modelName: 'Provinces',
-      checkWhere: false,
-      disabled: false
+      checkWhere: false
     }
   }
 }

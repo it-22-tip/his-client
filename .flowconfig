@@ -1,3 +1,5 @@
+[options]
+include_warnings=true
 [ignore]
 .*/__tests__/.*
 .*\.test\.js

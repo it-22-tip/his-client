@@ -12,6 +12,10 @@ export default {
     whereCode: {
       type: String,
       default: null
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
   data: () => ({
@@ -19,7 +23,6 @@ export default {
     selected: '',
     items: [{ Code: 0, Name: 'Tidak Ada Data' }],
     connection: null,
-    disabled: true,
     where: null
   }),
   template: `

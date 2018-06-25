@@ -115,6 +115,7 @@
     "vue": "^2.5.16",
     "vue-awesome-swiper": "^3.1.3",
     "vue-electron": "^1.0.6",
+    "vue-focus-lock": "^1.2.0",
     "vue-markdown": "^2.2.4",
     "vue-mousetrap": "^1.0.1",
     "vue-responsive-components": "^0.2.3",
