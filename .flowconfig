@@ -1,5 +1,7 @@
 [options]
 include_warnings=true
+module.file_ext=.vue
+module.file_ext=.js
 [ignore]
 .*/__tests__/.*
 .*\.test\.js
