@@ -1,88 +1,73 @@
 <template>
-  <div class="education-form">
-    <md-list>
-      <md-list-item
-        v-for="item in form"
-        :key="item.title"
-        :style="{ background: item.active ? 'transparent' : '#cccccc' }">
-        <md-switch v-model="item.active">{{ item.title }}</md-switch>
-        <div class="md-layout cdc">
-          <div class="md-layout-item md-size-25">
-            <md-radio
-              v-model="notification"
-              :value="item.title"/>
-          </div>
-          <div class="md-layout-item md-size-25">
-            <almamater-picker v-model="item.model.RegencyCode"/>
-          </div>
-          <div class="md-layout-item md-size-50">
-            <md-field>
-              <label>Almamater</label>
-              <md-input :disabled="!item.active"/>
-            </md-field>
-          </div>
-        </div>
-      </md-list-item>
-    </md-list>
+  <div>
+    <div v-if="db.length > 0">
+      <p
+        v-for="itm in db"
+        :key="itm.id">
+        {{ itm.id }}
+        {{ itm.level }}
+        <md-button
+          class="md-raised"
+          @click="remove(itm)">
+          -
+        </md-button>
+      </p>
+    </div>
+    <div>
+      <md-button
+        class="md-raised md-primary"
+        @click="add">
+        +
+      </md-button>
+      <md-field>
+        <label for="movie">Movie</label>
+        <md-select
+          id="movie"
+          v-model="selected"
+          name="movie">
+          <md-option value="SD">SD</md-option>
+          <md-option value="SMP">SMP</md-option>
+          <md-option value="SMA">SMA</md-option>
+          <md-option value="D3">D3</md-option>
+          <md-option value="S1">S1</md-option>
+        </md-select>
+      </md-field>
+    </div>
   </div>
 </template>
+
 <script>
+import { filter, random } from 'lodash'
 export default {
   name: 'EducationForm',
-  components: {
-    'almamater-picker': () => import('@partials/picker/almamater-picker')
-  },
   data () {
     return {
-      notification: null,
-      form: [
+      db: [
         {
-          title: 'SD',
-          active: false,
-          model: {
-            Name: null,
-            Level: 'SD',
-            RegencyCode: {
-              BirthDate: '',
-              BirthPlaceRegency: ''
-            }
-          }
-        },
-        {
-          title: 'SMP',
-          active: false,
-          model: {
-            Name: null,
-            Level: 'SMP',
-            RegencyCode: null
-          }
-        },
-        {
-          title: 'SMA',
-          active: false,
-          model: {
-            Name: null,
-            Level: 'SMA',
-            RegencyCode: null
-          }
-        },
-        {
-          title: 'S1',
-          active: false,
-          model: {
-            Name: null,
-            Level: 'S1',
-            RegencyCode: null
-          }
+          id: 1,
+          level: 'SD'
         }
-      ]
+      ],
+      selected: null
+    }
+  },
+  methods: {
+    add () {
+      let z = [{
+        id: random(0, 100),
+        level: this.selected
+      }]
+      console.log(z)
+      this.db = this.db.concat(z)
+      console.log(this.db)
+    },
+    remove (itm) {
+      console.log('remove ' + itm.id)
+      let a = filter(this.db, function (el) {
+        return el.id !== itm.id
+      })
+      this.db = a
     }
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.cdc {
-  flex: 1;
-}
-</style>
