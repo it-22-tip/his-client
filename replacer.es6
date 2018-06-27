@@ -2,7 +2,7 @@
 // $1$2($3)).toContain($3)
 // /avoriaz/
 import path from 'path'
-import { readdir as fsreaddir, stat as fsstat } from 'fs'
+import { readdir as fsreaddir, stat as fsstat, writeFileSync, unlinkSync } from 'fs'
 import { readFile } from './src/renderer/helpers/files'
 const readdir = Promise.promisify(fsreaddir)
 const stat = Promise.promisify(fsstat)
@@ -14,13 +14,22 @@ const recur = async function (dir) {
       let pathToFile = path.resolve(dir + '/' + fileName)
       let fileStat = await stat(pathToFile)
       if (fileStat.isFile()) {
+        let re2 = /.*\.change2?$/
+        if (re2.test(pathToFile)) unlinkSync(pathToFile)
         let re = /.*\.test\.js$/
         if (!re.test(pathToFile)) continue
         let content = await readFile(pathToFile)
         content = content.toString()
         // console.log(content.search(/avoriaz/))
+        content = content.replace(/(\w+\.)(hasClass)\((['\w-]+).+/, '$1classes($3)).toContain($3)')
+        /* try {
+          unlinkSync(pathToFile + '.change')
+          unlinkSync(pathToFile + '.change2')
+        } catch (e) {
+          console.log(e)
+        } */
+        // writeFileSync(pathToFile + '.bak', content, {encoding: 'utf8'})
 
-        if (content.search(/(\w+\.)(hasClass)\((['\w-]+).+/) === -1) console.log(pathToFile)
         fileNames.push(pathToFile)
       } else {
         await getAllFile(pathToFile)
