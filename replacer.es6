@@ -1,5 +1,6 @@
 // (\w+\.)(hasClass)\((['\w-]+).+
 // $1$2($3)).toContain($3)
+// /avoriaz/
 import path from 'path'
 import { readdir as fsreaddir, stat as fsstat } from 'fs'
 import { readFile } from './src/renderer/helpers/files'
@@ -17,7 +18,9 @@ const recur = async function (dir) {
         if (!re.test(pathToFile)) continue
         let content = await readFile(pathToFile)
         content = content.toString()
-        console.log(content.search(/avoriaz/))
+        // console.log(content.search(/avoriaz/))
+
+        if (content.search(/(\w+\.)(hasClass)\((['\w-]+).+/) === -1) console.log(pathToFile)
         fileNames.push(pathToFile)
       } else {
         await getAllFile(pathToFile)

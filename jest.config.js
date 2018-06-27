@@ -1,7 +1,7 @@
 module.exports = {
   verbose: true,
   testPathIgnorePatterns: [
-    '<rootDir>/src/vue-material/'
+    // '<rootDir>/src/vue-material/'
   ],
   testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(vue|js)$',
   'moduleFileExtensions': [
@@ -9,9 +9,9 @@ module.exports = {
     'vue'
   ],
   'moduleNameMapper': {
-    // '^vue$': '<rootDir>/node_modules/vue/dist/vue.common.js',
-    // '^vue-material(.*)$': '<rootDir>/src$1',
-    // '^test(.*)$': '<rootDir>/test$1',
+    '^vue$': '<rootDir>/node_modules/vue/dist/vue.common.js',
+    '^vue-material(.*)$': '<rootDir>/src/vue-material/dev$1',
+    '^test(.*)$': '<rootDir>/test$1'
     // '^src(.*)$': '<rootDir>/src$1',
     // '^theme(.*)$': '<rootDir>/src/theme$1',
     // '^base(.*)$': '<rootDir>/src/base$1',
