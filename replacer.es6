@@ -14,8 +14,6 @@ const recur = async function (dir) {
       let pathToFile = path.resolve(dir + '/' + fileName)
       let fileStat = await stat(pathToFile)
       if (fileStat.isFile()) {
-        let re2 = /.*\.change2?$/
-        if (re2.test(pathToFile)) unlinkSync(pathToFile)
         let re = /.*\.test\.js$/
         if (!re.test(pathToFile)) continue
         let content = await readFile(pathToFile)
@@ -23,8 +21,8 @@ const recur = async function (dir) {
         // console.log(content.search(/avoriaz/))
         content = content.replace(/(\w+\.)(hasClass)\((['\w-]+).+/, '$1classes($3)).toContain($3)')
         /* try {
-          unlinkSync(pathToFile + '.change')
-          unlinkSync(pathToFile + '.change2')
+          unlinkSync(pathToFile)
+          unlinkSync(pathToFile)
         } catch (e) {
           console.log(e)
         } */
