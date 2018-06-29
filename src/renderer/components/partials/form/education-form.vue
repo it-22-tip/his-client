@@ -34,17 +34,16 @@
           </md-option>
         </md-select>
       </md-field>
+      <div>
+        <almamater-regency-picker v-model="current.regencyId"/>
+      </div>
       <md-field>
-        <label>Provinsi</label>
-        <md-input model="name"/>
-      </md-field>
-      <md-field>
-        <label>Kota</label>
-        <md-input model="name"/>
+        <label>Nilai</label>
+        <md-input v-model="current.score"/>
       </md-field>
       <md-field>
         <label>Nama</label>
-        <md-input model="name"/>
+        <md-input v-model="current.name"/>
       </md-field>
     </div>
   </div>
@@ -54,6 +53,9 @@
 import { filter, random, find, without } from 'lodash'
 export default {
   name: 'EducationForm',
+  components: {
+    'almamater-regency-picker': () => import('@partials/picker/almamater-regency-picker')
+  },
   data () {
     return {
       db: [
@@ -75,8 +77,11 @@ export default {
       current: {
         name: null,
         level: null,
+        score: null,
         regencyId: null
-      }
+      },
+      regency: null,
+      province: null
     }
   },
   computed: {
@@ -104,7 +109,7 @@ export default {
       let z = [{
         id: random(0, 100),
         level: this.current.level,
-        name: this.name
+        name: this.current.name
       }]
       console.log(z)
       this.db = this.db.concat(z)
