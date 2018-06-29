@@ -4,8 +4,9 @@
       <p
         v-for="itm in db"
         :key="itm.id">
-        Tingkat: {{ itm.level }}
-        Nama: {{ itm.name }}
+        Tingkat: {{ itm.level }}<br>
+        Nama: {{ itm.name }}<br>
+        Nilai: {{ itm.score }}<br>
         <md-button
           class="md-raised"
           @click="remove(itm)">
@@ -109,7 +110,8 @@ export default {
       let z = [{
         id: random(0, 100),
         level: this.current.level,
-        name: this.current.name
+        name: this.current.name,
+        score: this.current.score
       }]
       console.log(z)
       this.db = this.db.concat(z)
