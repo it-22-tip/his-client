@@ -1,9 +1,9 @@
 <template>
   <div class="birthplace-picker">
-    <province-picker v-model="ProvinceCode"/>
+    <province-picker v-model="birthPlaceProvinceCode"/>
     <regency-picker
-      v-model="RegencyCode"
-      :province-code="ProvinceCode"/>
+      v-model="birthPlaceRegencyCode"
+      :province-code="birthPlaceProvinceCode"/>
   </div>
 </template>
 
@@ -22,21 +22,21 @@ export default {
   },
   data () {
     return {
-      ProvinceCode: '',
-      RegencyCode: ''
+      birthPlaceProvinceCode: '',
+      birthPlaceRegencyCode: ''
     }
   },
   watch: {
-    RegencyCode: {
+    birthPlaceRegencyCode: {
       handler: function (val) {
         this.$emit('input', val)
       },
       deep: true
     },
-    ProvinceCode: {
+    birthPlaceProvinceCode: {
       handler: function (val) {
         if (val === '') {
-          this.RegencyCode = ''
+          this.birthPlaceRegencyCode = ''
         }
       },
       deep: true

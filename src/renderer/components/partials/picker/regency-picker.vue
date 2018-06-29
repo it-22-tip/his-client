@@ -12,6 +12,13 @@ export default {
       modelName: 'Regencies',
       where: 'ProvinceCode'
     }
+  },
+  watch: {
+    ProvinceCode: {
+      handler: function (x) {
+        console.log(x)
+      }
+    }
   }
 }
 </script>

@@ -36,7 +36,7 @@
         </md-select>
       </md-field>
       <div>
-        <almamater-regency-picker v-model="current.regencyId"/>
+        <birthplace-picker v-model="BirthPlaceRegency"/>
       </div>
       <md-field>
         <label>Nilai</label>
@@ -55,10 +55,11 @@ import { filter, random, find, without } from 'lodash'
 export default {
   name: 'EducationForm',
   components: {
-    'almamater-regency-picker': () => import('@partials/picker/almamater-regency-picker')
+    'birthplace-picker': () => import('@partials/picker/birthplace-picker')
   },
   data () {
     return {
+      BirthPlaceRegency: '',
       db: [
         {
           id: 1,
