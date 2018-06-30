@@ -28,9 +28,10 @@ const recur = async function (dir) {
         content = content.replace(/(\w+\.)hasClass\((['\w-]+)\)+\.toBe\(true\)/g, '$1classes()).toContain($2)')
         content = content.replace(/(\w+\.)hasClass\((['\w-]+)\)+\.toBe\(false\)/g, '$1classes()).not.toContain($2)')
         content = content.replace(/(\w+\.)hasAttribute\((['\w-]+)\)+\.toBe\(true\)/g, 'Object.keys($1attributes())).toContain($2)')
+        content = content.replace(/(\w+\.)hasAttribute\((['\w-]+)\)+\.toBe\(false\)/g, 'Object.keys($1attributes())).not.toContain($2)')
         content = content.replace(/(\w+\.)hasAttribute\('([\w-]+)', (['\w-]+)\)+\.toBe\(true\)/g, '$1attributes().$2).toBe($3)')
-        content = content.replace(/(\w+\.)getAttribute\('([\w]+-?[\w]*)'\)+\.toBe\(('([\w]+-?[\w]*)')\)/g, '$1attributes().$2).toBe($3)')
-        content = content.replace(/(^\s+data:\s)(\{\n\s+.+\n\s+\})/g, '$1 () => ($2)')
+        content = content.replace(/(\w+\.)getAttribute\('([\w]+-?[\w]*)'\)+\.toBe\(('?(.*)'?)\)/g, '$1attributes().$2).toBe($3)')
+        content = content.replace(/(^\s+data:\s)(\{\n\s+.+\n\s+\})/gm, '$1 () => ($2)')
         content = content.replace(/\.find\((.*)\)\[(\d)\]/g, '.findAll($1).at($2)')
         /* try {
           unlinkSync(pathToFile)
