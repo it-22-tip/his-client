@@ -9,6 +9,12 @@ const stat = Promise.promisify(fsstat)
 const recur = async function (dir) {
   let fileNames = []
   const getAllFile = async function (dir) {
+    /* const escapeRegExp = function (str) {
+      return str.replace(/([.*+?^=!:${}()|[\]/\\])/g, '\\$1')
+    }
+    const replaceAll = function (str, find, replace) {
+      return str.replace(new RegExp(escapeRegExp(find), 'g'), replace)
+    } */
     let files = await readdir(dir)
     for (let fileName of files) {
       let pathToFile = path.resolve(dir + '/' + fileName)
@@ -18,9 +24,13 @@ const recur = async function (dir) {
         // if (!re.test(pathToFile)) continue
         let content = await readFile(pathToFile)
         content = content.toString()
-        // console.log(content.search(/avoriaz/))
         content = content.replace(/avoriaz/, '@vue/test-utils')
-        content = content.replace(/(\w+\.)(hasClass)\((['\w-]+).+/, '$1classes($3)).toContain($3)')
+        content = content.replace(/(\w+\.)hasClass\((['\w-]+)\)+\.toBe\(true\)/g, '$1classes()).toContain($2)')
+        content = content.replace(/(\w+\.)hasClass\((['\w-]+)\)+\.toBe\(false\)/g, '$1classes()).not.toContain($2)')
+        content = content.replace(/(\w+\.)hasAttribute\((['\w-]+)\)+\.toBe\(true\)/g, 'Object.keys($1attributes())).toContain($2)')
+        content = content.replace(/(\w+\.)hasAttribute\('([\w-]+)', (['\w-]+)\)+\.toBe\(true\)/g, '$1attributes().$2).toBe($3)')
+        content = content.replace(/(\w+\.)getAttribute\('([\w-]+)'\)+\.toBe\(([\w-]+)\)/g, '$1attributes().$2).toBe($3)')
+        content = content.replace(/\.find\((.*)\)\[(\d)\]/g, '.findAll($1).at($2)')
         /* try {
           unlinkSync(pathToFile)
           unlinkSync(pathToFile)
