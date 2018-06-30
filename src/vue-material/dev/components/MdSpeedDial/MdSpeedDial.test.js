@@ -18,7 +18,7 @@ test('should render the speed dial', async () => {
   const template = '<md-speed-dial>Lorem ipsum</md-speed-dial>'
   const wrapper = await mountTemplate(MdSpeedDial, template)
 
-  expect(wrapper.hasClass('md-speed-dial')).toBe(true)
+  expect(wrapper.classes('md-speed-dial')).toContain('md-speed-dial')
   expect(wrapper.text()).toBe('Lorem ipsum')
 })
 
@@ -26,7 +26,7 @@ test('should render the theme class', async () => {
   const template = '<md-speed-dial md-theme="alt">Lorem ipsum</md-speed-dial>'
   const wrapper = await mountTemplate(MdSpeedDial, template)
 
-  expect(wrapper.hasClass('md-theme-alt')).toBe(true)
+  expect(wrapper.classes('md-theme-alt')).toContain('md-theme-alt')
 })
 
 test('should render the default classes', async () => {
@@ -46,9 +46,9 @@ test('should render the default classes', async () => {
 
   const wrapper = await mountTemplate(MdSpeedDial, template, componentList)
 
-  expect(wrapper.hasClass('md-with-hover')).toBe(true)
-  expect(wrapper.hasClass('md-direction-top')).toBe(true)
-  expect(wrapper.hasClass('md-effect-fling')).toBe(true)
+  expect(wrapper.classes('md-with-hover')).toContain('md-with-hover')
+  expect(wrapper.classes('md-direction-top')).toContain('md-direction-top')
+  expect(wrapper.classes('md-effect-fling')).toContain('md-effect-fling')
 })
 
 test('should render a different class for md-direction', async () => {
@@ -68,9 +68,9 @@ test('should render a different class for md-direction', async () => {
 
   const wrapper = await mountTemplate(MdSpeedDial, template, componentList)
 
-  expect(wrapper.hasClass('md-with-hover')).toBe(true)
-  expect(wrapper.hasClass('md-direction-bottom')).toBe(true)
-  expect(wrapper.hasClass('md-effect-fling')).toBe(true)
+  expect(wrapper.classes('md-with-hover')).toContain('md-with-hover')
+  expect(wrapper.classes('md-direction-bottom')).toContain('md-direction-bottom')
+  expect(wrapper.classes('md-effect-fling')).toContain('md-effect-fling')
 })
 
 test('should render a different class for md-effect', async () => {
@@ -90,9 +90,9 @@ test('should render a different class for md-effect', async () => {
 
   const wrapper = await mountTemplate(MdSpeedDial, template, componentList)
 
-  expect(wrapper.hasClass('md-with-hover')).toBe(true)
-  expect(wrapper.hasClass('md-direction-top')).toBe(true)
-  expect(wrapper.hasClass('md-effect-scale')).toBe(true)
+  expect(wrapper.classes('md-with-hover')).toContain('md-with-hover')
+  expect(wrapper.classes('md-direction-top')).toContain('md-direction-top')
+  expect(wrapper.classes('md-effect-scale')).toContain('md-effect-scale')
 })
 
 test('should render a different class for md-event', async () => {
@@ -112,9 +112,9 @@ test('should render a different class for md-event', async () => {
 
   const wrapper = await mountTemplate(MdSpeedDial, template, componentList)
 
-  expect(wrapper.hasClass('md-with-hover')).toBe(false)
-  expect(wrapper.hasClass('md-direction-top')).toBe(true)
-  expect(wrapper.hasClass('md-effect-fling')).toBe(true)
+  expect(wrapper.classes('md-with-hover')).toContain('md-with-hover')
+  expect(wrapper.classes('md-direction-top')).toContain('md-direction-top')
+  expect(wrapper.classes('md-effect-fling')).toContain('md-effect-fling')
 })
 
 test('should toggle the content with click for md-event="click"', async () => {
@@ -137,11 +137,11 @@ test('should toggle the content with click for md-event="click"', async () => {
 
   trigger.trigger('click')
   await wrapper.vm.$nextTick()
-  expect(wrapper.hasClass('md-active')).toBe(true)
+  expect(wrapper.classes('md-active')).toContain('md-active')
 
   trigger.trigger('click')
   await wrapper.vm.$nextTick()
-  expect(wrapper.hasClass('md-active')).toBe(false)
+  expect(wrapper.classes('md-active')).toContain('md-active')
 })
 
 test('should not toggle the content with click for md-event="hover"', async () => {
@@ -164,11 +164,11 @@ test('should not toggle the content with click for md-event="hover"', async () =
 
   trigger.trigger('click')
   await wrapper.vm.$nextTick()
-  expect(wrapper.hasClass('md-active')).toBe(false)
+  expect(wrapper.classes('md-active')).toContain('md-active')
 
   trigger.trigger('click')
   await wrapper.vm.$nextTick()
-  expect(wrapper.hasClass('md-active')).toBe(false)
+  expect(wrapper.classes('md-active')).toContain('md-active')
 })
 
 test('should add index attributes to content children', async () => {

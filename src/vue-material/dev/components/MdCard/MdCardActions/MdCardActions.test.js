@@ -16,8 +16,8 @@ test('should render the actions', async () => {
   const wrapper = await mountTemplate(MdCard, template, cardComponents)
   const actions = wrapper.find(MdCardActions)[0]
 
-  expect(actions.hasClass('md-card-actions')).toBe(true)
-  expect(actions.hasClass('md-alignment-right')).toBe(true)
+  expect(actions.classes('md-card-actions')).toContain('md-card-actions')
+  expect(actions.classes('md-alignment-right')).toContain('md-alignment-right')
 })
 
 test('should render the actions with left alignment classes', async () => {
@@ -29,8 +29,8 @@ test('should render the actions with left alignment classes', async () => {
   const wrapper = await mountTemplate(MdCard, template, cardComponents)
   const actions = wrapper.find(MdCardActions)[0]
 
-  expect(actions.hasClass('md-card-actions')).toBe(true)
-  expect(actions.hasClass('md-alignment-left')).toBe(true)
+  expect(actions.classes('md-card-actions')).toContain('md-card-actions')
+  expect(actions.classes('md-alignment-left')).toContain('md-alignment-left')
 })
 
 test('should render the actions with space-between alignment classes', async () => {
@@ -42,8 +42,8 @@ test('should render the actions with space-between alignment classes', async () 
   const wrapper = await mountTemplate(MdCard, template, cardComponents)
   const actions = wrapper.find(MdCardActions)[0]
 
-  expect(actions.hasClass('md-card-actions')).toBe(true)
-  expect(actions.hasClass('md-alignment-space-between')).toBe(true)
+  expect(actions.classes('md-card-actions')).toContain('md-card-actions')
+  expect(actions.classes('md-alignment-space-between')).toContain('md-alignment-space-between')
 })
 
 test('should fail with an unsupported alignment value', async () => {

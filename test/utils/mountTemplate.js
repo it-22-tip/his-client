@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { mount } from 'avoriaz'
+import { mount } from '@vue/test-utils'
 
 export default async (component, template, options = {}) => {
   const newComponent = Vue.component(`${component.name}-test`, {

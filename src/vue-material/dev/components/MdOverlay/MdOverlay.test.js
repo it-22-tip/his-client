@@ -5,7 +5,7 @@ test('should render the overlay', async () => {
   const template = '<md-overlay md-active></md-overlay>'
   const wrapper = await mountTemplate(MdOverlay, template)
 
-  expect(wrapper.hasClass('md-overlay')).toBe(true)
+  expect(wrapper.classes('md-overlay')).toContain('md-overlay')
 })
 
 test('should render the overlay inside body tag', async () => {

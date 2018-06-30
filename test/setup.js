@@ -1,6 +1,6 @@
 import 'regenerator-runtime/runtime'
 import Vue from 'vue'
-import VueMaterial from 'src/material'
+import VueMaterial from 'src/vue-material/dev'
 
 Vue.config.productionTip = false
 Vue.config.devtools = false

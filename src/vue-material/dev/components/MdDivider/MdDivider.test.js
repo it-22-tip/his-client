@@ -6,14 +6,14 @@ test('should render the divider', async () => {
   const template = '<md-divider></md-divider>'
   const wrapper = await mountTemplate(MdDivider, template)
 
-  expect(wrapper.hasClass('md-divider')).toBe(true)
+  expect(wrapper.classes('md-divider')).toContain('md-divider')
 })
 
 test('should render the theme class', async () => {
   const template = '<md-divider md-theme="alt"></md-divider>'
   const wrapper = await mountTemplate(MdDivider, template)
 
-  expect(wrapper.hasClass('md-theme-alt')).toBe(true)
+  expect(wrapper.classes('md-theme-alt')).toContain('md-theme-alt')
 })
 
 test('should render a <li> tag when inside lists', async () => {

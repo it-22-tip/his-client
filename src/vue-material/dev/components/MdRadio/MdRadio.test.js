@@ -6,14 +6,14 @@ test('should render the radio', async () => {
   const template = '<md-radio></md-radio>'
   const wrapper = await mountTemplate(MdRadio, template)
 
-  expect(wrapper.hasClass('md-radio')).toBe(true)
+  expect(wrapper.classes('md-radio')).toContain('md-radio')
 })
 
 test('should render the theme class', async () => {
   const template = '<md-radio md-theme="alt"></md-radio>'
   const wrapper = await mountTemplate(MdRadio, template)
 
-  expect(wrapper.hasClass('md-theme-alt')).toBe(true)
+  expect(wrapper.classes('md-theme-alt')).toContain('md-theme-alt')
 })
 
 test('should create a fallback id if not given', async () => {
@@ -44,8 +44,8 @@ test('should create disabled and required classes', async () => {
     }
   })
 
-  expect(wrapper.hasClass('md-disabled')).toBe(true)
-  expect(wrapper.hasClass('md-required')).toBe(true)
+  expect(wrapper.classes('md-disabled')).toContain('md-disabled')
+  expect(wrapper.classes('md-required')).toContain('md-required')
 })
 
 test('should bind id, name, disabled and required to the inner input', async () => {
@@ -89,18 +89,18 @@ test('should toggle a checked class when checked', async () => {
   const label1 = wrapper.find('label')[0]
   const label2 = wrapper.find('label')[1]
 
-  expect(radio1.hasClass('md-checked')).toBe(true)
-  expect(radio2.hasClass('md-checked')).toBe(false)
+  expect(radio1.classes('md-checked')).toContain('md-checked')
+  expect(radio2.classes('md-checked')).toContain('md-checked')
 
   label2.trigger('click')
   await wrapper.vm.$nextTick()
-  expect(radio1.hasClass('md-checked')).toBe(false)
-  expect(radio2.hasClass('md-checked')).toBe(true)
+  expect(radio1.classes('md-checked')).toContain('md-checked')
+  expect(radio2.classes('md-checked')).toContain('md-checked')
 
   label1.trigger('click')
   await wrapper.vm.$nextTick()
-  expect(radio1.hasClass('md-checked')).toBe(true)
-  expect(radio2.hasClass('md-checked')).toBe(false)
+  expect(radio1.classes('md-checked')).toContain('md-checked')
+  expect(radio2.classes('md-checked')).toContain('md-checked')
 })
 
 test('should bind "on" value when no value attribute is given', async () => {

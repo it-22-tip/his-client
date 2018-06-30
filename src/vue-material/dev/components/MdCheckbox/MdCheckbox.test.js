@@ -6,14 +6,14 @@ test('should render the checkbox', async () => {
   const template = '<md-checkbox></md-checkbox>'
   const wrapper = await mountTemplate(MdCheckbox, template)
 
-  expect(wrapper.hasClass('md-checkbox')).toBe(true)
+  expect(wrapper.classes('md-checkbox')).toContain('md-checkbox')
 })
 
 test('should render the theme class', async () => {
   const template = '<md-checkbox md-theme="alt"></md-checkbox>'
   const wrapper = await mountTemplate(MdCheckbox, template)
 
-  expect(wrapper.hasClass('md-theme-alt')).toBe(true)
+  expect(wrapper.classes('md-theme-alt')).toContain('md-theme-alt')
 })
 
 test('should add id and for on input and label', async () => {
@@ -51,8 +51,8 @@ test('should create disabled and required classes', async () => {
     }
   })
 
-  expect(wrapper.hasClass('md-disabled')).toBe(true)
-  expect(wrapper.hasClass('md-required')).toBe(true)
+  expect(wrapper.classes('md-disabled')).toContain('md-disabled')
+  expect(wrapper.classes('md-required')).toContain('md-required')
 })
 
 test('should bind id, name, disabled and required to the inner input', async () => {
@@ -136,11 +136,11 @@ test('should toggle a checked class when checked', async () => {
   const checkbox = wrapper.find(MdCheckbox)[0]
   const label = wrapper.find('label')[0]
 
-  expect(checkbox.hasClass('md-checked')).toBe(true)
+  expect(checkbox.classes('md-checked')).toContain('md-checked')
 
   label.trigger('click')
   await checkbox.vm.$nextTick()
-  expect(checkbox.hasClass('md-checked')).toBe(false)
+  expect(checkbox.classes('md-checked')).toContain('md-checked')
 })
 
 test('should bind true / false when no value attribute is given', async () => {

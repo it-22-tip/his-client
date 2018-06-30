@@ -14,11 +14,12 @@ const recur = async function (dir) {
       let pathToFile = path.resolve(dir + '/' + fileName)
       let fileStat = await stat(pathToFile)
       if (fileStat.isFile()) {
-        let re = /.*\.test\.js$/
-        if (!re.test(pathToFile)) continue
+        // let re = /.*\.test\.js$/
+        // if (!re.test(pathToFile)) continue
         let content = await readFile(pathToFile)
         content = content.toString()
         // console.log(content.search(/avoriaz/))
+        content = content.replace(/avoriaz/, '@vue/test-utils')
         content = content.replace(/(\w+\.)(hasClass)\((['\w-]+).+/, '$1classes($3)).toContain($3)')
         /* try {
           unlinkSync(pathToFile)
@@ -26,7 +27,7 @@ const recur = async function (dir) {
         } catch (e) {
           console.log(e)
         } */
-        // writeFileSync(pathToFile + '.bak', content, {encoding: 'utf8'})
+        writeFileSync(pathToFile, content, {encoding: 'utf8'})
 
         fileNames.push(pathToFile)
       } else {
