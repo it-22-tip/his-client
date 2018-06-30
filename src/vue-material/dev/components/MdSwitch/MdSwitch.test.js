@@ -6,14 +6,14 @@ test('should render the switch', async () => {
   const template = '<md-switch></md-switch>'
   const wrapper = await mountTemplate(MdSwitch, template)
 
-  expect(wrapper.classes('md-switch')).toContain('md-switch')
+  expect(wrapper.hasClass('md-switch')).toBe(true)
 })
 
 test('should render the theme class', async () => {
   const template = '<md-switch md-theme="alt"></md-switch>'
   const wrapper = await mountTemplate(MdSwitch, template)
 
-  expect(wrapper.classes('md-theme-alt')).toContain('md-theme-alt')
+  expect(wrapper.hasClass('md-theme-alt')).toBe(true)
 })
 
 test('should add id and for on input and label', async () => {
@@ -51,8 +51,8 @@ test('should create disabled and required classes', async () => {
     }
   })
 
-  expect(wrapper.classes('md-disabled')).toContain('md-disabled')
-  expect(wrapper.classes('md-required')).toContain('md-required')
+  expect(wrapper.hasClass('md-disabled')).toBe(true)
+  expect(wrapper.hasClass('md-required')).toBe(true)
 })
 
 test('should bind id, name, disabled and required to the inner input', async () => {
@@ -136,11 +136,11 @@ test('should toggle a checked class when checked', async () => {
   const toggle = wrapper.find(MdSwitch)[0]
   const label = wrapper.find('label')[0]
 
-  expect(toggle.classes('md-checked')).toContain('md-checked')
+  expect(toggle.hasClass('md-checked')).toBe(true)
 
   label.trigger('click')
   await toggle.vm.$nextTick()
-  expect(toggle.classes('md-checked')).toContain('md-checked')
+  expect(toggle.hasClass('md-checked')).toBe(false)
 })
 
 test('should bind true / false when no value attribute is given', async () => {

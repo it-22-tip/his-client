@@ -1,4 +1,4 @@
-import { mount } from '@vue/test-utils'
+import { mount } from 'avoriaz'
 import mountTemplate from 'test/utils/mountTemplate'
 import MdPortal from './MdPortal'
 

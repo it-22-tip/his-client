@@ -16,5 +16,5 @@ test('should render the content', async () => {
   const wrapper = await mountTemplate(MdCard, template, cardComponents)
   const content = wrapper.find(MdCardContent)[0]
 
-  expect(content.classes('md-card-content')).toContain('md-card-content')
+  expect(content.hasClass('md-card-content')).toBe(true)
 })

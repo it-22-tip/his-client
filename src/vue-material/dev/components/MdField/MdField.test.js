@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { mount } from '@vue/test-utils'
+import { mount } from 'avoriaz'
 import mountTemplate from 'test/utils/mountTemplate'
 import MdField from './MdField.vue'
 import MdInput from './MdInput/MdInput.vue'
@@ -17,7 +17,7 @@ test('should render the field', async () => {
   const template = '<md-field>Lorem ipsum</md-field>'
   const wrapper = await mountTemplate(MdField, template)
 
-  expect(wrapper.classes('md-field')).toContain('md-field')
+  expect(wrapper.hasClass('md-field')).toBe(true)
   expect(wrapper.text().trim()).toBe('Lorem ipsum')
 })
 
@@ -25,7 +25,7 @@ test('should render the theme class', async () => {
   const template = '<md-field md-theme="alt">Lorem ipsum</md-field>'
   const wrapper = await mountTemplate(MdField, template)
 
-  expect(wrapper.classes('md-theme-alt')).toContain('md-theme-alt')
+  expect(wrapper.hasClass('md-theme-alt')).toBe(true)
 })
 
 /* test('should create a fallback id if not given', async () => {
