@@ -33,6 +33,7 @@ const recur = async function (dir) {
         content = content.replace(/(\w+\.)getAttribute\('([\w]+-?[\w]*)'\)+\.toBe\(('?(.*)'?)\)/g, '$1attributes().$2).toBe($3)')
         content = content.replace(/(^\s+data:\s)(\{\n\s+.+\n\s+\})/gm, '$1 () => ($2)')
         content = content.replace(/\.find\((.*)\)\[(\d)\]/g, '.findAll($1).at($2)')
+        content = content.replace(/\.data\(\)\./g, '.vm.')
         /* try {
           unlinkSync(pathToFile)
           unlinkSync(pathToFile)

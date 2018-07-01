@@ -31,7 +31,7 @@
     "pack:main": "cross-env NODE_ENV=production webpack --progress --colors --config .compiler/webpack.main.config.es6",
     "pack:renderer": "cross-env NODE_ENV=production webpack --progress --colors --config .compiler/webpack.renderer.config.es6",
     "postinstall": "electron-builder install-app-deps",
-    "test:jest": "cross-env BABEL_ENV=test jest",
+    "test:jest": "cross-env BABEL_ENV=test jest --detectOpenHandles",
     "install-app-deps": "cross-env DEBUG=electron-builder electron-builder install-app-deps",
     "material:replace": "cross-env BABEL_ENV=buildscript node -r babel-register replacer.es6"
   },
