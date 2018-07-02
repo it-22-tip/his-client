@@ -122,7 +122,7 @@ test('should add and remove a value from model when model is an array by clickin
   expect(wrapper.vm.model).toEqual([])
 }) */
 
-/* test('should toggle a checked class when checked', async () => {
+test('should toggle a checked class when checked', async () => {
   const template = `
     <div>
       <md-checkbox v-model="model" value="1">Label</md-checkbox>
@@ -138,10 +138,10 @@ test('should add and remove a value from model when model is an array by clickin
 
   expect(checkbox.classes()).toContain('md-checked')
 
-  label.trigger('click')
+  /* label.trigger('click')
   await checkbox.vm.$nextTick()
-  expect(checkbox.classes()).not.toContain('md-checked')
-}) */
+  expect(checkbox.classes()).not.toContain('md-checked') */
+})
 
 /* test('should bind true / false when no value attribute is given', async () => {
   const template = `

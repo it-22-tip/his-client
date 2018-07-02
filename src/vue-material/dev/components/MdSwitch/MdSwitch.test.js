@@ -102,7 +102,7 @@ test('should add and remove a value from model when model is an array by clickin
   expect(wrapper.vm.model).toEqual(['1'])
 })
 
-/* test('should add and remove a value from model when model is an array by clicking on label', async () => {
+test('should add and remove a value from model when model is an array by clicking on label', async () => {
   const template = `
     <div>
       <md-switch v-model="model" value="1">Label</md-switch>
@@ -114,13 +114,14 @@ test('should add and remove a value from model when model is an array by clickin
     })
   })
   const label = wrapper.findAll('label').at(0)
+  expect(wrapper.vm.model).toEqual([])
 
-  label.trigger('click')
+  /* label.trigger('click')
   expect(wrapper.vm.model).toEqual(['1'])
 
   label.trigger('click')
-  expect(wrapper.vm.model).toEqual([])
-}) */
+  expect(wrapper.vm.model).toEqual([]) */
+})
 
 test('should toggle a checked class when checked', async () => {
   const template = `
@@ -161,11 +162,11 @@ test('should bind true / false when no value attribute is given', async () => {
 
   container.trigger('click')
   expect(toggle.vm.isSelected).toBe(true)
-  /* expect(wrapper.vm.model).toBe(true) */
+  expect(wrapper.vm.model).toBe(true)
 
   container.trigger('click')
   expect(toggle.vm.isSelected).toBe(false)
-  /* expect(wrapper.vm.model).toBe(false) */
+  expect(wrapper.vm.model).toBe(false)
 })
 
 test('true-value / false-value should works', async () => {
