@@ -246,15 +246,15 @@
     lodash "^4.17.5"
     to-fast-properties "^2.0.0"
 
-"@casl/ability@^2.3.0":
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/@casl/ability/-/ability-2.3.0.tgz#9f4791b0f2db4b917aaa3d2d8dda5c7ead03b95f"
+"@casl/ability@^2.4.1":
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/@casl/ability/-/ability-2.4.1.tgz#dded6c98faf4ad8af7f3c180662acacc99784b76"
   dependencies:
-    sift "^5.1.0"
+    sift "^6.0.0"
 
-"@casl/vue@^0.4.1":
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/@casl/vue/-/vue-0.4.1.tgz#4236d045d14bb75c174bb8232f7021dbec142a46"
+"@casl/vue@^0.4.2":
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/@casl/vue/-/vue-0.4.2.tgz#90d9c0665e82c797f301aedaafb91caffc01d536"
 
 "@fortawesome/fontawesome-common-types@^0.1.7":
   version "0.1.7"
@@ -11081,9 +11081,9 @@ shimmer@^1.1.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/shimmer/-/shimmer-1.2.0.tgz#f966f7555789763e74d8841193685a5e78736665"
 
-sift@^5.1.0:
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/sift/-/sift-5.1.0.tgz#1bbf2dfb0eb71e56c4cc7fb567fbd1351b65015e"
+sift@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/sift/-/sift-6.0.0.tgz#f93a778e5cbf05a5024ebc391e6b32511a6d1f82"
 
 sigmund@^1.0.1:
   version "1.0.1"
