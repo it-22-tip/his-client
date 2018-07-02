@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { mount } from 'avoriaz'
+import { mount } from '@vue/test-utils'
 import mountTemplate from 'test/utils/mountTemplate'
 import MdField from './MdField.vue'
 import MdInput from './MdInput/MdInput.vue'
@@ -17,7 +17,7 @@ test('should render the field', async () => {
   const template = '<md-field>Lorem ipsum</md-field>'
   const wrapper = await mountTemplate(MdField, template)
 
-  expect(wrapper.hasClass('md-field')).toBe(true)
+  expect(wrapper.classes()).toContain('md-field')
   expect(wrapper.text().trim()).toBe('Lorem ipsum')
 })
 
@@ -25,7 +25,7 @@ test('should render the theme class', async () => {
   const template = '<md-field md-theme="alt">Lorem ipsum</md-field>'
   const wrapper = await mountTemplate(MdField, template)
 
-  expect(wrapper.hasClass('md-theme-alt')).toBe(true)
+  expect(wrapper.classes()).toContain('md-theme-alt')
 })
 
 /* test('should create a fallback id if not given', async () => {
@@ -39,23 +39,23 @@ test('should render the theme class', async () => {
       default: [MdLabel, MdTextarea]
     }
   })
-  const input = wrapperWithInput.find(MdInput)[0]
-  const inputLabel = wrapperWithInput.find('label')[0]
-  const textarea = wrapperWithTextarea.find(MdTextarea)[0]
-  const textareaLabel = wrapperWithTextarea.find('label')[0]
+  const input = wrapperWithInput.findAll(MdInput).at(0)
+  const inputLabel = wrapperWithInput.findAll('label').at(0)
+  const textarea = wrapperWithTextarea.findAll(MdTextarea).at(0)
+  const textareaLabel = wrapperWithTextarea.findAll('label').at(0)
   const inputId = input.vm.$props.id
   const textareaId = textarea.vm.$props.id
 
-  expect(input.hasAttribute('id')).toBe(true)
-  expect(input.getAttribute('id')).toBe(inputId)
+  expect(Object.keys(input.attributes())).toContain('id')
+  expect(input.attributes().id).toBe(inputId)
 
-  expect(inputLabel.hasAttribute('for')).toBe(true)
+  expect(Object.keys(inputLabel.attributes())).toContain('for')
   expect(inputLabel.getAttribute('for')).toBe(inputId)
 
-  expect(textarea.hasAttribute('id')).toBe(true)
+  expect(Object.keys(textarea.attributes())).toContain('id')
   expect(textarea.getAttribute('id')).toBe(textareaId)
 
-  expect(textareaLabel.hasAttribute('for')).toBe(true)
+  expect(Object.keys(textareaLabel.attributes())).toContain('for')
   expect(textareaLabel.getAttribute('for')).toBe(textareaId)
 }) */
 
@@ -73,11 +73,11 @@ test('should render the theme class', async () => {
   })
   const wrapper = await mountStringSlot(MdRadio, 'Label', {
   })
-  const input = wrapper.find('input')[0]
+  const input = wrapper.findAll('input').at(0)
 
-  expect(input.hasAttribute('id', 'test')).toBe(true)
-  expect(input.hasAttribute('name', 'test')).toBe(true)
-  expect(input.hasAttribute('disabled', 'disabled')).toBe(true)
-  expect(input.hasAttribute('required', 'required')).toBe(true)
+  expect(input.attributes().id).toBe('test')
+  expect(input.attributes().name).toBe('test')
+  expect(input.attributes().disabled).toBe('disabled')
+  expect(input.attributes().required).toBe('required')
 })
  */

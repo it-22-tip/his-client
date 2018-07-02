@@ -17,9 +17,9 @@ test('should render the header', async () => {
     </md-card>
   `
   const wrapper = await mountTemplate(MdCard, template, cardComponents)
-  const header = wrapper.find(MdCardHeader)[0]
+  const header = wrapper.findAll(MdCardHeader).at(0)
 
-  expect(header.hasClass('md-card-header')).toBe(true)
+  expect(header.classes()).toContain('md-card-header')
 })
 
 test('should render the header text', async () => {
@@ -31,11 +31,11 @@ test('should render the header text', async () => {
     </md-card>
   `
   const wrapper = await mountTemplate(MdCard, template, cardComponents)
-  const header = wrapper.find(MdCardHeader)[0]
-  const text = wrapper.find(MdCardHeaderText)[0]
+  const header = wrapper.findAll(MdCardHeader).at(0)
+  const text = wrapper.findAll(MdCardHeaderText).at(0)
 
-  expect(text.hasClass('md-card-header-text')).toBe(true)
-  expect(header.hasClass('md-card-header-flex')).toBe(true)
+  expect(text.classes()).toContain('md-card-header-text')
+  expect(header.classes()).toContain('md-card-header-flex')
   text.destroy()
-  expect(header.hasClass('md-card-header-flex')).toBe(false)
+  expect(header.classes()).not.toContain('md-card-header-flex')
 })
