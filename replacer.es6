@@ -30,9 +30,10 @@ const recur = async function (dir) {
         content = content.replace(/(\w+\.)hasAttribute\((['\w-]+)\)+\.toBe\(true\)/g, 'Object.keys($1attributes())).toContain($2)')
         content = content.replace(/(\w+\.)hasAttribute\((['\w-]+)\)+\.toBe\(false\)/g, 'Object.keys($1attributes())).not.toContain($2)')
         content = content.replace(/(\w+\.)hasAttribute\('([\w-]+)', (['\w-]+)\)+\.toBe\(true\)/g, '$1attributes().$2).toBe($3)')
-        content = content.replace(/(\w+\.)getAttribute\('([\w]+-?[\w]*)'\)+\.toBe\(('?(.*)'?)\)/g, '$1attributes().$2).toBe($3)')
+        content = content.replace(/(wrapper|rootWrapper|testWrapper|input|label)\.getAttribute\('([\w]+-?[\w]*)'\)+\.toBe\(('?(.*)'?)\)/g, '$1.attributes().$2).toBe($3)')
         content = content.replace(/(^\s+data:\s)(\{\n\s+.+\n\s+\})/gm, '$1 () => ($2)')
         content = content.replace(/\.find\((.*)\)\[(\d)\]/g, '.findAll($1).at($2)')
+        content = content.replace(/Lorem ipsum\s/g, 'Lorem ipsum')
         content = content.replace(/\.data\(\)\./g, '.vm.')
         /* try {
           unlinkSync(pathToFile)
