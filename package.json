@@ -33,6 +33,7 @@
     "postinstall": "electron-builder install-app-deps",
     "test:jest": "cross-env BABEL_ENV=test jest --detectOpenHandles",
     "install-app-deps": "cross-env DEBUG=electron-builder electron-builder install-app-deps",
+    "material:update": "cross-env BABEL_ENV=buildscript node -r babel-register updater.es6",
     "material:replace": "cross-env BABEL_ENV=buildscript node -r babel-register replacer.es6"
   },
   "browserslist": [
@@ -67,6 +68,8 @@
     "electron-util": "^0.9.0",
     "emailjs-imap-client": "^3.0.5",
     "exceljs": "^1.5.1",
+    "extract-zip": "^1.6.7",
+    "fs-extra": "^6.0.1",
     "fuzzysearch": "^1.0.3",
     "gsap": "^2.0.1",
     "hammerjs": "^2.0.8",
