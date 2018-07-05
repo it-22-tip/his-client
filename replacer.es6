@@ -1,20 +1,11 @@
-// (\w+\.)(hasClass)\((['\w-]+).+
-// $1$2($3)).toContain($3)
-// /avoriaz/
 import path from 'path'
-import { readdir as fsreaddir, stat as fsstat, writeFileSync, unlinkSync } from 'fs'
+import { readdir as fsreaddir, stat as fsstat, writeFileSync } from 'fs'
 import { readFile } from './src/renderer/helpers/files'
 const readdir = Promise.promisify(fsreaddir)
 const stat = Promise.promisify(fsstat)
 const recur = async function (dir) {
   let fileNames = []
   const getAllFile = async function (dir) {
-    /* const escapeRegExp = function (str) {
-      return str.replace(/([.*+?^=!:${}()|[\]/\\])/g, '\\$1')
-    }
-    const replaceAll = function (str, find, replace) {
-      return str.replace(new RegExp(escapeRegExp(find), 'g'), replace)
-    } */
     let files = await readdir(dir)
     for (let fileName of files) {
       let pathToFile = path.resolve(dir + '/' + fileName)
@@ -35,14 +26,7 @@ const recur = async function (dir) {
         content = content.replace(/\.find\((.*)\)\[(\d)\]/g, '.findAll($1).at($2)')
         content = content.replace(/Lorem ipsum\s/g, 'Lorem ipsum')
         content = content.replace(/\.data\(\)\./g, '.vm.')
-        /* try {
-          unlinkSync(pathToFile)
-          unlinkSync(pathToFile)
-        } catch (e) {
-          console.log(e)
-        } */
         writeFileSync(pathToFile, content, {encoding: 'utf8'})
-
         fileNames.push(pathToFile)
       } else {
         await getAllFile(pathToFile)
