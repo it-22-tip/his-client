@@ -23,11 +23,11 @@ test('should preserve a value of the "name" attribute on change', async () => {
     </md-field>
   `
   const wrapper = await mountTemplate(MdField, template)
-  const input = wrapper.findAll('.md-input').at(0)
+  const input = wrapper.find('.md-input')[0]
 
   input.trigger('change')
 
   await wrapper.vm.$nextTick()
 
-  expect(input.attributes().name).toBe('details')
+  expect(input.getAttribute('name')).toBe('details')
 })

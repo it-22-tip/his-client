@@ -1,6 +1,6 @@
 import mockRequest from 'test/utils/mockRequest'
 import mockConsole from 'test/utils/mockConsole'
-import { mount } from '@vue/test-utils'
+import { mount } from 'avoriaz'
 import MdSvgLoader from './MdSvgLoader.vue'
 
 test('should gives an error when no mdSrc is present', async () => {

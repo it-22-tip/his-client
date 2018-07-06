@@ -13,7 +13,7 @@ module.exports = {
     // '<rootDir>/src/vue-material/dev/components/MdPortal/',
     '<rootDir>/external/'
   ],
-  testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(vue|js)$',
+  testRegex: '(/__tests__/.*|(\\.|/)(spec))\\.(vue|js)$',
   'moduleFileExtensions': [
     'js',
     'json',

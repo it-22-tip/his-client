@@ -11,7 +11,7 @@ extract(src, {dir: target})
   .then(
     () => {
       console.log('extract success')
-      copy(cpSrc, tgtSrc)
+      copy(cpSrc, tgtSrc, { overwrite: true })
         .then(
           () => {
             console.log('copy success')

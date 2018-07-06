@@ -13,10 +13,10 @@ test('should render the area', async () => {
     </md-card>
   `
   const wrapper = await mountTemplate(MdCard, template, cardComponents)
-  const area = wrapper.findAll(MdCardArea).at(0)
+  const area = wrapper.find(MdCardArea)[0]
 
-  expect(area.classes()).toContain('md-card-area')
-  expect(area.classes()).not.toContain('md-inset')
+  expect(area.hasClass('md-card-area')).toBe(true)
+  expect(area.hasClass('md-inset')).toBe(false)
 })
 
 test('should inset class', async () => {
@@ -26,8 +26,8 @@ test('should inset class', async () => {
     </md-card>
   `
   const wrapper = await mountTemplate(MdCard, template, cardComponents)
-  const area = wrapper.findAll(MdCardArea).at(0)
+  const area = wrapper.find(MdCardArea)[0]
 
-  expect(area.classes()).toContain('md-card-area')
-  expect(area.classes()).toContain('md-inset')
+  expect(area.hasClass('md-card-area')).toBe(true)
+  expect(area.hasClass('md-inset')).toBe(true)
 })

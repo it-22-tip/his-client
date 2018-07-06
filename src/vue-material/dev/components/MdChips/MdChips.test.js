@@ -5,12 +5,12 @@ test('should render the chips', async () => {
   const template = '<md-chips></md-chips>'
   const wrapper = await mountTemplate(MdChips, template)
 
-  expect(wrapper.classes()).toContain('md-chips')
+  expect(wrapper.hasClass('md-chips')).toBe(true)
 })
 
 test('should render the theme class', async () => {
   const template = '<md-chips md-theme="alt"></md-chips>'
   const wrapper = await mountTemplate(MdChips, template)
 
-  expect(wrapper.classes()).toContain('md-theme-alt')
+  expect(wrapper.hasClass('md-theme-alt')).toBe(true)
 })

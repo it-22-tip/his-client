@@ -9,10 +9,11 @@ const recur = async function (dir) {
     let files = await readdir(dir)
     for (let fileName of files) {
       let pathToFile = path.resolve(dir + '/' + fileName)
+      let targetFile = pathToFile.replace(/test/, 'spec')
       let fileStat = await stat(pathToFile)
       if (fileStat.isFile()) {
-        // let re = /.*\.test\.js$/
-        // if (!re.test(pathToFile)) continue
+        let re = /.*\.test\.js$/
+        if (!re.test(pathToFile)) continue
         let content = await readFile(pathToFile)
         content = content.toString()
         content = content.replace(/avoriaz/, '@vue/test-utils')
@@ -26,7 +27,7 @@ const recur = async function (dir) {
         content = content.replace(/\.find\((.*)\)\[(\d)\]/g, '.findAll($1).at($2)')
         content = content.replace(/Lorem ipsum\s/g, 'Lorem ipsum')
         content = content.replace(/\.data\(\)\./g, '.vm.')
-        writeFileSync(pathToFile, content, {encoding: 'utf8'})
+        writeFileSync(targetFile, content, {encoding: 'utf8'})
         fileNames.push(pathToFile)
       } else {
         await getAllFile(pathToFile)

@@ -16,7 +16,7 @@ test('should render the expand', async () => {
     </md-card>
   `
   const wrapper = await mountTemplate(MdCard, template, cardComponents)
-  const expand = wrapper.findAll(MdCardExpand).at(0)
+  const expand = wrapper.find(MdCardExpand)[0]
 
-  expect(expand.classes()).toContain('md-card-expand')
+  expect(expand.hasClass('md-card-expand')).toBe(true)
 })

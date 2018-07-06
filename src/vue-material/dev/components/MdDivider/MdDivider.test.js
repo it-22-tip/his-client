@@ -6,14 +6,14 @@ test('should render the divider', async () => {
   const template = '<md-divider></md-divider>'
   const wrapper = await mountTemplate(MdDivider, template)
 
-  expect(wrapper.classes()).toContain('md-divider')
+  expect(wrapper.hasClass('md-divider')).toBe(true)
 })
 
 test('should render the theme class', async () => {
   const template = '<md-divider md-theme="alt"></md-divider>'
   const wrapper = await mountTemplate(MdDivider, template)
 
-  expect(wrapper.classes()).toContain('md-theme-alt')
+  expect(wrapper.hasClass('md-theme-alt')).toBe(true)
 })
 
 test('should render a <li> tag when inside lists', async () => {
@@ -25,7 +25,7 @@ test('should render a <li> tag when inside lists', async () => {
       <md-divider></md-divider>
     </md-list>`
   const wrapper = await mountTemplate(MdDivider, template)
-  const divider = wrapper.findAll(MdDivider).at(0)
+  const divider = wrapper.find(MdDivider)[0]
 
   expect(divider.vm.$el.tagName.toLowerCase()).toBe('li')
 })
@@ -33,7 +33,7 @@ test('should render a <li> tag when inside lists', async () => {
 test('should render a <hr> tag when inside any other element', async () => {
   const template = `<md-divider></md-divider>`
   const wrapper = await mountTemplate(MdDivider, template)
-  const divider = wrapper.findAll(MdDivider).at(0)
+  const divider = wrapper.find(MdDivider)[0]
 
   expect(divider.vm.$el.tagName.toLowerCase()).toBe('hr')
 })
