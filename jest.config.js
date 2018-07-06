@@ -2,7 +2,7 @@ module.exports = {
   verbose: true,
   testPathIgnorePatterns: [
     '<rootDir>/src/main/',
-    '<rootDir>/src/renderer/',
+    // '<rootDir>/src/renderer/',
     // '<rootDir>/src/vue-material/dev/components/MdCheckbox/',
     // '<rootDir>/src/vue-material/dev/components/MdCard/MdCardMedia/',
     // '<rootDir>/src/vue-material/dev/components/MdBadge/',
