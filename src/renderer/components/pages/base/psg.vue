@@ -4,7 +4,11 @@
   </div>
 </template>
 <script>
+// import psgCmp from './psg-cmp'
 export default {
-  name: 'Psg'
+  name: 'Psg',
+  component: {
+    'psg-cmp': () => import('./psg-cmp')
+  }
 }
 </script>
