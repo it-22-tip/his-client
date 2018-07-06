@@ -28,7 +28,10 @@ module.exports = {
     // '^base(.*)$': '<rootDir>/src/vue-material/dev/base$1',
     '^core/(.*)$': '<rootDir>/src/vue-material/dev/core/$1',
     '^components(.*)$': '<rootDir>/src/vue-material/dev/components$1',
-    '\\.(css|scss)$': '<rootDir>/test/styleMock.js'
+    '\\.(css|scss)$': '<rootDir>/test/styleMock.js',
+    '^@partials/(.*)$': '<rootDir>/src/renderer/components/partials/$1',
+    '^@extras/(.*)$': '<rootDir>/src/renderer/components/extras/$1',
+    '^@mixins/(.*)$': '<rootDir>/src/renderer/mixins/$1'
     // '^@/(.*)$': '<rootDir>/src/renderer/$1'
   },
   'setupTestFrameworkScriptFile': '<rootDir>/test/setup.js',
