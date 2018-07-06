@@ -1,6 +1,7 @@
 import { stat as fsStat, readFile as fsReadFile, readdir as fsreaddir } from 'fs'
 import yaml from 'js-yaml'
 import XLSX from 'xlsx'
+import Promise from 'bluebird'
 
 const statAsync = Promise.promisify(fsStat)
 const readFileAsync = Promise.promisify(fsReadFile)

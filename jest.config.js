@@ -1,5 +1,5 @@
 module.exports = {
-  verbose: true,
+  verbose: false,
   testPathIgnorePatterns: [
     '<rootDir>/src/main/',
     // '<rootDir>/src/renderer/',
