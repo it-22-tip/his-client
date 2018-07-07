@@ -55,7 +55,7 @@ import { filter, random, find, without } from 'lodash'
 export default {
   name: 'EducationForm',
   components: {
-    'birthplace-picker': () => import('@partials/picker/birthplace-picker')
+    'birthplace-picker': () => import('@partials/form/birthdateplace-form')
   },
   data () {
     return {
