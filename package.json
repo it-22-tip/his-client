@@ -23,7 +23,7 @@
     "build:debug": "node .compiler/build.es6 && cross-env DEBUG=electron-builder electron-builder",
     "build:clean": "cross-env BABEL_ENV=buildscript BUILD_TARGET=clean node -r babel-register .compiler/build.es6",
     "build:web": "cross-env BUILD_TARGET=web node .compiler/build.js",
-    "test:component": "cross-env BABEL_ENV=test node -r babel-register node_modules/.bin/mocha-webpack --require .compiler/test-setup.js --webpack-config .compiler/webpack.test.config.es6 \"src/**/*.test.es6\"",
+    "test:component": "cross-env  BABEL_ENV=test jest --config=.testConfig/component.test.config.js",
     "lint": "node_modules/.bin/eslint --ext .js,.vue -f node_modules/eslint-friendly-formatter src",
     "lint:fix": "node_modules/.bin/eslint --fix --ext .js,.vue -f node_modules/eslint-friendly-formatter src",
     "pack": "npm run pack:main && npm run pack:renderer",
@@ -33,7 +33,7 @@
     "test": "cross-env BABEL_ENV=test jest",
     "test:clear": "cross-env BABEL_ENV=test jest --clearCache",
     "install-app-deps": "cross-env DEBUG=electron-builder electron-builder install-app-deps",
-    "material:test": "cross-env BABEL_ENV=test jest --config=./.testConfig/vue-material.test.config --clearCache",
+    "material:test": "cross-env BABEL_ENV=test jest --config=.testConfig/vue-material.test.config.js",
     "material:update": "cross-env BABEL_ENV=buildscript node -r babel-register updater.es6",
     "material:replace": "cross-env BABEL_ENV=buildscript node -r babel-register replacer.es6"
   },

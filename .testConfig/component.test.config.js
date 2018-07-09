@@ -1,16 +1,10 @@
 module.exports = {
   verbose: false,
+  rootDir: '../',
   testPathIgnorePatterns: [
     '<rootDir>/src/main/',
     // '<rootDir>/src/renderer/',
-    // '<rootDir>/src/vue-material/dev/components/MdCheckbox/',
-    // '<rootDir>/src/vue-material/dev/components/MdCard/MdCardMedia/',
-    // '<rootDir>/src/vue-material/dev/components/MdBadge/',
-    // '<rootDir>/src/vue-material/dev/components/MdRadio/',
-    // '<rootDir>/src/vue-material/dev/components/MdSwitch/',
-    // '<rootDir>/src/vue-material/dev/components/MdOverlay/',
-    // '<rootDir>/src/vue-material/dev/components/MdDrawer/',
-    // '<rootDir>/src/vue-material/dev/components/MdPortal/',
+    '<rootDir>/src/vue-material/',
     '<rootDir>/external/'
   ],
   testRegex: '(/__tests__/.*|(\\.|/)(spec))\\.(vue|js)$',

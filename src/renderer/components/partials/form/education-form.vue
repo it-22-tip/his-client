@@ -7,6 +7,7 @@
         Tingkat: {{ itm.level }}<br>
         Nama: {{ itm.name }}<br>
         Nilai: {{ itm.score }}<br>
+        Kota: {{ itm.regency }}
         <md-button
           class="md-raised"
           @click="remove(itm)">
@@ -36,7 +37,7 @@
         </md-select>
       </md-field>
       <div>
-        <birthplace-picker v-model="BirthPlaceRegency"/>
+        <birthplace-picker v-model="current.regencyId"/>
       </div>
       <md-field>
         <label>Nilai</label>
@@ -52,19 +53,24 @@
 
 <script>
 import { filter, random, find, without } from 'lodash'
+import Orm from '@mixins/orm'
 export default {
   name: 'EducationForm',
   components: {
     'birthplace-picker': () => import('@partials/form/birthdateplace-form')
   },
+  mixins: [
+    Orm
+  ],
   data () {
     return {
-      BirthPlaceRegency: '',
+      BirthPlaceRegency: {},
       db: [
         {
           id: 1,
           level: 'SD',
-          name: 'SD 01 Pagi'
+          name: 'SD 01 Pagi',
+          regency: 'Bandung'
         }
       ],
       levels: [
@@ -80,13 +86,18 @@ export default {
         name: null,
         level: null,
         score: null,
-        regencyId: null
+        regencyId: {}
       },
       regency: null,
       province: null
     }
   },
   computed: {
+    dbComputed: {
+      get () {
+        return ''
+      }
+    },
     availableLevels: {
       get () {
         let sd = find(this.db, function (o) { return o.level === 'SD' })
@@ -112,7 +123,8 @@ export default {
         id: random(0, 100),
         level: this.current.level,
         name: this.current.name,
-        score: this.current.score
+        score: this.current.score,
+        regency: this.current.regencyId
       }]
       console.log(z)
       this.db = this.db.concat(z)

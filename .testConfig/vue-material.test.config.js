@@ -1,19 +1,13 @@
 module.exports = {
   verbose: false,
+  rootDir: '../',
   testPathIgnorePatterns: [
     '<rootDir>/src/main/',
-    // '<rootDir>/src/renderer/',
-    // '<rootDir>/src/vue-material/dev/components/MdCheckbox/',
-    // '<rootDir>/src/vue-material/dev/components/MdCard/MdCardMedia/',
-    // '<rootDir>/src/vue-material/dev/components/MdBadge/',
-    // '<rootDir>/src/vue-material/dev/components/MdRadio/',
-    // '<rootDir>/src/vue-material/dev/components/MdSwitch/',
-    // '<rootDir>/src/vue-material/dev/components/MdOverlay/',
-    // '<rootDir>/src/vue-material/dev/components/MdDrawer/',
-    // '<rootDir>/src/vue-material/dev/components/MdPortal/',
-    '<rootDir>/external/'
+    '<rootDir>/external/',
+    '<rootDir>/src/renderer'
   ],
   testRegex: '(/__tests__/.*|(\\.|/)(spec))\\.(vue|js)$',
+  // testRegex: '(/__tests__/.*|(\\.|/)(spec))\\.(vue|js)$',
   'moduleFileExtensions': [
     'js',
     'json',
@@ -29,11 +23,6 @@ module.exports = {
     '^core/(.*)$': '<rootDir>/src/vue-material/dev/core/$1',
     '^components(.*)$': '<rootDir>/src/vue-material/dev/components$1',
     '\\.(css|scss)$': '<rootDir>/test/styleMock.js',
-    '^@partials/(.*)$': '<rootDir>/src/renderer/components/partials/$1',
-    '^@extras/(.*)$': '<rootDir>/src/renderer/components/extras/$1',
-    '^@mixins/(.*)$': '<rootDir>/src/renderer/mixins/$1',
-    '@/orm': '<rootDir>/src/renderer/orm'
-    // '^@/(.*)$': '<rootDir>/src/renderer/$1'
   },
   'setupTestFrameworkScriptFile': '<rootDir>/test/setup.js',
   'transform': {
