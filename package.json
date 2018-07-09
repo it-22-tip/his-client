@@ -33,6 +33,7 @@
     "test": "cross-env BABEL_ENV=test jest",
     "test:clear": "cross-env BABEL_ENV=test jest --clearCache",
     "install-app-deps": "cross-env DEBUG=electron-builder electron-builder install-app-deps",
+    "material:test": "cross-env BABEL_ENV=test jest --config=./.testConfig/vue-material.test.config --clearCache",
     "material:update": "cross-env BABEL_ENV=buildscript node -r babel-register updater.es6",
     "material:replace": "cross-env BABEL_ENV=buildscript node -r babel-register replacer.es6"
   },
@@ -132,7 +133,7 @@
     "vuex": "^3.0.1",
     "vuex-pathify": "^1.1.0",
     "vuex-router-sync": "^5.0.0",
-    "xlsx": "^0.13.1",
+    "xlsx": "^0.13.2",
     "xml2json": "^0.11.2"
   },
   "devDependencies": {
