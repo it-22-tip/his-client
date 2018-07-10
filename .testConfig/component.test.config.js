@@ -26,7 +26,9 @@ module.exports = {
     '^@partials/(.*)$': '<rootDir>/src/renderer/components/partials/$1',
     '^@extras/(.*)$': '<rootDir>/src/renderer/components/extras/$1',
     '^@mixins/(.*)$': '<rootDir>/src/renderer/mixins/$1',
-    '@/orm': '<rootDir>/src/renderer/orm'
+    '@/orm': '<rootDir>/src/renderer/orm',
+    '@windowUrls': '<rootDir>/src/main/windowUrls',
+    '@helpers/(.*)$': '<rootDir>/src/renderer/helpers/$1'
     // '^@/(.*)$': '<rootDir>/src/renderer/$1'
   },
   'setupTestFrameworkScriptFile': '<rootDir>/test/setup.js',
