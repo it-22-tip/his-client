@@ -28,6 +28,7 @@ module.exports = {
     '^@mixins/(.*)$': '<rootDir>/src/renderer/mixins/$1',
     '@/orm': '<rootDir>/src/renderer/orm',
     '@windowUrls': '<rootDir>/src/main/windowUrls',
+    '@windowDefinitions': '<rootDir>/src/main/windowDefinitions',
     '@helpers/(.*)$': '<rootDir>/src/renderer/helpers/$1'
     // '^@/(.*)$': '<rootDir>/src/renderer/$1'
   },
