@@ -41,7 +41,7 @@
 <script>
 import fs from 'fs'
 import { readFile, readDir, readJSON } from '@helpers/files'
-import { userData } from '@helpers/constants'
+// import { userData } from '@helpers/constants'
 import { default as Promise } from 'bluebird'
 import path from 'path'
 import os from 'os'
@@ -91,7 +91,7 @@ export default {
     await this.closeConnection()
   },
   async mounted () {
-    console.log(userData)
+    // console.log(userData)
     await this.closeConnection()
     this.dir = path.join(os.homedir() + `/.hisdata`)
     this.jsonDir = path.join(this.dir, '/json')
