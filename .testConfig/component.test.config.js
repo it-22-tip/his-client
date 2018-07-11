@@ -15,6 +15,7 @@ module.exports = {
   ],
   'moduleNameMapper': {
     '^vue$': '<rootDir>/node_modules/vue/dist/vue.common.js',
+    'electron': '<rootDir>/test/electronMock.js',
     '^vue-material(.*)$': '<rootDir>/src/vue-material/dev$1',
     '^test(.*)$': '<rootDir>/test$1',
     '^src(.*)$': '<rootDir>/src$1',
