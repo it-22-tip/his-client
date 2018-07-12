@@ -8,24 +8,18 @@
 [![MacOS-Linux-Windows](https://img.shields.io/badge/platform-MacOS%20%7C%20Windows%20%7C%20Linux-orange.svg?style=flat-square)](https://github.com/idnesdotlink/his-client)
 [![Permata Harapan Cancer Center](https://img.shields.io/badge/sponsor-phcc.co.id-eb6fa5.svg?style=flat-square)](https://phcc.co.id)
 
-<!--
-|Windows|Linux|
+|Windows & Linux|OSX|
 |:-:|:-:|
-|[![Build status](https://ci.appveyor.com/api/projects/status/[projectid]?svg=true)](https://ci.appveyor.com/project/idnesdotlink/[projectid])|[![Build status](https://travis-ci.org/idnesdotlink/[projectid].svg?branch=master)](https://travis-ci.org/idnesdotlink/[projectid])|
--->
+|[![Build status](https://img.shields.io/appveyor/ci/his-client/master.svg?style=flat-square)](https://ci.appveyor.com/project/idnesdotlink/his-client)|[![Build status](https://img.shields.io/travis/idnesdotlink/his-client/master.svg?style=flat-square)](https://travis-ci.org/idnesdotlink/his-client)|
 
 ## Using
 
-* Electron
 * Webpack 4
 * Vue
-* Sequelize
+* Dexie
 
 ## Planned Features
 
 * Printing
 * Pdf Printing
 * XLSX Export Import
-* Image
-* QR Code
-* Bar Code
