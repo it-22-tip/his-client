@@ -136,8 +136,8 @@
     "xml2json": "^0.11.2"
   },
   "devDependencies": {
-    "@babel/traverse": "^7.0.0-beta.52",
-    "@babel/types": "^7.0.0-beta.52",
+    "@babel/traverse": "^7.0.0-beta.53",
+    "@babel/types": "^7.0.0-beta.53",
     "@vue/test-utils": "^1.0.0-beta.20",
     "autoprefixer": "^8.6.5",
     "babel-core": "^6.26.3",
@@ -194,7 +194,7 @@
     "jest-serializer-vue": "^2.0.2",
     "jsdom": "^11.10.0",
     "jsdom-global": "^3.0.2",
-    "less": "^3.7.0",
+    "less": "^3.7.1",
     "less-loader": "^4.1.0",
     "mini-css-extract-plugin": "^0.4.1",
     "mocha": "^5.2.0",
