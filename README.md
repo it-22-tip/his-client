@@ -7,10 +7,8 @@
 [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-green.svg?style=flat-square)](https://github.com/idnesdotlink/his-client)
 [![MacOS-Linux-Windows](https://img.shields.io/badge/platform-MacOS%20%7C%20Windows%20%7C%20Linux-orange.svg?style=flat-square)](https://github.com/idnesdotlink/his-client)
 [![Permata Harapan Cancer Center](https://img.shields.io/badge/sponsor-phcc.co.id-eb6fa5.svg?style=flat-square)](https://phcc.co.id)
-
-|Windows & Linux|OSX|
-|:-:|:-:|
-|[![Build status](https://img.shields.io/appveyor/ci/idnesdotlink/his-client/master.svg?logo=appveyor&style=flat-square)](https://ci.appveyor.com/project/idnesdotlink/his-client)|[![Build status](https://img.shields.io/travis/idnesdotlink/his-client/master.svg?logo=travis&style=flat-square)](https://travis-ci.org/idnesdotlink/his-client)|
+[![Build status](https://img.shields.io/appveyor/ci/idnesdotlink/his-client/master.svg?logo=appveyor&style=flat-square)](https://ci.appveyor.com/project/idnesdotlink/his-client)
+[![Build status](https://img.shields.io/travis/idnesdotlink/his-client/master.svg?logo=travis&style=flat-square)](https://travis-ci.org/idnesdotlink/his-client)
 
 ## Using
 
