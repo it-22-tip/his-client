@@ -1,9 +1,11 @@
 .DS_Store
 dist/electron/*
 dist/web/*
+*.code-workspace
 build/*
 !build/icons
 node_modules/
+external/
 npm-debug.log
 npm-debug.log.*
 yarn-error.log
