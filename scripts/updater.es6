@@ -3,10 +3,12 @@ import path from 'path'
 import { copy } from 'fs-extra'
 const extract = Promise.promisify(extractZip)
 // const cp = Promise.promisify(copyFile)
-let src = path.resolve('./external', 'vue-material-dev.zip')
-let target = path.resolve('./external')
-let cpSrc = path.resolve('./external', 'vue-material-dev', 'src')
-let tgtSrc = path.resolve('./src', 'vue-material', 'dev')
+let rootPath = path.resolve(__dirname, '..')
+let externalPath = path.join(rootPath, 'external')
+let src = path.join(externalPath, 'vue-material-dev.zip')
+let target = externalPath
+let cpSrc = path.join(externalPath, 'vue-material-dev', 'src')
+let tgtSrc = path.join(rootPath, 'src', 'vue-material', 'dev')
 extract(src, {dir: target})
   .then(
     () => {

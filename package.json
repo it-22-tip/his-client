@@ -29,8 +29,8 @@
     "postinstall": "electron-builder install-app-deps",
     "install-app-deps": "electron-builder install-app-deps",
     "material:test": "cross-env BABEL_ENV=test jest --config=.testConfig/vue-material.testConfig.js",
-    "material:update": "cross-env BABEL_ENV=buildscript node -r babel-register script/updater.es6",
-    "material:replace": "cross-env BABEL_ENV=buildscript node -r babel-register script/replacer.es6"
+    "material:update": "cross-env BABEL_ENV=buildscript node -r babel-register scripts/updater.es6",
+    "material:replace": "cross-env BABEL_ENV=buildscript node -r babel-register scripts/replacer.es6"
   },
   "browserslist": [
     "last 1 chrome version"

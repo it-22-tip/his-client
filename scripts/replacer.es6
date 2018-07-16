@@ -1,6 +1,6 @@
 import path from 'path'
 import { readdir as fsreaddir, stat as fsstat, writeFileSync } from 'fs'
-import { readFile } from './src/renderer/helpers/files'
+import { readFile } from '../src/renderer/helpers/files'
 const readdir = Promise.promisify(fsreaddir)
 const stat = Promise.promisify(fsstat)
 const recur = async function (dir) {
@@ -39,7 +39,10 @@ const recur = async function (dir) {
   return fileNames
 }
 
-recur('./src/vue-material').then(
+let rootPath = path.resolve(__dirname, '..')
+let vueMaterialPath = path.join(rootPath, 'src', 'vue-material')
+
+recur(vueMaterialPath).then(
   file => {
     // console.log(file)
   }
