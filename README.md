@@ -10,7 +10,7 @@
 
 |Windows & Linux|OSX|
 |:-:|:-:|
-|[![Build status](https://img.shields.io/appveyor/ci/idnesdotlink/his-client/master.svg?style=flat-square)](https://ci.appveyor.com/project/idnesdotlink/his-client)|[![Build status](https://img.shields.io/travis/idnesdotlink/his-client/master.svg?style=flat-square)](https://travis-ci.org/idnesdotlink/his-client)|
+|[![Build status](https://img.shields.io/appveyor/ci/idnesdotlink/his-client/master.svg?logo=appveyor&style=flat-square)](https://ci.appveyor.com/project/idnesdotlink/his-client)|[![Build status](https://img.shields.io/travis/idnesdotlink/his-client/master.svg?logo=travis&style=flat-square)](https://travis-ci.org/idnesdotlink/his-client)|
 
 ## Using
 
