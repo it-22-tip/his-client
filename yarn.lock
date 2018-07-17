@@ -4610,6 +4610,13 @@ eslint-module-utils@^2.2.0:
     debug "^2.6.8"
     pkg-dir "^1.0.0"
 
+eslint-plugin-es@^1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-es/-/eslint-plugin-es-1.3.1.tgz#5acb2565db4434803d1d46a9b4cbc94b345bd028"
+  dependencies:
+    eslint-utils "^1.3.0"
+    regexpp "^2.0.0"
+
 eslint-plugin-flowtype-errors@^3.5.1:
   version "3.6.0"
   resolved "https://registry.yarnpkg.com/eslint-plugin-flowtype-errors/-/eslint-plugin-flowtype-errors-3.6.0.tgz#5782994261e925aed1320630146636e88e4ad553"
@@ -4636,14 +4643,16 @@ eslint-plugin-jest@^21.17.0:
   version "21.17.0"
   resolved "https://registry.yarnpkg.com/eslint-plugin-jest/-/eslint-plugin-jest-21.17.0.tgz#fdb00e2f9ff16987d6ebcf2c75c7add105760bbb"
 
-eslint-plugin-node@^6.0.1:
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-node/-/eslint-plugin-node-6.0.1.tgz#bf19642298064379315d7a4b2a75937376fa05e4"
+eslint-plugin-node@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-node/-/eslint-plugin-node-7.0.0.tgz#cd4db400d500394c0d39037868d0d61eb2cfb0f9"
   dependencies:
-    ignore "^3.3.6"
+    eslint-plugin-es "^1.3.1"
+    eslint-utils "^1.3.1"
+    ignore "^4.0.2"
     minimatch "^3.0.4"
-    resolve "^1.3.3"
-    semver "^5.4.1"
+    resolve "^1.8.1"
+    semver "^5.5.0"
 
 eslint-plugin-prettier@^2.6.2:
   version "2.6.2"
@@ -4687,7 +4696,7 @@ eslint-scope@^4.0.0:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
 
-eslint-utils@^1.3.1:
+eslint-utils@^1.3.0, eslint-utils@^1.3.1:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/eslint-utils/-/eslint-utils-1.3.1.tgz#9a851ba89ee7c460346f97cf8939c7298827e512"
 
@@ -5383,6 +5392,14 @@ fs-extra@^0.30.0:
 fs-extra@^6.0.1:
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-6.0.1.tgz#8abc128f7946e310135ddc93b98bddb410e7a34b"
+  dependencies:
+    graceful-fs "^4.1.2"
+    jsonfile "^4.0.0"
+    universalify "^0.1.0"
+
+fs-extra@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-7.0.0.tgz#8cc3f47ce07ef7b3593a11b9fb245f7e34c041d6"
   dependencies:
     graceful-fs "^4.1.2"
     jsonfile "^4.0.0"
@@ -6093,9 +6110,13 @@ ignore-walk@^3.0.1:
   dependencies:
     minimatch "^3.0.4"
 
-ignore@^3.3.3, ignore@^3.3.5, ignore@^3.3.6:
+ignore@^3.3.3, ignore@^3.3.5:
   version "3.3.10"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-3.3.10.tgz#0a97fb876986e8081c631160f8f9f389157f0043"
+
+ignore@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/ignore/-/ignore-4.0.2.tgz#0a8dd228947ec78c2d7f736b1642a9f7317c1905"
 
 image-compressor@^1.2.0:
   version "1.2.0"
@@ -10249,6 +10270,10 @@ regexpp@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/regexpp/-/regexpp-1.1.0.tgz#0e3516dd0b7904f413d2d4193dce4618c3a689ab"
 
+regexpp@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/regexpp/-/regexpp-2.0.0.tgz#b2a7534a85ca1b033bcf5ce9ff8e56d4e0755365"
+
 regexpu-core@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/regexpu-core/-/regexpu-core-1.0.0.tgz#86a763f58ee4d7c2f6b102e4764050de7ed90c6b"
@@ -10446,7 +10471,7 @@ resolve@1.1.7:
   version "1.1.7"
   resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.1.7.tgz#203114d82ad2c5ed9e8e0411b3932875e889e97b"
 
-resolve@^1.1.6, resolve@^1.1.7, resolve@^1.3.3, resolve@^1.5.0, resolve@^1.6.0:
+resolve@^1.1.6, resolve@^1.1.7, resolve@^1.5.0, resolve@^1.6.0, resolve@^1.8.1:
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.8.1.tgz#82f1ec19a423ac1fbd080b0bab06ba36e84a7a26"
   dependencies:
