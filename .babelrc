@@ -1,106 +1,54 @@
 {
-  "comments": false,
   "env": {
-    "test": {
-      "plugins": [
-        ["istanbul"],
-        [
-          "transform-runtime",
+      "buildscript": {
+          "presets": [
+              [
+                  "env",
+                  {
+                      "targets": {
+                          "node": "current"
+                      }
+                  }
+              ],
+              "stage-0"
+          ]
+      },
+      "test": {
+          "presets": [
+              [
+                  "env",
+                  {
+                      "targets": {
+                          "node": 7
+                      }
+                  }
+              ],
+              "stage-0"
+          ],
+          "plugins": [
+              [
+                  "transform-runtime",
+                  {
+                      "helpers": false,
+                      "polyfill": false,
+                      "regenerator": true
+                  }
+              ],
+              [
+                  "dynamic-import-node"
+              ]
+          ]
+      }
+  },
+  "presets": [
+      [
+          "env",
           {
-            "helpers": false,
-            "polyfill": false,
-            "regenerator": true
+              "targets": {
+                  "node": "current"
+              }
           }
-        ],
-        ["dynamic-import-node"]
       ],
-      "presets": [
-        ["env", {
-          "targets": {
-            "node": 7
-          }
-        }], "stage-0"
-      ]
-    },
-    "buildscript": {
-      "plugins": [
-        ["transform-promise-to-bluebird"],
-        [
-          "transform-runtime",
-          {
-            "helpers": false,
-            "polyfill": false,
-            "regenerator": true
-          }
-        ],
-        ["syntax-dynamic-import"]
-      ],
-      "presets": [
-        ["env", {
-          "targets": {
-            "node": 7
-          }
-        }], "stage-0"
-      ]
-    },
-    "main": {
-      "plugins": [
-        ["transform-promise-to-bluebird"],
-        [
-          "transform-runtime",
-          {
-            "helpers": false,
-            "polyfill": false,
-            "regenerator": true
-          }
-        ],
-        ["syntax-dynamic-import"]
-      ],
-      "presets": [
-        ["env", {
-          "targets": {
-            "node": 7
-          }
-        }], "stage-0"
-      ]
-    },
-    "renderer": {
-      "plugins": [
-        ["transform-promise-to-bluebird"],
-        [
-          "transform-runtime",
-          {
-            "helpers": false,
-            "polyfill": false,
-            "regenerator": true
-          }
-        ],
-        ["syntax-dynamic-import"]
-      ],
-      "presets": [
-        ["env", {
-          "modules": false
-        }], "stage-0", "es2015"
-      ]
-    },
-    "web": {
-      "plugins": [
-        ["transform-promise-to-bluebird"],
-        [
-          "transform-runtime",
-          {
-            "helpers": false,
-            "polyfill": false,
-            "regenerator": true
-          }
-        ],
-        ["syntax-dynamic-import"]
-      ],
-      "presets": [
-        ["env", {
-          "modules": false
-        }], "stage-0"
-      ]
-    }
-  }
+      "stage-0"
+  ]
 }

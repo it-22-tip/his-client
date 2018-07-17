@@ -22,7 +22,7 @@ module.exports = {
     // '^base(.*)$': '<rootDir>/src/vue-material/dev/base$1',
     '^core/(.*)$': '<rootDir>/src/vue-material/dev/core/$1',
     '^components(.*)$': '<rootDir>/src/vue-material/dev/components$1',
-    '\\.(css|scss)$': '<rootDir>/test/styleMock.js',
+    '\\.(css|scss)$': '<rootDir>/test/styleMock.js'
   },
   'setupTestFrameworkScriptFile': '<rootDir>/test/setup.js',
   'transform': {

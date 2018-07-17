@@ -1,11 +1,11 @@
 'use strict'
 
-import { say } from 'cfonts'
 import chalk from 'chalk'
 import del from 'del'
 import webpack from 'webpack'
 import Multispinner from 'multispinner'
 import { mainConfig, rendererConfig, webConfig } from './webpack'
+import { greeting2 } from './consoleLogger'
 
 const doneLog = chalk.bgGreen.white(' DONE ') + ' '
 const errorLog = chalk.bgRed.white(' ERROR ') + ' '
@@ -24,7 +24,7 @@ function clean () {
 }
 
 function build () {
-  greeting()
+  greeting2(isCI)
 
   del.sync(['dist/electron/*', '!.gitkeep'])
 
@@ -103,22 +103,4 @@ function web () {
 
     process.exit()
   })
-}
-
-function greeting () {
-  const cols = process.stdout.columns
-  let text = ''
-
-  if (cols > 85) text = 'bismillah'
-  else if (cols > 60) text = 'bismika|Allahumma'
-  else text = false
-
-  if (text && !isCI) {
-    say(text, {
-      colors: ['yellow'],
-      font: 'simple3d',
-      space: false
-    })
-  } else console.log(chalk.yellow.bold('\n  lets-build'))
-  console.log()
 }
