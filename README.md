@@ -14,10 +14,10 @@
 
 ## Planned Features
 
-* Printing
+* ESC/POS Printing
 * Pdf Printing
 * XLSX Export Import
 
 ## Sponsor
 
-[![Permata Harapan Cancer Center](https://phcc.co.id/img/logo/phcc.svg)](https://phcc.co.id)
+[![Permata Harapan Cancer Center]https://github.com/idnesdotlink/his-client/blob/master/artwork/logo/phcc.svg)](https://phcc.co.id)
