@@ -25,8 +25,7 @@ addons:
     - xz-utils
 before_install:
 - export LANG=en_US.UTF-8
-- mkdir -p /tmp/git-lfs && curl -L https://github.com/github/git-lfs/releases/download/v1.2.1/git-lfs-$([
-  "$TRAVIS_OS_NAME" == "linux" ] && echo "linux" || echo "darwin")-amd64-1.2.1.tar.gz | tar -xz -C /tmp/git-lfs --strip-components 1 && /tmp/git-lfs/git-lfs pull
+- mkdir -p /tmp/git-lfs && curl -L https://github.com/github/git-lfs/releases/download/v1.2.1/git-lfs-$([ "$TRAVIS_OS_NAME" == "linux" ] && echo "linux" || echo "darwin")-amd64-1.2.1.tar.gz | tar -xz -C /tmp/git-lfs --strip-components 1 && /tmp/git-lfs/git-lfs pull
 - nvm install 8
 - nvm use 8
 - source ~/.bashrc
@@ -39,3 +38,6 @@ script:
 branches:
   only:
   - master
+env:
+  global:
+    secure: fbhDN+mfqnZypnTeuRoJqXNhI/zqWfctmbWVKdisish5XqXzgSFmD8QVBJU/ylnsfLrfL6v5FDBorv6UNXeZ6EAY6MwkwOlomWgPi9GXVUUdWqnm7VfXhKLZPTECn2wpRL/qT+sRPa/4n2wB+uO+nTrYsYxV3/Rhb/LrgARmB4D7WaOdhgI0VHmG5DeLaZmACgXguSuUZKcb6S9jkc2HmslzxBexe2CueyEx4pFMMgtPkfmXmd5LbK0j9cbYSgM1t0e4qv2+sZkMFQJSI5vh1KGLOLj6t70V0LJEzxItpc/Ifr5vSforCyLwKzx31SST4tVlop1x4bbRx9WBz/7sKFNPzJOut7hL1xTvGnRiGqBZmq4mrXqVGJTK5iALzffdQ7RmIDV8liDi40iIU55DC7TI/KoDFqlks7+REMO3coTCecJjcshv2MtISqCykCv6VpfEwBlo0PTohK0m/c9VvWGRiDjglwtnHg+G2NTscf5TGVXksttCn4ehPWZXfFotE8gLO/PuBDCFBPaJfuK/2d1daKNAVaICstgHhd0GVrPeVkuosXe4sMmmT9DH/gdKTZD/TP5xp+yHoIHrMYq8PdW/2XfetiOp6Fy8a177rX59/uSifIASxALmB06lR95I2IQYVGkl5aByPu9PjzzGw2jnwx7C+laNxYLI1mZ7Jsw=
