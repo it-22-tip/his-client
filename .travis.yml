@@ -30,13 +30,12 @@ before_install:
 - nvm install 8
 - nvm use 8
 - source ~/.bashrc
-- curl -o- -L https://yarnpkg.com/install.sh | bash
 install:
 - npm install -g xvfb-maybe
 - npm install -g npm@latest
-- yarn
+- npm install
 script:
-- yarn build
+- npm run build
 branches:
   only:
   - master

@@ -28,9 +28,9 @@ cache:
   # - node_modules
   # - '%USERPROFILE%\.electron'
   # - '%USERPROFILE%\.electron-gyp'
-  # - '%USERPROFILE%\AppData\Local\Yarn\cache'
   # - '%USERPROFILE%\AppData\Local\electron\Cache'
   # - '%USERPROFILE%\AppData\Local\electron-builder\cache'
+  # - '%AppData%\npm-cache\'
 
 init:
   - sh: sudo apt-get update
@@ -41,10 +41,10 @@ stack: node 8, python 2.7.14
 
 install:
   - ps: Install-Product node $env:nodejs_version
-  - yarn install
+  - npm install
 
 build_script:
-  - yarn build
+  - npm run build
 
 test: off
 
