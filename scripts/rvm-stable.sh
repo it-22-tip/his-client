@@ -2,4 +2,4 @@
 
 set -e
 
-yes | sdkmanager "platforms;android-27"
+rvm get stable
