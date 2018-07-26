@@ -21,7 +21,7 @@ let rendererConfig = {
     renderer: RendererEntry
   },
   externals: whiteListed,
-  mode: process.env.NODE_ENV !== 'production' ? 'development' : 'production',
+  mode: 'development', // process.env.NODE_ENV !== 'production' ? 'development' : 'production',
   module: {
     rules: rendererRules
   },
@@ -47,10 +47,13 @@ let rendererConfig = {
     globalObject: 'this'
   },
   resolve: {
-    alias: assign({}, VueMaterialAlias, BaseAlias),
+    alias: assign({}, BaseAlias),
     extensions: ['.js', '.es6', '.vue', '.json', '.node', '.css', '.scss', '.sass', 'less']
   },
-  target: 'electron-renderer'
+  target: 'electron-renderer',
+  serve: {
+    port: 9080
+  }
 }
 
 if (process.env.NODE_ENV === 'production') {

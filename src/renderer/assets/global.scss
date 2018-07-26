@@ -1,11 +1,9 @@
 @import "~material-design-icons/iconfont/material-icons.css";
 @import "~typeface-roboto/index.css";
-@import "~vue-material/base/index";
+@import "~vue-material/dist/vue-material.min.css";
 @import "theme";
 @import "./vuebar";
 @import "pdf";
-@import "~@fortawesome/fontawesome-free-webfonts/css/fa-regular.css";
-@import "~@fortawesome/fontawesome-free-webfonts/css/fontawesome.css";
 
 html, body {
   -webkit-touch-callout: none;

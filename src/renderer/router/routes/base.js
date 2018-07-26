@@ -12,14 +12,6 @@ const Base = [
     component: () => import('@pages/base/intro')
   },
   {
-    path: '/printer',
-    name: 'base.printer',
-    component: () => import('@pages/base/printer'),
-    meta: {
-
-    }
-  },
-  {
     path: '/install',
     name: 'base.install',
     component: () => import('@pages/base/install'),
