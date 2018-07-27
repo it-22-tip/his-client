@@ -8,7 +8,7 @@ import { externals } from './externals'
 process.env.BABEL_ENV = 'main'
 let mainConfig = {
   entry: {
-    main: MainEntry
+    main: [MainEntry]
   },
   mode: process.env.NODE_ENV !== 'production' ? 'development' : 'production',
   externals: externals,
