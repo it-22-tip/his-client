@@ -14,7 +14,7 @@ let electronProcess = null
 let manualRestart = false
 let hotMiddleware
 
-function startRenderer () {
+const startRenderer = function () {
   return new Promise((resolve, reject) => {
     rendererConfig.entry.renderer = [path.join(__dirname, 'dev-client.es6')].concat(rendererConfig.entry.renderer)
 
@@ -61,7 +61,7 @@ function startRenderer () {
   })
 }
 
-function startMain () {
+const startMain = function () {
   return new Promise((resolve, reject) => {
     mainConfig.entry.main = [path.join(__dirname, '../src/main/index.dev.js')].concat(mainConfig.entry.main)
 
@@ -108,7 +108,7 @@ function startMain () {
   })
 }
 
-function startElectron () {
+const startElectron = function () {
   let env = Object.create(process.env)
   env.ELECTRON_DISABLE_SECURITY_WARNINGS = true
   env.IS_DEVELOPMENT = true
@@ -126,16 +126,15 @@ function startElectron () {
   })
 }
 
-function init () {
-  greeting()
-
-  Promise.all([startRenderer(), startMain()])
-    .then(() => {
-      startElectron()
-    })
-    .catch(err => {
-      console.error(err)
-    })
+const init = async function () {
+  try {
+    greeting()
+    await startRenderer()
+    await startMain()
+    startElectron()
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 init()

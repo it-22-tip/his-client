@@ -1,11 +1,9 @@
-import rendererConfig from './rendererConfig'
-import mainConfig from './mainConfig'
-import testConfig from './testConfig'
-import webConfig from './webConfig'
+import rendererConfig from './config/rendererConfig'
+import mainConfig from './config/mainConfig'
+import testConfig from './config/testConfig'
 
 export {
   rendererConfig,
   mainConfig,
-  testConfig,
-  webConfig
+  testConfig
 }

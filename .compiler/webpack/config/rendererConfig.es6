@@ -1,16 +1,16 @@
 'use strict'
 import path from 'path'
 import { assign } from 'lodash'
-import { RendererEntry, StaticPath, OutputPath } from '../constant'
+import { RendererEntry, StaticPath, OutputPath } from '../../constant'
 import webpack from 'webpack'
-import { BaseAlias } from './alias'
+import { BaseAlias } from '../alias'
 import BabelMinifyWebpackPlugin from 'babel-minify-webpack-plugin'
 import CopyWebpackPlugin from 'copy-webpack-plugin'
-import miniCssExtractPlugin from './plugins/miniCssExtractPlugin.es6'
-import htmlWebpackPlugin from './plugins/htmlWebpackPlugin'
-import webpackDefinePlugin from './plugins/webpackDefinePlugin'
-import rendererRules from './rules/rendererRules'
-import { whiteListed } from './externals'
+import miniCssExtractPlugin from '../plugins/miniCssExtractPlugin.es6'
+import htmlWebpackPlugin from '../plugins/htmlWebpackPlugin'
+import webpackDefinePlugin from '../plugins/webpackDefinePlugin'
+import rendererRules from '../rules/rendererRules'
+import { whiteListed } from '../externals'
 import { VueLoaderPlugin } from 'vue-loader'
 
 process.env.BABEL_ENV = 'renderer'
@@ -21,7 +21,7 @@ let rendererConfig = {
     renderer: [RendererEntry]
   },
   externals: whiteListed,
-  mode: 'development', // process.env.NODE_ENV !== 'production' ? 'development' : 'production',
+  mode: process.env.NODE_ENV !== 'production' ? 'development' : 'production',
   module: {
     rules: rendererRules
   },
@@ -34,7 +34,6 @@ let rendererConfig = {
     miniCssExtractPlugin,
     htmlWebpackPlugin,
     webpackDefinePlugin,
-    // new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin()
   ],
   output: {
@@ -48,6 +47,12 @@ let rendererConfig = {
     extensions: ['.js', '.es6', '.vue', '.json', '.node', '.css', '.scss', '.sass', 'less']
   },
   target: 'electron-renderer'
+}
+
+if (!process.env.WEBPACK_SERVE) {
+  rendererConfig.plugins.push(
+    new webpack.HotModuleReplacementPlugin()
+  )
 }
 
 if (process.env.NODE_ENV === 'production') {

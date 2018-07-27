@@ -1,9 +1,9 @@
 'use strict'
-import { OutputPath } from '../constant'
+import { OutputPath } from '../../constant'
 import webpack from 'webpack'
 import { VueLoaderPlugin } from 'vue-loader'
-import { webpackNodeExternals } from './externals'
-import testRules from './rules/testRules'
+import { webpackNodeExternals } from '../externals'
+import testRules from '../rules/testRules'
 process.env.BABEL_ENV = 'renderer'
 let testConfig = {
   devtool: 'inline-cheap-module-source-map',

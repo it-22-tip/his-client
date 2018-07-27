@@ -14,19 +14,13 @@
     "node": ">8.0.0"
   },
   "scripts": {
-    "code": "code -r *.code-workspace",
-    "dev": "cross-env DEBUG=webpack NODE_ENV=development BABEL_ENV=buildscript node --max_old_space_size=1024 -r babel-register .compiler/dev-runner.es6",
+    "dev:wds": "cross-env DEBUG=webpack NODE_ENV=development BABEL_ENV=buildscript node --max_old_space_size=1024 -r babel-register .compiler/dev.wds.es6",
+    "dev:ws": "cross-env WEBPACK_SERVE=true DEBUG=webpack NODE_ENV=development BABEL_ENV=buildscript node --max_old_space_size=1024 -r babel-register .compiler/dev.ws.es6",
     "build": "cross-env BABEL_ENV=buildscript NODE_ENV=production node --max_old_space_size=2048 -r babel-register .compiler/build.es6 && electron-builder --config electron-builder.yml",
-    "build:debug": "node .compiler/build.es6 && cross-env DEBUG=electron-builder electron-builder",
     "build:clean": "cross-env BABEL_ENV=buildscript BUILD_TARGET=clean node -r babel-register .compiler/build.es6",
-    "build:web": "cross-env BUILD_TARGET=web node .compiler/build.js",
-    "test:component": "cross-env  BABEL_ENV=test jest --no-cache --config=.testConfig/component.testConfig.js",
     "lint": "node_modules/.bin/eslint --fix --ext .js,.vue -f node_modules/eslint-friendly-formatter src",
-    "pack": "npm run pack:main && npm run pack:renderer",
-    "pack:main": "cross-env NODE_ENV=production webpack --progress --colors --config .compiler/webpack.main.config.es6",
-    "pack:renderer": "cross-env NODE_ENV=production webpack --progress --colors --config .compiler/webpack.renderer.config.es6",
     "install-app-deps": "electron-builder install-app-deps",
-    "postinstall": "electron-builder install-app-deps"
+    "postinstall": "npm run install-app-deps"
   },
   "browserslist": [
     "last 1 chrome version"
@@ -148,7 +142,7 @@
     "raw-loader": "^0.5.1",
     "sass-loader": "^7.0.3",
     "sequelize-mock": "^0.10.2",
-    "shelljs": "^0.8.2",
+    "shx": "^0.3.2",
     "sinon": "^6.1.4",
     "style-loader": "^0.21.0",
     "uglifyjs-webpack-plugin": "^1.2.7",

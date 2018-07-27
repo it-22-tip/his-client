@@ -24,9 +24,9 @@ async function startRenderer () {
 }
 
 function startMain () {
-    mainConfig.entry.main = [path.join(__dirname, '../src/main/index.dev.js')].concat(mainConfig.entry.main)
-    webpack(mainConfig)
-    return Promise.resolve()
+  mainConfig.entry.main = [path.join(__dirname, '../src/main/index.dev.js')].concat(mainConfig.entry.main)
+  webpack(mainConfig)
+  return Promise.resolve()
 }
 
 function startElectron () {
