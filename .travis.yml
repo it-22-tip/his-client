@@ -26,7 +26,7 @@ addons:
 before_install:
 - export LANG=en_US.UTF-8
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ./scripts/travis/rvm-stable.sh ; fi
-- ./travis/scripts/git-lfs.sh
+- ./scripts/travis/git-lfs.sh
 - nvm install 8
 - nvm use 8
 - source ~/.bashrc
