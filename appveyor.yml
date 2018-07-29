@@ -5,10 +5,6 @@ environment:
   GH_TOKEN: 1FMwnJoqZUKuGuCgElp4LdpmflJIUaODB5elKK8mtkgUPzYApozF4iQ2X7a9vbKt
   APPVEYOR_YML_DISABLE_PS_LINUX: true
 
-branches:
-  only:
-    - master
-
 image:
   - Visual Studio 2015
   - Ubuntu
