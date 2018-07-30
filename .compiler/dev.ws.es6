@@ -18,7 +18,11 @@ async function startRenderer () {
   const compiler = webpack(rendererConfig)
   const options = {
     compiler: compiler,
-    port: 9080
+    port: 9080,
+    logLevel: 'debug',
+    hotClient: {
+      validTargets: ['electron-renderer']
+    }
   }
   server = await WebpackServe({}, options)
   return server
