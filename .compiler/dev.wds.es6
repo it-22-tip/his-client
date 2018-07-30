@@ -6,21 +6,21 @@ import path from 'path'
 import { spawn } from 'child_process'
 import webpack from 'webpack'
 import WebpackDevServer from 'webpack-dev-server'
-import webpackHotMiddleware from 'webpack-hot-middleware'
+import WebpackHotMiddleware from 'webpack-hot-middleware'
 import { mainConfig, rendererConfig } from './webpack'
 import { greeting, logStats, electronLog } from './consoleLogger'
 import { CompilerPath, MainPath, OutputPath } from './constant'
 
 let electronProcess = null
 let manualRestart = false
-let hotMiddleware
+let webpackHotMiddleware
 
 const startRenderer = function () {
   return new Promise((resolve, reject) => {
     rendererConfig.entry.renderer = [path.join(CompilerPath, 'dev-client.es6')].concat(rendererConfig.entry.renderer)
 
     const compiler = webpack(rendererConfig)
-    hotMiddleware = webpackHotMiddleware(compiler, {
+    webpackHotMiddleware = WebpackHotMiddleware(compiler, {
       log: false,
       heartbeat: 2500
     })
@@ -31,7 +31,7 @@ const startRenderer = function () {
         compilation.hooks.htmlWebpackPluginAfterEmit.tapAsync(
           'htmlWebpackPluginAfterEmit',
           (data, cb) => {
-            hotMiddleware.publish({ action: 'reload' })
+            webpackHotMiddleware.publish({ action: 'reload' })
             cb()
           }
         )
@@ -50,7 +50,7 @@ const startRenderer = function () {
         contentBase: path.join(__dirname, '../'),
         quiet: true,
         before (app, ctx) {
-          app.use(hotMiddleware)
+          app.use(webpackHotMiddleware)
           ctx.middleware.waitUntilValid(() => {
             resolve()
           })
@@ -72,7 +72,7 @@ const startMain = function () {
       'watch-run-plugins-pusing',
       (compilation, done) => {
         logStats('Main', chalk.white.bold('compiling...'))
-        hotMiddleware.publish({ action: 'compiling' })
+        webpackHotMiddleware.publish({ action: 'compiling' })
         done()
       }
     )
