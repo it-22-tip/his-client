@@ -82,7 +82,6 @@ function startElectron () {
   electronProcess.stderr.on('data', data => {
     electronLog(data, 'yellow')
   })
-
   electronProcess.on('close', () => {
     if (!manualRestart) process.exit()
   })
