@@ -4,7 +4,7 @@ import chalk from 'chalk'
 import del from 'del'
 import webpack from 'webpack'
 import Multispinner from 'multispinner'
-import { mainConfig, rendererConfig } from './webpack'
+import { mainConfig, rendererConfig } from './webpack/config'
 import { greeting2 } from './consoleLogger'
 
 const doneLog = chalk.bgGreen.white(' DONE ') + ' '

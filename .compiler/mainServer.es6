@@ -1,6 +1,6 @@
 import webpack from 'webpack'
 import path from 'path'
-import { mainConfig } from './webpack'
+import { mainConfig } from './webpack/config'
 import electron from 'electron'
 import { spawn } from 'child_process'
 import { electronLog, logStats } from './consoleLogger'

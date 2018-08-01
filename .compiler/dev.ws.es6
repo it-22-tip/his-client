@@ -8,7 +8,7 @@ const init = async function () {
   greeting()
   try {
     const renderer = await rendererServer()
-    renderer.on('build-finished', mainServer )
+    renderer.on('build-finished', mainServer)
   } catch (error) {
     console.log(error)
   }
