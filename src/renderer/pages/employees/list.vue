@@ -23,9 +23,9 @@
 </template>
 
 <script>
-import orm from '@mixins/orm'
-import paginated from '@mixins/paginated'
-import populate from '@mixins/populate'
+import orm from '@/mixins/orm'
+import paginated from '@/mixins/paginated'
+import populate from '@/mixins/populate'
 import { map } from 'lodash'
 import '@components/extras/contextmenu/ctx-menu.css'
 export default {

@@ -9,7 +9,7 @@
 export default {
   name: 'App',
   components: {
-    'dev-button': () => import('@partials/dev-button')
+    'dev-button': () => import('@components/dev-button')
   }
 }
 </script>

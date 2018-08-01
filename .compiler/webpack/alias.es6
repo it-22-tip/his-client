@@ -1,30 +1,22 @@
-import { SrcPath, RendererPath, MainPath } from '../constant'
+import { RendererPath, MainPath } from '../constant'
+import { assign } from 'lodash'
 import path from 'path'
 
-const Ver = 'dev'
-const VueMaterialPath = path.join(SrcPath, 'vue-material', Ver)
-
-const VueMaterialAlias = {
-  'components': path.join(VueMaterialPath, 'components'),
-  'vue-material/material': path.join(VueMaterialPath, 'material.js'),
-  'core': path.join(VueMaterialPath, 'core'),
-  'theme': path.join(VueMaterialPath, 'theme'),
-  'vue-material/base/index.scss': path.join(VueMaterialPath, 'base', 'index.scss'),
-  'vue-material/theme/engine.scss': path.join(VueMaterialPath, 'theme', 'engine.scss'),
-  'vue-material/theme/all.scss': path.join(VueMaterialPath, 'theme', 'all.scss'),
-  'vue-material': VueMaterialPath
-}
-
-const BaseAlias = {
-  '@pages': path.join(RendererPath, 'components', 'pages'),
-  '@partials': path.join(RendererPath, 'components', 'partials'),
-  '@extras': path.join(RendererPath, 'components', 'extras'),
-  '@helpers': path.join(RendererPath, 'helpers'),
-  '@mixins': path.join(RendererPath, 'mixins'),
-  '@windowDefinitions': path.join(MainPath, 'windowDefinitions'),
-  '@windowUrls': path.join(MainPath, 'windowUrls'),
-  '@': RendererPath,
+const nodeModulesAlias = {
   'vue$': 'vue/dist/vue.esm.js'
 }
 
-export { VueMaterialAlias, BaseAlias }
+const rendererAlias = {
+  '@components': path.join(RendererPath, 'components'),
+  '@pages': path.join(RendererPath, 'pages'),
+  '@helpers': path.join(RendererPath, 'helpers'),
+  '@mixins': path.join(RendererPath, 'mixins'),
+  '@': RendererPath
+}
+
+const mainALias = {
+  '@windowDefinitions': path.join(MainPath, 'windowDefinitions'),
+  '@windowUrls': path.join(MainPath, 'windowUrls'),
+}
+
+export default assign({}, nodeModulesAlias, rendererAlias, mainALias)

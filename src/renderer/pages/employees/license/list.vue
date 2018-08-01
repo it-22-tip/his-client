@@ -6,34 +6,27 @@
         :table-cell="tableCell"
         :sort="activeSort"
         :order="activeOrder"
+        @context-menu="contextMenu"
         @change-sort="changePage({ sort: $event })"
-        @change-order="changePage({ order: $event })"
-        @click="click"/>
+        @change-order="changePage({ order: $event })"/>
     </md-content>
     <toolbar
       :total="totalPage"
       :page="activePage"
       @change-page="changePage({ page: $event })"/>
-    <context-menu
-      ref="contextMenu"
-      @ctx-open="onCtxOpen">
-      <p>{{ contextMenuData.Name }}</p>
-    </context-menu>
   </md-content>
 </template>
 
 <script>
-import orm from '@mixins/orm'
-import paginated from '@mixins/paginated'
-import populate from '@mixins/populate'
+import orm from '@/mixins/orm'
+import paginated from '@/mixins/paginated'
+import populate from '@/mixins/populate'
 import { map } from 'lodash'
-import '@components/extras/contextmenu/ctx-menu.css'
 export default {
   components: {
     'layout-one': () => import('@components/layout-one'),
     'mtable': () => import('@components/mtable'),
-    'toolbar': () => import('@components/toolbar'),
-    'context-menu': () => import('@components/extras/contextmenu')
+    'toolbar': () => import('@components/toolbar')
   },
   mixins: [
     orm,
@@ -43,32 +36,21 @@ export default {
   data () {
     return {
       model: [],
-      contextMenuData: {},
       tableCell: [
-        {
-          MdLabel: 'NIP',
-          MdSortBy: 'Ein',
-          Data: 'Ein'
-        },
         {
           MdLabel: 'Nama',
           MdSortBy: 'Name',
           Data: 'Name'
         },
         {
-          MdLabel: 'JK',
-          MdSortBy: 'Gender',
-          Data: 'Gender'
+          MdLabel: 'Jenis',
+          MdSortBy: 'Type',
+          Data: 'Type'
         },
         {
-          MdLabel: 'Posisi',
-          MdSortBy: 'JobTitle',
-          Data: 'JobTitle'
-        },
-        {
-          MdLabel: 'Usia',
-          MdSortBy: 'Age',
-          Data: 'Age'
+          MdLabel: 'Habis',
+          MdSortBy: 'DueDate',
+          Data: 'TimeLeft'
         }
       ]
     }
@@ -77,57 +59,47 @@ export default {
     this.activeSort = 'Name'
   },
   methods: {
-    onCtxOpen (data) {
-      this.contextMenuData = data
-    },
-    click (e) {
-      const { $event, item } = e
-      this.$refs.contextMenu.open($event, item)
+    contextMenu ($event) {
+      console.log('clr')
+      // $refs.contextMenu.open($event, { Name: item.Name, Id:item.Ein })
     },
     getOrder (Model) {
       let order = null
       let cs = this.activeSort
       switch (cs) {
-        case 'Ein':
-          order = ['Id', this.activeOrder]
+        case 'Type':
+          order = ['LicenseTypeId', this.activeOrder]
           break
         case 'Name':
           order = [Model.associations.Person, 'Name', this.activeOrder]
           break
-        case 'Gender':
-          order = [Model.associations.Person, 'Gender', this.activeOrder]
-          break
-        case 'JobTitle':
-          order = [Model.associations.JobTitle, 'Name', this.activeOrder]
-          break
-        case 'Age':
-          order = [Model.associations.Person, 'BirthDate', this.activeOrder]
+        case 'DueDate':
+          order = ['DueDate', this.activeOrder]
           break
         default:
-          order = ['Id', this.activeOrder]
+          order = [Model.associations.Person, 'Name', this.activeOrder]
       }
       return [order]
     },
     mapper (row) {
       return {
-        Ein: row.Id,
         Name: row.Person.Name,
-        Age: row.Person.Age,
-        Gender: row.Person.Gender,
-        JobTitle: (row.JobTitle !== null) ? row.JobTitle.Name : null
+        Type: row.LicenseType.Title,
+        TimeLeft: row.TimeLeft,
+        DueDate: row.DueDate
       }
     },
     async transaction (transaction) {
-      const { Persons, Employees, JobTitles } = this.$connection.models
+      const { Licenses, Persons, LicenseTypes } = this.$connection.models
       let page = this.activePage - 1
       let limit = 15
       let offset = page * limit
-      let order = this.getOrder(Employees)
+      let order = this.getOrder(Licenses)
 
       let options = {
         transaction: transaction,
         raw: false,
-        attributes: ['Id'],
+        attributes: ['Id', 'LicenseTypeId', 'DueDate', 'TimeLeft'],
         limit: limit,
         offset: offset,
         order: order,
@@ -136,12 +108,12 @@ export default {
         include: [
           {
             model: Persons,
-            attributes: ['Name', 'Gender', 'BirthDate', 'Age'],
+            attributes: ['Name'],
             required: true
           },
           {
-            model: JobTitles,
-            attributes: ['Name'],
+            model: LicenseTypes,
+            attributes: ['Title'],
             required: true
           }
         ]
@@ -149,10 +121,10 @@ export default {
       let count = null
       let rows = []
       try {
-        rows = await Employees.findAll(options)
+        rows = await Licenses.findAll(options)
         options.raw = true
         options.attributes = undefined
-        count = await Employees.count(options)
+        count = await Licenses.count(options)
       } catch (error) {
         console.log(error)
       }

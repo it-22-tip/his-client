@@ -1,9 +1,8 @@
 'use strict'
 import path from 'path'
-import { assign } from 'lodash'
 import { RendererEntry, StaticPath, OutputPath } from '../../constant'
 import webpack from 'webpack'
-import { BaseAlias } from '../alias'
+import alias from '../alias'
 import BabelMinifyWebpackPlugin from 'babel-minify-webpack-plugin'
 import CopyWebpackPlugin from 'copy-webpack-plugin'
 import miniCssExtractPlugin from '../plugins/miniCssExtractPlugin.es6'
@@ -43,7 +42,7 @@ let rendererConfig = {
     globalObject: 'this' /* worker loader workaround */
   },
   resolve: {
-    alias: assign({}, BaseAlias),
+    alias: alias,
     extensions: ['.js', '.es6', '.vue', '.json', '.node', '.css', '.scss', '.sass', 'less']
   },
   target: 'electron-renderer'
