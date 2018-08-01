@@ -7,7 +7,7 @@ import { spawn } from 'child_process'
 import webpack from 'webpack'
 import WebpackDevServer from 'webpack-dev-server'
 import WebpackHotMiddleware from 'webpack-hot-middleware'
-import { mainConfig, rendererConfig } from './webpack'
+import { mainConfig, rendererConfig } from './webpack/config'
 import { greeting, logStats, electronLog } from './consoleLogger'
 import { CompilerPath, MainPath, OutputPath } from './constant'
 
