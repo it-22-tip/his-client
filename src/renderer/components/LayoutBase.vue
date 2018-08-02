@@ -2,29 +2,41 @@
   <div
     :class="layout"
     class="layout-base">
-    <router-view
-      class="full-page"/>
-    <router-view
-      class="top-panel"
-      name="top-panel"/>
-    <router-view
-      class="side-panel"
-      name="side-panel"/>
-    <router-view
-      class="content"
-      name="content"/>
+    <transition name="slide-fade-left">
+      <router-view
+        key="full-page"
+        class="full-page"/>
+      <router-view
+        key="content"
+        class="content"
+        name="content"/>
+    </transition>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'LayoutBase',
   computed: {
-    layout: {
-      get () {
-        return 'default'
-      }
-    }
+    ...mapGetters([
+      'layout'
+    ])
   }
 }
 </script>
+
+<style lang="scss">
+  .slide-fade-left-enter-active {
+    transition: all 1s ease-in-out;
+  }
+  .slide-fade-left-leave-active {
+    transition: all 1s ease-in-out;
+  }
+  .slide-fade-left-enter {
+    transform: translateX(-100%);
+  }
+  .slide-fade-left-leave-to {
+    transform: translateX(100%);
+  }
+</style>

@@ -1,16 +1,18 @@
 <template>
-  <div>
+  <page>
+    <top-panel/>
     [Dashboard]
-    <md-button
-      class="md-primary md-raised"
-      @click="$router.push({ name: 'login' })">
-      Login
-    </md-button>
-  </div>
+  </page>
 </template>
 
 <script>
+import TopPanel from '@components/TopPanel'
+import Page from '@components/Page'
 export default {
-  name: 'Dashboard'
+  name: 'Dashboard',
+  components: {
+    'top-panel': TopPanel,
+    'page': Page
+  }
 }
 </script>
