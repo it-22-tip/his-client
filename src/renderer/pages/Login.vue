@@ -3,7 +3,7 @@
     <md-content>
       <md-button
         class="md-primary md-raised"
-        @click="$router.push({ name: 'dashboard' })">
+        @click="$router.push({ name: 'subone' })">
         Dashboard
       </md-button>
     </md-content>
