@@ -1,16 +1,21 @@
 <template>
-  <page class="test">
-    <top-panel/>
-    <router-view
-      class="sub-route-panel"
-      name="sub-top-panel"/>
-    <div class="test2">
-      <transition
-        name="slide-fade-left">
-        <router-view
-          class="sub-page-route"
-          name="sub-page"/>
-      </transition>
+  <page class="test3">
+    <div class="side-panel">
+      [side]
+    </div>
+    <div class="test">
+      <top-panel/>
+      <router-view
+        class="sub-route-panel"
+        name="sub-top-panel"/>
+      <div class="test2">
+        <transition
+          name="slide-fade-left">
+          <router-view
+            class="sub-page-route"
+            name="sub-page"/>
+        </transition>
+      </div>
     </div>
   </page>
 </template>
@@ -28,9 +33,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  .side-panel {
+    background: blue;
+  }
+  .test3 {
+    display: flex;
+    flex-direction: row;
+  }
   .test {
+    flex: 1;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
   }
   .test2 {
     flex: 1;
