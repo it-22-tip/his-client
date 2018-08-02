@@ -1,5 +1,7 @@
 <template>
-  <div>
+  <div
+    :class="layout"
+    class="layout-base">
     <router-view
       class="full-page"/>
     <router-view
@@ -16,6 +18,13 @@
 
 <script>
 export default {
-  name: 'LayoutBase'
+  name: 'LayoutBase',
+  computed: {
+    layout: {
+      get () {
+        return 'default'
+      }
+    }
+  }
 }
 </script>

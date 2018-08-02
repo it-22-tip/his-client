@@ -3,10 +3,11 @@
 </template>
 
 <script>
+import LayoutBase from '@components/LayoutBase'
 export default {
   name: 'App',
   components: {
-    'layout-base': () => import('@components/LayoutBase')
+    'layout-base': LayoutBase
   }
 }
 </script>
