@@ -1,11 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Store from '@/store'
-import Base from './routes/base'
-import Employees from './routes/employees'
-import Persons from './routes/persons'
-import Documents from './routes/documents'
-import MasterData from './routes/masterdata'
 Vue.use(Router)
 
 const error404 = [
@@ -16,7 +11,7 @@ const error404 = [
 ]
 
 const routes = new Router({
-  routes: [].concat(Base, Employees, Persons, Documents, MasterData, error404)
+  routes: [].concat(error404)
 })
 
 /* routes.beforeEach((to, from, next) => {
