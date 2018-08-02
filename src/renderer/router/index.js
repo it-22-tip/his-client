@@ -1,17 +1,30 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Store from '@/store'
+// import Store from '@/store'
+import Home from '@components/Home'
+import Login from '@components/Login'
 Vue.use(Router)
 
-const error404 = [
+const base = [
   {
     path: '*',
+    name: 'notfound',
     redirect: '/'
+  },
+  {
+    path: '/',
+    name: 'home',
+    components: { default: Home }
+  },
+  {
+    path: '/login',
+    name: 'login',
+    components: { default: Login }
   }
 ]
 
 const routes = new Router({
-  routes: [].concat(error404)
+  routes: [].concat(base)
 })
 
 /* routes.beforeEach((to, from, next) => {
@@ -19,7 +32,7 @@ const routes = new Router({
   next()
 }) */
 
-routes.beforeEach((to, from, next) => {
+/* routes.beforeEach((to, from, next) => {
   if (to.meta !== undefined && to.meta.login !== undefined) {
     const { isLoggedIn } = Store.state.Users
     if (isLoggedIn === false) {
@@ -46,6 +59,6 @@ routes.beforeEach((to, from, next) => {
     // console.log(to)
   }
   next()
-})
+}) */
 
 export default routes

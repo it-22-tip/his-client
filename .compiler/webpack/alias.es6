@@ -11,6 +11,8 @@ const rendererAlias = {
   '@pages': path.join(RendererPath, 'pages'),
   '@helpers': path.join(RendererPath, 'helpers'),
   '@mixins': path.join(RendererPath, 'mixins'),
+  '@store': path.join(RendererPath, 'store'),
+  '@route': path.join(RendererPath, 'route'),
   '@': RendererPath
 }
 
