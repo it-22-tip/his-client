@@ -1,6 +1,6 @@
 <template>
-  <div class="side-panel">
-    <md-toolbar>[App Title]</md-toolbar>
+  <md-content class="side-panel">
+    <md-toolbar md-elevation="0">[My App Title]</md-toolbar>
     <div>
       <md-list>
         <md-list-item>
@@ -24,5 +24,5 @@
         </md-list-item>
       </md-list>
     </div>
-  </div>
+  </md-content>
 </template>

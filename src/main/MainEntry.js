@@ -3,6 +3,7 @@ import { app, BrowserWindow, globalShortcut, Menu, ipcMain } from 'electron'
 import createMenu from './createMenu'
 import windowDefinitions from './windowDefinitions'
 import windowUrls from './windowUrls'
+import devtools from './devtools'
 import path from 'path'
 let isDevelopment = true
 let appName = 'his-client'
@@ -48,17 +49,6 @@ function createMainWindow () {
   }
 
   if (isDevelopment) {
-    const devtools = async function () {
-      // const ElectronDevtoolsInstaller = await import('electron-devtools-installer')
-      const devtron = await import('devtron')
-      const vuedevtools = await import('vue-devtools')
-      // const { default: installExtension, VUEJS_DEVTOOLS } = ElectronDevtoolsInstaller
-      devtron.install()
-      /* installExtension(VUEJS_DEVTOOLS)
-        .then((name) => console.log(`Added Extension:  ${name}`))
-        .catch((err) => console.log('An error occurred: ', err)) */
-      vuedevtools.install()
-    }
     devtools()
   }
 

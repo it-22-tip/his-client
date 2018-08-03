@@ -21,10 +21,12 @@ export default {
     position: absolute;
     width: 100%;
     height: 100%;
-    padding: 20px;
+    padding: 10px;
+    background: grey;
   }
   .sub-page div {
     display: block;
     height: 100%;
+    background: white;
   }
 </style>
