@@ -7,13 +7,13 @@ async function rendererServer () {
   const options = {
     compiler: compiler,
     port: 9080,
-    logLevel: 'silent',
+    logLevel: 'debug',
     hotClient: {
       validTargets: ['electron-renderer'],
-      logLevel: 'silent'
+      logLevel: 'debug'
     },
     devMiddleware: {
-      logLevel: 'silent'
+      logLevel: 'debug'
     }
   }
   server = await WebpackServe({}, options)
