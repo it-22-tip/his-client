@@ -7,6 +7,7 @@ import TopPanel from '@components/TopPanel'
 import Login from '@pages/Login'
 import SubOne from '@pages/SubOne'
 import SubTwo from '@pages/SubTwo'
+import SubThree from '@pages/SubThree'
 Vue.use(Router)
 
 const base = [
@@ -51,6 +52,14 @@ const base = [
         components: {
           'top-panel': TopPanel,
           'sub-page': SubTwo
+        }
+      },
+      {
+        path: 'subthree',
+        name: 'subthree',
+        components: {
+          'top-panel': TopPanel,
+          'sub-page': SubThree
         }
       }
     ]
