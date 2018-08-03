@@ -24,9 +24,10 @@ export default {
     padding: 10px;
     background: grey;
   }
-  .sub-page div {
+  .sub-page > div {
     display: block;
     height: 100%;
     background: white;
+    position: relative;
   }
 </style>
