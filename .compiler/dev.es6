@@ -1,11 +1,11 @@
 'use strict'
 
-import mainServer from './mainServer'
-import rendererServer from './rendererServer'
-import { greeting } from './consoleLogger'
+import mainServer from './server/mainServer'
+import rendererServer from './server/rendererServer'
+// import { greeting } from './consoleLogger'
 
 const init = async function () {
-  greeting()
+  // greeting()
   try {
     const renderer = await rendererServer()
     renderer.on('build-finished', mainServer)

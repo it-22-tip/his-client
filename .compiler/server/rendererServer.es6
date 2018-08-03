@@ -1,6 +1,6 @@
 import webpack from 'webpack'
 import WebpackServe from 'webpack-serve'
-import { rendererConfig } from './webpack/config'
+import { rendererConfig } from '../webpack/config'
 async function rendererServer () {
   let server
   const compiler = webpack(rendererConfig)

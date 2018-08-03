@@ -1,10 +1,10 @@
 import webpack from 'webpack'
 import path from 'path'
-import { mainConfig } from './webpack/config'
+import { mainConfig } from '../webpack/config'
 import electron from 'electron'
 import { spawn } from 'child_process'
-import { electronLog, logStats } from './consoleLogger'
-import { MainPath, OutputPath } from './constant'
+// import { electronLog, logStats } from '../consoleLogger'
+import { /* MainPath, */ OutputPath } from '../constant'
 import Promise from 'bluebird'
 
 let electronProcess = null
