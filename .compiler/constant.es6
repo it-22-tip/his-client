@@ -11,6 +11,7 @@ const DistPath = path.join(RootPath, 'dist')
 const RendererPath = path.join(SrcPath, 'renderer')
 const SharedPath = path.join(SrcPath, 'shared')
 const MainPath = path.join(SrcPath, 'main')
+const ServerPath = path.join(SrcPath, 'server')
 const HtmlWebpackPluginTemplatePath = path.join(SrcPath, 'index.ejs')
 const RendererEntry = path.join(RendererPath, 'RendererEntry.js')
 const MainEntry = path.join(MainPath, 'MainEntry.js')
@@ -32,5 +33,6 @@ export {
   MainPath,
   MainEntry,
   DistPath,
-  OutputPath
+  OutputPath,
+  ServerPath
 }
