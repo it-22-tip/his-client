@@ -12,7 +12,7 @@ const RendererPath = path.join(SrcPath, 'renderer')
 const SharedPath = path.join(SrcPath, 'shared')
 const MainPath = path.join(SrcPath, 'main')
 const ServerPath = path.join(SrcPath, 'server')
-const HtmlWebpackPluginTemplatePath = path.join(SrcPath, 'index.ejs')
+const RendererTemplatePath = path.join(RendererPath, 'index.ejs')
 const RendererEntry = path.join(RendererPath, 'RendererEntry.js')
 const MainEntry = path.join(MainPath, 'MainEntry.js')
 const OutputPath = path.join(DistPath, 'electron')
@@ -23,7 +23,7 @@ export {
   devDependencies,
   RootPath,
   SrcPath,
-  HtmlWebpackPluginTemplatePath,
+  RendererTemplatePath,
   CompilerPath,
   NodeModulesPath,
   StaticPath,

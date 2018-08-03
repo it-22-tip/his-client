@@ -1,9 +1,9 @@
-import { HtmlWebpackPluginTemplatePath, NodeModulesPath } from '../../constant'
+import { RendererTemplatePath, NodeModulesPath } from '../../constant'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 
 export default new HtmlWebpackPlugin({
   filename: 'index.html',
-  template: HtmlWebpackPluginTemplatePath,
+  template: RendererTemplatePath,
   minify: {
     collapseWhitespace: true,
     removeAttributeQuotes: true,
