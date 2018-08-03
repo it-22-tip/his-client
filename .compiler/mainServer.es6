@@ -12,7 +12,7 @@ let manualRestart = false
 
 function startMain () {
   return new Promise((resolve) => {
-    mainConfig.entry.main = [path.join(MainPath, 'index.dev.js')].concat(mainConfig.entry.main)
+    // mainConfig.entry.main = [path.join(MainPath, 'index.dev.js')].concat(mainConfig.entry.main)
     const compiler = webpack(mainConfig)
     compiler.hooks.watchRun.tapAsync(
       'watch-run-plugins',
@@ -62,6 +62,7 @@ function startElectron () {
 }
 
 async function mainServer () {
+  if (electronProcess !== null) return
   await startMain()
   startElectron()
 }

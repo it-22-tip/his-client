@@ -14,7 +14,7 @@
     "node": ">8.0.0"
   },
   "scripts": {
-    "dev:wds": "cross-env DEBUG=webpack NODE_ENV=development BABEL_ENV=buildscript node --max_old_space_size=1024 -r babel-register .compiler/dev.wds.es6",
+    "dev:wds": "cross-env DEBUG=webpack NODE_ENV=development BABEL_ENV=buildscript node --max_old_space_size=1024 -r babel-register .compiler/dev.wds.old.es6",
     "dev:ws": "cross-env WEBPACK_SERVE=true DEBUG=webpack NODE_ENV=development BABEL_ENV=buildscript node --max_old_space_size=1024 -r babel-register .compiler/dev.ws.es6",
     "build": "cross-env BABEL_ENV=buildscript NODE_ENV=production node --max_old_space_size=2048 -r babel-register .compiler/build.es6 && electron-builder --config electron-builder.yml",
     "build:clean": "cross-env BABEL_ENV=buildscript BUILD_TARGET=clean node -r babel-register .compiler/build.es6",

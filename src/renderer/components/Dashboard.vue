@@ -1,8 +1,6 @@
 <template>
   <page class="test3">
-    <div class="side-panel">
-      [side]
-    </div>
+    <side-panel/>
     <div class="test">
       <top-panel/>
       <router-view
@@ -21,21 +19,20 @@
 </template>
 
 <script>
+import SidePanel from '@components/SidePanel'
 import TopPanel from '@components/TopPanel'
 import Page from '@components/Page'
 export default {
   name: 'Dashboard',
   components: {
     'top-panel': TopPanel,
+    'side-panel': SidePanel,
     'page': Page
   }
 }
 </script>
 
 <style lang="scss" scoped>
-  .side-panel {
-    background: blue;
-  }
   .test3 {
     display: flex;
     flex-direction: row;
