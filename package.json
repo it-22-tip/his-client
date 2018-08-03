@@ -14,8 +14,7 @@
     "node": ">8.0.0"
   },
   "scripts": {
-    "dev:wds": "cross-env DEBUG=webpack NODE_ENV=development BABEL_ENV=buildscript node --max_old_space_size=1024 -r babel-register .compiler/dev.wds.old.es6",
-    "dev:ws": "cross-env WEBPACK_SERVE=true DEBUG=webpack NODE_ENV=development BABEL_ENV=buildscript node --max_old_space_size=1024 -r babel-register .compiler/dev.ws.es6",
+    "dev": "cross-env WEBPACK_SERVE=true DEBUG=webpack NODE_ENV=development BABEL_ENV=buildscript node --max_old_space_size=1024 -r babel-register .compiler/dev.ws.es6",
     "build": "cross-env BABEL_ENV=buildscript NODE_ENV=production node --max_old_space_size=2048 -r babel-register .compiler/build.es6 && electron-builder --config electron-builder.yml",
     "build:clean": "cross-env BABEL_ENV=buildscript BUILD_TARGET=clean node -r babel-register .compiler/build.es6",
     "lint": "node_modules/.bin/eslint --fix --ext .js,.vue -f node_modules/eslint-friendly-formatter src",
@@ -76,6 +75,7 @@
     "vue-responsive-components": "^0.2.3",
     "vue-router": "^3.0.1",
     "vue-snotify": "^3.2.1",
+    "vue-socket.io": "^2.1.1-b",
     "vue-touch": "^2.0.0-beta.4",
     "vuebar": "0.0.18",
     "vuedraggable": "^2.16.0",
@@ -87,7 +87,7 @@
   },
   "devDependencies": {
     "@vue/test-utils": "^1.0.0-beta.23",
-    "autoprefixer": "^9.0.2",
+    "autoprefixer": "^9.1.0",
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.6",
     "babel-jest": "^23.4.2",
@@ -144,6 +144,7 @@
     "sequelize-mock": "^0.10.2",
     "shx": "^0.3.2",
     "sinon": "^6.1.4",
+    "socket.io": "^2.1.1",
     "style-loader": "^0.21.0",
     "uglifyjs-webpack-plugin": "^1.2.7",
     "url-loader": "^1.0.1",
@@ -154,7 +155,6 @@
     "vue-style-loader": "^4.1.1",
     "vue-template-compiler": "^2.5.17",
     "webpack": "^4.16.4",
-    "webpack-dev-server": "^3.1.5",
     "webpack-hot-middleware": "^2.22.3",
     "webpack-merge": "^4.1.4",
     "webpack-node-externals": "^1.7.2",
