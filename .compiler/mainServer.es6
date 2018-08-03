@@ -26,7 +26,7 @@ function startMain () {
         return
       }
 
-      logStats('Main', stats)
+      // logStats('Main', stats)
 
       if (electronProcess && electronProcess.kill) {
         manualRestart = true
@@ -50,12 +50,12 @@ function startElectron () {
   env.IS_DEVELOPMENT = true
   electronProcess = spawn(electron, ['--inspect=5858', path.join(OutputPath, 'main.js')], { env: env })
 
-  electronProcess.stdout.on('data', data => {
+  /* electronProcess.stdout.on('data', data => {
     electronLog(data, 'green')
   })
   electronProcess.stderr.on('data', data => {
     electronLog(data, 'yellow')
-  })
+  }) */
   electronProcess.on('close', () => {
     if (!manualRestart) process.exit()
   })
