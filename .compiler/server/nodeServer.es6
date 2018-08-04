@@ -20,9 +20,9 @@ const nodeServer = function () {
 
   io.on('connection', function (socket) {
     console.log('connected')
-    socket.on('chat', function(msg){
-        console.log(msg)
-        io.emit('chat', msg + "222222")
+    socket.on('chat', function (msg) {
+      console.log(msg)
+      io.emit('chat', msg + '222222')
     })
   })
   server.listen(4500)

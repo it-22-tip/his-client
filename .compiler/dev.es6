@@ -2,7 +2,7 @@
 
 import mainServer from './server/mainServer'
 import rendererServer from './server/rendererServer'
-import nodeServer from './server/nodeServer';
+import nodeServer from './server/nodeServer'
 // import { greeting } from './consoleLogger'
 
 const init = async function () {

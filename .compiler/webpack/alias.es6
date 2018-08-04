@@ -18,7 +18,7 @@ const rendererAlias = {
 
 const mainALias = {
   '@windowDefinitions': path.join(MainPath, 'windowDefinitions'),
-  '@windowUrls': path.join(MainPath, 'windowUrls'),
+  '@windowUrls': path.join(MainPath, 'windowUrls')
 }
 
 export default assign({}, nodeModulesAlias, rendererAlias, mainALias)
