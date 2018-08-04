@@ -5,13 +5,11 @@ import del from 'del'
 import webpack from 'webpack'
 import Multispinner from 'multispinner'
 import { mainConfig, rendererConfig } from './webpack/config'
-import { greeting2 } from './consoleLogger'
 
 const doneLog = chalk.bgGreen.white(' DONE ') + ' '
 const errorLog = chalk.bgRed.white(' ERROR ') + ' '
 const okayLog = chalk.bgBlue.white(' OKAY ') + ' '
 // process.env.NODE_ENV = 'production'
-const isCI = process.env.CI || false
 
 if (process.env.BUILD_TARGET === 'clean') clean()
 else build()
@@ -23,8 +21,6 @@ function clean () {
 }
 
 function build () {
-  greeting2(isCI)
-
   del.sync(['dist/electron/*', '!.gitkeep'])
 
   const tasks = ['main', 'renderer']

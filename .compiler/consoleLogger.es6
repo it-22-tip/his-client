@@ -1,6 +1,8 @@
 import chalk from 'chalk'
 import { say } from 'cfonts'
 
+const isCI = process.env.CI || false
+
 const banner = function () {
   let text
   const cols = process.stdout.columns
@@ -22,7 +24,7 @@ const greeting = function () {
   console.log(chalk.blue('  getting ready...') + '\n')
 }
 
-const greeting2 = function (isCI) {
+const greeting2 = function () {
   let text = banner()
   if (text && !isCI) {
     say(text, {
