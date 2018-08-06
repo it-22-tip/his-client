@@ -4,10 +4,8 @@
     class="layout-base">
     <transition name="slide-fade-left">
       <router-view
-        key="full-page"
         class="full-page"/>
       <router-view
-        key="content"
         class="content"
         name="content"/>
     </transition>
