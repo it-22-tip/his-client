@@ -33,7 +33,7 @@ init:
   - sh: sudo apt-get install -y libcups2-dev
   - cmd: git config --global core.autocrlf input
 
-stack: node 8, python 2.7.14
+stack: node 8, python 2.7.15
 
 install:
   - ps: Install-Product node $env:nodejs_version
