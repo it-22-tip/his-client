@@ -1,13 +1,14 @@
 <template>
   <div
     :class="layout"
-    class="layout-base">
+    class="layout-base"
+  >
     <transition name="slide-fade-left">
-      <router-view
-        class="full-page"/>
+      <router-view class="full-page" />
       <router-view
         class="content"
-        name="content"/>
+        name="content"
+      />
     </transition>
   </div>
 </template>

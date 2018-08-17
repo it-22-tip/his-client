@@ -1,17 +1,18 @@
 <template>
   <page class="test3">
-    <side-panel/>
+    <side-panel />
     <div class="test">
-      <top-panel/>
+      <top-panel />
       <router-view
         class="sub-route-panel"
-        name="sub-top-panel"/>
+        name="sub-top-panel"
+      />
       <div class="test2">
-        <transition
-          name="slide-fade-left">
+        <transition name="slide-fade-left">
           <router-view
             class="sub-page-route"
-            name="sub-page"/>
+            name="sub-page"
+          />
         </transition>
       </div>
     </div>

@@ -3,7 +3,8 @@
     [hello 3]
     <md-field>
       <md-input
-        v-model="msg"/>
+        v-model="msg"
+      />
     </md-field>
     <md-button @click="send">click</md-button>
   </sub-page>

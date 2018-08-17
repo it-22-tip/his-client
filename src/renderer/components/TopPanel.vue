@@ -1,6 +1,5 @@
 <template>
-  <md-toolbar
-    class="md-dense md-primary">
+  <md-toolbar class="md-dense md-primary">
     <div class="md-toolbar-section-start">
       <md-button class="md-icon-button">
         <md-icon>menu</md-icon>
@@ -11,20 +10,23 @@
       v-model="selectedEmployee"
       :md-options="employees"
       class="search"
-      md-layout="box">
+      md-layout="box"
+    >
       <label>Search...</label>
     </md-autocomplete>
 
     <div class="md-toolbar-section-end">
       <md-button
         class="md-icon-button"
-        @click="$router.push({ name: 'subone' })">
+        @click="$router.push({ name: 'subone' })"
+      >
         <md-icon>refresh</md-icon>
       </md-button>
 
       <md-button
         class="md-icon-button"
-        @click="$router.push({ name: 'subtwo' })">
+        @click="$router.push({ name: 'subtwo' })"
+      >
         <md-icon>more_vert</md-icon>
       </md-button>
     </div>

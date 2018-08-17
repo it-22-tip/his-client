@@ -1,5 +1,7 @@
 <template>
-  <layout-base id="app"/>
+  <layout-base
+    id="app"
+  />
 </template>
 
 <script>

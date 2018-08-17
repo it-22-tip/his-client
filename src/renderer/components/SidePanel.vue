@@ -27,7 +27,8 @@
     <md-toolbar md-elevation="0">
       <md-button
         class="md-icon-button"
-        @click="$router.push({ name: 'subone' })">
+        @click="$router.push({ name: 'subone' })"
+      >
         <md-icon>refresh</md-icon>
       </md-button> Minimize
     </md-toolbar>
